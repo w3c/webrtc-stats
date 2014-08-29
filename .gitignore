@@ -1,0 +1,9 @@
+*~
+old
+old?
+.DS_Store
+webrtc-stats.diff.html
+webrtc-stats.orig.html
+webrtc-stats.orig.txt
+webrtc-stats.txt
+htmlwdiff.sh
