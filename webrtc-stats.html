@@ -37,6 +37,7 @@
     </section>
 
     <!-- NB: [[!..]] normative refs, [[..]] informative refs-->
+    <!-- based on the wiki page https://www.w3.org/2011/04/webrtc/wiki/Stats -->
 
     <section class='informative'>
       <h2>Introduction</h2>
@@ -92,8 +93,8 @@
       </p>
 
       <p>
-        The terms <dfn>RTCPeerConnection</dfn>, <dfn>RTCDataChannel</dfn>,
-        <dfn>RTCIceCandidate</dfn> are defined in [[!WEBRTC]].
+        The terms <dfn>RTCPeerConnection</dfn>, <dfn>RTCDataChannel</dfn>
+        are defined in [[!WEBRTC]].
       </p>
     </section>
 
@@ -134,22 +135,28 @@
         <dt>DOMHiResTimeStamp timestamp</dt>
         <dd><p>The <dfn><code>timestamp</code></dfn>, of type <code>DOMHiResTimeStamp</code>
           [[HIGHRES-TIME]], associated with this object. The time is relative
-          to the UNIX epoch (Jan 1, 1970, UTC).</p></dd>
+          to the UNIX epoch (Jan 1, 1970, UTC). The timestamp for local
+          measurements corresponds to the to the local clock and for remote
+          measurements corresponds to the timestamp indicated in the incoming
+          RTCP Sender Report (SR), Receiver Report (RR) or Extended Report (XR).
+          </p></dd>
 
         <dt>RTCStatsType type</dt>
         <dd><p>The type of this object.</p>
           <p>The <dfn id="dom-rtcstats-type"><code>type</code></dfn> attribute
-          MUST be initialized to the name of the most specific type this
-          <code><a>RTCStats</a></code> dictionary represents.</p></dd>
+          <em class="rfc2119" title="MUST">MUST</em> be initialized to the name
+          of the most specific type this <code><a>RTCStats</a></code> dictionary
+          represents.</p></dd>
 
         <dt> DOMString         id</dt>
         <dd><p>A unique <code>id</code> that is associated with the object that
           was inspected to produce this <code>RTCStats</code> object.
           Two <code>RTCStats</code> objects, extracted from two different
-          <code>RTCStatsReport</code> objects, <em class="rfc2119" title="MUST">MUST</em>
-          have the same <code>id</code> if they were produced by inspecting the
-          same underlying object. User agents are free to pick any format for
-          the <code>id</code> as long as it meets the requirements above.</p></dd>
+          <code>RTCStatsReport</code> objects,
+          <em class="rfc2119" title="MUST">MUST</em> have the same
+          <code>id</code> if they were produced by inspecting the same
+          underlying object. User agents are free to pick any format for the
+          <code>id</code> as long as it meets the requirements above.</p></dd>
       </dl>
       <section id="rtcstatstype-enum*">
         <h3>RTCStatsType enum</h3>
@@ -199,32 +206,45 @@
       <section id="streamstats-dict*">
         <h3><dfn>RTCRTPStreamStats</dfn> dictionary</h3>
         <dl class="idl" title="dictionary RTCRTPStreamStats : RTCStats">
-           <dt>DOMString ssrc</dt>
-           <dd><p></p></dd>
-           <dt>DOMString remoteId</dt>
-           <dd><p></p></dd>
-           <dt>boolean isRemote = false</dt>
-           <dd><p></p></dd>
-           <dt>DOMString mediaTrackId</dt>
-           <dd><p></p></dd>
-           <dt>DOMString transportId</dt>
-           <dd><p></p></dd>
-           <dt>DOMString codecId</dt>
-           <dd><p></p></dd>
-           <dt>unsigned long firCount</dt>
-           <dd><p>Only valid for video - these are sent by receiver, received
-             by sender. Calculated as in [[!RFC5104]] section 4.3.1. Not using
-             the metric indicated in [[RFC2032]], because it was deprecated by
-             [[RFC4587]].</p></dd>
-           <dt>unsigned long pliCount</dt>
-           <dd><p>Only valid for video - these are sent by receiver, received
-             by sender. Calculated as in [[!RFC4585]] section 6.3.1.</p></dd>
-           <dt>unsigned long nackCount</dt>
-           <dd><p>Only valid for video - these are sent by receiver, received
-             by sender. Calculated as in [[!RFC4585]] section 6.2.1.</p></dd>
-           <dt>unsigned long sliCount</dt>
-           <dd><p>Only valid for video - these are sent by receiver, received
-             by sender. Calculated as in [[!RFC4585]] section 6.3.2.</p></dd>
+          <dt>DOMString ssrc</dt>
+          <dd><p></p></dd>
+
+          <dt>DOMString associateStatsId</dt>
+          <dd><p>The <code>associateStatsId</code> is used for looking up the
+            corresponding (local/remote) <code><a>RTCStats</a></code> object
+            for a given SSRC.</p></dd>
+          <dt>boolean isRemote = false</dt>
+          <dd><p><code>false</code> indicates that the statistics are measured
+            locally, while <code>true</code> indicates that the measurements
+            were done at the remote endpoint and reported in an RTCP RR/XR.</p></dd>
+
+          <dt>DOMString mediaTrackId</dt>
+          <dd><p></p></dd>
+          <dt>DOMString transportId</dt>
+          <dd><p></p></dd>
+          <dt>DOMString codecId</dt>
+          <dd><p></p></dd>
+
+          <dt>unsigned long firCount</dt>
+          <dd><p>Count the total number of Full Intra Request (FIR) packets
+            received by the sender. This metric is only valid for video and is
+            sent by receiver. Calculated as in [[!RFC5104]] section 4.3.1. and
+            does not use the metric indicated in [[RFC2032]], because it was
+            deprecated by [[RFC4587]].</p></dd>
+          <dt>unsigned long pliCount</dt>
+          <dd><p>Count the total number of Packet Loss Indication (PLI) packets
+            received by the sender and is sent by receiver. Calculated as in
+            [[!RFC4585]] section 6.3.1.</p></dd>
+            <!-- FIXME: PLI: Why only valid for video? -->
+          <dt>unsigned long nackCount</dt>
+          <dd><p>Count the total number of Negative ACKnowledgement (NACK)
+            packets received by the sender and is sent by receiver. Calculated
+            as in [[!RFC4585]] section 6.2.1.</p></dd>
+            <!-- FIXME: NACK: Why only valid for video? -->
+          <dt>unsigned long sliCount</dt>
+          <dd><p>Count the total number of Slice Loss Indication (SLI) packets
+            received by the sender. This metric is only valid for video and is
+            sent by receiver. Calculated as in [[!RFC4585]] section 6.3.2.</p></dd>
         </dl>
 
         <section id="codec-dict*">
@@ -247,8 +267,7 @@
           <h3>RTCInboundRTPStreamStats dictionary</h3>
           <p>
             <dfn>RTCInboundRTPStreamStats</dfn> dictionary represents the
-            measurement metrics for the incoming media stream. Also the the
-            timestamp corresponds to the to the local clock.
+            measurement metrics for the incoming media stream.
           </p>
           <dl class="idl" title="dictionary RTCInboundRTPStreamStats : RTCRTPStreamStats">
             <dt>unsigned long packetsReceived</dt>
@@ -264,24 +283,26 @@
             <dd><p>Packet Jitter measured in seconds for this SSRC. Calculated
               as in [[!RFC3550]] section 6.4.1.</p></dd>
           </dl>
-          <div class="note">
-            Open Issue: do we need to report fractionLost? it represents the
-            packets lost in the last RTCP reporting interval. Since most
-            counters are cumulative, this would differ from that expectation.
-            Jitter is not a cumulative metric but is calculated continuously
-            on receiving an RTP packet and is reported by the user agent.
+          <div class="issue">
+            Open Issue: fractionLost is missing? it represents the fraction of the
+            packets lost over the expected number of packets received in the
+            last RTCP reporting interval. Since most other counters are
+            cumulative, this metric would differ from that expectation.
           </div>
-
+          <div class="issue">
+            Open Issue: Possible additional metrics
+            <ul>
+              <li>packetsDiscarded</li>
+              <li>packetsRepaired</li>
+            </ul>
+          </div>
         </section>
 
         <section id="outboundrtpstats-dict*">
           <h3>RTCOutboundRTPStreamStats dictionary</h3>
           <p>
             <dfn>RTCOutboundRTPStreamStats</dfn> dictionary represents the
-            measurement metrics for the outgoing media stream. Also the the
-            timestamp for local measurements corresponds to the to the local
-            clock and the remote measurement timestamp corresponds to the
-            timestamp indicated in the incoming RTCP SR/RR packet.
+            measurement metrics for the outgoing media stream.
           </p>
           <dl class="idl" title="dictionary RTCOutboundRTPStreamStats : RTCRTPStreamStats">
             <dt>unsigned long packetsSent</dt>
@@ -298,6 +319,31 @@
             <dd><p>Estimated round trip time (seconds) for this SSRC based on
               the RTCP timestamp. Calculated as in [[!RFC3550]] section 6.4.1.</p></dd>
           </dl>
+        </section>
+        <!-- TODO: EXAMPLE -->
+        <section>
+          <h4>Example</h4>
+          <p>The following example code shows the association of remote
+            statistics with local statistics in a <code>RTCStats</code>
+            dictionary.</p>
+          <!-- <pre class="example highlight" xml:space="preserve">
+stats [
+   dictionary (of type RTPoutboundStatsDictionary) {
+      ssrc=1234
+      id=foobar
+      type=outboundrtp
+      isRemote=false
+      associateStatsId=barfoo
+  },
+  dictionary (of type RTPinboundStatsDictionary) {
+      ssrc=1234
+      id=barfoo
+      type=inboundrtp
+      isRemote=true
+      associateStatsId=foobar
+  }
+]
+          </pre> -->
         </section>
       </section>
 
@@ -432,15 +478,13 @@
       </section>
 
       <section id="icecandidate-dict*">
-        <h3>RTCIceCandidate dictionary</h3>
+        <h3>RTCIceCandidateAttributes dictionary</h3>
         <p>
-          <code>RTCIceCandidate</code> reflects the properties of a
+          <code>RTCIceCandidateAttributes</code> reflects the properties of a
           <code>candidate</code> in Section 15.1 of [[!RFC5245]].
         </p>
-        <div class="note">
-          Open Issue: <code>RTCIceCandidate</code> is already used in [[!WEBRTC]].
-        </div>
-        <dl class="idl" title="dictionary RTCIceCandidate : RTCStats">
+        
+        <dl class="idl" title="dictionary RTCIceCandidateAttributes : RTCStats">
           <dt>DOMString ipAddress</dt>
           <dd><p>It is the IP address of the candidate, allowing for IPv4
             addresses, IPv6 addresses, and fully qualified domain names (FQDNs).
@@ -508,10 +552,10 @@
           <dd><p></p></dd>
           <dt>double availableOutgoingBitrate</dt>
           <dd><p>Measured in Bits per second, and is implementation dependent.
-            May be calculated by the underlying congestion control.</p></dd>
+            It may be calculated by the underlying congestion control.</p></dd>
           <dt>double availableIncomingBitrate</dt>
           <dd><p>Measured in Bits per second, and is implementation dependent.
-            May be calculated by the underlying congestion control.</p></dd>
+            It may be calculated by the underlying congestion control.</p></dd>
         </dl>
 
         <section>

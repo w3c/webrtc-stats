@@ -3,7 +3,7 @@ var respecConfig = {
       specStatus:           "ED",
 
       // the specification's short name, as in http://www.w3.org/TR/short-name/
-      shortName:            "webrtc-stats-api",
+      shortName:            "webrtc-stats",
 
       // if your specification has a subtitle that goes below the main
       // formal title, define it here
@@ -24,7 +24,7 @@ var respecConfig = {
       // prevED: "http://dev.w3.org/2011/webrtc/editor/archives/20140321/webrtc.html",
 
       // if there a publicly available Editor's Draft, this is the link
-      edDraftURI: "http://dev.w3.org/2011/webrtc/editor/webrtc-stats-api.html",
+      edDraftURI: "http://dev.w3.org/2011/webrtc/editor/webrtc-stats.html",
 
       // if this is a LCWD, uncomment and set the end of its review period
       // lcEnd: "2009-08-05",
