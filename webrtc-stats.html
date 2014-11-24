@@ -77,8 +77,9 @@
       <p>
         The concepts <dfn><a
         href="http://dev.w3.org/html5/spec/webappapis.html#queue-a-task">queue
-        a task</a></dfn>, and <dfn><a href="http://dev.w3.org/html5/spec/webappapis.html#fire-a-simple-event">fires a
-        simple event</a></dfn> are defined in [[!HTML5]].
+        a task</a></dfn>, and 
+        <dfn><a href="http://dev.w3.org/html5/spec/webappapis.html#fire-a-simple-event">fires
+        a simple event</a></dfn> are defined in [[!HTML5]].
       </p>
 
       <p>The terms <dfn>event</dfn>, <dfn><a
@@ -137,17 +138,11 @@
 
             <p>When the <dfn id=
             "dom-peerconnection-getstats"><code>getStats()</code></dfn> method is
-            invoked, the user agent MUST queue a task to run the following
-            steps:</p>
+            invoked, the user agent <em class="rfc2119" title="MUST">MUST</em> 
+            queue a task to run the following steps:</p>
 
             <ol>
-              <li>
-                <p>If the <code><a>RTCPeerConnection</a></code> object's <a href=
-                "#dom-peerconnection-signaling-state"><code>RTCPeerConnection</code>
-                signalingState</a> is <code>closed</code>, throw an
-                <code>InvalidStateError</code> exception.</p>
-              </li>
-
+              
               <li>
                 <p>Return, but continue the following steps in the
                 background.</p>
@@ -159,14 +154,23 @@
 
               <li>
                 <p>If <var>selectorArg</var> is an invalid <a href=
-                "#stats-selector">selector</a>, the user agent MUST queue a task
+                "#stats-selector">selector</a>, the user agent 
+                <em class="rfc2119" title="MUST">MUST</em> queue a task
                 to invoke the failure callback (the method's third argument).</p>
               </li>
 
               <li>
+                
                 <p>Start gathering the stats indicated by <var>selectorArg</var>.
-                In case <var>selectorArg</var> is null, stats MUST be gathered
-                for the whole <code><a>RTCPeerConnection</a></code> object.</p>
+                In case <var>selectorArg</var> is null, stats 
+                <em class="rfc2119" title="MUST">MUST</em> be gathered for
+                the whole <code><a>RTCPeerConnection</a></code> object. If the
+                <code><a>RTCPeerConnection</a></code> object's 
+                <a href="http://www.w3.org/TR/webrtc/#dom-peerconnection-signaling-state">signalingState</a> is
+                <code>closed</code>, stats should reflect the state at or near the
+                time that <a href="http://www.w3.org/TR/webrtc/#dom-peerconnection-signaling-state">signalingState</a>
+                transitioned to <code>closed</code>.
+                </p>
               </li>
 
               <li>
@@ -235,7 +239,7 @@
       <h2>RTCStats Dictionary</h2>
       <p>
         An <code><dfn>RTCStats</dfn></code> dictionary represents the stats gathered by
-        inspecting a specific object relevant to a <dfn>selector</dfn>. The
+        inspecting a specific object relevant to a <code>selector</code>. The
         <code>RTCStats</code> dictionary is a base type that specifies a set
         of default attributes, such as <a>timestamp</a> and <a>type</a>.
         Specific stats are added by extending the <code>RTCStats</code> dictionary.
