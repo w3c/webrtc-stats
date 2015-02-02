@@ -77,8 +77,9 @@
       <p>
         The concepts <dfn><a
         href="http://dev.w3.org/html5/spec/webappapis.html#queue-a-task">queue
-        a task</a></dfn>, and <dfn><a href="http://dev.w3.org/html5/spec/webappapis.html#fire-a-simple-event">fires a
-        simple event</a></dfn> are defined in [[!HTML5]].
+        a task</a></dfn>, and 
+        <dfn><a href="http://dev.w3.org/html5/spec/webappapis.html#fire-a-simple-event">fires
+        a simple event</a></dfn> are defined in [[!HTML5]].
       </p>
 
       <p>The terms <dfn>event</dfn>, <dfn><a
@@ -98,109 +99,69 @@
       </p>
     </section>
 
-    <!-- vs: does getStats() move here? -->
-    <section>
-      <h2>Statistics Model</h2>
+    <!-- VS: getStats() remains in base spec! -->
 
-        <p>
-          The browser maintains a set of statistics referenced by a
-          <code>selector</code>. The selector may, for example, be a
-          <code>MediaStreamTrack</code>. For a track to be a valid selector,
-          it <em class="rfc2119" title="MUST">MUST</em> be a member of a
-          <code>MediaStream</code> that is sent or received by the
-          <code>RTCPeerConnection</code> object on which
-          the statistics were requested.
+    <section id="rtctatstype-*">
+      <h2>RTCStatsType</h2>
 
-          The <dfn>getStats()</dfn> method is defined in [[!WEBRTC]] and the
-          browser emits (in the JavaScript) a set of metrics that it
-          believes are relevant to the selector.
-        </p>
+      <code>RTCStatsType</code> object is initialized to the name of the dictionary that
+      the <code>RTCStats</code> represents.
+      
+      <div class="note">
+        OPEN ISSUE: Need to define an IANA registry for the RTCStatsType and populate
+        it with the following set as baseline. 
+      </div>
 
-      </section>
+      <section id="rtcstatstype-str*">
+        <h3>RTCStatsType DOMString</h3>
 
-    </section>
-
-    <section id="rtctats-dict*">
-
-      <h2>RTCStats Dictionary</h2>
-      <p>
-        An <code><dfn>RTCStats</dfn></code> dictionary represents the stats gathered by
-        inspecting a specific object relevant to a <dfn>selector</dfn>. The
-        <code>RTCStats</code> dictionary is a base type that specifies a set
-        of default attributes, such as <a>timestamp</a> and <a>type</a>.
-        Specific stats are added by extending the <code>RTCStats</code> dictionary.
-      </p>
-
-      <dl class="idl" title="dictionary RTCStats">
-        <dt>DOMHiResTimeStamp timestamp</dt>
-        <dd><p>The <dfn><code>timestamp</code></dfn>, of type <code>DOMHiResTimeStamp</code>
-          [[HIGHRES-TIME]], associated with this object. The time is relative
-          to the UNIX epoch (Jan 1, 1970, UTC). The timestamp for local
-          measurements corresponds to the to the local clock and for remote
-          measurements corresponds to the timestamp indicated in the incoming
-          RTCP Sender Report (SR), Receiver Report (RR) or Extended Report (XR).
-          </p></dd>
-
-        <dt>RTCStatsType type</dt>
-        <dd><p>The type of this object.</p>
-          <p>The <dfn id="dom-rtcstats-type"><code>type</code></dfn> attribute
-          <em class="rfc2119" title="MUST">MUST</em> be initialized to the name
-          of the most specific type this <code><a>RTCStats</a></code> dictionary
-          represents.</p></dd>
-
-        <dt> DOMString         id</dt>
-        <dd><p>A unique <code>id</code> that is associated with the object that
-          was inspected to produce this <code>RTCStats</code> object.
-          Two <code>RTCStats</code> objects, extracted from two different
-          <code>RTCStatsReport</code> objects,
-          <em class="rfc2119" title="MUST">MUST</em> have the same
-          <code>id</code> if they were produced by inspecting the same
-          underlying object. User agents are free to pick any format for the
-          <code>id</code> as long as it meets the requirements above.</p></dd>
-      </dl>
-      <section id="rtcstatstype-enum*">
-        <h3>RTCStatsType enum</h3>
-
+        <!-- 
+        As per discussions: Move enum to a string that is in a registry 
         <div class="note">
           Updated the enum in [[!WEBRTC]]: to use lowercasenospacesordashes
           name convention, and added new enum values.
-        </div>
+        </div> -->
 
         <!-- TODO: point to the actual stats dictionaries  -->
-        <dl class="idl" title="enum RTCStatsType">
-          <dt>inboundrtp</dt>
+        <!-- <dl class="idl" title="DOMString RTCStatsType"> -->
+        <div>
+        <var>RTCStatsType</var> is a equal to one of the following strings defined in [IANA-TOBE]:
+
+          <dt><code>inboundrtp</code></dt>
           <dd><p>Statistics for the inbound RTP stream that is currently
             received with this <code>RTCPeerConnection</code> object. It is
             accessed by the <code><a>RTCInboundRTPStreamStats</a></code>.</p></dd>
 
-          <dt>outboundrtp</dt>
+          <dt><code>outboundrtp</code></dt>
           <dd><p>Statistics for the outbound RTP stream that is currently
             sent with this <code>RTCPeerConnection</code> object. It is
             accessed by the <code><a>RTCOutboundRTPStreamStats</a></code> </p></dd>
 
-          <dt>session</dt>
+          <dt><code>session</code></dt>
           <dd><p> Related to the <code>RTCDataChannel</code> and
             <code>RTCPeerConnection</code> object.</p></dd>
 
-          <dt>track</dt>
+          <dt><code>track</code></dt>
           <dd><p></p></dd>
 
-          <dt>transport</dt>
+          <dt><code>transport</code></dt>
           <dd><p>Transport statistics related to the
             <code>RTCPeerConnection</code> object.</p></dd>
 
-          <dt>candidatepair</dt>
+          <dt><code>candidatepair</code></dt>
           <dd><p>ICE candidate pair statistics related to the
             <code>RTCIceTransport</code> objects.</p></dd>
 
-          <dt>localcandidate</dt>
+          <dt><code>localcandidate</code></dt>
           <dd><p>ICE local candidate statistics related to the
             <code>RTCIceTransport</code> objects.</p></dd>
 
-          <dt>remotecandidate</dt>
+          <dt><code>remotecandidate</code></dt>
           <dd><p>ICE remote candidate statistics related to the
             <code>RTCIceTransport</code> objects.</p></dd>
-        </dl>
+        
+        <!-- </dl> -->
+        </div>
       </section>
 
       <section id="streamstats-dict*">
@@ -597,6 +558,59 @@ stats [
 
     </section>
 
+
+
+    <section>
+      <h3>Example</h3>
+
+      <p>Consider the case where the user is experiencing bad sound and the
+      application wants to determine if the cause of it is packet loss. The
+      following example code might be used:</p>
+      <pre class="example highlight" xml:space="preserve">
+var baselineReport, currentReport;
+var selector = pc.getRemoteStreams()[0].getAudioTracks()[0];
+
+pc.getStats(selector, function (report) {
+    baselineReport = report;
+}, logError);
+
+// ... wait a bit
+setTimeout(function () {
+    pc.getStats(selector, function (report) {
+        currentReport = report;
+        processStats();
+    }, logError);
+}, aBit);
+
+function processStats() {
+    // compare the elements from the current report with the baseline
+    for (var i in currentReport) {
+        var now = currentReport[i];
+        if (now.type != "outbund-rtp")
+            continue;
+
+        // get the corresponding stats from the baseline report
+        base = baselineReport[now.id];
+
+        if (base) {
+            remoteNow = currentReport[now.remoteId];
+            remoteBase = baselineReport[base.remoteId];
+
+            var packetsSent = now.packetsSent - base.packetsSent;
+            var packetsReceived = remoteNow.packetsReceived - remoteBase.packetsReceived;
+
+            // if fractionLost is &gt; 0.3, we have probably found the culprit
+            var fractionLost = (packetsSent - packetsReceived) / packetsSent;
+        }
+    }
+}
+
+function logError(error) {
+    log(error.name + ": " + error.message);
+}
+</pre>
+    </section>
+
     <section>
       <h3>Security Considerations</h3>
       <p>
@@ -611,16 +625,18 @@ stats [
       <h2>Change Log</h2>
 
       <p>This section will be removed before publication.</p>
-      <!-- <section id="since-01-Sept-2014*">
-        <h3>Changes since 1 September 2014</h3>
+      <section id="since-30-Sept-2014*">
+        <h3>Changes since 30 September 2014</h3>
         <ol>
-          <li>Created this document.</li>
-        </ol> -->
+          <li>Moved getStats() from webrtc-pc to this document.</li>
+        </ol>
     </section>
 
     <section class='appendix'>
       <h2>Acknowledgements</h2>
       <p>
+        The editors wish to thank the Working Group chairs, Stefan Håkansson,
+        and Team Contact, Dominique Hazaël-Massieux, for their support.
         The editors would like to thank
           [names]
         for their contributions to this specification.
