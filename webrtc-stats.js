@@ -65,7 +65,7 @@ var respecConfig = {
       localBiblio:  {
         "XRBLOCK-STATS": {
             title:    "RTCP XR Metrics for WebRTC",
-            href:     "https://tools.ietf.org/html/draft-ietf-xrblock-rtcweb-rtcp-xr-metrics/",
+            href:     "https://tools.ietf.org/html/draft-ietf-xrblock-rtcweb-rtcp-xr-metrics",
             authors:  [
                 "Varun Singh",
                 "Rachel Huang",
@@ -82,6 +82,18 @@ var respecConfig = {
           authors: ["ITU-T G.168"],
           status: "Standard",
           publisher: "ITU-T"
+        },
+        "STUN-PATH-CHAR": {
+          title:    "Discovery of path characteristics using STUN",
+            href:     "https://tools.ietf.org/html/draft-reddy-tram-stun-path-data",
+            authors:  [
+                "T. Reddy",
+                "D. Wing",
+                "P. Martinsen",
+                "V. Singh"
+            ],
+            status:   "Internet Draft",
+            publisher:  "IETF"
         }
       },
     };

@@ -127,36 +127,40 @@
         <div>
         <var>RTCStatsType</var> is a equal to one of the following strings defined in [IANA-TOBE]:
 
-          <dt><code>inboundrtp</code></dt>
+          <dt><code>"inboundrtp"</code></dt>
           <dd><p>Statistics for the inbound RTP stream that is currently
             received with this <code>RTCPeerConnection</code> object. It is
             accessed by the <code><a>RTCInboundRTPStreamStats</a></code>.</p></dd>
 
-          <dt><code>outboundrtp</code></dt>
+          <dt><code>"outboundrtp"</code></dt>
           <dd><p>Statistics for the outbound RTP stream that is currently
             sent with this <code>RTCPeerConnection</code> object. It is
             accessed by the <code><a>RTCOutboundRTPStreamStats</a></code> </p></dd>
 
-          <dt><code>session</code></dt>
+          <dt><code>"session"</code></dt>
           <dd><p> Related to the <code>RTCDataChannel</code> and
             <code>RTCPeerConnection</code> object.</p></dd>
 
-          <dt><code>track</code></dt>
-          <dd><p></p></dd>
+          <dt><code>"datachannel"</code></dt>
+          <dd><p> Statistics related to each <code>RTCDataChannel</code> id.</p></dd>
 
-          <dt><code>transport</code></dt>
+          <dt><code>"track"</code></dt>
+          <dd><p>Contains the sequence of tracks related to a specific media stream 
+          and the corresponding media-level metrics.</p></dd>
+
+          <dt><code>"transport"</code></dt>
           <dd><p>Transport statistics related to the
             <code>RTCPeerConnection</code> object.</p></dd>
 
-          <dt><code>candidatepair</code></dt>
+          <dt><code>"candidatepair"</code></dt>
           <dd><p>ICE candidate pair statistics related to the
             <code>RTCIceTransport</code> objects.</p></dd>
 
-          <dt><code>localcandidate</code></dt>
+          <dt><code>"localcandidate"</code></dt>
           <dd><p>ICE local candidate statistics related to the
             <code>RTCIceTransport</code> objects.</p></dd>
 
-          <dt><code>remotecandidate</code></dt>
+          <dt><code>"remotecandidate"</code></dt>
           <dd><p>ICE remote candidate statistics related to the
             <code>RTCIceTransport</code> objects.</p></dd>
         
@@ -182,30 +186,32 @@
           <dt>DOMString mediaTrackId</dt>
           <dd><p></p></dd>
           <dt>DOMString transportId</dt>
-          <dd><p></p></dd>
+          <dd><p>It is a unique identifier that is associated to the object
+          that was inspected to produce the <code>RTCTransportStats</code>
+          associated with this RTP stream.</p></dd>
           <dt>DOMString codecId</dt>
           <dd><p></p></dd>
 
           <dt>unsigned long firCount</dt>
           <dd><p>Count the total number of Full Intra Request (FIR) packets
             received by the sender. This metric is only valid for video and is
-            sent by receiver. Calculated as in [[!RFC5104]] section 4.3.1. and
+            sent by receiver. Calculated as defined in [[!RFC5104]] section 4.3.1. and
             does not use the metric indicated in [[RFC2032]], because it was
             deprecated by [[RFC4587]].</p></dd>
           <dt>unsigned long pliCount</dt>
           <dd><p>Count the total number of Packet Loss Indication (PLI) packets
-            received by the sender and is sent by receiver. Calculated as in
+            received by the sender and is sent by receiver. Calculated as defined in
             [[!RFC4585]] section 6.3.1.</p></dd>
             <!-- FIXME: PLI: Why only valid for video? -->
           <dt>unsigned long nackCount</dt>
           <dd><p>Count the total number of Negative ACKnowledgement (NACK)
             packets received by the sender and is sent by receiver. Calculated
-            as in [[!RFC4585]] section 6.2.1.</p></dd>
+            as defined in [[!RFC4585]] section 6.2.1.</p></dd>
             <!-- FIXME: NACK: Why only valid for video? -->
           <dt>unsigned long sliCount</dt>
           <dd><p>Count the total number of Slice Loss Indication (SLI) packets
             received by the sender. This metric is only valid for video and is
-            sent by receiver. Calculated as in [[!RFC4585]] section 6.3.2.</p></dd>
+            sent by receiver. Calculated as defined in [[!RFC4585]] section 6.3.2.</p></dd>
         </dl>
 
         <section id="codec-dict*">
@@ -216,11 +222,11 @@
             <dt>DOMString codec</dt>
             <dd><p>e.g., video/vp8 or equivalent.</p></dd>
             <dt>unsigned long clockRate</dt>
-            <dd><p></p></dd>
+            <dd><p>Represents the media sampling rate.</p></dd>
             <dt>unsigned long channels</dt>
             <dd><p>Use 2 for stereo, missing for most other cases.</p></dd>
             <dt>DOMString parameters</dt>
-            <dd><p>From SDP description line.</p></dd>
+            <dd><p>From the SDP description line.</p></dd>
           </dl>
         </section>
 
@@ -233,28 +239,26 @@
           <dl class="idl" title="dictionary RTCInboundRTPStreamStats : RTCRTPStreamStats">
             <dt>unsigned long packetsReceived</dt>
             <dd><p>Total number of RTP packets received for this SSRC.
-              Calculated as in [[!RFC3550]] section 6.4.1.</p></dd>
+              Calculated as defined in [[!RFC3550]] section 6.4.1.</p></dd>
             <dt>unsigned long long bytesReceived</dt>
             <dd><p>Total number of bytes received for this SSRC. Calculated as
-              in [[!RFC3550]] section 6.4.1.</p></dd>
+              defined in [[!RFC3550]] section 6.4.1.</p></dd>
             <dt>unsigned long packetsLost</dt>
             <dd><p>Total number of RTP packets lost for this SSRC. Calculated
-              as in [[!RFC3550]] section 6.4.1.</p></dd>
+              as defined in [[!RFC3550]] section 6.4.1.</p></dd>
             <dt>double jitter</dt>
             <dd><p>Packet Jitter measured in seconds for this SSRC. Calculated
-              as in [[!RFC3550]] section 6.4.1.</p></dd>
+              as defined in [[!RFC3550]] section 6.4.1.</p></dd>
+            <dt>double fractionLost</dt>
+            <dd><p>The fraction packet loss reported for this SSRC. Calculated
+              as defined in [[!RFC3550]] section 6.4.1 and Appendix A.3.</p></dd>
           </dl>
+          
           <div class="issue">
-            Open Issue: fractionLost is missing? it represents the fraction of the
-            packets lost over the expected number of packets received in the
-            last RTCP reporting interval. Since most other counters are
-            cumulative, this metric would differ from that expectation.
-          </div>
-          <div class="issue">
-            Open Issue: Possible additional metrics
+            Open Issue: Possible additional metrics that are useful for RTP, defined in [[XRBLOCK-STATS]]:
             <ul>
-              <li>packetsDiscarded</li>
-              <li>packetsRepaired</li>
+              <li>packetsDiscarded.</li>
+              <li>packetsRepaired.</li>
             </ul>
           </div>
         </section>
@@ -268,9 +272,9 @@
           <dl class="idl" title="dictionary RTCOutboundRTPStreamStats : RTCRTPStreamStats">
             <dt>unsigned long packetsSent</dt>
             <dd><p>Total number of RTP packets sent for this SSRC. Calculated
-              as in [[!RFC3550]] section 6.4.1.</p></dd>
+              as defined in [[!RFC3550]] section 6.4.1.</p></dd>
             <dt>unsigned long long bytesSent</dt>
-            <dd><p>Total number of bytes sent for this SSRC. Calculated as in
+            <dd><p>Total number of bytes sent for this SSRC. Calculated as defined in
               [[!RFC3550]] section 6.4.1.</p></dd>
             <dt>double targetBitrate</dt>
             <dd><p>Presently configured bitrate target of this SSRC, in bits
@@ -278,7 +282,7 @@
               to the codec's encoder.</p></dd>
             <dt>double roundTripTime</dt>
             <dd><p>Estimated round trip time (seconds) for this SSRC based on
-              the RTCP timestamp. Calculated as in [[!RFC3550]] section 6.4.1.</p></dd>
+              the RTCP timestamp. Calculated as defined in [[!RFC3550]] section 6.4.1.</p></dd>
           </dl>
         </section>
         <!-- TODO: EXAMPLE -->
@@ -312,9 +316,9 @@ stats [
         <h3><dfn>RTCPeerConnectionStats</dfn> dictionary</h3>
         <dl class="idl" title="dictionary RTCPeerConnectionStats : RTCStats">
            <dt>unsigned long dataChannelsOpened</dt>
-           <dd><p></p></dd>
+           <dd><p>Represents the number of unique datachannels opened.</p></dd>
            <dt>unsigned long dataChannelsClosed</dt>
-           <dd><p></p></dd>
+           <dd><p>Represents the number of unique datachannels closed.</p></dd>
         </dl>
       </section>
 
@@ -352,7 +356,7 @@ stats [
              <dd><p>Only valid for video. It represents the total number of frames sent
              for this SSRC.</p></dd>
              <dt>unsigned long framesReceived</dt>
-             <dd><p>Only valid for video and when remoteSource is set to true.
+             <dd><p>Only valid for video and when remoteSource is set to <code>true</code>.
              It represents the total number of frames received for this SSRC.</p></dd>
              <dt>unsigned long framesDecoded</dt>
              <dd><p>Only valid for video. It represents the total number of frames
@@ -367,7 +371,7 @@ stats [
 
              <dt>double audioLevel</dt>
              <dd><p>Only valid for audio, and the value is between 0..1 (linear),
-               where  1.0 represents <code>0 dBov</code>. Calculated as in
+               where  1.0 represents <code>0 dBov</code>. Calculated as defined in
                [[!RFC6464]].</p></dd>
              <dt>double echoReturnLoss</dt>
              <dd><p>Only present on audio tracks sourced from a microphone where
@@ -396,13 +400,13 @@ stats [
           <dt>unsigned long messagesSent</dt>
           <dd><p>Represents the total number of API "message" events sent.</p></dd>
           <dt>unsigned long long bytesSent</dt>
-          <dd><p>Represent the total number of bytes sent on this
-            <code>PeerConnection</code>.</p></dd>
+          <dd><p>Represents the total number of payload bytes sent on this
+            <code>RTCDatachannel</code>, i.e., not including headers or padding.</p></dd>
           <dt>unsigned long messagesReceived</dt>
           <dd><p>Represents the total number of API "message" events received.</p></dd>
           <dt>unsigned long long bytesReceived</dt>
           <dd><p>Represents the total number of bytes received on this
-            <code>PeerConnection</code>.</p></dd>
+            <code>RTCDatachannel</code>, i.e., not including headers or padding.</p></dd>
         </dl>
       </section>
 
@@ -415,20 +419,24 @@ stats [
         </p>
         <dl class="idl" title="dictionary RTCTransportStats : RTCStats">
           <dt>unsigned long long bytesSent</dt>
-          <dd><p></p></dd>
+          <dd><p>Represents the total number of payload bytes sent on this
+            <code>PeerConnection</code>, i.e., not including headers or padding.</p></dd>
           <dt>unsigned long long bytesReceived</dt>
-          <dd><p></p></dd>
+          <dd><p>Represents the total number of bytes received on this
+            <code>PeerConnection</code>, i.e., not including headers or padding.</p></dd>
           <dt>DOMString rtcpTransportStatsId</dt>
-          <dd><p>If RTP and RTCP are not multiplexed, this is the ID of the
-            transport that gives stats for the RTCP component, and this record
-            has only the RTP component stats.</p></dd>
+          <dd><p>If RTP and RTCP are not multiplexed, this is the <code>id</code> 
+            of the transport that gives stats for the RTCP component, and this 
+            record has only the RTP component stats.</p></dd>
             <!-- FIXME: It is unclear. i.e., If multiplexed it will give both
             the RTP and RTCP stats? if not multiplexed - it gives the RTP stats
             but not RTCP instead gives an id to access the RTCP stats ?  -->
           <dt>boolean activeConnection</dt>
-          <dd><p></p></dd>
+          <dd><p>Set to <code>true</code> when transport is active.</p></dd>
           <dt>DOMString selectedCandidatePairId</dt>
-          <dd><p></p></dd>
+          <dd><p>It is a unique identifier that is associated to the object
+          that was inspected to produce the <code>RTCIceCandidatePairStats</code>
+          associated with this transport.</p></dd>
           <dt>DOMString localCertificateId</dt>
           <dd><p>For components where DTLS is negotiated, give local
             certificate.</p></dd>
@@ -461,7 +469,7 @@ stats [
           <dd><p>The enumeration <a>RTCStatsIceCandidateType</a> is based on the
             <code>cand-type</code> defined in [[!RFC5245]] section 15.1.</p></dd>
           <dt>long priority</dt>
-          <dd><p>Calculated as in [[!RFC5245]] section 15.1.</p></dd>
+          <dd><p>Calculated as defined in [[!RFC5245]] section 15.1.</p></dd>
           <dt>DOMString addressSourceUrl</dt>
           <dd><p>The URL of the TURN or STUN server indicated in the
             <code>RTCIceServers</code> that translated this IP address.</p></dd>
@@ -488,15 +496,22 @@ stats [
 
         <dl class="idl" title="dictionary RTCIceCandidatePairStats : RTCStats">
           <dt>DOMString transportId</dt>
-          <dd><p></p></dd>
+          <dd><p>It is a unique identifier that is associated to the object
+          that was inspected to produce the <code>RTCTransportStats</code>
+          associated with this candidate pair.</p></dd>
           <dt>DOMString localCandidateId</dt>
-          <dd><p></p></dd>
+          <dd><p>It is a unique identifier that is associated to the object
+          that was inspected to produce the <code>RTCIceCandidateAttributes</code>
+          for the local candidate associated with this candidate pair.</p></dd>
           <dt>DOMString remoteCandidateId</dt>
-          <dd><p></p></dd>
+          <dd><p>It is a unique identifier that is associated to the object
+          that was inspected to produce the <code>RTCIceCandidateAttributes</code>
+          for the remote candidate associated with this candidate pair.</p></dd>
           <dt>RTCStatsIceCandidatePairState state</dt>
-          <dd><p></p></dd>
+          <dd><p>Represents the state of the checklist for the local and
+          remote candidates in a pair.</p></dd>
           <dt>unsigned long long priority</dt>
-          <dd><p>Calculated from candidate priorities. Calculated as in
+          <dd><p>Calculated from candidate priorities as defined in
             [[!RFC5245]] section 5.7.2.</p></dd>
           <dt>boolean nominated</dt>
           <dd><p>Related to updating the nominated flag described in Section
@@ -506,11 +521,14 @@ stats [
           <dt>boolean readable</dt>
           <dd><p>Has gotten a valid incoming ICE request.</p></dd>
           <dt>unsigned long long bytesSent</dt>
-          <dd><p></p></dd>
+          <dd><p>Represents the total number of payload bytes sent on this
+          candidate pair, i.e., not including headers or padding.</p></dd>
           <dt>unsigned long long bytesReceived</dt>
-          <dd><p></p></dd>
+          <dd><p>Represents the total number of payload bytes received on this
+          candidate pair, i.e., not including headers or padding.</p></dd>
           <dt>double roundTripTime</dt>
-          <dd><p></p></dd>
+          <dd><p>Represents the RTT computed by the STUN connectivity checks 
+          [[!STUN-PATH-CHAR]].</p></dd>
           <dt>double availableOutgoingBitrate</dt>
           <dd><p>Measured in Bits per second, and is implementation dependent.
             It may be calculated by the underlying congestion control.</p></dd>
@@ -518,6 +536,9 @@ stats [
           <dd><p>Measured in Bits per second, and is implementation dependent.
             It may be calculated by the underlying congestion control.</p></dd>
         </dl>
+        <div class="note">
+            OPEN ISSUE: do the bitrate metrics need refs?
+          </div>
 
         <section>
           <h3><dfn>RTCStatsIceCandidatePairState</dfn> enum</h3>
@@ -628,7 +649,10 @@ function logError(error) {
       <section id="since-30-Sept-2014*">
         <h3>Changes since 30 September 2014</h3>
         <ol>
-          <li>Moved getStats() from webrtc-pc to this document.</li>
+          <li>kept getStats() in webrtc-pc. Changed RTCStatsType from enum to DOMString.</li>
+          <li>Added "datachannel" to RTCStatsType.</li>
+          <li>Added fractionLost to RTCInboundRTPStreamStats.</li>
+          <li>Clarified that bytesSent and bytesReceived do no include headers or paddings.</li>
         </ol>
     </section>
 
@@ -637,8 +661,9 @@ function logError(error) {
       <p>
         The editors wish to thank the Working Group chairs, Stefan Håkansson,
         and Team Contact, Dominique Hazaël-Massieux, for their support.
+
         The editors would like to thank
-          [names]
+          Cullen Jennings
         for their contributions to this specification.
       </p>
     </section>
