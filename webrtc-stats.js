@@ -33,8 +33,8 @@ var respecConfig = {
       // editors, add as many as you like
       // only "name" is REQUIRED
       editors: [
-        {   name: "Harald Alvestrand",  company: "Google" },
-        {   name: "Varun Singh",        company: "Aalto University" }
+        {   name: "Harald Alvestrand",  company: "Google", w3cid: "24610" },
+        {   name: "Varun Singh",        company: "Aalto University", w3cid: "67103" }
       ],
 
       // authors, add as many as you like.
