@@ -331,19 +331,32 @@ stats [
         <dl class="idl" title="dictionary RTCMediaStreamStats : RTCStats">
           <dt>DOMString streamIdentifier</dt>
           <dd><p><code>stream.id</code> property</p></dd>
-          <dt>sequence<DOMString> trackIds</dt>
+          <dt>sequence&lt;DOMString&gt; trackIds</dt>
           <dd><p>This is the id of the stats object, not the
             <code>track.id</code>.</p></dd>
         </dl>
 
         <section id="mststats-dict*">
           <h3><dfn>RTCMediaStreamTrackStats</dfn> dictionary</h3>
+	  <p>An RTCMediaStreamTrackStats object represents the stats about a
+	  MediaStreamTrakc's connection to the PeerConnection object for which
+	  one calls getStats.</p>
+	  <p>It appears in the stats as soon as it is attached. If it is
+	    detached, it continues to appear, but with the "detached" member
+	    set to True.</p>
           <dl class="idl" title="dictionary RTCMediaStreamTrackStats : RTCStats">
              <dt>DOMString trackIdentifier</dt>
              <dd><p>Represents the <code>track.id</code> property.</p></dd>
              <dt>boolean remoteSource</dt>
              <dd><p></p></dd>
-             <dt>sequence<DOMString> ssrcIds</dt>
+	     <dt>boolean ended</dt>
+	     <dd><p>Reflects the "ended" state of the track.</p></dd>
+	     <dt>boolean detached</dt>
+	     <dd><p>True if the track has been detached from the PeerConnection
+		 object. If true, all stats reflect their values at the time
+		 when the track was detached.</p>
+	       </dd>
+             <dt>sequence&lt;DOMString&gt; ssrcIds</dt>
              <dd><p></p></dd>
 
              <dt>unsigned long frameWidth</dt>
