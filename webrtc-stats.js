@@ -17,7 +17,7 @@ var respecConfig = {
       copyrightStart: "2014",
 
       // if there is a previously published draft, uncomment this and set its YYYY-MM-DD
-      // prevED: "http://dev.w3.org/2011/webrtc/editor/archives/20140321/webrtc.html",
+      prevED: "https://w3c.github.io/webrtc-stats/archives/20150203/webrtc-stats.html",
 
       // if there a publicly available Editor's Draft, this is the link
       edDraftURI: "http://w3c.github.io/webrtc-stats/",

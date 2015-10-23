@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" typeof="bibo:Document " prefix="bibo: http://purl.org/ontology/bibo/ w3p: http://www.w3.org/2001/02pd/rec54#">
+<head><meta lang="" property="dc:language" content="en">
+    <meta charset="utf-8">
+    <style>/* --- EXAMPLES --- */
+div.example-title {
+    min-width: 7.5em;
+    color: #b9ab2d;
+}
+div.example-title span {
+    text-transform: uppercase;
+}
+aside.example, div.example, div.illegal-example {
+    padding: 0.5em;
+    margin: 1em 0;
+    position: relative;
+    clear: both;
+}
+div.illegal-example { color: red }
+div.illegal-example p { color: black }
+aside.example, div.example {
+    padding: .5em;
+    border-left-width: .5em;
+    border-left-style: solid;
+    border-color: #e0cb52;
+    background: #fcfaee;
+}
+
+aside.example div.example {
+    border-left-width: .1em;
+    border-color: #999;
+    background: #fff;
+}
+aside.example div.example div.example-title {
+    color: #999;
+}
+</style><style>/* --- ISSUES/NOTES --- */
+div.issue-title, div.note-title , div.ednote-title, div.warning-title {
+    padding-right:  1em;
+    min-width: 7.5em;
+    color: #b9ab2d;
+}
+div.issue-title { color: #e05252; }
+div.note-title, div.ednote-title { color: #2b2; }
+div.warning-title { color: #f22; }
+div.issue-title span, div.note-title span, div.ednote-title span, div.warning-title span {
+    text-transform: uppercase;
+}
+div.note, div.issue, div.ednote, div.warning {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.note > p:first-child, .ednote > p:first-child, .issue > p:first-child, .warning > p:first-child { margin-top: 0 }
+.issue, .note, .ednote, .warning {
+    padding: .5em;
+    border-left-width: .5em;
+    border-left-style: solid;
+}
+div.issue, div.note , div.ednote,  div.warning {
+    padding: 1em 1.2em 0.5em;
+    margin: 1em 0;
+    position: relative;
+    clear: both;
+}
+span.note, span.ednote, span.issue, span.warning { padding: .1em .5em .15em; }
+
+.issue {
+    border-color: #e05252;
+    background: #fbe9e9;
+}
+.note, .ednote {
+    border-color: #52e052;
+    background: #e9fbe9;
+}
+
+.warning {
+    border-color: #f11;
+    border-right-width: .2em;
+    border-top-width: .2em;
+    border-bottom-width: .2em;
+    border-style: solid;
+    background: #fbe9e9;
+}
+
+.warning-title:before{
+    content: "⚠"; /*U+26A0 WARNING SIGN*/
+    font-size: 3em;
+    float: left;
+    height: 100%;
+    padding-right: .3em;
+    vertical-align: top;
+    margin-top: -0.5em;
+}
+
+li.task-list-item {
+    list-style: none;
+}
+
+input.task-list-item-checkbox {
+    margin: 0 0.35em 0.25em -1.6em;
+    vertical-align: middle;
+}
+</style><style>/* HIGHLIGHTS */
+code.prettyprint {
+    color:  inherit;
+}
+
+/* this from google-code-prettify */
+.pln{color:#000}@media screen{.str{color:#080}.kwd{color:#008}.com{color:#800}.typ{color:#606}.lit{color:#066}.pun,.opn,.clo{color:#660}.tag{color:#008}.atn{color:#606}.atv{color:#080}.dec,.var{color:#606}.fun{color:red}}@media print,projection{.str{color:#060}.kwd{color:#006;font-weight:bold}.com{color:#600;font-style:italic}.typ{color:#404;font-weight:bold}.lit{color:#044}.pun,.opn,.clo{color:#440}.tag{color:#006;font-weight:bold}.atn{color:#404}.atv{color:#060}}ol.linenums{margin-top:0;margin-bottom:0}li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8{list-style-type:none}li.L1,li.L3,li.L5,li.L7,li.L9{background:#eee}
+</style><style>/* --- WEB IDL --- */
+pre.idl {
+    border-top: 1px solid #90b8de;
+    border-bottom: 1px solid #90b8de;
+    padding:    1em;
+    line-height:    120%;
+}
+
+pre.idl::before {
+    content:    "WebIDL";
+    display:    block;
+    width:      150px;
+    background: #90b8de;
+    color:  #fff;
+    font-family:    sans-serif;
+    padding:    3px;
+    font-weight:    bold;
+    margin: -1em 0 1em -1em;
+}
+
+.idlType {
+    color:  #ff4500;
+    font-weight:    bold;
+    text-decoration:    none;
+}
+
+/*.idlModule*/
+/*.idlModuleID*/
+/*.idlInterface*/
+.idlInterfaceID, .idlDictionaryID, .idlCallbackID, .idlEnumID {
+    font-weight:    bold;
+    color:  #005a9c;
+}
+a.idlEnumItem {
+    color:  #000;
+    border-bottom:  1px dotted #ccc;
+    text-decoration: none;
+}
+
+.idlSuperclass {
+    font-style: italic;
+    color:  #005a9c;
+}
+
+/*.idlAttribute*/
+.idlAttrType, .idlFieldType, .idlMemberType {
+    color:  #005a9c;
+}
+.idlAttrName, .idlFieldName, .idlMemberName {
+    color:  #ff4500;
+}
+.idlAttrName a, .idlFieldName a, .idlMemberName a {
+    color:  #ff4500;
+    border-bottom:  1px dotted #ff4500;
+    text-decoration: none;
+}
+
+/*.idlMethod*/
+.idlMethType, .idlCallbackType {
+    color:  #005a9c;
+}
+.idlMethName {
+    color:  #ff4500;
+}
+.idlMethName a {
+    color:  #ff4500;
+    border-bottom:  1px dotted #ff4500;
+    text-decoration: none;
+}
+
+/*.idlCtor*/
+.idlCtorName {
+    color:  #ff4500;
+}
+.idlCtorName a {
+    color:  #ff4500;
+    border-bottom:  1px dotted #ff4500;
+    text-decoration: none;
+}
+
+/*.idlParam*/
+.idlParamType {
+    color:  #005a9c;
+}
+.idlParamName, .idlDefaultValue {
+    font-style: italic;
+}
+
+.extAttr {
+    color:  #666;
+}
+
+/*.idlSectionComment*/
+.idlSectionComment {
+    color: gray;
+}
+
+/*.idlIterable*/
+.idlIterableKeyType, .idlIterableValueType {
+    color:  #005a9c;
+}
+
+/*.idlMaplike*/
+.idlMaplikeKeyType, .idlMaplikeValueType {
+    color:  #005a9c;
+}
+
+/*.idlConst*/
+.idlConstType {
+    color:  #005a9c;
+}
+.idlConstName {
+    color:  #ff4500;
+}
+.idlConstName a {
+    color:  #ff4500;
+    border-bottom:  1px dotted #ff4500;
+    text-decoration: none;
+}
+
+/*.idlException*/
+.idlExceptionID {
+    font-weight:    bold;
+    color:  #c00;
+}
+
+.idlTypedefID, .idlTypedefType {
+    color:  #005a9c;
+}
+
+.idlRaises, .idlRaises a.idlType, .idlRaises a.idlType code, .excName a, .excName a code {
+    color:  #c00;
+    font-weight:    normal;
+}
+
+.excName a {
+    font-family:    monospace;
+}
+
+.idlRaises a.idlType, .excName a.idlType {
+    border-bottom:  1px dotted #c00;
+}
+
+.excGetSetTrue, .excGetSetFalse, .prmNullTrue, .prmNullFalse, .prmOptTrue, .prmOptFalse {
+    width:  45px;
+    text-align: center;
+}
+.excGetSetTrue, .prmNullTrue, .prmOptTrue { color:  #0c0; }
+.excGetSetFalse, .prmNullFalse, .prmOptFalse { color:  #c00; }
+
+.idlImplements a {
+    font-weight:    bold;
+}
+
+dl.attributes, dl.methods, dl.constants, dl.constructors, dl.fields, dl.dictionary-members {
+    margin-left:    2em;
+}
+
+.attributes dt, .methods dt, .constants dt, .constructors dt, .fields dt, .dictionary-members dt {
+    font-weight:    normal;
+}
+
+.attributes dt code, .methods dt code, .constants dt code, .constructors dt code, .fields dt code, .dictionary-members dt code {
+    font-weight:    bold;
+    color:  #000;
+    font-family:    monospace;
+}
+
+.attributes dt code, .fields dt code, .dictionary-members dt code {
+    background:  #ffffd2;
+}
+
+.attributes dt .idlAttrType code, .fields dt .idlFieldType code, .dictionary-members dt .idlMemberType code {
+    color:  #005a9c;
+    background:  transparent;
+    font-family:    inherit;
+    font-weight:    normal;
+    font-style: italic;
+}
+
+.methods dt code {
+    background:  #d9e6f8;
+}
+
+.constants dt code {
+    background:  #ddffd2;
+}
+
+.constructors dt code {
+    background:  #cfc;
+}
+
+.attributes dd, .methods dd, .constants dd, .constructors dd, .fields dd, .dictionary-members dd {
+    margin-bottom:  1em;
+}
+
+table.parameters, table.exceptions {
+    border-spacing: 0;
+    border-collapse:    collapse;
+    margin: 0.5em 0;
+    width:  100%;
+}
+table.parameters { border-bottom:  1px solid #90b8de; }
+table.exceptions { border-bottom:  1px solid #deb890; }
+
+.parameters th, .exceptions th {
+    color:  #fff;
+    padding:    3px 5px;
+    text-align: left;
+    font-weight:    normal;
+    text-shadow:    #666 1px 1px 0;
+}
+.parameters th { background: #90b8de; }
+.exceptions th { background: #deb890; }
+
+.parameters td, .exceptions td {
+    padding:    3px 10px;
+    border-top: 1px solid #ddd;
+    vertical-align: top;
+}
+
+.parameters tr:first-child td, .exceptions tr:first-child td {
+    border-top: none;
+}
+
+.parameters td.prmName, .exceptions td.excName, .exceptions td.excCodeName {
+    width:  100px;
+}
+
+.parameters td.prmType {
+    width:  120px;
+}
+
+table.exceptions table {
+    border-spacing: 0;
+    border-collapse:    collapse;
+    width:  100%;
+}
+</style><link href="webrtc-stats.css" rel="stylesheet" type="text/css">
+    <title>Identifiers for WebRTC's Statistics API</title>
+    
+  
+  <style>/*****************************************************************
+ * ReSpec 3 CSS
+ * Robin Berjon - http://berjon.com/
+ *****************************************************************/
+
+/* --- INLINES --- */
+em.rfc2119 { 
+    text-transform:     lowercase;
+    font-variant:       small-caps;
+    font-style:         normal;
+    color:              #900;
+}
+
+h1 acronym, h2 acronym, h3 acronym, h4 acronym, h5 acronym, h6 acronym, a acronym,
+h1 abbr, h2 abbr, h3 abbr, h4 abbr, h5 abbr, h6 abbr, a abbr {
+    border: none;
+}
+
+dfn {
+    font-weight:    bold;
+}
+
+a.internalDFN {
+    color:  inherit;
+    border-bottom:  1px solid #99c;
+    text-decoration:    none;
+}
+
+a.externalDFN {
+    color:  inherit;
+    border-bottom:  1px dotted #ccc;
+    text-decoration:    none;
+}
+
+a.bibref {
+    text-decoration:    none;
+}
+
+cite .bibref {
+    font-style: normal;
+}
+
+code {
+    color:  #C83500;
+}
+
+/* --- TOC --- */
+.toc a, .tof a {
+    text-decoration:    none;
+}
+
+a .secno, a .figno {
+    color:  #000;
+}
+
+ul.tof, ol.tof {
+    list-style: none outside none;
+}
+
+.caption {
+    margin-top: 0.5em;
+    font-style:   italic;
+}
+
+/* --- TABLE --- */
+table.simple {
+    border-spacing: 0;
+    border-collapse:    collapse;
+    border-bottom:  3px solid #005a9c;
+}
+
+.simple th {
+    background: #005a9c;
+    color:  #fff;
+    padding:    3px 5px;
+    text-align: left;
+}
+
+.simple th[scope="row"] {
+    background: inherit;
+    color:  inherit;
+    border-top: 1px solid #ddd;
+}
+
+.simple td {
+    padding:    3px 10px;
+    border-top: 1px solid #ddd;
+}
+
+.simple tr:nth-child(even) {
+    background: #f0f6ff;
+}
+
+/* --- DL --- */
+.section dd > p:first-child {
+    margin-top: 0;
+}
+
+.section dd > p:last-child {
+    margin-bottom: 0;
+}
+
+.section dd {
+    margin-bottom:  1em;
+}
+
+.section dl.attrs dd, .section dl.eldef dd {
+    margin-bottom:  0;
+}
+
+@media print {
+    .removeOnSave {
+        display: none;
+    }
+}
+</style><link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/W3C-ED"><!--[if lt IE 9]><script src='https://www.w3.org/2008/site/js/html5shiv.js'></script><![endif]--><script id="initialUserConfig" type="application/json">{
+  "specStatus": "ED",
+  "shortName": "webrtc-stats",
+  "copyrightStart": "2014",
+  "prevED": "https://w3c.github.io/webrtc-stats/archives/20150203/webrtc-stats.html",
+  "edDraftURI": "http://w3c.github.io/webrtc-stats/",
+  "editors": [
+    {
+      "name": "Harald Alvestrand",
+      "company": "Google",
+      "w3cid": "24610"
+    },
+    {
+      "name": "Varun Singh",
+      "company": "Aalto University",
+      "w3cid": "67103"
+    }
+  ],
+  "wg": "Web Real-Time Communications Working Group",
+  "wgURI": "http://www.w3.org/2011/04/webrtc/",
+  "wgPublicList": "public-webrtc",
+  "wgPatentURI": "http://www.w3.org/2004/01/pp-impl/47318/status",
+  "localBiblio": {
+    "XRBLOCK-STATS": {
+      "title": "RTCP XR Metrics for WebRTC",
+      "href": "https://tools.ietf.org/html/draft-ietf-xrblock-rtcweb-rtcp-xr-metrics",
+      "authors": [
+        "Varun Singh",
+        "Rachel Huang",
+        "Roni Even",
+        "Dan Romascanu",
+        "Lingli Deng"
+      ],
+      "status": "Internet Draft",
+      "publisher": "IETF"
+    },
+    "ECHO": {
+      "title": "Digital network echo cancellers",
+      "href": "https://www.itu.int/rec/T-REC-G.168/en",
+      "authors": [
+        "ITU-T G.168"
+      ],
+      "status": "Standard",
+      "publisher": "ITU-T"
+    },
+    "STUN-PATH-CHAR": {
+      "title": "Discovery of path characteristics using STUN",
+      "href": "https://tools.ietf.org/html/draft-reddy-tram-stun-path-data",
+      "authors": [
+        "T. Reddy",
+        "D. Wing",
+        "P. Martinsen",
+        "V. Singh"
+      ],
+      "status": "Internet Draft",
+      "publisher": "IETF"
+    }
+  }
+}</script></head>
+   <body class="h-entry" role="document" id="respecDocument"><div class="head" role="contentinfo" id="respecHeader">
+  <p>
+      
+        
+            <a href="http://www.w3.org/"><img width="72" height="48" src="https://www.w3.org/Icons/w3c_home" alt="W3C"></a>
+            
+            
+        
+      
+  </p>
+  <h1 class="title p-name" id="title" property="dcterms:title">Identifiers for WebRTC's Statistics API</h1>
+  
+  <h2 id="w3c-editor-s-draft-23-october-2015"><abbr title="World Wide Web Consortium">W3C</abbr> Editor's Draft <time property="dcterms:issued" class="dt-published" datetime="2015-10-23">23 October 2015</time></h2>
+  <dl>
+    
+      <dt>This version:</dt>
+      <dd><a class="u-url" href="https://w3c.github.io/webrtc-stats/archives/20151023/webrtc-stats.html">https://w3c.github.io/webrtc-stats/archives/20151023/webrtc-stats.html</a></dd>
+      <dt>Latest published version:</dt>
+      <dd><a href="http://www.w3.org/TR/webrtc-stats/">http://www.w3.org/TR/webrtc-stats/</a></dd>
+    
+    
+      <dt>Latest editor's draft:</dt>
+      <dd><a href="http://w3c.github.io/webrtc-stats/">http://w3c.github.io/webrtc-stats/</a></dd>
+    
+    
+    
+    
+    
+      
+        <dt>Previous editor's draft:</dt>
+        <dd><a href="https://w3c.github.io/webrtc-stats/archives/20150203/webrtc-stats.html">https://w3c.github.io/webrtc-stats/archives/20150203/webrtc-stats.html</a></dd>
+      
+    
+    
+    
+    <dt>Editors:</dt>
+    <dd class="p-author h-card vcard" property="bibo:editor" resource="_:editor0" data-editor-id="24610"><span property="rdf:first" typeof="foaf:Person"><span property="foaf:name" class="p-name fn">Harald Alvestrand</span>, Google</span>
+<span property="rdf:rest" resource="_:editor1"></span>
+</dd>
+<dd class="p-author h-card vcard" resource="_:editor1" data-editor-id="67103"><span property="rdf:first" typeof="foaf:Person"><span property="foaf:name" class="p-name fn">Varun Singh</span>, Aalto University</span>
+<span property="rdf:rest" resource="rdf:nil"></span>
+</dd>
+
+    
+    
+  </dl>
+  
+  
+  
+  
+    
+      <p class="copyright">
+        <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> ©
+        2014-2015
+        
+        <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup>
+        (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>,
+        <a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>,
+        <a href="http://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>). 
+        
+        <abbr title="World Wide Web Consortium">W3C</abbr> <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
+        <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and
+        
+          
+            <a rel="license" href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a>
+          
+        
+        rules apply.
+      </p>
+    
+  
+  <hr>
+</div>
+    <section id="abstract" class="introductory" property="dc:abstract"><h2 id="h-abstract" resource="#h-abstract"><span property="xhv:role" resource="xhv:heading">Abstract</span></h2>
+      <p>
+        This document defines a set of Javascript APIs that allow access to
+        the statistical information about a PeerConnection.
+      </p>
+    </section><section id="sotd" class="introductory"><h2 id="h-sotd" resource="#h-sotd"><span property="xhv:role" resource="xhv:heading">Status of This Document</span></h2>
+  
+    
+      
+        <p>
+          <em>This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current <abbr title="World Wide Web Consortium">W3C</abbr> publications and the latest revision of this technical report can be found in the <a href="http://www.w3.org/TR/"><abbr title="World Wide Web Consortium">W3C</abbr> technical reports index</a> at http://www.w3.org/TR/.</em>
+        </p>
+        
+          
+          
+      <!-- Status of the draft -->
+      <p>
+        This document is incomplete, and as such is not yet suitable for
+        implementation. However, early experimentation is encouraged.
+      </p>
+    
+          
+          <p>
+            This document was published by the <a href="http://www.w3.org/2011/04/webrtc/">Web Real-Time Communications Working Group</a> as an Editor's Draft.
+            
+            
+              If you wish to make comments regarding this document, please send them to
+              <a href="mailto:public-webrtc@w3.org">public-webrtc@w3.org</a>
+              (<a href="mailto:public-webrtc-request@w3.org?subject=subscribe">subscribe</a>,
+              <a href="http://lists.w3.org/Archives/Public/public-webrtc/">archives</a>).
+            
+            
+            
+            
+            
+              
+              All comments are welcome.
+              
+            
+          </p>
+          
+          
+          
+            <p>
+              Publication as an Editor's Draft does not imply endorsement by the <abbr title="World Wide Web Consortium">W3C</abbr>
+              Membership. This is a draft document and may be updated, replaced or obsoleted by other
+              documents at any time. It is inappropriate to cite this document as other than work in
+              progress.
+            </p>
+          
+          
+          
+          <p>
+            
+              This document was produced by
+              
+              a group
+               operating under the
+              <a id="sotd_patent" property="w3p:patentRules" href="http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004 <abbr title="World Wide Web Consortium">W3C</abbr> Patent
+              Policy</a>.
+            
+            
+            
+              
+                <abbr title="World Wide Web Consortium">W3C</abbr> maintains a <a href="http://www.w3.org/2004/01/pp-impl/47318/status" rel="disclosure">public list of any patent
+                disclosures</a>
+              
+              made in connection with the deliverables of
+              
+              the group; that page also includes
+              
+              instructions for disclosing a patent. An individual who has actual knowledge of a patent
+              which the individual believes contains
+              <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential
+              Claim(s)</a> must disclose the information in accordance with
+              <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section
+              6 of the <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>.
+            
+            
+          </p>
+          
+            <p>This document is governed by the <a id="w3c_process_revision" href="http://www.w3.org/2015/Process-20150901/">1 September 2015 <abbr title="World Wide Web Consortium">W3C</abbr> Process Document</a>.
+            </p>
+          
+          
+        
+      
+    
+  
+</section><section id="toc"><h2 class="introductory" id="h-toc" resource="#h-toc"><span property="xhv:role" resource="xhv:heading">Table of Contents</span></h2><ul class="toc" role="directory" id="respecContents"><li class="tocline"><a href="#introduction" class="tocxref"><span class="secno">1. </span>Introduction</a></li><li class="tocline"><a href="#conformance" class="tocxref"><span class="secno">2. </span>Conformance</a></li><li class="tocline"><a href="#terminology" class="tocxref"><span class="secno">3. </span>Terminology</a></li><li class="tocline"><a href="#rtctatstype-*" class="tocxref"><span class="secno">4. </span>RTCStatsType</a><ul class="toc"><li class="tocline"><a href="#rtcstatstype-str*" class="tocxref"><span class="secno">4.1 </span>RTCStatsType DOMString</a></li><li class="tocline"><a href="#streamstats-dict*" class="tocxref"><span class="secno">4.2 </span><span data-dfn-type="dfn">RTCRTPStreamStats</span> dictionary</a><ul class="toc"><li class="tocline"><a href="#dictionary-rtcrtpstreamstats-members" class="tocxref"><span class="secno">4.2.1 </span>Dictionary <span class="formerLink"><code>RTCRTPStreamStats</code></span> Members</a></li><li class="tocline"><a href="#codec-dict*" class="tocxref"><span class="secno">4.2.2 </span><span data-dfn-type="dfn">RTCCodec</span> dictionary</a><ul class="toc"><li class="tocline"><a href="#dictionary-rtccodec-members" class="tocxref"><span class="secno">4.2.2.1 </span>Dictionary <span class="formerLink"><code>RTCCodec</code></span> Members</a></li></ul></li><li class="tocline"><a href="#inboundrtpstats-dict*" class="tocxref"><span class="secno">4.2.3 </span>RTCInboundRTPStreamStats dictionary</a><ul class="toc"><li class="tocline"><a href="#dictionary-rtcinboundrtpstreamstats-members" class="tocxref"><span class="secno">4.2.3.1 </span>Dictionary <span class="formerLink"><code>RTCInboundRTPStreamStats</code></span> Members</a></li></ul></li><li class="tocline"><a href="#outboundrtpstats-dict*" class="tocxref"><span class="secno">4.2.4 </span>RTCOutboundRTPStreamStats dictionary</a><ul class="toc"><li class="tocline"><a href="#dictionary-rtcoutboundrtpstreamstats-members" class="tocxref"><span class="secno">4.2.4.1 </span>Dictionary <span class="formerLink"><code>RTCOutboundRTPStreamStats</code></span> Members</a></li></ul></li><li class="tocline"><a href="#example" class="tocxref"><span class="secno">4.2.5 </span>Example</a></li></ul></li><li class="tocline"><a href="#pcstats-dict*" class="tocxref"><span class="secno">4.3 </span><span data-dfn-type="dfn">RTCPeerConnectionStats</span> dictionary</a><ul class="toc"><li class="tocline"><a href="#dictionary-rtcpeerconnectionstats-members" class="tocxref"><span class="secno">4.3.1 </span>Dictionary <span class="formerLink"><code>RTCPeerConnectionStats</code></span> Members</a></li></ul></li><li class="tocline"><a href="#msstats-dict*" class="tocxref"><span class="secno">4.4 </span><span data-dfn-type="dfn">RTCMediaStreamStats</span> dictionary</a><ul class="toc"><li class="tocline"><a href="#dictionary-rtcmediastreamstats-members" class="tocxref"><span class="secno">4.4.1 </span>Dictionary <span class="formerLink"><code>RTCMediaStreamStats</code></span> Members</a></li><li class="tocline"><a href="#mststats-dict*" class="tocxref"><span class="secno">4.4.2 </span><span data-dfn-type="dfn">RTCMediaStreamTrackStats</span> dictionary</a><ul class="toc"><li class="tocline"><a href="#dictionary-rtcmediastreamtrackstats-members" class="tocxref"><span class="secno">4.4.2.1 </span>Dictionary <span class="formerLink"><code>RTCMediaStreamTrackStats</code></span> Members</a></li></ul></li></ul></li><li class="tocline"><a href="#dcstats-dict*" class="tocxref"><span class="secno">4.5 </span><span data-dfn-type="dfn">RTCDataChannelStats</span> dictionary</a><ul class="toc"><li class="tocline"><a href="#dictionary-rtcdatachannelstats-members" class="tocxref"><span class="secno">4.5.1 </span>Dictionary <span class="formerLink"><code>RTCDataChannelStats</code></span> Members</a></li></ul></li><li class="tocline"><a href="#transportstats-dict*" class="tocxref"><span class="secno">4.6 </span><span data-dfn-type="dfn">RTCTransportStats</span> dictionary</a><ul class="toc"><li class="tocline"><a href="#dictionary-rtctransportstats-members" class="tocxref"><span class="secno">4.6.1 </span>Dictionary <span class="formerLink"><code>RTCTransportStats</code></span> Members</a></li></ul></li><li class="tocline"><a href="#icecandidate-dict*" class="tocxref"><span class="secno">4.7 </span>RTCIceCandidateAttributes dictionary</a><ul class="toc"><li class="tocline"><a href="#dictionary-rtcicecandidateattributes-members" class="tocxref"><span class="secno">4.7.1 </span>Dictionary <span class="formerLink"><code>RTCIceCandidateAttributes</code></span> Members</a></li><li class="tocline"><a href="#rtcstatsicecandidatetype-enum" class="tocxref"><span class="secno">4.7.2 </span><span data-dfn-type="dfn">RTCStatsIceCandidateType</span> enum</a></li></ul></li><li class="tocline"><a href="#candidatepair-dict*" class="tocxref"><span class="secno">4.8 </span><span data-dfn-type="dfn">RTCIceCandidatePairStats</span> dictionary</a><ul class="toc"><li class="tocline"><a href="#dictionary-rtcicecandidatepairstats-members" class="tocxref"><span class="secno">4.8.1 </span>Dictionary <span class="formerLink"><code>RTCIceCandidatePairStats</code></span> Members</a></li><li class="tocline"><a href="#rtcstatsicecandidatepairstate-enum" class="tocxref"><span class="secno">4.8.2 </span><span data-dfn-type="dfn">RTCStatsIceCandidatePairState</span> enum</a></li></ul></li><li class="tocline"><a href="#certificatestats-dict*" class="tocxref"><span class="secno">4.9 </span>RTCCertificateStats dictionary</a><ul class="toc"><li class="tocline"><a href="#dictionary-rtccertificatestats-members" class="tocxref"><span class="secno">4.9.1 </span>Dictionary <span class="formerLink"><code>RTCCertificateStats</code></span> Members</a></li></ul></li></ul></li><li class="tocline"><a href="#example-1" class="tocxref"><span class="secno">5. </span>Example</a></li><li class="tocline"><a href="#security-considerations" class="tocxref"><span class="secno">6. </span>Security Considerations</a></li><li class="tocline"><a href="#change-log*" class="tocxref"><span class="secno">7. </span>Change Log</a><ul class="toc"><li class="tocline"><a href="#since-30-Sept-2014*" class="tocxref"><span class="secno">7.1 </span>Changes since 30 September 2014</a></li><li class="tocline"><a href="#acknowledgements" class="tocxref"><span class="secno">7.2 </span>Acknowledgements</a></li></ul></li><li class="tocline"><a href="#references" class="tocxref"><span class="secno">A. </span>References</a><ul class="toc"><li class="tocline"><a href="#normative-references" class="tocxref"><span class="secno">A.1 </span>Normative references</a></li><li class="tocline"><a href="#informative-references" class="tocxref"><span class="secno">A.2 </span>Informative references</a></li></ul></li></ul></section>
+
+    
+
+    <!-- NB: [[!..]] normative refs, [[..]] informative refs-->
+    <!-- based on the wiki page https://www.w3.org/2011/04/webrtc/wiki/Stats -->
+
+    <section class="informative" id="introduction" typeof="bibo:Chapter" resource="#introduction" property="bibo:hasPart">
+      <!--OddPage--><h2 id="h-introduction" resource="#h-introduction"><span property="xhv:role" resource="xhv:heading"><span class="secno">1. </span>Introduction</span></h2><p><em>This section is non-normative.</em></p>
+      <p>
+        Audio, video, or data packets transmitted over a peer-connection can be
+        lost, and experience varying amounts of network delay. A web application
+        implementing WebRTC expects to monitor the performance of the underlying
+        network and media pipeline.
+      </p>
+      <p>
+        This document defines the APIs and statistic identifiers used by the
+        web application to extract metrics from the user agent.
+      </p>
+    </section>
+
+     <section id="conformance" typeof="bibo:Chapter" resource="#conformance" property="bibo:hasPart"><!--OddPage--><h2 id="h-conformance" resource="#h-conformance"><span property="xhv:role" resource="xhv:heading"><span class="secno">2. </span>Conformance</span></h2>
+<p>
+  As well as sections marked as non-normative, all authoring guidelines, diagrams, examples,
+  and notes in this specification are non-normative. Everything else in this specification is
+  normative.
+</p>
+<p id="respecRFC2119">The key word <em class="rfc2119" title="MUST">MUST</em> is 
+  to be interpreted as described in [<cite><a class="bibref" href="#bib-RFC2119">RFC2119</a></cite>].
+</p>
+
+      <p>This specification defines the conformance criteria that applies to a
+        single product: the <em>user agent</em>.
+      </p>
+      <p>Implementations that use ECMAScript to implement the APIs defined in
+        this specification <em class="rfc2119" title="MUST"><em class="rfc2119" title="MUST">MUST</em></em> implement
+        them in a manner consistent with the ECMAScript Bindings defined in the
+        Web IDL specification [<cite><a class="bibref" href="#bib-WEBIDL">WEBIDL</a></cite>], as this document uses that
+        specification and terminology.
+      </p>
+    </section>
+
+    <section id="terminology" typeof="bibo:Chapter" resource="#terminology" property="bibo:hasPart">
+      <!--OddPage--><h2 id="h-terminology" resource="#h-terminology"><span property="xhv:role" resource="xhv:heading"><span class="secno">3. </span>Terminology</span></h2>
+      <p>
+        The <code><a href="http://dev.w3.org/html5/spec/webappapis.html#eventhandler">EventHandler</a>
+        </code> interface represents a callback used for event handlers as
+        defined in [<cite><a class="bibref" href="#bib-HTML5">HTML5</a></cite>].
+      </p>
+
+      <p>
+        The concepts <dfn data-dfn-type="dfn" id="dfn-queue-a-task"><a href="http://dev.w3.org/html5/spec/webappapis.html#queue-a-task">queue
+        a task</a></dfn>, and 
+        <dfn data-dfn-type="dfn" id="dfn-fires-a-simple-event"><a href="http://dev.w3.org/html5/spec/webappapis.html#fire-a-simple-event">fires
+        a simple event</a></dfn> are defined in [<cite><a class="bibref" href="#bib-HTML5">HTML5</a></cite>].
+      </p>
+
+      <p>The terms <dfn data-dfn-type="dfn" id="dfn-event">event</dfn>, <dfn data-dfn-type="dfn" id="dfn-event-handlers"><a href="http://dev.w3.org/html5/spec/webappapis.html#event-handlers">event
+        handlers</a></dfn>, and <dfn data-dfn-type="dfn" id="dfn-event-handler-event-types"><a href="http://dev.w3.org/html5/spec/webappapis.html#event-handler-event-type">event
+        handler event types</a></dfn> are defined in [<cite><a class="bibref" href="#bib-HTML5">HTML5</a></cite>].</p>
+
+      <p>
+        The terms <dfn data-dfn-type="dfn" id="dfn-mediastream">MediaStream</dfn>, <dfn data-dfn-type="dfn" id="dfn-mediastreamtrack">MediaStreamTrack</dfn>, and
+        <dfn data-dfn-type="dfn" id="dfn-consumer">Consumer</dfn> are defined in [<cite><a class="bibref" href="#bib-GETUSERMEDIA">GETUSERMEDIA</a></cite>].
+      </p>
+
+      <p>
+        The terms <dfn data-dfn-type="dfn" id="dfn-rtcpeerconnection">RTCPeerConnection</dfn>, <dfn data-dfn-type="dfn" id="dfn-rtcdatachannel">RTCDataChannel</dfn>
+        are defined in [<cite><a class="bibref" href="#bib-WEBRTC">WEBRTC</a></cite>].
+      </p>
+    </section>
+
+    <!-- VS: getStats() remains in base spec! -->
+
+    <section id="rtctatstype-*" typeof="bibo:Chapter" resource="#rtctatstype-*" property="bibo:hasPart">
+      <!--OddPage--><h2 id="h-rtctatstype" resource="#h-rtctatstype"><span property="xhv:role" resource="xhv:heading"><span class="secno">4. </span>RTCStatsType</span></h2>
+
+      <code>RTCStatsType</code> object is initialized to the name of the dictionary that
+      the <code>RTCStats</code> represents.
+      
+      <div class="note"><div class="note-title" aria-level="3" role="heading" id="h-note1"><span>Note</span></div><div class="">
+        OPEN ISSUE: Need to define an IANA registry for the RTCStatsType and populate
+        it with the following set as baseline. 
+      </div></div>
+
+      <section id="rtcstatstype-str*" typeof="bibo:Chapter" resource="#rtcstatstype-str*" property="bibo:hasPart">
+        <h3 id="h-rtcstatstype-str" resource="#h-rtcstatstype-str"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.1 </span>RTCStatsType DOMString</span></h3>
+
+        <!-- 
+        As per discussions: Move enum to a string that is in a registry 
+        <div class="note">
+          Updated the enum in [[!WEBRTC]]: to use lowercasenospacesordashes
+          name convention, and added new enum values.
+        </div> -->
+
+        <!-- TODO: point to the actual stats dictionaries  -->
+        <!-- <dl class="idl" title="DOMString RTCStatsType"> -->
+        <p><var>RTCStatsType</var> is a equal to one of the following strings defined in [IANA-TOBE]:</p>
+        <dl>
+          <dt><code>"inboundrtp"</code></dt>
+          <dd><p>Statistics for the inbound RTP stream that is currently
+            received with this <code>RTCPeerConnection</code> object. It is
+            accessed by the <code><a href="#idl-def-RTCInboundRTPStreamStats" class="idlType"><code>RTCInboundRTPStreamStats</code></a></code>.</p></dd>
+
+          <dt><code>"outboundrtp"</code></dt>
+          <dd><p>Statistics for the outbound RTP stream that is currently
+            sent with this <code>RTCPeerConnection</code> object. It is
+            accessed by the <code><a href="#idl-def-RTCOutboundRTPStreamStats" class="idlType"><code>RTCOutboundRTPStreamStats</code></a></code> </p></dd>
+
+          <dt><code>"session"</code></dt>
+          <dd><p> Related to the <code>RTCDataChannel</code> and
+            <code>RTCPeerConnection</code> object.</p></dd>
+
+          <dt><code>"datachannel"</code></dt>
+          <dd><p> Statistics related to each <code>RTCDataChannel</code> id.</p></dd>
+
+          <dt><code>"track"</code></dt>
+          <dd><p>Contains the sequence of tracks related to a specific media stream 
+          and the corresponding media-level metrics.</p></dd>
+
+          <dt><code>"transport"</code></dt>
+          <dd><p>Transport statistics related to the
+            <code>RTCPeerConnection</code> object.</p></dd>
+
+          <dt><code>"candidatepair"</code></dt>
+          <dd><p>ICE candidate pair statistics related to the
+            <code>RTCIceTransport</code> objects.</p></dd>
+
+          <dt><code>"localcandidate"</code></dt>
+          <dd><p>ICE local candidate statistics related to the
+            <code>RTCIceTransport</code> objects.</p></dd>
+
+          <dt><code>"remotecandidate"</code></dt>
+          <dd><p>ICE remote candidate statistics related to the
+            <code>RTCIceTransport</code> objects.</p></dd>
+        
+        </dl>
+      </section>
+
+      <section id="streamstats-dict*" typeof="bibo:Chapter" resource="#streamstats-dict*" property="bibo:hasPart">
+        <h3 id="h-streamstats-dict" resource="#h-streamstats-dict"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.2 </span><dfn data-dfn-type="dfn" id="dfn-rtcrtpstreamstats">RTCRTPStreamStats</dfn> dictionary</span></h3>
+        <pre class="idl"><span class="idlDictionary" id="idl-def-RTCRTPStreamStats">dictionary <span class="idlDictionaryID">RTCRTPStreamStats</span> : <span class="idlSuperclass">RTCStats</span> {
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>     <span class="idlMemberName"><a href="#widl-RTCRTPStreamStats-ssrc">ssrc</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>     <span class="idlMemberName"><a href="#widl-RTCRTPStreamStats-associateStatsId">associateStatsId</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">boolean</span>       <span class="idlMemberName"><a href="#widl-RTCRTPStreamStats-isRemote">isRemote</a></span> = <span class="idlMemberValue">false</span>;</span>
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>     <span class="idlMemberName"><a href="#widl-RTCRTPStreamStats-mediaType">mediaType</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>     <span class="idlMemberName"><a href="#widl-RTCRTPStreamStats-mediaTrackId">mediaTrackId</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>     <span class="idlMemberName"><a href="#widl-RTCRTPStreamStats-transportId">transportId</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>     <span class="idlMemberName"><a href="#widl-RTCRTPStreamStats-codecId">codecId</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span> <span class="idlMemberName"><a href="#widl-RTCRTPStreamStats-firCount">firCount</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span> <span class="idlMemberName"><a href="#widl-RTCRTPStreamStats-pliCount">pliCount</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span> <span class="idlMemberName"><a href="#widl-RTCRTPStreamStats-nackCount">nackCount</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span> <span class="idlMemberName"><a href="#widl-RTCRTPStreamStats-sliCount">sliCount</a></span>;</span>
+};</span></pre><section id="dictionary-rtcrtpstreamstats-members" typeof="bibo:Chapter" resource="#dictionary-rtcrtpstreamstats-members" property="bibo:hasPart"><h4 id="h-dictionary-rtcrtpstreamstats-members" resource="#h-dictionary-rtcrtpstreamstats-members"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.2.1 </span>Dictionary <a class="idlType" href="#idl-def-RTCRTPStreamStats"><code>RTCRTPStreamStats</code></a> Members</span></h4><dl class="dictionary-members"><dt id="widl-RTCRTPStreamStats-associateStatsId"><code>associateStatsId</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p>The <code>associateStatsId</code> is used for looking up the
+            corresponding (local/remote) <code>RTCStats</code> object
+            for a given SSRC.</p></dd><dt id="widl-RTCRTPStreamStats-codecId"><code>codecId</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p></p></dd><dt id="widl-RTCRTPStreamStats-firCount"><code>firCount</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Count the total number of Full Intra Request (FIR) packets
+            received by the sender. This metric is only valid for video and is
+            sent by receiver. Calculated as defined in [<cite><a class="bibref" href="#bib-RFC5104">RFC5104</a></cite>] section 4.3.1. and
+            does not use the metric indicated in [<cite><a class="bibref" href="#bib-RFC2032">RFC2032</a></cite>], because it was
+            deprecated by [<cite><a class="bibref" href="#bib-RFC4587">RFC4587</a></cite>].</p></dd><dt id="widl-RTCRTPStreamStats-isRemote"><code>isRemote</code> of type <span class="idlMemberType">boolean</span>,         , defaulting to <code>false</code></dt><dd><p><code>false</code> indicates that the statistics are measured
+            locally, while <code>true</code> indicates that the measurements
+            were done at the remote endpoint and reported in an RTCP RR/XR.</p></dd><dt id="widl-RTCRTPStreamStats-mediaTrackId"><code>mediaTrackId</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p></p></dd><dt id="widl-RTCRTPStreamStats-mediaType"><code>mediaType</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p>Either "<code>audio</code>" or "<code>video</code>". This <em class="rfc2119" title="MUST">MUST</em> match the media type part
+          of the information in the corresponding
+          <code><a href="#widl-RTCCodec-codec">codec</a></code> member of
+          <code>RTCCodec</code>.</p></dd><dt id="widl-RTCRTPStreamStats-nackCount"><code>nackCount</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Count the total number of Negative ACKnowledgement (NACK)
+            packets received by the sender and is sent by receiver. Calculated
+            as defined in [<cite><a class="bibref" href="#bib-RFC4585">RFC4585</a></cite>] section 6.2.1.</p></dd><dt id="widl-RTCRTPStreamStats-pliCount"><code>pliCount</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Count the total number of Packet Loss Indication (PLI) packets
+            received by the sender and is sent by receiver. Calculated as defined in
+            [<cite><a class="bibref" href="#bib-RFC4585">RFC4585</a></cite>] section 6.3.1.</p></dd><dt id="widl-RTCRTPStreamStats-sliCount"><code>sliCount</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Count the total number of Slice Loss Indication (SLI) packets
+            received by the sender. This metric is only valid for video and is
+            sent by receiver. Calculated as defined in [<cite><a class="bibref" href="#bib-RFC4585">RFC4585</a></cite>] section 6.3.2.</p></dd><dt id="widl-RTCRTPStreamStats-ssrc"><code>ssrc</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p></p></dd><dt id="widl-RTCRTPStreamStats-transportId"><code>transportId</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p>It is a unique identifier that is associated to the object
+          that was inspected to produce the <code>RTCTransportStats</code>
+          associated with this RTP stream.</p></dd></dl></section>
+
+        <section id="codec-dict*" typeof="bibo:Chapter" resource="#codec-dict*" property="bibo:hasPart">
+          <h4 id="h-codec-dict" resource="#h-codec-dict"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.2.2 </span><dfn data-dfn-type="dfn" id="dfn-rtccodec">RTCCodec</dfn> dictionary</span></h4>
+          <pre class="idl"><span class="idlDictionary" id="idl-def-RTCCodec">dictionary <span class="idlDictionaryID">RTCCodec</span> : <span class="idlSuperclass">RTCStats</span> {
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span> <span class="idlMemberName"><a href="#widl-RTCCodec-payloadType">payloadType</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>     <span class="idlMemberName"><a href="#widl-RTCCodec-codec">codec</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span> <span class="idlMemberName"><a href="#widl-RTCCodec-clockRate">clockRate</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span> <span class="idlMemberName"><a href="#widl-RTCCodec-channels">channels</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>     <span class="idlMemberName"><a href="#widl-RTCCodec-parameters">parameters</a></span>;</span>
+};</span></pre><section id="dictionary-rtccodec-members" typeof="bibo:Chapter" resource="#dictionary-rtccodec-members" property="bibo:hasPart"><h5 id="h-dictionary-rtccodec-members" resource="#h-dictionary-rtccodec-members"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.2.2.1 </span>Dictionary <a class="idlType" href="#idl-def-RTCCodec"><code>RTCCodec</code></a> Members</span></h5><dl class="dictionary-members"><dt id="widl-RTCCodec-channels"><code>channels</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Use 2 for stereo, missing for most other cases.</p></dd><dt id="widl-RTCCodec-clockRate"><code>clockRate</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Represents the media sampling rate.</p></dd><dt id="widl-RTCCodec-codec"><code>codec</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p>e.g., video/vp8 or equivalent.</p></dd><dt id="widl-RTCCodec-parameters"><code>parameters</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p>From the SDP description line.</p></dd><dt id="widl-RTCCodec-payloadType"><code>payloadType</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Payload type as used in RTP encoding.</p></dd></dl></section>
+        </section>
+
+        <section id="inboundrtpstats-dict*" typeof="bibo:Chapter" resource="#inboundrtpstats-dict*" property="bibo:hasPart">
+          <h4 id="h-inboundrtpstats-dict" resource="#h-inboundrtpstats-dict"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.2.3 </span>RTCInboundRTPStreamStats dictionary</span></h4>
+          <p>
+            <dfn data-dfn-type="dfn" id="dfn-rtcinboundrtpstreamstats">RTCInboundRTPStreamStats</dfn> dictionary represents the
+            measurement metrics for the incoming media stream.
+          </p>
+          <pre class="idl"><span class="idlDictionary" id="idl-def-RTCInboundRTPStreamStats">dictionary <span class="idlDictionaryID">RTCInboundRTPStreamStats</span> : <span class="idlSuperclass"><a href="#idl-def-RTCRTPStreamStats" class="idlType"><code>RTCRTPStreamStats</code></a></span> {
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span>      <span class="idlMemberName"><a href="#widl-RTCInboundRTPStreamStats-packetsReceived">packetsReceived</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long long</span> <span class="idlMemberName"><a href="#widl-RTCInboundRTPStreamStats-bytesReceived">bytesReceived</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span>      <span class="idlMemberName"><a href="#widl-RTCInboundRTPStreamStats-packetsLost">packetsLost</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">double</span>             <span class="idlMemberName"><a href="#widl-RTCInboundRTPStreamStats-jitter">jitter</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">double</span>             <span class="idlMemberName"><a href="#widl-RTCInboundRTPStreamStats-fractionLost">fractionLost</a></span>;</span>
+};</span></pre><section id="dictionary-rtcinboundrtpstreamstats-members" typeof="bibo:Chapter" resource="#dictionary-rtcinboundrtpstreamstats-members" property="bibo:hasPart"><h5 id="h-dictionary-rtcinboundrtpstreamstats-members" resource="#h-dictionary-rtcinboundrtpstreamstats-members"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.2.3.1 </span>Dictionary <a class="idlType" href="#idl-def-RTCInboundRTPStreamStats"><code>RTCInboundRTPStreamStats</code></a> Members</span></h5><dl class="dictionary-members"><dt id="widl-RTCInboundRTPStreamStats-bytesReceived"><code>bytesReceived</code> of type <span class="idlMemberType">unsigned long long</span>,         </dt><dd><p>Total number of bytes received for this SSRC. Calculated as
+              defined in [<cite><a class="bibref" href="#bib-RFC3550">RFC3550</a></cite>] section 6.4.1.</p></dd><dt id="widl-RTCInboundRTPStreamStats-fractionLost"><code>fractionLost</code> of type <span class="idlMemberType">double</span>,         </dt><dd><p>The fraction packet loss reported for this SSRC. Calculated
+              as defined in [<cite><a class="bibref" href="#bib-RFC3550">RFC3550</a></cite>] section 6.4.1 and Appendix A.3.</p></dd><dt id="widl-RTCInboundRTPStreamStats-jitter"><code>jitter</code> of type <span class="idlMemberType">double</span>,         </dt><dd><p>Packet Jitter measured in seconds for this SSRC. Calculated
+              as defined in [<cite><a class="bibref" href="#bib-RFC3550">RFC3550</a></cite>] section 6.4.1.</p></dd><dt id="widl-RTCInboundRTPStreamStats-packetsLost"><code>packetsLost</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Total number of RTP packets lost for this SSRC. Calculated
+              as defined in [<cite><a class="bibref" href="#bib-RFC3550">RFC3550</a></cite>] section 6.4.1.</p></dd><dt id="widl-RTCInboundRTPStreamStats-packetsReceived"><code>packetsReceived</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Total number of RTP packets received for this SSRC.
+              Calculated as defined in [<cite><a class="bibref" href="#bib-RFC3550">RFC3550</a></cite>] section 6.4.1.</p></dd></dl></section>
+          
+          <div class="issue" id="issue-1"><div class="issue-title" aria-level="5" role="heading" id="h-issue1"><span>Issue 1</span></div><div class="">
+            Open Issue: Possible additional metrics that are useful for RTP, defined in [<cite><a class="bibref" href="#bib-XRBLOCK-STATS">XRBLOCK-STATS</a></cite>]:
+            <ul>
+              <li>packetsDiscarded.</li>
+              <li>packetsRepaired.</li>
+            </ul>
+          </div></div>
+        </section>
+
+        <section id="outboundrtpstats-dict*" typeof="bibo:Chapter" resource="#outboundrtpstats-dict*" property="bibo:hasPart">
+          <h4 id="h-outboundrtpstats-dict" resource="#h-outboundrtpstats-dict"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.2.4 </span>RTCOutboundRTPStreamStats dictionary</span></h4>
+          <p>
+            <dfn data-dfn-type="dfn" id="dfn-rtcoutboundrtpstreamstats">RTCOutboundRTPStreamStats</dfn> dictionary represents the
+            measurement metrics for the outgoing media stream.
+          </p>
+          <pre class="idl"><span class="idlDictionary" id="idl-def-RTCOutboundRTPStreamStats">dictionary <span class="idlDictionaryID">RTCOutboundRTPStreamStats</span> : <span class="idlSuperclass"><a href="#idl-def-RTCRTPStreamStats" class="idlType"><code>RTCRTPStreamStats</code></a></span> {
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span>      <span class="idlMemberName"><a href="#widl-RTCOutboundRTPStreamStats-packetsSent">packetsSent</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long long</span> <span class="idlMemberName"><a href="#widl-RTCOutboundRTPStreamStats-bytesSent">bytesSent</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">double</span>             <span class="idlMemberName"><a href="#widl-RTCOutboundRTPStreamStats-targetBitrate">targetBitrate</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">double</span>             <span class="idlMemberName"><a href="#widl-RTCOutboundRTPStreamStats-roundTripTime">roundTripTime</a></span>;</span>
+};</span></pre><section id="dictionary-rtcoutboundrtpstreamstats-members" typeof="bibo:Chapter" resource="#dictionary-rtcoutboundrtpstreamstats-members" property="bibo:hasPart"><h5 id="h-dictionary-rtcoutboundrtpstreamstats-members" resource="#h-dictionary-rtcoutboundrtpstreamstats-members"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.2.4.1 </span>Dictionary <a class="idlType" href="#idl-def-RTCOutboundRTPStreamStats"><code>RTCOutboundRTPStreamStats</code></a> Members</span></h5><dl class="dictionary-members"><dt id="widl-RTCOutboundRTPStreamStats-bytesSent"><code>bytesSent</code> of type <span class="idlMemberType">unsigned long long</span>,         </dt><dd><p>Total number of bytes sent for this SSRC. Calculated as defined in
+              [<cite><a class="bibref" href="#bib-RFC3550">RFC3550</a></cite>] section 6.4.1.</p></dd><dt id="widl-RTCOutboundRTPStreamStats-packetsSent"><code>packetsSent</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Total number of RTP packets sent for this SSRC. Calculated
+              as defined in [<cite><a class="bibref" href="#bib-RFC3550">RFC3550</a></cite>] section 6.4.1.</p></dd><dt id="widl-RTCOutboundRTPStreamStats-roundTripTime"><code>roundTripTime</code> of type <span class="idlMemberType">double</span>,         </dt><dd><p>Estimated round trip time (seconds) for this SSRC based on
+              the RTCP timestamp. Calculated as defined in [<cite><a class="bibref" href="#bib-RFC3550">RFC3550</a></cite>] section 6.4.1.</p></dd><dt id="widl-RTCOutboundRTPStreamStats-targetBitrate"><code>targetBitrate</code> of type <span class="idlMemberType">double</span>,         </dt><dd><p>Presently configured bitrate target of this SSRC, in bits
+              per second. Typically this is a configuration parameter provided
+              to the codec's encoder.</p></dd></dl></section>
+        </section>
+        <!-- TODO: EXAMPLE -->
+        <section id="example" typeof="bibo:Chapter" resource="#example" property="bibo:hasPart">
+          <h4 id="h-example" resource="#h-example"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.2.5 </span>Example</span></h4>
+          <p>The following example code shows the association of remote
+            statistics with local statistics in a <code>RTCStats</code>
+            dictionary.</p>
+          <!-- <pre class="example highlight" xml:space="preserve">
+stats [
+   dictionary (of type RTPoutboundStatsDictionary) {
+      ssrc=1234
+      id=foobar
+      type=outboundrtp
+      isRemote=false
+      associateStatsId=barfoo
+  },
+  dictionary (of type RTPinboundStatsDictionary) {
+      ssrc=1234
+      id=barfoo
+      type=inboundrtp
+      isRemote=true
+      associateStatsId=foobar
+  }
+]
+          </pre> -->
+        </section>
+      </section>
+
+      <section id="pcstats-dict*" typeof="bibo:Chapter" resource="#pcstats-dict*" property="bibo:hasPart">
+        <h3 id="h-pcstats-dict" resource="#h-pcstats-dict"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.3 </span><dfn data-dfn-type="dfn" id="dfn-rtcpeerconnectionstats">RTCPeerConnectionStats</dfn> dictionary</span></h3>
+        <pre class="idl"><span class="idlDictionary" id="idl-def-RTCPeerConnectionStats">dictionary <span class="idlDictionaryID">RTCPeerConnectionStats</span> : <span class="idlSuperclass">RTCStats</span> {
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span> <span class="idlMemberName"><a href="#widl-RTCPeerConnectionStats-dataChannelsOpened">dataChannelsOpened</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span> <span class="idlMemberName"><a href="#widl-RTCPeerConnectionStats-dataChannelsClosed">dataChannelsClosed</a></span>;</span>
+};</span></pre><section id="dictionary-rtcpeerconnectionstats-members" typeof="bibo:Chapter" resource="#dictionary-rtcpeerconnectionstats-members" property="bibo:hasPart"><h4 id="h-dictionary-rtcpeerconnectionstats-members" resource="#h-dictionary-rtcpeerconnectionstats-members"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.3.1 </span>Dictionary <a class="idlType" href="#idl-def-RTCPeerConnectionStats"><code>RTCPeerConnectionStats</code></a> Members</span></h4><dl class="dictionary-members"><dt id="widl-RTCPeerConnectionStats-dataChannelsClosed"><code>dataChannelsClosed</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Represents the number of unique datachannels closed.</p></dd><dt id="widl-RTCPeerConnectionStats-dataChannelsOpened"><code>dataChannelsOpened</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Represents the number of unique datachannels opened.</p></dd></dl></section>
+      </section>
+
+      <section id="msstats-dict*" typeof="bibo:Chapter" resource="#msstats-dict*" property="bibo:hasPart">
+        <h3 id="h-msstats-dict" resource="#h-msstats-dict"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.4 </span><dfn data-dfn-type="dfn" id="dfn-rtcmediastreamstats">RTCMediaStreamStats</dfn> dictionary</span></h3>
+
+        <pre class="idl"><span class="idlDictionary" id="idl-def-RTCMediaStreamStats">dictionary <span class="idlDictionaryID">RTCMediaStreamStats</span> : <span class="idlSuperclass">RTCStats</span> {
+<span class="idlMember">             <span class="idlMemberType">DOMString</span> <span class="idlMemberName"><a href="#widl-RTCMediaStreamStats-streamIdentifier">streamIdentifier</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">sequence</span>  <span class="idlMemberName"><a href="#widl-RTCMediaStreamStats-trackIds">trackIds</a></span>;</span>
+};</span></pre><section id="dictionary-rtcmediastreamstats-members" typeof="bibo:Chapter" resource="#dictionary-rtcmediastreamstats-members" property="bibo:hasPart"><h4 id="h-dictionary-rtcmediastreamstats-members" resource="#h-dictionary-rtcmediastreamstats-members"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.4.1 </span>Dictionary <a class="idlType" href="#idl-def-RTCMediaStreamStats"><code>RTCMediaStreamStats</code></a> Members</span></h4><dl class="dictionary-members"><dt id="widl-RTCMediaStreamStats-streamIdentifier"><code>streamIdentifier</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p><code>stream.id</code> property</p></dd><dt id="widl-RTCMediaStreamStats-trackIds"><code>trackIds</code> of type <span class="idlMemberType">sequence</span>,         </dt><dd><p>This is the id of the stats object, not the
+            <code>track.id</code>.</p></dd></dl></section>
+
+        <section id="mststats-dict*" typeof="bibo:Chapter" resource="#mststats-dict*" property="bibo:hasPart">
+          <h4 id="h-mststats-dict" resource="#h-mststats-dict"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.4.2 </span><dfn data-dfn-type="dfn" id="dfn-rtcmediastreamtrackstats">RTCMediaStreamTrackStats</dfn> dictionary</span></h4>
+          <pre class="idl"><span class="idlDictionary" id="idl-def-RTCMediaStreamTrackStats">dictionary <span class="idlDictionaryID">RTCMediaStreamTrackStats</span> : <span class="idlSuperclass">RTCStats</span> {
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>     <span class="idlMemberName"><a href="#widl-RTCMediaStreamTrackStats-trackIdentifier">trackIdentifier</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">boolean</span>       <span class="idlMemberName"><a href="#widl-RTCMediaStreamTrackStats-remoteSource">remoteSource</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">sequence</span>      <span class="idlMemberName"><a href="#widl-RTCMediaStreamTrackStats-ssrcIds">ssrcIds</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span> <span class="idlMemberName"><a href="#widl-RTCMediaStreamTrackStats-frameWidth">frameWidth</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span> <span class="idlMemberName"><a href="#widl-RTCMediaStreamTrackStats-frameHeight">frameHeight</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">double</span>        <span class="idlMemberName"><a href="#widl-RTCMediaStreamTrackStats-framesPerSecond">framesPerSecond</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span> <span class="idlMemberName"><a href="#widl-RTCMediaStreamTrackStats-framesSent">framesSent</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span> <span class="idlMemberName"><a href="#widl-RTCMediaStreamTrackStats-framesReceived">framesReceived</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span> <span class="idlMemberName"><a href="#widl-RTCMediaStreamTrackStats-framesDecoded">framesDecoded</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span> <span class="idlMemberName"><a href="#widl-RTCMediaStreamTrackStats-framesDropped">framesDropped</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span> <span class="idlMemberName"><a href="#widl-RTCMediaStreamTrackStats-framesCorrupted">framesCorrupted</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">double</span>        <span class="idlMemberName"><a href="#widl-RTCMediaStreamTrackStats-audioLevel">audioLevel</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">double</span>        <span class="idlMemberName"><a href="#widl-RTCMediaStreamTrackStats-echoReturnLoss">echoReturnLoss</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">double</span>        <span class="idlMemberName"><a href="#widl-RTCMediaStreamTrackStats-echoReturnLossEnhancement">echoReturnLossEnhancement</a></span>;</span>
+};</span></pre><section id="dictionary-rtcmediastreamtrackstats-members" typeof="bibo:Chapter" resource="#dictionary-rtcmediastreamtrackstats-members" property="bibo:hasPart"><h5 id="h-dictionary-rtcmediastreamtrackstats-members" resource="#h-dictionary-rtcmediastreamtrackstats-members"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.4.2.1 </span>Dictionary <a class="idlType" href="#idl-def-RTCMediaStreamTrackStats"><code>RTCMediaStreamTrackStats</code></a> Members</span></h5><dl class="dictionary-members"><dt id="widl-RTCMediaStreamTrackStats-audioLevel"><code>audioLevel</code> of type <span class="idlMemberType">double</span>,         </dt><dd><p>Only valid for audio, and the value is between 0..1 (linear),
+               where  1.0 represents <code>0 dBov</code>. Calculated as defined in
+               [<cite><a class="bibref" href="#bib-RFC6464">RFC6464</a></cite>].</p></dd><dt id="widl-RTCMediaStreamTrackStats-echoReturnLoss"><code>echoReturnLoss</code> of type <span class="idlMemberType">double</span>,         </dt><dd><p>Only present on audio tracks sourced from a microphone where
+               echo cancellation is applied. Calculated in decibels, as defined
+               in [<cite><a class="bibref" href="#bib-ECHO">ECHO</a></cite>] (2012) section 3.14.</p></dd><dt id="widl-RTCMediaStreamTrackStats-echoReturnLossEnhancement"><code>echoReturnLossEnhancement</code> of type <span class="idlMemberType">double</span>,         </dt><dd><p>Only present on audio tracks sourced from a microphone where
+               echo cancellation is applied. Calculated in decibels, as defined
+               in [<cite><a class="bibref" href="#bib-ECHO">ECHO</a></cite>] (2012) section 3.15.</p></dd><dt id="widl-RTCMediaStreamTrackStats-frameHeight"><code>frameHeight</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Only makes sense for video media streams and represents the
+               height of the video frame for this SSRC.</p></dd><dt id="widl-RTCMediaStreamTrackStats-frameWidth"><code>frameWidth</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Only makes sense for video media streams and represents the
+               width of the video frame for this SSRC.</p></dd><dt id="widl-RTCMediaStreamTrackStats-framesCorrupted"><code>framesCorrupted</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Only valid for video.Same definition as
+               <code>corruptedVideoFrames</code> in Section 5 of [<cite><a class="bibref" href="#bib-MEDIA-SOURCE">MEDIA-SOURCE</a></cite>].</p></dd><dt id="widl-RTCMediaStreamTrackStats-framesDecoded"><code>framesDecoded</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Only valid for video. It represents the total number of frames
+               correctly decoded for this SSRC. Same definition as
+               <code>totalVideoFrames</code> in Section 5 of [<cite><a class="bibref" href="#bib-MEDIA-SOURCE">MEDIA-SOURCE</a></cite>].</p></dd><dt id="widl-RTCMediaStreamTrackStats-framesDropped"><code>framesDropped</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Only valid for video. Same definition as
+               <code>droppedVideoFrames</code> in Section 5 of [<cite><a class="bibref" href="#bib-MEDIA-SOURCE">MEDIA-SOURCE</a></cite>].</p></dd><dt id="widl-RTCMediaStreamTrackStats-framesPerSecond"><code>framesPerSecond</code> of type <span class="idlMemberType">double</span>,         </dt><dd><p>Only valid for video. It represents the nominal FPS value.</p></dd><dt id="widl-RTCMediaStreamTrackStats-framesReceived"><code>framesReceived</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Only valid for video and when remoteSource is set to <code>true</code>.
+             It represents the total number of frames received for this SSRC.</p></dd><dt id="widl-RTCMediaStreamTrackStats-framesSent"><code>framesSent</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Only valid for video. It represents the total number of frames sent
+             for this SSRC.</p></dd><dt id="widl-RTCMediaStreamTrackStats-remoteSource"><code>remoteSource</code> of type <span class="idlMemberType">boolean</span>,         </dt><dd><p></p></dd><dt id="widl-RTCMediaStreamTrackStats-ssrcIds"><code>ssrcIds</code> of type <span class="idlMemberType">sequence</span>,         </dt><dd><p></p></dd><dt id="widl-RTCMediaStreamTrackStats-trackIdentifier"><code>trackIdentifier</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p>Represents the <code>track.id</code> property.</p></dd></dl></section>
+        </section>
+      </section>
+
+      <section id="dcstats-dict*" typeof="bibo:Chapter" resource="#dcstats-dict*" property="bibo:hasPart">
+        <h3 id="h-dcstats-dict" resource="#h-dcstats-dict"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.5 </span><dfn data-dfn-type="dfn" id="dfn-rtcdatachannelstats">RTCDataChannelStats</dfn> dictionary</span></h3>
+        <pre class="idl"><span class="idlDictionary" id="idl-def-RTCDataChannelStats">dictionary <span class="idlDictionaryID">RTCDataChannelStats</span> : <span class="idlSuperclass">RTCStats</span> {
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>           <span class="idlMemberName"><a href="#widl-RTCDataChannelStats-label">label</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>           <span class="idlMemberName"><a href="#widl-RTCDataChannelStats-protocol">protocol</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">long</span>                <span class="idlMemberName"><a href="#widl-RTCDataChannelStats-datachannelid">datachannelid</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">RTCDataChannelState</span> <span class="idlMemberName"><a href="#widl-RTCDataChannelStats-state">state</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span>       <span class="idlMemberName"><a href="#widl-RTCDataChannelStats-messagesSent">messagesSent</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long long</span>  <span class="idlMemberName"><a href="#widl-RTCDataChannelStats-bytesSent">bytesSent</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long</span>       <span class="idlMemberName"><a href="#widl-RTCDataChannelStats-messagesReceived">messagesReceived</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long long</span>  <span class="idlMemberName"><a href="#widl-RTCDataChannelStats-bytesReceived">bytesReceived</a></span>;</span>
+};</span></pre><section id="dictionary-rtcdatachannelstats-members" typeof="bibo:Chapter" resource="#dictionary-rtcdatachannelstats-members" property="bibo:hasPart"><h4 id="h-dictionary-rtcdatachannelstats-members" resource="#h-dictionary-rtcdatachannelstats-members"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.5.1 </span>Dictionary <a class="idlType" href="#idl-def-RTCDataChannelStats"><code>RTCDataChannelStats</code></a> Members</span></h4><dl class="dictionary-members"><dt id="widl-RTCDataChannelStats-bytesReceived"><code>bytesReceived</code> of type <span class="idlMemberType">unsigned long long</span>,         </dt><dd><p>Represents the total number of bytes received on this
+            <code>RTCDatachannel</code>, i.e., not including headers or padding.</p></dd><dt id="widl-RTCDataChannelStats-bytesSent"><code>bytesSent</code> of type <span class="idlMemberType">unsigned long long</span>,         </dt><dd><p>Represents the total number of payload bytes sent on this
+            <code>RTCDatachannel</code>, i.e., not including headers or padding.</p></dd><dt id="widl-RTCDataChannelStats-datachannelid"><code>datachannelid</code> of type <span class="idlMemberType">long</span>,         </dt><dd><p>the "id" attribute of the RTCDataChannel object</p></dd><dt id="widl-RTCDataChannelStats-label"><code>label</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p></p></dd><dt id="widl-RTCDataChannelStats-messagesReceived"><code>messagesReceived</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Represents the total number of API "message" events received.</p></dd><dt id="widl-RTCDataChannelStats-messagesSent"><code>messagesSent</code> of type <span class="idlMemberType">unsigned long</span>,         </dt><dd><p>Represents the total number of API "message" events sent.</p></dd><dt id="widl-RTCDataChannelStats-protocol"><code>protocol</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p></p></dd><dt id="widl-RTCDataChannelStats-state"><code>state</code> of type <span class="idlMemberType">RTCDataChannelState</span>,         </dt><dd><p></p></dd></dl></section>
+      </section>
+
+      <section id="transportstats-dict*" typeof="bibo:Chapter" resource="#transportstats-dict*" property="bibo:hasPart">
+        <h3 id="h-transportstats-dict" resource="#h-transportstats-dict"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.6 </span><dfn data-dfn-type="dfn" id="dfn-rtctransportstats">RTCTransportStats</dfn> dictionary</span></h3>
+        <p>
+           A Transport carries a part of an SDP session, consisting of RTP and RTCP.
+           When Bundle is in use, an SDP session will have only one Transport per Bundle group.
+           When Bundle is not in use, there is one Transport per m-line.
+        </p>
+        <pre class="idl"><span class="idlDictionary" id="idl-def-RTCTransportStats">dictionary <span class="idlDictionaryID">RTCTransportStats</span> : <span class="idlSuperclass">RTCStats</span> {
+<span class="idlMember">             <span class="idlMemberType">unsigned long long</span> <span class="idlMemberName"><a href="#widl-RTCTransportStats-bytesSent">bytesSent</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long long</span> <span class="idlMemberName"><a href="#widl-RTCTransportStats-bytesReceived">bytesReceived</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>          <span class="idlMemberName"><a href="#widl-RTCTransportStats-rtcpTransportStatsId">rtcpTransportStatsId</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">boolean</span>            <span class="idlMemberName"><a href="#widl-RTCTransportStats-activeConnection">activeConnection</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>          <span class="idlMemberName"><a href="#widl-RTCTransportStats-selectedCandidatePairId">selectedCandidatePairId</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>          <span class="idlMemberName"><a href="#widl-RTCTransportStats-localCertificateId">localCertificateId</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>          <span class="idlMemberName"><a href="#widl-RTCTransportStats-remoteCertificateId">remoteCertificateId</a></span>;</span>
+};</span></pre><section id="dictionary-rtctransportstats-members" typeof="bibo:Chapter" resource="#dictionary-rtctransportstats-members" property="bibo:hasPart"><h4 id="h-dictionary-rtctransportstats-members" resource="#h-dictionary-rtctransportstats-members"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.6.1 </span>Dictionary <a class="idlType" href="#idl-def-RTCTransportStats"><code>RTCTransportStats</code></a> Members</span></h4><dl class="dictionary-members"><dt id="widl-RTCTransportStats-activeConnection"><code>activeConnection</code> of type <span class="idlMemberType">boolean</span>,         </dt><dd><p>Set to <code>true</code> when transport is active.</p></dd><dt id="widl-RTCTransportStats-bytesReceived"><code>bytesReceived</code> of type <span class="idlMemberType">unsigned long long</span>,         </dt><dd><p>Represents the total number of bytes received on this
+            <code>PeerConnection</code>, i.e., not including headers or padding.</p></dd><dt id="widl-RTCTransportStats-bytesSent"><code>bytesSent</code> of type <span class="idlMemberType">unsigned long long</span>,         </dt><dd><p>Represents the total number of payload bytes sent on this
+            <code>PeerConnection</code>, i.e., not including headers or padding.</p></dd><dt id="widl-RTCTransportStats-localCertificateId"><code>localCertificateId</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p>For components where DTLS is negotiated, give local
+            certificate.</p></dd><dt id="widl-RTCTransportStats-remoteCertificateId"><code>remoteCertificateId</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p>For components where DTLS is negotiated, give remote
+            certificate.</p></dd><dt id="widl-RTCTransportStats-rtcpTransportStatsId"><code>rtcpTransportStatsId</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p>If RTP and RTCP are not multiplexed, this is the <code>id</code> 
+            of the transport that gives stats for the RTCP component, and this 
+            record has only the RTP component stats.</p></dd><dt id="widl-RTCTransportStats-selectedCandidatePairId"><code>selectedCandidatePairId</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p>It is a unique identifier that is associated to the object
+          that was inspected to produce the <code>RTCIceCandidatePairStats</code>
+          associated with this transport.</p></dd></dl></section>
+      </section>
+
+      <section id="icecandidate-dict*" typeof="bibo:Chapter" resource="#icecandidate-dict*" property="bibo:hasPart">
+        <h3 id="h-icecandidate-dict" resource="#h-icecandidate-dict"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.7 </span>RTCIceCandidateAttributes dictionary</span></h3>
+        <p>
+          <code>RTCIceCandidateAttributes</code> reflects the properties of a
+          <code>candidate</code> in Section 15.1 of [<cite><a class="bibref" href="#bib-RFC5245">RFC5245</a></cite>].
+        </p>
+        
+        <pre class="idl"><span class="idlDictionary" id="idl-def-RTCIceCandidateAttributes">dictionary <span class="idlDictionaryID">RTCIceCandidateAttributes</span> : <span class="idlSuperclass">RTCStats</span> {
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>                <span class="idlMemberName"><a href="#widl-RTCIceCandidateAttributes-ipAddress">ipAddress</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">long</span>                     <span class="idlMemberName"><a href="#widl-RTCIceCandidateAttributes-portNumber">portNumber</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>                <span class="idlMemberName"><a href="#widl-RTCIceCandidateAttributes-transport">transport</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType"><a href="#idl-def-RTCStatsIceCandidateType" class="idlType"><code>RTCStatsIceCandidateType</code></a></span> <span class="idlMemberName"><a href="#widl-RTCIceCandidateAttributes-candidateType">candidateType</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">long</span>                     <span class="idlMemberName"><a href="#widl-RTCIceCandidateAttributes-priority">priority</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>                <span class="idlMemberName"><a href="#widl-RTCIceCandidateAttributes-addressSourceUrl">addressSourceUrl</a></span>;</span>
+};</span></pre><section id="dictionary-rtcicecandidateattributes-members" typeof="bibo:Chapter" resource="#dictionary-rtcicecandidateattributes-members" property="bibo:hasPart"><h4 id="h-dictionary-rtcicecandidateattributes-members" resource="#h-dictionary-rtcicecandidateattributes-members"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.7.1 </span>Dictionary <a class="idlType" href="#idl-def-RTCIceCandidateAttributes"><code>RTCIceCandidateAttributes</code></a> Members</span></h4><dl class="dictionary-members"><dt id="widl-RTCIceCandidateAttributes-addressSourceUrl"><code>addressSourceUrl</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p>The URL of the TURN or STUN server indicated in the
+            <code>RTCIceServers</code> that translated this IP address.</p></dd><dt id="widl-RTCIceCandidateAttributes-candidateType"><code>candidateType</code> of type <span class="idlMemberType"><a href="#idl-def-RTCStatsIceCandidateType" class="idlType"><code>RTCStatsIceCandidateType</code></a></span>,         </dt><dd><p>The enumeration <a href="#idl-def-RTCStatsIceCandidateType" class="idlType"><code>RTCStatsIceCandidateType</code></a> is based on the
+            <code>cand-type</code> defined in [<cite><a class="bibref" href="#bib-RFC5245">RFC5245</a></cite>] section 15.1.</p></dd><dt id="widl-RTCIceCandidateAttributes-ipAddress"><code>ipAddress</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p>It is the IP address of the candidate, allowing for IPv4
+            addresses, IPv6 addresses, and fully qualified domain names (FQDNs).
+            See [<cite><a class="bibref" href="#bib-RFC5245">RFC5245</a></cite>] section 15.1 for details.</p></dd><dt id="widl-RTCIceCandidateAttributes-portNumber"><code>portNumber</code> of type <span class="idlMemberType">long</span>,         </dt><dd><p>It is the port number of the candidate.</p></dd><dt id="widl-RTCIceCandidateAttributes-priority"><code>priority</code> of type <span class="idlMemberType">long</span>,         </dt><dd><p>Calculated as defined in [<cite><a class="bibref" href="#bib-RFC5245">RFC5245</a></cite>] section 15.1.</p></dd><dt id="widl-RTCIceCandidateAttributes-transport"><code>transport</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p>Valid values for transport is one of <code>udp</code> and
+            <code>tcp</code>. Based on the "transport" defined in [<cite><a class="bibref" href="#bib-RFC5245">RFC5245</a></cite>]
+            section 15.1.</p></dd></dl></section>
+
+        <section id="rtcstatsicecandidatetype-enum" typeof="bibo:Chapter" resource="#rtcstatsicecandidatetype-enum" property="bibo:hasPart">
+          <h4 id="h-rtcstatsicecandidatetype-enum" resource="#h-rtcstatsicecandidatetype-enum"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.7.2 </span><dfn data-dfn-type="dfn" id="dfn-rtcstatsicecandidatetype">RTCStatsIceCandidateType</dfn> enum</span></h4>
+          <pre class="idl"><span class="idlEnum" id="idl-def-RTCStatsIceCandidateType">enum <span class="idlEnumID">RTCStatsIceCandidateType</span> {
+    "<a href="#idl-def-RTCStatsIceCandidateType.host" class="idlEnumItem">host</a>",
+    "<a href="#idl-def-RTCStatsIceCandidateType.serverreflexive" class="idlEnumItem">serverreflexive</a>",
+    "<a href="#idl-def-RTCStatsIceCandidateType.peerreflexive" class="idlEnumItem">peerreflexive</a>",
+    "<a href="#idl-def-RTCStatsIceCandidateType.relayed" class="idlEnumItem">relayed</a>"
+};</span></pre><table class="simple"><tbody><tr><th colspan="2">Enumeration description</th></tr><tr><td><code id="idl-def-RTCStatsIceCandidateType.host">host</code></td><td><p>Defined in Section 4.1.1.1 of [<cite><a class="bibref" href="#bib-RFC5245">RFC5245</a></cite>].</p></td></tr><tr><td><code id="idl-def-RTCStatsIceCandidateType.serverreflexive">serverreflexive</code></td><td><p>Defined in Section 4.1.1.2 of [<cite><a class="bibref" href="#bib-RFC5245">RFC5245</a></cite>].</p></td></tr><tr><td><code id="idl-def-RTCStatsIceCandidateType.peerreflexive">peerreflexive</code></td><td><p>Defined in Section 4.1.1.2 of [<cite><a class="bibref" href="#bib-RFC5245">RFC5245</a></cite>].</p></td></tr><tr><td><code id="idl-def-RTCStatsIceCandidateType.relayed">relayed</code></td><td><p>Defined in Section 7.1.3.2.1 of [<cite><a class="bibref" href="#bib-RFC5245">RFC5245</a></cite>].</p></td></tr></tbody></table>
+        </section>
+      </section>
+
+
+      <section id="candidatepair-dict*" typeof="bibo:Chapter" resource="#candidatepair-dict*" property="bibo:hasPart">
+        <h3 id="h-candidatepair-dict" resource="#h-candidatepair-dict"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.8 </span><dfn data-dfn-type="dfn" id="dfn-rtcicecandidatepairstats">RTCIceCandidatePairStats</dfn> dictionary</span></h3>
+
+        <pre class="idl"><span class="idlDictionary" id="idl-def-RTCIceCandidatePairStats">dictionary <span class="idlDictionaryID">RTCIceCandidatePairStats</span> : <span class="idlSuperclass">RTCStats</span> {
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>                     <span class="idlMemberName"><a href="#widl-RTCIceCandidatePairStats-transportId">transportId</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>                     <span class="idlMemberName"><a href="#widl-RTCIceCandidatePairStats-localCandidateId">localCandidateId</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">DOMString</span>                     <span class="idlMemberName"><a href="#widl-RTCIceCandidatePairStats-remoteCandidateId">remoteCandidateId</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType"><a href="#idl-def-RTCStatsIceCandidatePairState" class="idlType"><code>RTCStatsIceCandidatePairState</code></a></span> <span class="idlMemberName"><a href="#widl-RTCIceCandidatePairStats-state">state</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long long</span>            <span class="idlMemberName"><a href="#widl-RTCIceCandidatePairStats-priority">priority</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">boolean</span>                       <span class="idlMemberName"><a href="#widl-RTCIceCandidatePairStats-nominated">nominated</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">boolean</span>                       <span class="idlMemberName"><a href="#widl-RTCIceCandidatePairStats-writable">writable</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">boolean</span>                       <span class="idlMemberName"><a href="#widl-RTCIceCandidatePairStats-readable">readable</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long long</span>            <span class="idlMemberName"><a href="#widl-RTCIceCandidatePairStats-bytesSent">bytesSent</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">unsigned long long</span>            <span class="idlMemberName"><a href="#widl-RTCIceCandidatePairStats-bytesReceived">bytesReceived</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">double</span>                        <span class="idlMemberName"><a href="#widl-RTCIceCandidatePairStats-roundTripTime">roundTripTime</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">double</span>                        <span class="idlMemberName"><a href="#widl-RTCIceCandidatePairStats-availableOutgoingBitrate">availableOutgoingBitrate</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">double</span>                        <span class="idlMemberName"><a href="#widl-RTCIceCandidatePairStats-availableIncomingBitrate">availableIncomingBitrate</a></span>;</span>
+};</span></pre><section id="dictionary-rtcicecandidatepairstats-members" typeof="bibo:Chapter" resource="#dictionary-rtcicecandidatepairstats-members" property="bibo:hasPart"><h4 id="h-dictionary-rtcicecandidatepairstats-members" resource="#h-dictionary-rtcicecandidatepairstats-members"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.8.1 </span>Dictionary <a class="idlType" href="#idl-def-RTCIceCandidatePairStats"><code>RTCIceCandidatePairStats</code></a> Members</span></h4><dl class="dictionary-members"><dt id="widl-RTCIceCandidatePairStats-availableIncomingBitrate"><code>availableIncomingBitrate</code> of type <span class="idlMemberType">double</span>,         </dt><dd><p>Measured in Bits per second, and is implementation dependent.
+            It may be calculated by the underlying congestion control.</p></dd><dt id="widl-RTCIceCandidatePairStats-availableOutgoingBitrate"><code>availableOutgoingBitrate</code> of type <span class="idlMemberType">double</span>,         </dt><dd><p>Measured in Bits per second, and is implementation dependent.
+            It may be calculated by the underlying congestion control.</p></dd><dt id="widl-RTCIceCandidatePairStats-bytesReceived"><code>bytesReceived</code> of type <span class="idlMemberType">unsigned long long</span>,         </dt><dd><p>Represents the total number of payload bytes received on this
+          candidate pair, i.e., not including headers or padding.</p></dd><dt id="widl-RTCIceCandidatePairStats-bytesSent"><code>bytesSent</code> of type <span class="idlMemberType">unsigned long long</span>,         </dt><dd><p>Represents the total number of payload bytes sent on this
+          candidate pair, i.e., not including headers or padding.</p></dd><dt id="widl-RTCIceCandidatePairStats-localCandidateId"><code>localCandidateId</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p>It is a unique identifier that is associated to the object
+          that was inspected to produce the <code>RTCIceCandidateAttributes</code>
+          for the local candidate associated with this candidate pair.</p></dd><dt id="widl-RTCIceCandidatePairStats-nominated"><code>nominated</code> of type <span class="idlMemberType">boolean</span>,         </dt><dd><p>Related to updating the nominated flag described in Section
+            7.1.3.2.4 of [<cite><a class="bibref" href="#bib-RFC5245">RFC5245</a></cite>].</p></dd><dt id="widl-RTCIceCandidatePairStats-priority"><code>priority</code> of type <span class="idlMemberType">unsigned long long</span>,         </dt><dd><p>Calculated from candidate priorities as defined in
+            [<cite><a class="bibref" href="#bib-RFC5245">RFC5245</a></cite>] section 5.7.2.</p></dd><dt id="widl-RTCIceCandidatePairStats-readable"><code>readable</code> of type <span class="idlMemberType">boolean</span>,         </dt><dd><p>Has gotten a valid incoming ICE request.</p></dd><dt id="widl-RTCIceCandidatePairStats-remoteCandidateId"><code>remoteCandidateId</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p>It is a unique identifier that is associated to the object
+          that was inspected to produce the <code>RTCIceCandidateAttributes</code>
+          for the remote candidate associated with this candidate pair.</p></dd><dt id="widl-RTCIceCandidatePairStats-roundTripTime"><code>roundTripTime</code> of type <span class="idlMemberType">double</span>,         </dt><dd><p>Represents the RTT computed by the STUN connectivity checks 
+          [<cite><a class="bibref" href="#bib-STUN-PATH-CHAR">STUN-PATH-CHAR</a></cite>].</p></dd><dt id="widl-RTCIceCandidatePairStats-state"><code>state</code> of type <span class="idlMemberType"><a href="#idl-def-RTCStatsIceCandidatePairState" class="idlType"><code>RTCStatsIceCandidatePairState</code></a></span>,         </dt><dd><p>Represents the state of the checklist for the local and
+          remote candidates in a pair.</p></dd><dt id="widl-RTCIceCandidatePairStats-transportId"><code>transportId</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p>It is a unique identifier that is associated to the object
+          that was inspected to produce the <code>RTCTransportStats</code>
+          associated with this candidate pair.</p></dd><dt id="widl-RTCIceCandidatePairStats-writable"><code>writable</code> of type <span class="idlMemberType">boolean</span>,         </dt><dd><p>Has gotten ACK to an ICE request.</p></dd></dl></section>
+        <div class="note"><div class="note-title" aria-level="4" role="heading" id="h-note2"><span>Note</span></div><div class="">
+            OPEN ISSUE: do the bitrate metrics need refs?
+          </div></div>
+
+        <section id="rtcstatsicecandidatepairstate-enum" typeof="bibo:Chapter" resource="#rtcstatsicecandidatepairstate-enum" property="bibo:hasPart">
+          <h4 id="h-rtcstatsicecandidatepairstate-enum" resource="#h-rtcstatsicecandidatepairstate-enum"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.8.2 </span><dfn data-dfn-type="dfn" id="dfn-rtcstatsicecandidatepairstate">RTCStatsIceCandidatePairState</dfn> enum</span></h4>
+          <pre class="idl"><span class="idlEnum" id="idl-def-RTCStatsIceCandidatePairState">enum <span class="idlEnumID">RTCStatsIceCandidatePairState</span> {
+    "<a href="#idl-def-RTCStatsIceCandidatePairState.frozen" class="idlEnumItem">frozen</a>",
+    "<a href="#idl-def-RTCStatsIceCandidatePairState.waiting" class="idlEnumItem">waiting</a>",
+    "<a href="#idl-def-RTCStatsIceCandidatePairState.inprogress" class="idlEnumItem">inprogress</a>",
+    "<a href="#idl-def-RTCStatsIceCandidatePairState.failed" class="idlEnumItem">failed</a>",
+    "<a href="#idl-def-RTCStatsIceCandidatePairState.succeeded" class="idlEnumItem">succeeded</a>",
+    "<a href="#idl-def-RTCStatsIceCandidatePairState.cancelled" class="idlEnumItem">cancelled</a>"
+};</span></pre><table class="simple"><tbody><tr><th colspan="2">Enumeration description</th></tr><tr><td><code id="idl-def-RTCStatsIceCandidatePairState.frozen">frozen</code></td><td><p>Defined in Section 5.7.4 of [<cite><a class="bibref" href="#bib-RFC5245">RFC5245</a></cite>].</p></td></tr><tr><td><code id="idl-def-RTCStatsIceCandidatePairState.waiting">waiting</code></td><td><p>Defined in Section 5.7.4 of [<cite><a class="bibref" href="#bib-RFC5245">RFC5245</a></cite>].</p></td></tr><tr><td><code id="idl-def-RTCStatsIceCandidatePairState.inprogress">inprogress</code></td><td><p>Defined in Section 5.7.4 of [<cite><a class="bibref" href="#bib-RFC5245">RFC5245</a></cite>].</p></td></tr><tr><td><code id="idl-def-RTCStatsIceCandidatePairState.failed">failed</code></td><td><p>Defined in Section 5.7.4 of [<cite><a class="bibref" href="#bib-RFC5245">RFC5245</a></cite>].</p></td></tr><tr><td><code id="idl-def-RTCStatsIceCandidatePairState.succeeded">succeeded</code></td><td><p>Defined in Section 5.7.4 of [<cite><a class="bibref" href="#bib-RFC5245">RFC5245</a></cite>].</p></td></tr><tr><td><code id="idl-def-RTCStatsIceCandidatePairState.cancelled">cancelled</code></td><td><p>Defined in Section 5.7.4 of [<cite><a class="bibref" href="#bib-RFC5245">RFC5245</a></cite>].</p></td></tr></tbody></table>
+        </section>
+      </section>
+
+      <section id="certificatestats-dict*" typeof="bibo:Chapter" resource="#certificatestats-dict*" property="bibo:hasPart">
+        <h3 id="h-certificatestats-dict" resource="#h-certificatestats-dict"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.9 </span>RTCCertificateStats dictionary</span></h3>
+        <pre class="idl"><span class="idlDictionary" id="idl-def-RTCCertificateStats">dictionary <span class="idlDictionaryID">RTCCertificateStats</span> : <span class="idlSuperclass">RTCStats</span> {
+<span class="idlMember">             <span class="idlMemberType">DOMString</span> <span class="idlMemberName"><a href="#widl-RTCCertificateStats-fingerprint">fingerprint</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">DOMString</span> <span class="idlMemberName"><a href="#widl-RTCCertificateStats-fingerprintAlgorithm">fingerprintAlgorithm</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">DOMString</span> <span class="idlMemberName"><a href="#widl-RTCCertificateStats-baseCertificate">base64Certificate</a></span>;</span>
+<span class="idlMember">             <span class="idlMemberType">DOMString</span> <span class="idlMemberName"><a href="#widl-RTCCertificateStats-issuerCertificateId">issuerCertificateId</a></span>;</span>
+};</span></pre><section id="dictionary-rtccertificatestats-members" typeof="bibo:Chapter" resource="#dictionary-rtccertificatestats-members" property="bibo:hasPart"><h4 id="h-dictionary-rtccertificatestats-members" resource="#h-dictionary-rtccertificatestats-members"><span property="xhv:role" resource="xhv:heading"><span class="secno">4.9.1 </span>Dictionary <a class="idlType" href="#idl-def-RTCCertificateStats"><code>RTCCertificateStats</code></a> Members</span></h4><dl class="dictionary-members"><dt id="widl-RTCCertificateStats-baseCertificate"><code>base64Certificate</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p>For example, DER-encoded, base-64 representation of a
+            certifiate.</p></dd><dt id="widl-RTCCertificateStats-fingerprint"><code>fingerprint</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p>Only use the fingerprint value as defined in Section 5 of
+          [<cite><a class="bibref" href="#bib-RFC4572">RFC4572</a></cite>].</p></dd><dt id="widl-RTCCertificateStats-fingerprintAlgorithm"><code>fingerprintAlgorithm</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p>For instance, "sha-256".</p></dd><dt id="widl-RTCCertificateStats-issuerCertificateId"><code>issuerCertificateId</code> of type <span class="idlMemberType">DOMString</span>,         </dt><dd><p></p></dd></dl></section>
+      </section>
+
+    </section>
+
+
+
+    <section id="example-1" typeof="bibo:Chapter" resource="#example-1" property="bibo:hasPart">
+      <!--OddPage--><h2 id="h-example-1" resource="#h-example-1"><span property="xhv:role" resource="xhv:heading"><span class="secno">5. </span>Example</span></h2>
+
+      <p>Consider the case where the user is experiencing bad sound and the
+      application wants to determine if the cause of it is packet loss. The
+      following example code might be used:</p>
+      <div class="example"><div class="example-title"><span>Example 1</span></div><pre class="example highlight prettyprint prettyprinted" xml:space="preserve"><span class="kwd">var</span><span class="pln"> baselineReport</span><span class="pun">,</span><span class="pln"> currentReport</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> selector </span><span class="pun">=</span><span class="pln"> pc</span><span class="pun">.</span><span class="pln">getRemoteStreams</span><span class="pun">()[</span><span class="lit">0</span><span class="pun">].</span><span class="pln">getAudioTracks</span><span class="pun">()[</span><span class="lit">0</span><span class="pun">];</span><span class="pln">
+
+pc</span><span class="pun">.</span><span class="pln">getStats</span><span class="pun">(</span><span class="pln">selector</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="pln">report</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    baselineReport </span><span class="pun">=</span><span class="pln"> report</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">},</span><span class="pln"> logError</span><span class="pun">);</span><span class="pln">
+
+</span><span class="com">// ... wait a bit</span><span class="pln">
+setTimeout</span><span class="pun">(</span><span class="kwd">function</span><span class="pln"> </span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    pc</span><span class="pun">.</span><span class="pln">getStats</span><span class="pun">(</span><span class="pln">selector</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="pln">report</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        currentReport </span><span class="pun">=</span><span class="pln"> report</span><span class="pun">;</span><span class="pln">
+        processStats</span><span class="pun">();</span><span class="pln">
+    </span><span class="pun">},</span><span class="pln"> logError</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">},</span><span class="pln"> aBit</span><span class="pun">);</span><span class="pln">
+
+</span><span class="kwd">function</span><span class="pln"> processStats</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// compare the elements from the current report with the baseline</span><span class="pln">
+    </span><span class="kwd">for</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">var</span><span class="pln"> i </span><span class="kwd">in</span><span class="pln"> currentReport</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">var</span><span class="pln"> now </span><span class="pun">=</span><span class="pln"> currentReport</span><span class="pun">[</span><span class="pln">i</span><span class="pun">];</span><span class="pln">
+        </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">now</span><span class="pun">.</span><span class="pln">type </span><span class="pun">!=</span><span class="pln"> </span><span class="str">"outbund-rtp"</span><span class="pun">)</span><span class="pln">
+            </span><span class="kwd">continue</span><span class="pun">;</span><span class="pln">
+
+        </span><span class="com">// get the corresponding stats from the baseline report</span><span class="pln">
+        </span><span class="kwd">base</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> baselineReport</span><span class="pun">[</span><span class="pln">now</span><span class="pun">.</span><span class="pln">id</span><span class="pun">];</span><span class="pln">
+
+        </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">base</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            remoteNow </span><span class="pun">=</span><span class="pln"> currentReport</span><span class="pun">[</span><span class="pln">now</span><span class="pun">.</span><span class="pln">remoteId</span><span class="pun">];</span><span class="pln">
+            remoteBase </span><span class="pun">=</span><span class="pln"> baselineReport</span><span class="pun">[</span><span class="kwd">base</span><span class="pun">.</span><span class="pln">remoteId</span><span class="pun">];</span><span class="pln">
+
+            </span><span class="kwd">var</span><span class="pln"> packetsSent </span><span class="pun">=</span><span class="pln"> now</span><span class="pun">.</span><span class="pln">packetsSent </span><span class="pun">-</span><span class="pln"> </span><span class="kwd">base</span><span class="pun">.</span><span class="pln">packetsSent</span><span class="pun">;</span><span class="pln">
+            </span><span class="kwd">var</span><span class="pln"> packetsReceived </span><span class="pun">=</span><span class="pln"> remoteNow</span><span class="pun">.</span><span class="pln">packetsReceived </span><span class="pun">-</span><span class="pln"> remoteBase</span><span class="pun">.</span><span class="pln">packetsReceived</span><span class="pun">;</span><span class="pln">
+
+            </span><span class="com">// if fractionLost is &gt; 0.3, we have probably found the culprit</span><span class="pln">
+            </span><span class="kwd">var</span><span class="pln"> fractionLost </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="pln">packetsSent </span><span class="pun">-</span><span class="pln"> packetsReceived</span><span class="pun">)</span><span class="pln"> </span><span class="pun">/</span><span class="pln"> packetsSent</span><span class="pun">;</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">function</span><span class="pln"> logError</span><span class="pun">(</span><span class="pln">error</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    log</span><span class="pun">(</span><span class="pln">error</span><span class="pun">.</span><span class="pln">name </span><span class="pun">+</span><span class="pln"> </span><span class="str">": "</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> error</span><span class="pun">.</span><span class="pln">message</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">}</span></pre></div>
+    </section>
+
+    <section id="security-considerations" typeof="bibo:Chapter" resource="#security-considerations" property="bibo:hasPart">
+      <!--OddPage--><h2 id="h-security-considerations" resource="#h-security-considerations"><span property="xhv:role" resource="xhv:heading"><span class="secno">6. </span>Security Considerations</span></h2>
+      <p>
+        Some stats identifiers may expose personally identifiable information,
+        for example the IP addresses of the participating endpoints when a
+        TURN relay is not used.
+        <!-- TODO: add guidance on how to not expose this information? -->
+      </p>
+    </section>
+
+    <section id="change-log*" typeof="bibo:Chapter" resource="#change-log*" property="bibo:hasPart">
+      <!--OddPage--><h2 id="h-change-log" resource="#h-change-log"><span property="xhv:role" resource="xhv:heading"><span class="secno">7. </span>Change Log</span></h2>
+
+      <p>This section will be removed before publication.</p>
+      <section id="since-30-Sept-2014*" typeof="bibo:Chapter" resource="#since-30-Sept-2014*" property="bibo:hasPart">
+        <h3 id="h-since-30-sept-2014" resource="#h-since-30-sept-2014"><span property="xhv:role" resource="xhv:heading"><span class="secno">7.1 </span>Changes since 30 September 2014</span></h3>
+        <ol>
+          <li>kept getStats() in webrtc-pc. Changed RTCStatsType from enum to DOMString.</li>
+          <li>Added "datachannel" to RTCStatsType.</li>
+          <li>Added fractionLost to RTCInboundRTPStreamStats.</li>
+          <li>Clarified that bytesSent and bytesReceived do no include headers or paddings.</li>
+        </ol>
+    </section>
+
+    <section class="appendix" id="acknowledgements" typeof="bibo:Chapter" resource="#acknowledgements" property="bibo:hasPart">
+      <h3 id="h-acknowledgements" resource="#h-acknowledgements"><span property="xhv:role" resource="xhv:heading"><span class="secno">7.2 </span>Acknowledgements</span></h3>
+      <p>
+        The editors wish to thank the Working Group chairs, Stefan Håkansson,
+        and Team Contact, Dominique Hazaël-Massieux, for their support.
+
+        The editors would like to thank
+          Cullen Jennings
+        for their contributions to this specification.
+      </p>
+    </section>
+
+  
+
+</section><section id="references" class="appendix" typeof="bibo:Chapter" resource="#references" property="bibo:hasPart"><!--OddPage--><h2 id="h-references" resource="#h-references"><span property="xhv:role" resource="xhv:heading"><span class="secno">A. </span>References</span></h2><section id="normative-references" typeof="bibo:Chapter" resource="#normative-references" property="bibo:hasPart"><h3 id="h-normative-references" resource="#h-normative-references"><span property="xhv:role" resource="xhv:heading"><span class="secno">A.1 </span>Normative references</span></h3><dl class="bibliography" resource=""><dt id="bib-ECHO">[ECHO]</dt><dd>ITU-T G.168. <a href="https://www.itu.int/rec/T-REC-G.168/en" property="dc:requires"><cite>Digital network echo cancellers</cite></a>. Standard. URL: <a href="https://www.itu.int/rec/T-REC-G.168/en" property="dc:requires">https://www.itu.int/rec/T-REC-G.168/en</a>
+</dd><dt id="bib-GETUSERMEDIA">[GETUSERMEDIA]</dt><dd>Daniel Burnett; Adam Bergkvist; Cullen Jennings; Anant Narayanan. <a href="http://www.w3.org/TR/mediacapture-streams/" property="dc:requires"><cite>Media Capture and Streams</cite></a>. 14 April 2015. W3C Last Call Working Draft. URL: <a href="http://www.w3.org/TR/mediacapture-streams/" property="dc:requires">http://www.w3.org/TR/mediacapture-streams/</a>
+</dd><dt id="bib-HTML5">[HTML5]</dt><dd>Ian Hickson; Robin Berjon; Steve Faulkner; Travis Leithead; Erika Doyle Navara; Edward O'Connor; Silvia Pfeiffer. <a href="http://www.w3.org/TR/html5/" property="dc:requires"><cite>HTML5</cite></a>. 28 October 2014. W3C Recommendation. URL: <a href="http://www.w3.org/TR/html5/" property="dc:requires">http://www.w3.org/TR/html5/</a>
+</dd><dt id="bib-MEDIA-SOURCE">[MEDIA-SOURCE]</dt><dd>Aaron Colwell; Adrian Bateman; Mark Watson. <a href="http://www.w3.org/TR/media-source/" property="dc:requires"><cite>Media Source Extensions</cite></a>. 31 March 2015. W3C Candidate Recommendation. URL: <a href="http://www.w3.org/TR/media-source/" property="dc:requires">http://www.w3.org/TR/media-source/</a>
+</dd><dt id="bib-RFC2119">[RFC2119]</dt><dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119" property="dc:requires"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119" property="dc:requires">https://tools.ietf.org/html/rfc2119</a>
+</dd><dt id="bib-RFC3550">[RFC3550]</dt><dd>H. Schulzrinne; S. Casner; R. Frederick; V. Jacobson. <a href="https://tools.ietf.org/html/rfc3550" property="dc:requires"><cite>RTP: A Transport Protocol for Real-Time Applications</cite></a>. July 2003. Internet Standard. URL: <a href="https://tools.ietf.org/html/rfc3550" property="dc:requires">https://tools.ietf.org/html/rfc3550</a>
+</dd><dt id="bib-RFC4572">[RFC4572]</dt><dd>J. Lennox. <a href="https://tools.ietf.org/html/rfc4572" property="dc:requires"><cite>Connection-Oriented Media Transport over the Transport Layer Security (TLS) Protocol in the Session Description Protocol (SDP)</cite></a>. July 2006. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc4572" property="dc:requires">https://tools.ietf.org/html/rfc4572</a>
+</dd><dt id="bib-RFC4585">[RFC4585]</dt><dd>J. Ott; S. Wenger; N. Sato; C. Burmeister; J. Rey. <a href="https://tools.ietf.org/html/rfc4585" property="dc:requires"><cite>Extended RTP Profile for Real-time Transport Control Protocol (RTCP)-Based Feedback (RTP/AVPF)</cite></a>. July 2006. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc4585" property="dc:requires">https://tools.ietf.org/html/rfc4585</a>
+</dd><dt id="bib-RFC5104">[RFC5104]</dt><dd>S. Wenger; U. Chandra; M. Westerlund; B. Burman. <a href="https://tools.ietf.org/html/rfc5104" property="dc:requires"><cite>Codec Control Messages in the RTP Audio-Visual Profile with Feedback (AVPF)</cite></a>. February 2008. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc5104" property="dc:requires">https://tools.ietf.org/html/rfc5104</a>
+</dd><dt id="bib-RFC5245">[RFC5245]</dt><dd>J. Rosenberg. <a href="https://tools.ietf.org/html/rfc5245" property="dc:requires"><cite>Interactive Connectivity Establishment (ICE): A Protocol for Network Address Translator (NAT) Traversal for Offer/Answer Protocols</cite></a>. April 2010. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc5245" property="dc:requires">https://tools.ietf.org/html/rfc5245</a>
+</dd><dt id="bib-RFC6464">[RFC6464]</dt><dd>J. Lennox, Ed.; E. Ivov; E. Marocco. <a href="https://tools.ietf.org/html/rfc6464" property="dc:requires"><cite>A Real-time Transport Protocol (RTP) Header Extension for Client-to-Mixer Audio Level Indication</cite></a>. December 2011. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6464" property="dc:requires">https://tools.ietf.org/html/rfc6464</a>
+</dd><dt id="bib-STUN-PATH-CHAR">[STUN-PATH-CHAR]</dt><dd>T. Reddy; D. Wing; P. Martinsen; V. Singh. <a href="https://tools.ietf.org/html/draft-reddy-tram-stun-path-data" property="dc:requires"><cite>Discovery of path characteristics using STUN</cite></a>. Internet Draft. URL: <a href="https://tools.ietf.org/html/draft-reddy-tram-stun-path-data" property="dc:requires">https://tools.ietf.org/html/draft-reddy-tram-stun-path-data</a>
+</dd><dt id="bib-WEBRTC">[WEBRTC]</dt><dd>Adam Bergkvist; Daniel Burnett; Cullen Jennings; Anant Narayanan. <a href="http://www.w3.org/TR/webrtc/" property="dc:requires"><cite>WebRTC 1.0: Real-time Communication Between Browsers</cite></a>. 10 February 2015. W3C Working Draft. URL: <a href="http://www.w3.org/TR/webrtc/" property="dc:requires">http://www.w3.org/TR/webrtc/</a>
+</dd></dl></section><section id="informative-references" typeof="bibo:Chapter" resource="#informative-references" property="bibo:hasPart"><h3 id="h-informative-references" resource="#h-informative-references"><span property="xhv:role" resource="xhv:heading"><span class="secno">A.2 </span>Informative references</span></h3><dl class="bibliography" resource=""><dt id="bib-RFC2032">[RFC2032]</dt><dd>T. Turletti; C. Huitema. <a href="https://tools.ietf.org/html/rfc2032" property="dc:references"><cite>RTP Payload Format for H.261 Video Streams</cite></a>. October 1996. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc2032" property="dc:references">https://tools.ietf.org/html/rfc2032</a>
+</dd><dt id="bib-RFC4587">[RFC4587]</dt><dd>R. Even. <a href="https://tools.ietf.org/html/rfc4587" property="dc:references"><cite>RTP Payload Format for H.261 Video Streams</cite></a>. August 2006. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc4587" property="dc:references">https://tools.ietf.org/html/rfc4587</a>
+</dd><dt id="bib-WEBIDL">[WEBIDL]</dt><dd>Cameron McCormack; Boris Zbarsky. <a href="http://www.w3.org/TR/WebIDL-1/" property="dc:references"><cite>WebIDL Level 1</cite></a>. 4 August 2015. W3C Working Draft. URL: <a href="http://www.w3.org/TR/WebIDL-1/" property="dc:references">http://www.w3.org/TR/WebIDL-1/</a>
+</dd><dt id="bib-XRBLOCK-STATS">[XRBLOCK-STATS]</dt><dd>Varun Singh; Rachel Huang; Roni Even; Dan Romascanu; Lingli Deng. <a href="https://tools.ietf.org/html/draft-ietf-xrblock-rtcweb-rtcp-xr-metrics" property="dc:references"><cite>RTCP XR Metrics for WebRTC</cite></a>. Internet Draft. URL: <a href="https://tools.ietf.org/html/draft-ietf-xrblock-rtcweb-rtcp-xr-metrics" property="dc:references">https://tools.ietf.org/html/draft-ietf-xrblock-rtcweb-rtcp-xr-metrics</a>
+</dd></dl></section></section></body></html>
