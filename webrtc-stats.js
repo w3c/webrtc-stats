@@ -20,7 +20,7 @@ var respecConfig = {
       prevED: "https://w3c.github.io/webrtc-stats/archives/20150203/webrtc-stats.html",
 
       // if there a publicly available Editor's Draft, this is the link
-      edDraftURI: "http://w3c.github.io/webrtc-stats/",
+      edDraftURI: "https://w3c.github.io/webrtc-stats/",
 
       // if this is a LCWD, uncomment and set the end of its review period
       // lcEnd: "2009-08-05",
@@ -50,7 +50,7 @@ var respecConfig = {
       wg:           "Web Real-Time Communications Working Group",
 
       // URI of the public WG page
-      wgURI:        "http://www.w3.org/2011/04/webrtc/",
+      wgURI:        "https://www.w3.org/2011/04/webrtc/",
 
       // name (without the @w3c.org) of the public mailing to which comments are due
       wgPublicList: "public-webrtc",
@@ -60,8 +60,7 @@ var respecConfig = {
       // This is important for Rec-track documents, do not copy a patent URI from a random
       // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
       // Team Contact.
-      // TODO: confirm wgPatentURI
-      wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/47318/status",
+      wgPatentURI:  "https://www.w3.org/2004/01/pp-impl/47318/status",
       localBiblio:  {
         "XRBLOCK-STATS": {
             title:    "RTCP XR Metrics for WebRTC",
