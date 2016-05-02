@@ -539,17 +539,17 @@ stats [
           <dd><p>Measured in Bits per second, and is implementation dependent.
             It may be calculated by the underlying congestion control.</p></dd>
           <dt>double totalRoundTripTime</dt>
-          <dd><p>Represents the total round trip time in ms for connectivity checks.</p></dd>
+          <dd><p>Represents the total round trip time in ms (for non-retransmitted connectivity checks only).</p></dd>
           <dt>unsigned long long responses</dt>
           <dd><p>Total number of connectivity check responses received.</p></dd>
           <dt>unsigned long long retransmissions</dt>
           <dd><p>Total number of connectivity check retransmissions.</p></dd>
-          <dt>double bindingTotalRoundTripTime</dt>
-          <dd><p>Represents the total round trip time in ms for binding request/responses.</p></dd>
-          <dt>unsigned long long bindingRequests</dt>
-          <dd><p>Total number of binding requests sent.</p></dd>
-          <dt>unsigned long long bindingResponses</dt>
-          <dd><p>Total number of binding responses received.</p></dd>
+          <dt>double consentTotalRoundTripTime</dt>
+          <dd><p>Represents the total round trip time in ms for consent request/responses.</p></dd>
+          <dt>unsigned long long consentRequests</dt>
+          <dd><p>Total number of consent requests sent.</p></dd>
+          <dt>unsigned long long consentResponses</dt>
+          <dd><p>Total number of consent responses received.</p></dd>
         </dl>
         <div class="note">
             OPEN ISSUE: do the bitrate metrics need refs?
