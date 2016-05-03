@@ -341,8 +341,12 @@ stats [
 	  <p>An RTCMediaStreamTrackStats object represents the stats about a
 	  MediaStreamTrakc's connection to the PeerConnection object for which
 	  one calls getStats.</p>
-	  <p>It appears in the stats as soon as it is attached. If it is
-	    detached, it continues to appear, but with the "detached" member
+	  <p>It appears in the stats as soon as it is attached (via
+	    addTrack, via addTransceiver, via ReplaceTrack on an
+	    RTPSender object, or via
+	    being created on an RTPReceiver object). If it is
+	    detached (via removeTrack or via replaceTrack), it
+	    continues to appear, but with the "detached" member
 	    set to True.</p>
           <dl class="idl" title="dictionary RTCMediaStreamTrackStats : RTCStats">
              <dt>DOMString trackIdentifier</dt>
