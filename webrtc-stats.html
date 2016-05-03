@@ -450,47 +450,36 @@ stats [
       </section>
 
       <section id="icecandidate-dict*">
-        <h3>RTCIceCandidateAttributes dictionary</h3>
+        <h3>RTCIceCandidateStats dictionary</h3>
         <p>
-          <code>RTCIceCandidateAttributes</code> reflects the properties of a
-          <code>candidate</code> in Section 15.1 of [[!RFC5245]].
+          <code>RTCIceCandidateStats</code> reflects the properties of a
+          <code>candidate</code> in Section 15.1 of [[!RFC5245]]. It
+	  corresponds to a <code>RTCIceCandidate</code> object.
         </p>
         
-        <dl class="idl" title="dictionary RTCIceCandidateAttributes : RTCStats">
-          <dt>DOMString ipAddress</dt>
+        <dl class="idl" title="dictionary RTCIceCandidateStats : RTCStats">
+          <dt>DOMString ip</dt>
           <dd><p>It is the IP address of the candidate, allowing for IPv4
             addresses, IPv6 addresses, and fully qualified domain names (FQDNs).
             See [[!RFC5245]] section 15.1 for details.</p></dd>
-          <dt>long portNumber</dt>
+          <dt>long port</dt>
           <dd><p>It is the port number of the candidate.</p></dd>
-          <dt>DOMString transport</dt>
-          <dd><p>Valid values for transport is one of <code>udp</code> and
+          <dt>DOMString protocol</dt>
+          <dd><p>Valid values for protocol is one of <code>udp</code> and
             <code>tcp</code>. Based on the "transport" defined in [[!RFC5245]]
             section 15.1.</p></dd>
           <!-- TODO: should transports be enums too? -->
-          <dt>RTCStatsIceCandidateType candidateType</dt>
-          <dd><p>The enumeration <a>RTCStatsIceCandidateType</a> is based on the
-            <code>cand-type</code> defined in [[!RFC5245]] section 15.1.</p></dd>
+          <dt>RTCIceCandidateType type</dt>
+          <dd>This enum is defined in [[WEBRTC]].</dd>
           <dt>long priority</dt>
           <dd><p>Calculated as defined in [[!RFC5245]] section 15.1.</p></dd>
-          <dt>DOMString addressSourceUrl</dt>
-          <dd><p>The URL of the TURN or STUN server indicated in the
-            <code>RTCIceServers</code> that translated this IP address.</p></dd>
+          <dt>DOMString url</dt>
+          <dd><p>The URL of the TURN or STUN server that translated
+              this IP address.
+	      It is the URL surfaced in an
+	      <code>RTCPeerConnectionIceEvent</code>.
+	  </p></dd>
         </dl>
-
-        <section>
-          <h3><dfn>RTCStatsIceCandidateType</dfn> enum</h3>
-          <dl class="idl" title="enum RTCStatsIceCandidateType">
-            <dt>host</dt>
-            <dd><p>Defined in Section 4.1.1.1 of [[!RFC5245]].</p></dd>
-            <dt>serverreflexive</dt>
-            <dd><p>Defined in Section 4.1.1.2 of [[!RFC5245]].</p></dd>
-            <dt>peerreflexive</dt>
-            <dd><p>Defined in Section 4.1.1.2 of [[!RFC5245]].</p></dd>
-            <dt>relayed</dt>
-            <dd><p>Defined in Section 7.1.3.2.1 of [[!RFC5245]].</p></dd>
-          </dl>
-        </section>
       </section>
 
 
