@@ -230,6 +230,13 @@
             <dd><p>Use 2 for stereo, missing for most other cases.</p></dd>
             <dt>DOMString parameters</dt>
             <dd><p>From the SDP description line.</p></dd>
+	    <dt>DOMString implementation</dt>
+	    <dd><p>Identifies the implementation used. This is useful for
+		diagnosing interoperability issues.</p>
+	      <p class="fingerprint">If too much information is given here,
+		it increases the fingerprint surface. Since it is only
+		given for active tracks, the incremental exposure is small.
+	      </p>
           </dl>
         </section>
 
