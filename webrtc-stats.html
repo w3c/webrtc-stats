@@ -562,6 +562,28 @@ stats [
           <dt>double availableIncomingBitrate</dt>
           <dd><p>Measured in Bits per second, and is implementation dependent.
             It may be calculated by the underlying congestion control.</p></dd>
+          <dt>double totalRoundTripTime</dt>
+          <dd><p>Represents the total round trip time in ms (for non-retransmitted connectivity checks only).</p></dd>
+          <dt>unsigned long long requestsReceived</dt>
+          <dd><p>Total number of connectivity check requests received (includes retransmissions).</p></dd>
+          <dt>unsigned long long requestsSent</dt>
+          <dd><p>Total number of connectivity check requests sent (does not include retransmissions).</p></dd>
+          <dt>unsigned long long responsesReceived</dt>
+          <dd><p>Total number of connectivity check responses received.</p></dd>
+          <dt>unsigned long long responsesSent</dt>
+          <dd><p>Total number of connectivity check responses sent.</p></dd>
+          <dt>unsigned long long retransmissionsSent</dt>
+          <dd><p>Total number of connectivity check request retransmissions sent.</p></dd>
+          <dt>double consentTotalRoundTripTime</dt>
+          <dd><p>Represents the total round trip time in ms for consent request/responses.</p></dd>
+          <dt>unsigned long long consentRequestsReceived</dt>
+          <dd><p>Total number of consent requests received.</p></dd>
+          <dt>unsigned long long consentRequestsSent</dt>
+          <dd><p>Total number of consent requests sent.</p></dd>
+          <dt>unsigned long long consentResponsesReceived</dt>
+          <dd><p>Total number of consent responses received.</p></dd>
+          <dt>unsigned long long consentResponsesSent</dt>
+          <dd><p>Total number of consent responses sent.</p></dd>
         </dl>
         <div class="note">
             OPEN ISSUE: do the bitrate metrics need refs?
