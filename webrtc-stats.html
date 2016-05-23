@@ -100,8 +100,8 @@
       <section id="rtcstatstype-str*">
         <h3>
           RTCStatsType DOMString
-        </h3><!-- 
-        As per discussions: Move enum to a string that is in a registry 
+        </h3><!--
+        As per discussions: Move enum to a string that is in a registry
         <div class="note">
           Updated the enum in [[!WEBRTC]]: to use lowercasenospacesordashes
           name convention, and added new enum values.
@@ -535,8 +535,10 @@
                 </dt>
                 <dd>
                   <p>
-                    Presently configured bitrate target of this SSRC, in bits per second. Typically
-                    this is a configuration parameter provided to the codec's encoder.
+                    It is the current target bitrate configured for this particular SSRC. Typically,
+                    this is a configuration parameter provided to the codec's encoder. It is
+                    measured in bits per second and the bitrate is calculated over a 1 second
+                    window [[!RFC3890]].
                   </p>
                 </dd>
                 <dt>
@@ -1320,8 +1322,10 @@ stats [
               </dt>
               <dd>
                 <p>
-                  Measured in Bits per second, and is implementation dependent. It may be
-                  calculated by the underlying congestion control.
+                  Measured in bits per second, and is implementation dependent. It may be
+                  calculated by the underlying congestion control by combining the available
+                  bitrate for all the outgoing media. The bitrate is calculated over a
+                  1 second window [[!RFC3890]].
                 </p>
               </dd>
               <dt>
@@ -1330,15 +1334,14 @@ stats [
               </dt>
               <dd>
                 <p>
-                  Measured in Bits per second, and is implementation dependent. It may be
-                  calculated by the underlying congestion control.
+                  Measured in bits per second, and is implementation dependent. It may be
+                  calculated by the underlying congestion control by combining the available
+                  bitrate for all the incoming media. The bitrate is calculated over a
+                  1 second window [[!RFC3890]].
                 </p>
               </dd>
             </dl>
           </section>
-        </div>
-        <div class="note">
-          OPEN ISSUE: do the bitrate metrics need refs?
         </div>
         <section>
           <h3>
@@ -1537,7 +1540,7 @@ function logError(error) {
       </h3>
       <p>
         Some stats identifiers may expose personally identifiable information, for example the IP
-        addresses of the participating endpoints when a TURN relay is not used. 
+        addresses of the participating endpoints when a TURN relay is not used.
         <!-- TODO: add guidance on how to not expose this information? -->
       </p>
     </section>
