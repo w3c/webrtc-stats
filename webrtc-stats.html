@@ -100,8 +100,8 @@
       <section id="rtcstatstype-str*">
         <h3>
           RTCStatsType DOMString
-        </h3><!-- 
-        As per discussions: Move enum to a string that is in a registry 
+        </h3><!--
+        As per discussions: Move enum to a string that is in a registry
         <div class="note">
           Updated the enum in [[!WEBRTC]]: to use lowercasenospacesordashes
           name convention, and added new enum values.
@@ -545,8 +545,9 @@
                 </dt>
                 <dd>
                   <p>
-                    Estimated round trip time (seconds) for this SSRC based on the RTCP timestamp.
-                    Calculated as defined in [[!RFC3550]] section 6.4.1.
+                    Estimated round trip time for this SSRC based on the RTCP timestamps
+                    in the RTCP Receiver Report (RR). Calculated as defined in section 6.4.1.
+                    of [[!RFC3550]] with the measurement units set to milliseconds.
                   </p>
                 </dd>
               </dl>
@@ -1311,7 +1312,8 @@ stats [
               </dt>
               <dd>
                 <p>
-                  Represents the RTT computed by the STUN connectivity checks [[!STUN-PATH-CHAR]].
+                  Represents the RTT computed by the STUN connectivity checks and measured
+                  in milliseconds [[!STUN-PATH-CHAR]].
                 </p>
               </dd>
               <dt>
@@ -1537,7 +1539,7 @@ function logError(error) {
       </h3>
       <p>
         Some stats identifiers may expose personally identifiable information, for example the IP
-        addresses of the participating endpoints when a TURN relay is not used. 
+        addresses of the participating endpoints when a TURN relay is not used.
         <!-- TODO: add guidance on how to not expose this information? -->
       </p>
     </section>
