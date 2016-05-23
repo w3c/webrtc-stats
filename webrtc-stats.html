@@ -554,8 +554,12 @@
                 </dt>
                 <dd>
                   <p>
-                    Presently configured bitrate target of this SSRC, in bits per second. Typically
-                    this is a configuration parameter provided to the codec's encoder.
+                    It is the current target bitrate configured for this particular SSRC and
+                    is the Transport Independent Application Specific (TIAS) bitrate [[!RFC3890]].
+                    Typically, the target bitrate is a configuration parameter provided to the
+                    codec's encoder and does not count the size of the IP or other transport
+                    layers like TCP or UDP. It is measured in bits per second and the bitrate
+                    is calculated over a 1 second window.
                   </p>
                 </dd>
                 <dt>
@@ -1279,8 +1283,11 @@ stats [
               </dt>
               <dd>
                 <p>
-                  Measured in Bits per second, and is implementation dependent. It may be
-                  calculated by the underlying congestion control.
+                  It is calculated by the underlying congestion control by combining the available
+                  bitrate for all the outgoing media streams. The bitrate measurement does not
+                  count the size of the IP or other transport layers like TCP or UDP. It is
+                  similar to the TIAS defined in [[!RFC3890]], i.e., it is measured in bits per
+                  second and the bitrate is calculated over a 1 second window.
                 </p>
               </dd>
               <dt>
@@ -1289,15 +1296,15 @@ stats [
               </dt>
               <dd>
                 <p>
-                  Measured in Bits per second, and is implementation dependent. It may be
-                  calculated by the underlying congestion control.
+                  It is calculated by the underlying congestion control by combining the available
+                  bitrate for all the incoming media streams. The bitrate measurement does not
+                  count the size of the IP or other transport layers like TCP or UDP. It is
+                  similar to the TIAS defined in [[!RFC3890]], i.e., it is measured in bits per
+                  second and the bitrate is calculated over a 1 second window.
                 </p>
               </dd>
             </dl>
           </section>
-        </div>
-        <div class="note">
-          OPEN ISSUE: do the bitrate metrics need refs?
         </div>
         <section>
           <h3>
