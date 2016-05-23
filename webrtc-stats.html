@@ -1052,40 +1052,42 @@ stats [
       </section>
       <section id="icecandidate-dict*">
         <h3>
-          RTCIceCandidateAttributes dictionary
+          <dfn>RTCIceCandidateStats</dfn> dictionary
         </h3>
         <p>
-          <code>RTCIceCandidateAttributes</code> reflects the properties of a
+          <code>RTCIceCandidateStats</code> reflects the properties of a
           <code>candidate</code> in Section 15.1 of [[!RFC5245]].
+          It corresponds to a <code>RTCIceCandidate</code> object.
         </p>
         <div>
-          <pre class="idl">dictionary RTCIceCandidateAttributes : RTCStats {
-             DOMString                ipAddress;
-             long                     portNumber;
-             DOMString                transport;
-             RTCStatsIceCandidateType candidateType;
+          <pre class="idl">dictionary RTCIceCandidateStats : RTCStats {
+             DOMString                ip;
+             long                     port;
+             DOMString                protocol;
+             RTCIceCandidateType      candidateType;
              long                     priority;
-             DOMString                addressSourceUrl;
+             DOMString                url;
 };</pre>
           <section>
             <h2>
-              Dictionary <a class="idlType">RTCIceCandidateAttributes</a> Members
+              Dictionary <a class="idlType">RTCIceCandidateStats</a> Members
             </h2>
-            <dl data-link-for="RTCIceCandidateAttributes" data-dfn-for="RTCIceCandidateAttributes"
+            <dl data-link-for="RTCIceCandidateStats" data-dfn-for="RTCIceCandidateStats"
             class="dictionary-members">
               <dt>
-                <dfn><code>ipAddress</code></dfn> of type <span class=
+                <dfn><code>ip</code></dfn> of type <span class=
                 "idlMemberType"><a>DOMString</a></span>
               </dt>
               <dd>
                 <p>
-                  It is the IP address of the candidate, allowing for IPv4 addresses, IPv6
-                  addresses, and fully qualified domain names (FQDNs). See [[!RFC5245]] section
+                  It is the IP address of the candidate, allowing for IPv4
+                  addresses and IPv6 addresses, but fully qualified domain
+                  names (FQDNs) are not allowed. See [[!RFC5245]] section
                   15.1 for details.
                 </p>
               </dd>
               <dt>
-                <dfn><code>portNumber</code></dfn> of type <span class=
+                <dfn><code>port</code></dfn> of type <span class=
                 "idlMemberType"><a>long</a></span>
               </dt>
               <dd>
@@ -1094,23 +1096,23 @@ stats [
                 </p>
               </dd>
               <dt>
-                <dfn><code>transport</code></dfn> of type <span class=
+                <dfn><code>protocol</code></dfn> of type <span class=
                 "idlMemberType"><a>DOMString</a></span>
               </dt>
               <dd>
                 <p>
-                  Valid values for transport is one of <code>udp</code> and <code>tcp</code>. Based
+                  Valid values for transport is one of <code>udp</code>
+                  and <code>tcp</code>. Based
                   on the "transport" defined in [[!RFC5245]] section 15.1.
                 </p>
               </dd>
               <dt>
                 <dfn><code>candidateType</code></dfn> of type <span class=
-                "idlMemberType"><a>RTCStatsIceCandidateType</a></span>
+                "idlMemberType"><a>RTCIceCandidateType</a></span>
               </dt>
               <dd>
                 <p>
-                  The enumeration <a>RTCStatsIceCandidateType</a> is based on the
-                  <code>cand-type</code> defined in [[!RFC5245]] section 15.1.
+                  Thhis enumeration is defined in [[WEBRTC]].
                 </p>
               </dd>
               <dt>
@@ -1123,81 +1125,19 @@ stats [
                 </p>
               </dd>
               <dt>
-                <dfn><code>addressSourceUrl</code></dfn> of type <span class=
+                <dfn><code>url</code></dfn> of type <span class=
                 "idlMemberType"><a>DOMString</a></span>
               </dt>
               <dd>
                 <p>
-                  The URL of the TURN or STUN server indicated in the <code>RTCIceServers</code>
-                  that translated this IP address.
+                  The URL of the TURN or STUN server indicated in the
+                  that translated this IP address. It is the URL address
+                  surfaced in an <code>RTCPeerConnectionIceEvent</code>.
                 </p>
               </dd>
             </dl>
           </section>
         </div>
-        <section>
-          <h3>
-            <dfn>RTCStatsIceCandidateType</dfn> enum
-          </h3>
-          <div>
-            <pre class="idl">enum RTCStatsIceCandidateType {
-    "host",
-    "serverreflexive",
-    "peerreflexive",
-    "relayed"
-};</pre>
-            <table data-link-for="RTCStatsIceCandidateType" data-dfn-for="RTCStatsIceCandidateType"
-            class="simple">
-              <tbody>
-                <tr>
-                  <th colspan="2">
-                    Enumeration description
-                  </th>
-                </tr>
-                <tr>
-                  <td>
-                    <dfn><code>host</code></dfn>
-                  </td>
-                  <td>
-                    <p>
-                      Defined in Section 4.1.1.1 of [[!RFC5245]].
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <dfn><code>serverreflexive</code></dfn>
-                  </td>
-                  <td>
-                    <p>
-                      Defined in Section 4.1.1.2 of [[!RFC5245]].
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <dfn><code>peerreflexive</code></dfn>
-                  </td>
-                  <td>
-                    <p>
-                      Defined in Section 4.1.1.2 of [[!RFC5245]].
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <dfn><code>relayed</code></dfn>
-                  </td>
-                  <td>
-                    <p>
-                      Defined in Section 7.1.3.2.1 of [[!RFC5245]].
-                    </p>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
       </section>
       <section id="candidatepair-dict*">
         <h3>
