@@ -100,8 +100,8 @@
       <section id="rtcstatstype-str*">
         <h3>
           RTCStatsType DOMString
-        </h3><!-- 
-        As per discussions: Move enum to a string that is in a registry 
+        </h3><!--
+        As per discussions: Move enum to a string that is in a registry
         <div class="note">
           Updated the enum in [[!WEBRTC]]: to use lowercasenospacesordashes
           name convention, and added new enum values.
@@ -417,6 +417,8 @@
              unsigned long      packetsLost;
              double             jitter;
              double             fractionLost;
+             unsigned long      packetsDiscarded;
+             unsigned long      packetsRepaired;
 };</pre>
             <section>
               <h2>
@@ -474,18 +476,35 @@
                     [[!RFC3550]] section 6.4.1 and Appendix A.3.
                   </p>
                 </dd>
+                <dt>
+                  <dfn><code>packetsDiscarded</code></dfn> of type <span class=
+                  "idlMemberType"><a>unsigned long</a></span>
+                </dt>
+                <dd>
+                  <p>
+                  The cumulative number of RTP packets discarded by the jitter buffer
+                  due to late or early-arrival, i.e., these packets are not played out.
+                  RTP packets discarded due to packet duplication are not reported in
+                  this metric [[XRBLOCK-STATS]]. Calculated as defined in
+                  [[!RFC7002]] section 3.2 and Appendix A.a.
+                  </p>
+                </dd>
+                <dt>
+                  <dfn><code>packetsRepaired</code></dfn> of type <span class=
+                  "idlMemberType"><a>unsigned long</a></span>
+                </dt>
+                <dd>
+                  <p>
+                  The cumulative number of lost RTP packets repaired after applying an
+                  error-resilience mechanism [[XRBLOCK-STATS]]. It is measured for the
+                  primary source RTP packets and only counted for RTP packets that have
+                  no further chance of repair. To clarify, the value is upper-bound to
+                  the cumulative number of lost packets. Calculated as defined in
+                  [[!RFC7509]] section 3.1 and Appendix A.b.
+                  </p>
+                </dd>
               </dl>
             </section>
-          </div>
-          <div class="issue">
-            Open Issue: Possible additional metrics that are useful for RTP, defined in
-            [[XRBLOCK-STATS]]:
-            <ul>
-              <li>packetsDiscarded.
-              </li>
-              <li>packetsRepaired.
-              </li>
-            </ul>
           </div>
         </section>
         <section id="outboundrtpstats-dict*">
@@ -1537,7 +1556,7 @@ function logError(error) {
       </h3>
       <p>
         Some stats identifiers may expose personally identifiable information, for example the IP
-        addresses of the participating endpoints when a TURN relay is not used. 
+        addresses of the participating endpoints when a TURN relay is not used.
         <!-- TODO: add guidance on how to not expose this information? -->
       </p>
     </section>
