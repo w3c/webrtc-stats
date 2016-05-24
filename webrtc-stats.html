@@ -250,7 +250,7 @@
                 <p>
                   Either "<code>audio</code>" or "<code>video</code>". This MUST match the media
                   type part of the information in the corresponding <code><a>codec</a></code>
-                  member of <code>RTCCodec</code>.
+                  member of <code>RTCCodecStats</code>.
                 </p>
               </dd>
               <dt>
@@ -323,10 +323,10 @@
         </div>
         <section id="codec-dict*">
           <h3>
-            <dfn>RTCCodec</dfn> dictionary
+            <dfn>RTCCodecStats</dfn> dictionary
           </h3>
           <div>
-            <pre class="idl">dictionary RTCCodec : RTCStats {
+            <pre class="idl">dictionary RTCCodecStats : RTCStats {
              unsigned long payloadType;
              DOMString     codec;
              unsigned long clockRate;
@@ -336,9 +336,9 @@
 };</pre>
             <section>
               <h2>
-                Dictionary <a class="idlType">RTCCodec</a> Members
+                Dictionary <a class="idlType">RTCCodecStats</a> Members
               </h2>
-              <dl data-link-for="RTCCodec" data-dfn-for="RTCCodec" class="dictionary-members">
+              <dl data-link-for="RTCCodecStats" data-dfn-for="RTCCodecStats" class="dictionary-members">
                 <dt>
                   <dfn><code>payloadType</code></dfn> of type <span class=
                   "idlMemberType"><a>unsigned long</a></span>
