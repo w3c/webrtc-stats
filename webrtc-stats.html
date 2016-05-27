@@ -1223,7 +1223,6 @@ stats [
              unsigned long long            responsesReceived;
              unsigned long long            responsesSent;
              unsigned long long            retransmissionsSent;
-             double                        consentTotalRoundTripTime;
              unsigned long long            consentRequestsReceived;
              unsigned long long            consentRequestsSent;
              unsigned long long            consentResponsesReceived;
@@ -1340,7 +1339,8 @@ stats [
               </dt>
               <dd>
                 <p>
-                  Represents the RTT computed by the STUN connectivity checks [[!STUN-PATH-CHAR]].
+                  Represents the RTT computed by the STUN connectivity checks
+                  [[!STUN-PATH-CHAR]] as well as consent checks [[!RFC7675]].
                 </p>
               </dd>
               <dt>
@@ -1406,15 +1406,6 @@ stats [
               <dd>
                 <p>
                   Represents the total number of connectivity check retransmissions sent.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>consentRoundTripTime</code></dfn> of type <span class=
-                "idlMemberType"><a>double</a></span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the round trip time in ms for consent requests/responses [[!RFC7675]].
                 </p>
               </dd>
               <dt>
