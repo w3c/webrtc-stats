@@ -114,7 +114,7 @@
         </p>
         <dl>
           <dt>
-            <code>"inboundrtp"</code>
+            <code>"inbound-rtp"</code>
           </dt>
           <dd>
             <p>
@@ -124,13 +124,13 @@
             </p>
           </dd>
           <dt>
-            <code>"outboundrtp"</code>
+            <code>"outbound-rtp"</code>
           </dt>
           <dd>
             <p>
               Statistics for the outbound RTP stream that is currently sent with this
               <code>RTCPeerConnection</code> object. It is accessed by the
-              <code><a>RTCOutboundRTPStreamStats</a></code>
+              <code><a>RTCOutboundRTPStreamStats</a></code>.
             </p>
           </dd>
           <dt>
@@ -142,11 +142,12 @@
             </p>
           </dd>
           <dt>
-            <code>"datachannel"</code>
+            <code>"data-channel"</code>
           </dt>
           <dd>
             <p>
               Statistics related to each <code>RTCDataChannel</code> id.
+              It is accessed by the <code><a>RTCDataChannelStats</a></code>.
             </p>
           </dd>
           <dt>
@@ -155,7 +156,7 @@
           <dd>
             <p>
               Contains the sequence of tracks related to a specific media stream and the
-              corresponding media-level metrics.
+              corresponding media-level metrics. It is accessed by the <code><a>RTCMediaStreamStats</a></code>.
             </p>
           </dd>
           <dt>
@@ -164,30 +165,34 @@
           <dd>
             <p>
               Transport statistics related to the <code>RTCPeerConnection</code> object.
+              It is accessed by the <code><a>RTCTransportStats</a></code>.
             </p>
           </dd>
           <dt>
-            <code>"candidatepair"</code>
+            <code>"candidate-pair"</code>
           </dt>
           <dd>
             <p>
               ICE candidate pair statistics related to the <code>RTCIceTransport</code> objects.
+              It is accessed by the <code><a>RTCIceCandidatePairStats</a></code>.
             </p>
           </dd>
           <dt>
-            <code>"localcandidate"</code>
+            <code>"local-candidate"</code>
           </dt>
           <dd>
             <p>
               ICE local candidate statistics related to the <code>RTCIceTransport</code> objects.
+              It is accessed by the <code><a>RTCIceCandidateStats</a></code> for the local candidate.
             </p>
           </dd>
           <dt>
-            <code>"remotecandidate"</code>
+            <code>"remote-candidate"</code>
           </dt>
           <dd>
             <p>
               ICE remote candidate statistics related to the <code>RTCIceTransport</code> objects.
+              It is accessed by the <code><a>RTCIceCandidateStats</a></code> for the remote candidate.
             </p>
           </dd>
         </dl>
