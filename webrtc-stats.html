@@ -461,7 +461,7 @@
                 <dd>
                   <p>
                     Packet Jitter measured in seconds for this SSRC. Calculated as defined in
-                    [[!RFC3550]] section 6.4.1.
+                    section 6.4.1. of [[!RFC3550]].
                   </p>
                 </dd>
                 <dt>
@@ -546,8 +546,8 @@
                 <dd>
                   <p>
                     Estimated round trip time for this SSRC based on the RTCP timestamps
-                    in the RTCP Receiver Report (RR). Calculated as defined in section 6.4.1.
-                    of [[!RFC3550]] with the measurement units set to milliseconds.
+                    in the RTCP Receiver Report (RR) and measured in seconds. Calculated
+                    as defined in section 6.4.1. of [[!RFC3550]].
                   </p>
                 </dd>
               </dl>
@@ -1313,7 +1313,7 @@ stats [
               <dd>
                 <p>
                   Represents the RTT computed by the STUN connectivity checks and measured
-                  in milliseconds [[!STUN-PATH-CHAR]].
+                  in seconds [[!STUN-PATH-CHAR]].
                 </p>
               </dd>
               <dt>
