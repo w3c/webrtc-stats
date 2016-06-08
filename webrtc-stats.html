@@ -538,8 +538,10 @@
                 <dd>
                   <p>
                   The cumulative number of bursts of lost RTP packets,
-                  Appendix A (e) of [[!RFC6958]]. [[!RFC3611]] recommends a Gmin
-                  (threshold) value of 16 for classifying packet loss or discard burst.
+                  Appendix A (e) of [[!RFC6958]].
+                  </p>
+                  <p>[[!RFC3611]] recommends a Gmin (threshold) value of
+                  16 for classifying packet loss or discard burst.
                   </p>
                 </dd>
                 <dt>
@@ -558,7 +560,10 @@
                 </dt>
                 <dd>
                   <p>
-                  The fraction of RTP packets lost during bursts, Appendix A (a) of [[!RFC7004]].
+                  It is the fraction of RTP packets lost during bursts to the total
+                  number of RTP packets expected in the bursts. As defined in
+                  Appendix A (a) of [[!RFC7004]], however, the actual value is
+                  reported without multiplying with 32768.
                   </p>
                 </dd>
                 <dt>
@@ -567,7 +572,10 @@
                 </dt>
                 <dd>
                   <p>
-                  The fraction of RTP packets discarded during bursts, Appendix A (e) of [[!RFC7004]].
+                  The fraction of RTP packets discarded during bursts to the total
+                  number of RTP packets expected in bursts. As defined in
+                  Appendix A (e) of [[!RFC7004]], however, the actual value is
+                  reported without multiplying with 32768.
                   </p>
                 </dd>
                 <dt>
@@ -576,7 +584,9 @@
                 </dt>
                 <dd>
                   <p>
-                  The fraction of RTP packets lost during gaps, Appendix A (b) of [[!RFC7004]].
+                  The fraction of RTP packets lost during the gap periods.
+                  Appendix A (b) of [[!RFC7004]], however, the actual value is
+                  reported without multiplying with 32768.
                   </p>
                 </dd>
                 <dt>
@@ -585,7 +595,9 @@
                 </dt>
                 <dd>
                   <p>
-                  The fraction of RTP packets discarded during gaps, Appendix A (f) of [[!RFC7004]].
+                  The fraction of RTP packets discarded during the gap periods.
+                  Appendix A (f) of [[!RFC7004]], however, the actual value is
+                  reported without multiplying with 32768.
                   </p>
                 </dd>
 
