@@ -791,7 +791,8 @@ stats [
              unsigned long       framesDecoded;
              unsigned long       framesDropped;
              unsigned long       framesCorrupted;
-             unsigned long       framesLost;
+             unsigned long       partialFramesLost;
+             unsigned long       fullFramesLost;
              double              audioLevel;
              double              echoReturnLoss;
              double              echoReturnLossEnhancement;
@@ -906,8 +907,10 @@ stats [
                 </dt>
                 <dd>
                   <p>
-                    Only valid for video. Same definition as <code>droppedVideoFrames</code> in
-                    Section 5 of [[!MEDIA-SOURCE]].
+                    Only valid for video. It is the total number of frames dropped
+                    predecode or dropped because the frame missed its display
+                    deadline for this SSRC. It is the same definition as
+                    <code>droppedVideoFrames</code> in Section 5 of [[!MEDIA-SOURCE]].
                   </p>
                 </dd>
                 <dt>
@@ -916,18 +919,31 @@ stats [
                 </dt>
                 <dd>
                   <p>
-                    Only valid for video. Same definition as <code>corruptedVideoFrames</code> in
-                    Section 5 of [[!MEDIA-SOURCE]].
+                    Only valid for video. It is the total number of corrupted frames
+                    that have been detected for this SSRC. It is the same definition as
+                    <code>corruptedVideoFrames</code> in Section 5 of [[!MEDIA-SOURCE]].
                   </p>
                 </dd>
                 <dt>
-                  <dfn><code>framesLost</code></dfn> of type <span class=
+                  <dfn><code>partialFramesLost</code></dfn> of type <span class=
                   "idlMemberType"><a>unsigned long</a></span>
                 </dt>
                 <dd>
                   <p>
-                    Only valid for video. <code>framesLost</code> is the cumulative number of
-                    full frames lost, as defined in Appendix A (i) of [[!RFC7004]].
+                    Only valid for video. <code>partialFramesLost</code> is the
+                    cumulative number of partial frames lost, as defined in
+                    Appendix A (j) of [[!RFC7004]].
+                  </p>
+                </dd>
+                <dt>
+                  <dfn><code>fullFramesLost</code></dfn> of type <span class=
+                  "idlMemberType"><a>unsigned long</a></span>
+                </dt>
+                <dd>
+                  <p>
+                    Only valid for video. <code>fullFramesLost</code> is the
+                    cumulative number of full frames lost, as defined in
+                    Appendix A (i) of [[!RFC7004]].
                   </p>
                 </dd>
                 <dt>
