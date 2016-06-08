@@ -192,6 +192,9 @@
           </dd>
         </dl>
       </section>
+      </section>
+      <section>
+	<h2>Stats dictionaries</h2>
       <section id="streamstats-dict*">
         <h3>
           <dfn>RTCRTPStreamStats</dfn> dictionary
@@ -321,6 +324,7 @@
             </dl>
           </section>
         </div>
+	</section>
         <section id="codec-dict*">
           <h3>
             <dfn>RTCCodecStats</dfn> dictionary
@@ -576,33 +580,6 @@
               </dl>
             </section>
           </div>
-        </section><!-- TODO: EXAMPLE -->
-        <section>
-          <h4>
-            Example
-          </h4>
-          <p>
-            The following example code shows the association of remote statistics with local
-            statistics in a <code>RTCStats</code> dictionary.
-          </p><!-- <pre class="example highlight">
-stats [
-   dictionary (of type RTPoutboundStatsDictionary) {
-      ssrc=1234
-      id=foobar
-      type=outboundrtp
-      isRemote=false
-      associateStatsId=barfoo
-  },
-  dictionary (of type RTPinboundStatsDictionary) {
-      ssrc=1234
-      id=barfoo
-      type=inboundrtp
-      isRemote=true
-      associateStatsId=foobar
-  }
-]
-          </pre> -->
-        </section>
       </section>
       <section id="pcstats-dict*">
         <h3>
@@ -677,6 +654,7 @@ stats [
             </dl>
           </section>
         </div>
+	</section>
         <section id="mststats-dict*">
           <h3>
             <dfn>RTCMediaStreamTrackStats</dfn> dictionary
@@ -870,7 +848,6 @@ stats [
             </section>
           </div>
         </section>
-      </section>
       <section id="dcstats-dict*">
         <h3>
           <dfn>RTCDataChannelStats</dfn> dictionary
@@ -1449,8 +1426,36 @@ stats [
       </section>
     </section>
     <section>
+      <h2>Examples</h2>
+        <section>
+          <h4>
+            Example of association of local and remote statistics
+          </h4>
+          <p>
+            The following example code shows the association of remote statistics with local
+            statistics in a <code>RTCStats</code> dictionary.
+          </p><pre class="example highlight">
+stats [
+   dictionary (of type RTPoutboundStatsDictionary) {
+      ssrc=1234
+      id=foobar
+      type=outboundrtp
+      isRemote=false
+      associateStatsId=barfoo
+  },
+  dictionary (of type RTPinboundStatsDictionary) {
+      ssrc=1234
+      id=barfoo
+      type=inboundrtp
+      isRemote=true
+      associateStatsId=foobar
+  }
+]
+          </pre>
+        </section>
+	<section>
       <h3>
-        Example
+        Example of a stats application
       </h3>
       <p>
         Consider the case where the user is experiencing bad sound and the application wants to
@@ -1498,6 +1503,7 @@ function logError(error) {
     log(error.name + ": " + error.message);
 }
 </pre>
+    </section>
     </section>
     <section>
       <h3>
