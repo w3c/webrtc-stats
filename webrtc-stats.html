@@ -1146,6 +1146,15 @@
              double                        roundTripTime;
              double                        availableOutgoingBitrate;
              double                        availableIncomingBitrate;
+             unsigned long long            requestsReceived;
+             unsigned long long            requestsSent;
+             unsigned long long            responsesReceived;
+             unsigned long long            responsesSent;
+             unsigned long long            retransmissionsSent;
+             unsigned long long            consentRequestsReceived;
+             unsigned long long            consentRequestsSent;
+             unsigned long long            consentResponsesReceived;
+             unsigned long long            consentResponsesSent;
 };</pre>
           <section>
             <h2>
@@ -1286,6 +1295,87 @@
                   count the size of the IP or other transport layers like TCP or UDP. It is
                   similar to the TIAS defined in [[!RFC3890]], i.e., it is measured in bits per
                   second and the bitrate is calculated over a 1 second window.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>requestsReceived</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of connectivity check requests received (includes retransmissions).
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>requestsSent</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of connectivity check requests sent (does not include retransmissions).
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>responsesReceived</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of connectivity check responses received.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>responsesSent</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of connectivity check responses sent.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>retransmissionsSent</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of connectivity check retransmissions sent.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>consentRequestsReceived</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of consent requests received.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>consentRequestsSent</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of consent requests sent.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>consentResponsesReceived</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of consent responses received.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>consentResponsesSent</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of consent responses sent.
                 </p>
               </dd>
             </dl>
