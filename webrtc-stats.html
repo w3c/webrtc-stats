@@ -1144,6 +1144,7 @@
              unsigned long long            bytesSent;
              unsigned long long            bytesReceived;
              double                        roundTripTime;
+             double                        currentRtt;
              double                        availableOutgoingBitrate;
              double                        availableIncomingBitrate;
              unsigned long long            requestsReceived;
@@ -1270,6 +1271,15 @@
                 <p>
                   Represents the average RTT measured in seconds, computed from both STUN
                   connectivity checks [[!STUN-PATH-CHAR]] and consent responses [[!RFC7675]].
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>currentRtt</code></dfn> of type <span class=
+                "idlMemberType"><a>double</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the last RTT measured in seconds.
                 </p>
               </dd>
               <dt>
