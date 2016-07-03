@@ -1143,7 +1143,7 @@
              boolean                       readable;
              unsigned long long            bytesSent;
              unsigned long long            bytesReceived;
-             double                        averageRtt;
+             double                        totalRtt;
              double                        currentRtt;
              double                        availableOutgoingBitrate;
              double                        availableIncomingBitrate;
@@ -1264,14 +1264,14 @@
                 </p>
               </dd>
               <dt>
-                <dfn><code>averageRtt</code></dfn> of type <span class=
+                <dfn><code>totalRtt</code></dfn> of type <span class=
                 "idlMemberType"><a>double</a></span>
               </dt>
               <dd>
                 <p>
-                  Represents the average RTT measured in seconds since the beginning of the session,
-                  computed from both STUN connectivity checks [[!STUN-PATH-CHAR]] and consent
-                  responses [[!RFC7675]].
+                  Represents the total RTT measured in seconds since the beginning of the session,
+                  based on both STUN connectivity check [[!STUN-PATH-CHAR]] responses
+                  (responsesReceived) and consent [[!RFC7675]] responses (consentResponsesReceived).
                 </p>
               </dd>
               <dt>
