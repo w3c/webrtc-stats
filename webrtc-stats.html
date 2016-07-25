@@ -1269,9 +1269,12 @@
               </dt>
               <dd>
                 <p>
-                  Represents the total RTT measured in seconds since the beginning of the session,
-                  based on both STUN connectivity check [[!STUN-PATH-CHAR]] responses
-                  (responsesReceived) and consent [[!RFC7675]] responses (consentResponsesReceived).
+                  Represents the sum of all RTT measurements in seconds since the
+                  beginning of the session, based on both STUN connectivity check
+                  [[!STUN-PATH-CHAR]] responses (responsesReceived) and consent
+                  [[!RFC7675]] responses (consentResponsesReceived). The average
+                  RTT can be computed from <code>totalRtt</code> by dividing it
+                  by (<code>responsesReceived</code> + <code>consentResponsesReceived</code>).
                 </p>
               </dd>
               <dt>
