@@ -1100,7 +1100,7 @@
               </dt>
               <dd>
                 <p>
-                  Thhis enumeration is defined in [[WEBRTC]].
+                  This enumeration is defined in [[WEBRTC]].
                 </p>
               </dd>
               <dt>
@@ -1143,9 +1143,20 @@
              boolean                       readable;
              unsigned long long            bytesSent;
              unsigned long long            bytesReceived;
-             double                        roundTripTime;
+             double                        totalRtt;
+             double                        currentRtt;
              double                        availableOutgoingBitrate;
              double                        availableIncomingBitrate;
+             unsigned long long            requestsReceived;
+             unsigned long long            requestsSent;
+             unsigned long long            responsesReceived;
+             unsigned long long            responsesSent;
+             unsigned long long            retransmissionsReceived;
+             unsigned long long            retransmissionsSent;
+             unsigned long long            consentRequestsReceived;
+             unsigned long long            consentRequestsSent;
+             unsigned long long            consentResponsesReceived;
+             unsigned long long            consentResponsesSent;
 };</pre>
           <section>
             <h2>
@@ -1253,13 +1264,27 @@
                 </p>
               </dd>
               <dt>
-                <dfn><code>roundTripTime</code></dfn> of type <span class=
+                <dfn><code>totalRtt</code></dfn> of type <span class=
                 "idlMemberType"><a>double</a></span>
               </dt>
               <dd>
                 <p>
-                  Represents the RTT computed by the STUN connectivity checks and measured
-                  in seconds [[!STUN-PATH-CHAR]].
+                  Represents the sum of all RTT measurements in seconds since the
+                  beginning of the session, based on both STUN connectivity check
+                  [[!STUN-PATH-CHAR]] responses (responsesReceived) and consent
+                  [[!RFC7675]] responses (consentResponsesReceived). The average
+                  RTT can be computed from <code>totalRtt</code> by dividing it
+                  by (<code>responsesReceived</code> + <code>consentResponsesReceived</code>).
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>currentRtt</code></dfn> of type <span class=
+                "idlMemberType"><a>double</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the latest RTT measured in seconds, computed from both STUN connectivity
+                  checks [[!STUN-PATH-CHAR]] and consent responses [[!RFC7675]].
                 </p>
               </dd>
               <dt>
@@ -1286,6 +1311,96 @@
                   count the size of the IP or other transport layers like TCP or UDP. It is
                   similar to the TIAS defined in [[!RFC3890]], i.e., it is measured in bits per
                   second and the bitrate is calculated over a 1 second window.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>requestsReceived</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of connectivity check requests received (including retransmissions).
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>requestsSent</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of connectivity check requests sent (not including retransmissions).
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>responsesReceived</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of connectivity check responses received.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>responsesSent</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of connectivity check responses sent.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>retransmissionsReceived</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of connectivity check retransmissions received.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>retransmissionsSent</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of connectivity check retransmissions sent.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>consentRequestsReceived</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of consent requests received.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>consentRequestsSent</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of consent requests sent.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>consentResponsesReceived</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of consent responses received.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>consentResponsesSent</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of consent responses sent.
                 </p>
               </dd>
             </dl>
