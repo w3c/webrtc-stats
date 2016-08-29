@@ -429,6 +429,14 @@
              double             fractionLost;
              unsigned long      packetsDiscarded;
              unsigned long      packetsRepaired;
+             unsigned long      burstPacketsLost;
+             unsigned long      burstPacketsDiscarded;
+             unsigned long      burstLossCount;
+             unsigned long      burstDiscardCount;
+             double             burstLossRate;
+             double             burstDiscardRate;
+             double             gapLossRate;
+             double             gapDiscardRate;
 };</pre>
             <section>
               <h2>
@@ -513,6 +521,96 @@
                   [[!RFC7509]] section 3.1 and Appendix A.b.
                   </p>
                 </dd>
+                <dt>
+                  <dfn><code>burstPacketsLost</code></dfn> of type <span class=
+                  "idlMemberType"><a>unsigned long</a></span>
+                </dt>
+                <dd>
+                  <p>
+                  The cumulative number of RTP packets lost during loss
+                  bursts, Appendix A (c) of [[!RFC6958]].
+                  </p>
+                </dd>
+                <dt>
+                  <dfn><code>burstPacketsDiscarded</code></dfn> of type <span class=
+                  "idlMemberType"><a>unsigned long</a></span>
+                </dt>
+                <dd>
+                  <p>
+                  The cumulative number of RTP packets discarded during
+                  discard bursts, Appendix A (b) of [[!RFC7003]].
+                  </p>
+                </dd>
+                <dt>
+                  <dfn><code>burstLossCount</code></dfn> of type <span class=
+                  "idlMemberType"><a>unsigned long</a></span>
+                </dt>
+                <dd>
+                  <p>
+                  The cumulative number of bursts of lost RTP packets,
+                  Appendix A (e) of [[!RFC6958]].
+                  </p>
+                  <p>[[!RFC3611]] recommends a Gmin (threshold) value of
+                  16 for classifying a sequence of packet losses or discards as a burst.
+                  </p>
+                </dd>
+                <dt>
+                  <dfn><code>burstDiscardCount</code></dfn> of type <span class=
+                  "idlMemberType"><a>unsigned long</a></span>
+                </dt>
+                <dd>
+                  <p>
+                  The cumulative number of bursts of discarded RTP packets,
+                  Appendix A (e) of [[!burst-gap-discard]].
+                  </p>
+                </dd>
+                <dt>
+                  <dfn><code>burstLossRate</code></dfn> of type <span class=
+                  "idlMemberType"><a>double</a></span>
+                </dt>
+                <dd>
+                  <p>
+                  The fraction of RTP packets lost during bursts to the total
+                  number of RTP packets expected in the bursts. As defined in
+                  Appendix A (a) of [[!RFC7004]], however, the actual value is
+                  reported without multiplying by 32768.
+                  </p>
+                </dd>
+                <dt>
+                  <dfn><code>burstDiscardRate</code></dfn> of type <span class=
+                  "idlMemberType"><a>double</a></span>
+                </dt>
+                <dd>
+                  <p>
+                  The fraction of RTP packets discarded during bursts to the total
+                  number of RTP packets expected in bursts. As defined in
+                  Appendix A (e) of [[!RFC7004]], however, the actual value is
+                  reported without multiplying by 32768.
+                  </p>
+                </dd>
+                <dt>
+                  <dfn><code>gapLossRate</code></dfn> of type <span class=
+                  "idlMemberType"><a>double</a></span>
+                </dt>
+                <dd>
+                  <p>
+                  The fraction of RTP packets lost during the gap periods.
+                  Appendix A (b) of [[!RFC7004]], however, the actual value is
+                  reported without multiplying by 32768.
+                  </p>
+                </dd>
+                <dt>
+                  <dfn><code>gapDiscardRate</code></dfn> of type <span class=
+                  "idlMemberType"><a>double</a></span>
+                </dt>
+                <dd>
+                  <p>
+                  The fraction of RTP packets discarded during the gap periods.
+                  Appendix A (f) of [[!RFC7004]], however, the actual value is
+                  reported without multiplying by 32768.
+                  </p>
+                </dd>
+
               </dl>
             </section>
           </div>
@@ -690,6 +788,8 @@
              unsigned long       framesDecoded;
              unsigned long       framesDropped;
              unsigned long       framesCorrupted;
+             unsigned long       partialFramesLost;
+             unsigned long       fullFramesLost;
              double              audioLevel;
              double              echoReturnLoss;
              double              echoReturnLossEnhancement;
@@ -804,8 +904,10 @@
                 </dt>
                 <dd>
                   <p>
-                    Only valid for video. Same definition as <code>droppedVideoFrames</code> in
-                    Section 5 of [[!MEDIA-SOURCE]].
+                    Only valid for video. It is the total number of frames dropped
+                    predecode or dropped because the frame missed its display
+                    deadline for this SSRC. It is the same definition as
+                    <code>droppedVideoFrames</code> in Section 5 of [[!MEDIA-SOURCE]].
                   </p>
                 </dd>
                 <dt>
@@ -814,8 +916,31 @@
                 </dt>
                 <dd>
                   <p>
-                    Only valid for video.Same definition as <code>corruptedVideoFrames</code> in
-                    Section 5 of [[!MEDIA-SOURCE]].
+                    Only valid for video. It is the total number of corrupted frames
+                    that have been detected for this SSRC. It is the same definition as
+                    <code>corruptedVideoFrames</code> in Section 5 of [[!MEDIA-SOURCE]].
+                  </p>
+                </dd>
+                <dt>
+                  <dfn><code>partialFramesLost</code></dfn> of type <span class=
+                  "idlMemberType"><a>unsigned long</a></span>
+                </dt>
+                <dd>
+                  <p>
+                    Only valid for video. <code>partialFramesLost</code> is the
+                    cumulative number of partial frames lost, as defined in
+                    Appendix A (j) of [[!RFC7004]].
+                  </p>
+                </dd>
+                <dt>
+                  <dfn><code>fullFramesLost</code></dfn> of type <span class=
+                  "idlMemberType"><a>unsigned long</a></span>
+                </dt>
+                <dd>
+                  <p>
+                    Only valid for video. <code>fullFramesLost</code> is the
+                    cumulative number of full frames lost, as defined in
+                    Appendix A (i) of [[!RFC7004]].
                   </p>
                 </dd>
                 <dt>
