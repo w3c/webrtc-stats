@@ -52,10 +52,31 @@
         <em>user agent</em>.
       </p>
       <p>
-        Implementations that use ECMAScript to implement the APIs defined in this specification
+        Implementations that use ECMAScript to implement the APIs and objects defined in this specification
         <em class="rfc2119" title="MUST">MUST</em> implement them in a manner consistent with the
         ECMAScript Bindings defined in the Web IDL specification [[WEBIDL]], as this document uses
         that specification and terminology.
+      </p>
+      <p>
+	This specification does not define what objects a conforming
+	implementation should generate.
+	Specifications that refer to this specification have the need to
+	specify conformance. They should put in their document text
+	like this:
+      </p>
+      <p>
+	<ul>
+	  <li>An implementation MUST support generating statistics for the type
+	    RTCInboundRTPStreamStats, with attributes packetsReceived,
+	    bytesReceived, packetsLost, jitter, and fractionLost.</li>
+	  <li>
+	    It MUST support generting statistics for the type
+	    RTCOutboundRTPStreamStats, with attributes packetsSent,
+	    bytesSent.</li>
+	  <li>For all subclasses of RTCRtpStreamStats, it MUST include ssrc,
+	    associateStatsId, isRemote, mediaType.</li>
+	  <li>It MAY support generating other stats.</li>
+	</ul>
       </p>
     </section>
     <section>
