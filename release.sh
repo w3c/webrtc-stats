@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Script to make a dated release of the WebRTC 1.0 spec.
-# 
+#
 # Prerequisites: You must have a remote called "origin" that points to the
 # github repo. You must have local branches called "master" and "gh-pages".
 #
@@ -14,7 +14,7 @@
 # 1. Prepare the release (previous release date before the new one)
 #    $ ./release.sh 20140817 20140909 prepare
 #
-# 2. Browse to the webrtc.html source file and press Ctrl+Alt+Shift+s
+# 2. Browse to the webrtc-stats.html source file and press Ctrl+Alt+Shift+s
 #    to show the respec save dialog. Click the "Save as HTML" option and save
 #    the resulting document at the location proposed this script.
 #
