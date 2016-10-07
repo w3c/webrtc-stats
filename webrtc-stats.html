@@ -88,29 +88,55 @@
         [[!WEBRTC]].
       </p>
     </section><!-- VS: getStats() remains in base spec! -->
+    <section class="informative">
+      <h2>Basic concepts</h2>
+      <p>The stats API is defined in [[!GETUSERMEDIA]]. It is defined to return
+	a set of objects that are a subclass of the RTCStats dictionary. This is
+	normatively defined in [[!GETUSERMEDIA]], but is reproduced here
+	for ease of reference.
+      </p>
+      <pre class="idl">
+	dictionary RTCStats {
+    DOMHighResTimeStamp timestamp;
+    RTCStatsType        type;
+    DOMString           id;
+	};
+      </pre>
+    </section>
     <section id="rtctatstype-*">
       <h2>
         RTCStatsType
-      </h2><code>RTCStatsType</code> object is initialized to the name of the dictionary that the
-      <code>RTCStats</code> represents.
-      <div class="note">
-        OPEN ISSUE: Need to define an IANA registry for the RTCStatsType and populate it with the
-        following set as baseline.
-      </div>
+      </h2>
+      <p>The <code>RTCStatsType</code> member indicates the type of the
+      object that the
+      <code>RTCStats</code> object represents. An object with a given "type"
+      can be only one type of dictionary, but multiple "type" values may use
+      the same type of dictionary.</p>
+      <p>This specification is normative for the allowed values of <code>RTCStatsType</code>.</p>
       <section id="rtcstatstype-str*">
+
+	<pre class="idl">
+enum RTCStatsType {
+    "inbound-rtp",
+"outbound-rtp",
+"peer-connection",
+"data-channel",
+"track",
+"transport",
+"candidate-pair",
+"local-candidate",
+"remote-candidate",
+"certificate"
+};
+	</pre>
+
         <h3>
           RTCStatsType DOMString
-        </h3><!--
-        As per discussions: Move enum to a string that is in a registry
-        <div class="note">
-          Updated the enum in [[!WEBRTC]]: to use lowercasenospacesordashes
-          name convention, and added new enum values.
-        </div> -->
-        <!-- TODO: point to the actual stats dictionaries  -->
-        <!-- <dl class="idl" title="DOMString RTCStatsType"> -->
+        </h3>
+
+
         <p>
-          <var>RTCStatsType</var> is a equal to one of the following strings defined in
-          [IANA-TOBE]:
+          The following strings are valid values for <var>RTCStatsType</var>:
         </p>
         <dl>
           <dt>
@@ -196,6 +222,14 @@
               It is accessed by the <code><a>RTCIceCandidateStats</a></code> for the remote candidate.
             </p>
           </dd>
+	  <dt>
+	    <code>"certificate"</code>
+	  </dt>
+	  <dd>
+	    <p>
+	      Information about a certificate used by an RTCIceTransport.
+	    </p>
+	  </dd>
         </dl>
       </section>
       </section>
