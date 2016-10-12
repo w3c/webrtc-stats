@@ -102,6 +102,60 @@
     DOMString           id;
 	};
       </pre>
+      <section>
+	<h3>Guidelines for design of stats objects</h3>
+	<p>
+	  When introducing a new stats type, the following principles
+	  should be followed:
+	  <ul>
+	    <li>An RTCStats object should correspond to an object
+	      defined in the specification it supports.
+	    </li>
+	    <li>All members of the new object need to have definitions
+	      that make them consistently implementable. References to
+	      other specifications are a good way of doing this.
+	    </li>
+	    <li>All members need to have defined behavior for what
+	      happens before the thing it counts happens, or when the
+	      information it's supposed to show is not
+	      available. Usually, this will be "start at zero" or "do
+	      not populate the value".
+	    </li>
+	  </ul>
+	</p>
+      </section>
+      <section>
+	<h3>Guidelines for implementing stats objects</h3>
+	<p>
+	  When implementing stats objects, the following guidelines
+	  should be adhered to:
+	  <ul>
+	    <li>When a feature is not implemented on the platform,
+	      omit the dictionary member that is tracking usage of the
+	      feature.</li>
+	    <li>When a feature is not applicable to an instance of an
+	      object (for example audioLevel on a video stream), omit
+	      the dictionary member. Do NOT report a count of zero,
+	      -1 or "empty string".</li>
+	    <li>When a counted feature hasn't been used yet, but may happen in
+	      the future, report a count of zero.
+	    </li>
+	  </ul>
+	</p>
+      </section>
+      <section>
+	<h3>Lifetime of stats objects</h3>
+	<p>The general rule is that stats objects, once created, exist
+	  for the lifetime of the PeerConnection that contains
+	  them, even when the underlying object they report on is
+	  stopped or deleted. This is important in order to report
+	  consistently on short-lived objects and to be able to report
+	  totals over the lifetime of a PeerConnection.</p>
+	<p>When an object is closed or deleted,
+	  the <code>timestamp</code> member of the stats object stops
+	  updating; it is frozen at the time when the object stopped.
+	</p>
+      </section>
     </section>
     <section id="rtctatstype-*">
       <h2>
