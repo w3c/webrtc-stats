@@ -122,6 +122,17 @@
 	      not populate the value".
 	    </li>
 	  </ul>
+	  The new members of the stats dictionary need to be named
+	  according to standard practice (camelCase).
+	</p>
+	<p>
+	  Names ending in
+	  "Id" (such as "datachannelId") are always of type DOMString
+	  and are used to refer to other
+	  stats objects by the value of their "id" field; names ending
+	  in "Ids" (such as "trackIds")
+	  are always of type sequence&lt;DOMString>, and are used to
+	  refer to a list of other stats objects.
 	</p>
       </section>
       <section>
