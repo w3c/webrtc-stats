@@ -87,12 +87,12 @@
         The terms <dfn>RTCPeerConnection</dfn>, <dfn>RTCDataChannel</dfn> are defined in
         [[!WEBRTC]].
       </p>
-    </section><!-- VS: getStats() remains in base spec! -->
+    </section>
     <section class="informative">
       <h2>Basic concepts</h2>
-      <p>The stats API is defined in [[!GETUSERMEDIA]]. It is defined to return
+      <p>The stats API is defined in [[!WEBRTC]]. It is defined to return
 	a set of objects that are a subclass of the RTCStats dictionary. This is
-	normatively defined in [[!GETUSERMEDIA]], but is reproduced here
+	normatively defined in [[!WEBRTC]], but is reproduced here
 	for ease of reference.
       </p>
       <pre class="idl">
@@ -107,11 +107,13 @@
       <h2>
         RTCStatsType
       </h2>
-      <p>The <code>RTCStatsType</code> member indicates the type of the
-      object that the
-      <code>RTCStats</code> object represents. An object with a given "type"
-      can be only one type of dictionary, but multiple "type" values may use
-      the same type of dictionary.</p>
+      <p>The <code>type</code> element, of type <a>RTCStatsType</a>,
+	indicates the type of the object that the
+	<code>RTCStats</code> object represents. An object with a given "type"
+	can have only one IDL dictionary type, but multiple "type" values may
+	indicate the same IDL dictionary type; for example, "local-candidate"
+	and "remote-candidate" both use the IDL dictionary type
+	<a>RTCIceCandidateStats</a>.</p>
       <p>This specification is normative for the allowed values of <code>RTCStatsType</code>.</p>
       <section id="rtcstatstype-str*">
 
@@ -130,9 +132,6 @@ enum RTCStatsType {
 };
 	</pre>
 
-        <h3>
-          RTCStatsType DOMString
-        </h3>
 
 
         <p>
