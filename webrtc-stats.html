@@ -108,6 +108,9 @@
         The terms <dfn>RTCPeerConnection</dfn>, <dfn>RTCDataChannel</dfn> are defined in
         [[!WEBRTC]].
       </p>
+      <p>
+	The term <dfn>RTP stream</dfn> is defined in [[RFC7656]] section 2.1.10.
+      </p>
     </section>
     <section class="informative">
       <h2>Basic concepts</h2>
@@ -164,7 +167,7 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              Statistics for the inbound RTP stream that is currently received with this
+              Statistics for an inbound RTP stream that is currently received with this
               <code>RTCPeerConnection</code> object. It is accessed by the
               <code><a>RTCInboundRTPStreamStats</a></code>.
             </p>
@@ -174,7 +177,7 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              Statistics for the outbound RTP stream that is currently sent with this
+              Statistics for an outbound RTP stream that is currently sent with this
               <code>RTCPeerConnection</code> object. It is accessed by the
               <code><a>RTCOutboundRTPStreamStats</a></code>.
             </p>
@@ -202,7 +205,7 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              Contains the sequence of tracks related to a specific media stream and the
+              Contains statistics related to a specific MediaStreamTrack and the
               corresponding media-level metrics. It is accessed by the <code><a>RTCMediaStreamStats</a></code>.
             </p>
           </dd>
@@ -472,7 +475,7 @@ enum RTCStatsType {
           </h3>
           <p>
             <dfn>RTCInboundRTPStreamStats</dfn> dictionary represents the measurement metrics for
-            the incoming media stream.
+            the incoming RTP stream.
           </p>
           <div>
             <pre class="idl">dictionary RTCInboundRTPStreamStats : RTCRTPStreamStats {
@@ -675,7 +678,7 @@ enum RTCStatsType {
           </h3>
           <p>
             <dfn>RTCOutboundRTPStreamStats</dfn> dictionary represents the measurement metrics for
-            the outgoing media stream.
+            the outgoing RTP stream.
           </p>
           <div>
             <pre class="idl">dictionary RTCOutboundRTPStreamStats : RTCRTPStreamStats {
@@ -898,8 +901,8 @@ enum RTCStatsType {
                 </dt>
                 <dd>
                   <p>
-                    Only makes sense for video media streams and represents the width of the video
-                    frame for this SSRC.
+                    Only valid for video MediaStreamTracks and represents the width of the video
+                    frame for this track.
                   </p>
                 </dd>
                 <dt>
@@ -908,8 +911,8 @@ enum RTCStatsType {
                 </dt>
                 <dd>
                   <p>
-                    Only makes sense for video media streams and represents the height of the video
-                    frame for this SSRC.
+                    Only valid for video MediaStreamTracks and represents the height of the video
+                    frame for this MediaStreamTrack.
                   </p>
                 </dd>
                 <dt>
@@ -1473,7 +1476,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   It is calculated by the underlying congestion control by combining the available
-                  bitrate for all the outgoing media streams. The bitrate measurement does not
+                  bitrate for all the outgoing RTP streams using this candidate pair. The bitrate measurement does not
                   count the size of the IP or other transport layers like TCP or UDP. It is
                   similar to the TIAS defined in [[!RFC3890]], i.e., it is measured in bits per
                   second and the bitrate is calculated over a 1 second window.
@@ -1486,7 +1489,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   It is calculated by the underlying congestion control by combining the available
-                  bitrate for all the incoming media streams. The bitrate measurement does not
+                  bitrate for all the incoming RTP streams using this candidate pair. The bitrate measurement does not
                   count the size of the IP or other transport layers like TCP or UDP. It is
                   similar to the TIAS defined in [[!RFC3890]], i.e., it is measured in bits per
                   second and the bitrate is calculated over a 1 second window.
