@@ -105,8 +105,9 @@
         defined in [[!GETUSERMEDIA]].
       </p>
       <p>
-        The terms <dfn>RTCPeerConnection</dfn>, <dfn>RTCDataChannel</dfn> are defined in
-        [[!WEBRTC]].
+        The terms <dfn>RTCPeerConnection</dfn>, <dfn>RTCDataChannel</dfn>,
+        <dfn>RTCDtlsTransport</dfn> and <dfn>RTCIceTransport</dfn> are defined
+        in [[!WEBRTC]].
       </p>
       <p>
 	The term <dfn>RTP stream</dfn> is defined in [[RFC7656]] section 2.1.10.
@@ -1128,9 +1129,19 @@ enum RTCStatsType {
           <dfn>RTCTransportStats</dfn> dictionary
         </h3>
         <p>
-          A Transport carries a part of an SDP session, consisting of RTP and RTCP. When Bundle is
-          in use, an SDP session will have only one Transport per Bundle group. When Bundle is not
-          in use, there is one Transport per m-line.
+          An <code>RTCTransportStats</code> object represents the stats
+          corresponding to an <code><a>RTCDtlsTransport</a></code> and its
+          underlying <code><a>RTCIceTransport</a></code>. When RTCP multiplexing
+          is used, one transport is used for both RTP and RTCP. Otherwise, RTP
+          and RTCP will be sent on separate transports, and
+          <code>rtcpTransportStatsId</code> can be used to pair the resulting
+          <code>RTCTransportStats</code> objects. Additionally, when bundling
+          is used, a single transport (or pair of transports, if RTCP
+          multiplexing is not used) will be used for all
+          <code><a>MediaStreamTrack</a></code>s in the bundle group. If
+          bundling is not used, different <code><a>MediaStreamTrack</a></code>
+          will use different transports. RTCP multiplexing and bundling are
+          described in [[!WEBRTC]].
         </p>
         <div>
           <pre class="idl">dictionary RTCTransportStats : RTCStats {
