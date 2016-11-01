@@ -143,7 +143,8 @@
 
 	<pre class="idl">
 enum RTCStatsType {
-    "inbound-rtp",
+"codec",
+"inbound-rtp",
 "outbound-rtp",
 "peer-connection",
 "data-channel",
@@ -162,6 +163,16 @@ enum RTCStatsType {
           The following strings are valid values for <var>RTCStatsType</var>:
         </p>
         <dl>
+          <dt>
+            <code>"codec"</code>
+          </dt>
+          <dd>
+            <p>
+              Statistics for a codec that is currently being used by RTP streams being sent or
+              received by this <code>RTCPeerConnection</code> object. It is accessed by the
+              <code><a>RTCCodecStats</a></code>.
+            </p>
+          </dd>
           <dt>
             <code>"inbound-rtp"</code>
           </dt>
@@ -338,7 +349,12 @@ enum RTCStatsType {
                 <dfn><code>codecId</code></dfn> of type <span class=
                 "idlMemberType"><a>DOMString</a></span>
               </dt>
-              <dd></dd>
+              <dd>
+                <p>
+                  It is a unique identifier that is associated to the object that was inspected to
+                  produce the <code>RTCCodecStats</code> associated with this RTP stream.
+                </p>
+              </dd>
               <dt>
                 <dfn><code>firCount</code></dfn> of type <span class="idlMemberType"><a>unsigned
                 long</a></span>
