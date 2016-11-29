@@ -1,17 +1,42 @@
-language: node_js
+language: python
 
 branches:
   only:
+    - /.*/
     - gh-pages
+
+python:
+  - "2.7_with_system_site_packages"
+sudo: false
+addons:
+  apt:
+    sources:
+      - george-edison55-precise-backports
+      - ubuntu-toolchain-r-test
+    packages:
+      - libwww-perl
+      - libcss-dom-perl
+      - python-lxml
+      - cmake
+      - cmake-data
+      - gcc-4.8
+      - g++-4.8
+before_install:
+  - export CXX="g++-4.8" CC="gcc-4.8"
+  - nvm install 6
+  - "export DISPLAY=:99.0"
+  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16 -extension RANDR"
+  - sh -e /etc/init.d/xvfb start
+install:
+ - make travissetup
+script:
+ - make check
 
 env:
   global:
     - URL="https://w3c.github.io/webrtc-stats/W3CTRMANIFEST"
     - DECISION="https://lists.w3.org/Archives/Public/public-webrtc/2016Mar/0031.html"
     - secure: "VD097GRyqSACTjhUDkrPnZv80shH2Uh5g66cxXsO95hVA1ZrLUtbwS4aQshcQrcl28uVpsJ2E/OpeHHg1HbmNv9uVdsvbnEztGxu7wm6xUi0ZXK81uYqOZtvbbnipjZywe45wTjLYJOGiYgsN9yEN1arHXAPR9lmNInt0QIf10M="
-
-script:
-  - echo "ok"
 
 after_success:
   - test $TRAVIS_BRANCH = "gh-pages" -a $TRAVIS_PULL_REQUEST = false \
