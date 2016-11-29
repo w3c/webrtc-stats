@@ -64,20 +64,18 @@
 	specify conformance. They should put in their document text
 	like this:
       </p>
-      <p>
-	<ul>
-	  <li>An implementation MUST support generating statistics for the type
-	    RTCInboundRTPStreamStats, with attributes packetsReceived,
-	    bytesReceived, packetsLost, jitter, and fractionLost.</li>
-	  <li>
-	    It MUST support generating statistics for the type
-	    RTCOutboundRTPStreamStats, with attributes packetsSent,
-	    bytesSent.</li>
-	  <li>For all subclasses of RTCRtpStreamStats, it MUST include ssrc,
-	    associateStatsId, isRemote, mediaType.</li>
-	  <li>It MAY support generating other stats.</li>
-	</ul>
-      </p>
+      <ul>
+        <li>An implementation MUST support generating statistics for the type
+          RTCInboundRTPStreamStats, with attributes packetsReceived,
+          bytesReceived, packetsLost, jitter, and fractionLost.</li>
+        <li>
+          It MUST support generating statistics for the type
+          RTCOutboundRTPStreamStats, with attributes packetsSent,
+          bytesSent.</li>
+        <li>For all subclasses of RTCRtpStreamStats, it MUST include ssrc,
+          associateStatsId, isRemote, mediaType.</li>
+        <li>It MAY support generating other stats.</li>
+      </ul>
     </section>
     <section>
       <h2>
@@ -132,21 +130,23 @@
 	<p>
 	  When introducing a new stats type, the following principles
 	  should be followed:
-	  <ul>
-	    <li>An RTCStats object should correspond to an object
-	      defined in the specification it supports.
-	    </li>
-	    <li>All members of the new object need to have definitions
-	      that make them consistently implementable. References to
-	      other specifications are a good way of doing this.
-	    </li>
-	    <li>All members need to have defined behavior for what
-	      happens before the thing it counts happens, or when the
-	      information it's supposed to show is not
-	      available. Usually, this will be "start at zero" or "do
-	      not populate the value".
-	    </li>
-	  </ul>
+	</p>
+	<ul>
+	  <li>An RTCStats object should correspond to an object
+	    defined in the specification it supports.
+	  </li>
+	  <li>All members of the new object need to have definitions
+	    that make them consistently implementable. References to
+	    other specifications are a good way of doing this.
+	  </li>
+	  <li>All members need to have defined behavior for what
+	    happens before the thing it counts happens, or when the
+	    information it's supposed to show is not
+	    available. Usually, this will be "start at zero" or "do
+	    not populate the value".
+	  </li>
+	</ul>
+	<p>
 	  The new members of the stats dictionary need to be named
 	  according to standard practice (camelCase).
 	</p>
@@ -165,19 +165,19 @@
 	<p>
 	  When implementing stats objects, the following guidelines
 	  should be adhered to:
-	  <ul>
-	    <li>When a feature is not implemented on the platform,
-	      omit the dictionary member that is tracking usage of the
-	      feature.</li>
-	    <li>When a feature is not applicable to an instance of an
-	      object (for example audioLevel on a video stream), omit
-	      the dictionary member. Do NOT report a count of zero,
-	      -1 or "empty string".</li>
-	    <li>When a counted feature hasn't been used yet, but may happen in
-	      the future, report a count of zero.
-	    </li>
-	  </ul>
 	</p>
+	<ul>
+	  <li>When a feature is not implemented on the platform,
+	    omit the dictionary member that is tracking usage of the
+	    feature.</li>
+	  <li>When a feature is not applicable to an instance of an
+	    object (for example audioLevel on a video stream), omit
+	    the dictionary member. Do NOT report a count of zero,
+	    -1 or "empty string".</li>
+	  <li>When a counted feature hasn't been used yet, but may happen in
+	    the future, report a count of zero.
+	  </li>
+	</ul>
       </section>
       <section>
 	<h3>Lifetime of stats objects</h3>
