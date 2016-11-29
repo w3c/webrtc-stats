@@ -7,3 +7,11 @@ webrtc-stats.orig.html
 webrtc-stats.orig.txt
 webrtc-stats.txt
 htmlwdiff.sh
+tidy.err
+tidy.html
+tidy.txt
+tidy.diff.html
+build
+support
+webrtc-respec-ci
+.webrtc-respec-ci
