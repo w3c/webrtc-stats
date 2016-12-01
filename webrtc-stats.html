@@ -473,14 +473,19 @@ enum RTCStatsType {
                   The sum of the QP values of frames passed. The count
                   of frames is in <a>framesDecoded</a> for inbound
                   stream stats, and in <a>framesEncoded</a> for
-                  outbound stream stats. If QP varies across the frame,
-		  an average or typical QP value is recorded.
+                  outbound stream stats.
                 </p>
                 <p>
                   The definition of QP value depends on
-                  the <a>codec</a>; for VP8, QP values are defined in
-                  [[RFC6386]]. <!-- Need appropriate references for
-                  VP8, VP9 and H.264 - RFC 6386 doesn't use the term -->
+                  the <a>codec</a>; for VP8, the QP value is the value carried
+                  in the frame header as the syntax element "y_ac_qi", and
+                  defined in [[RFC6386]] section 19.2. Its range is 0..127.
+                  <!-- Need appropriate references for VP9 and H.264 -->
+                </p>
+                <p>
+                  Note that the QP value is only
+                  an indication of quantizer values used; many formats have
+                  ways to vary the quantizer value within the frame.
                 </p>
                 <p>Only valid for video.</p>
               </dd>
