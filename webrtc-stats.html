@@ -1368,6 +1368,7 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCIceCandidateStats : RTCStats {
+             DOMString                transportId;
              boolean                  isRemote;
              DOMString                ip;
              long                     port;
@@ -1383,6 +1384,16 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCIceCandidateStats" data-dfn-for="RTCIceCandidateStats"
             class="dictionary-members">
+              <dt>
+                <dfn><code>transportId</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMString</a></span>
+              </dt>
+              <dd>
+                <p>
+                  It is a unique identifier that is associated to the object that was inspected to
+                  produce the <code>RTCIceCandidateStats</code> associated with this candidate.
+                </p>
+              </dd>
               <dt>
                 <dfn><code>isRemote</code></dfn> of type <span class=
                 "idlMemberType"><a>boolean</a></span>
