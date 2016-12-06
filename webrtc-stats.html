@@ -1326,6 +1326,7 @@ enum RTCStatsType {
              RTCIceCandidateType      candidateType;
              long                     priority;
              DOMString                url;
+             boolean                  deleted = false;
 };</pre>
           <section>
             <h2>
@@ -1392,6 +1393,23 @@ enum RTCStatsType {
                   The URL of the TURN or STUN server indicated in the
                   that translated this IP address. It is the URL address
                   surfaced in an <code>RTCPeerConnectionIceEvent</code>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>deleted</code></dfn> of type <span class=
+                "idlMemberType"><a>boolean</a></span>, defaulting to <code>false</code>
+              </dt>
+              <dd>
+                <p>
+                  For local candidates, <code>true</code> indicates that the
+                  candidate has been deleted/freed as described by [[!RFC5245]].
+                  For host candidates, this means that any network resources
+                  (typically a socket) associated with the candidate have been
+                  released. For TURN candidates, this means the TURN allocation
+                  is no longer active.
+                </p>
+                <p>
+                  For remote candidates, this property is not applicable.
                 </p>
               </dd>
             </dl>
