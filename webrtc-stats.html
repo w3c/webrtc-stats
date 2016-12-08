@@ -1414,8 +1414,8 @@ enum RTCStatsType {
              boolean                       readable;
              unsigned long long            bytesSent;
              unsigned long long            bytesReceived;
-             double                        totalRtt;
-             double                        currentRtt;
+             double                        totalRoundTripTime;
+             double                        currentRoundTripTime;
              double                        availableOutgoingBitrate;
              double                        availableIncomingBitrate;
              unsigned long long            requestsReceived;
@@ -1535,26 +1535,26 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>totalRtt</code></dfn> of type <span class=
+                <dfn><code>totalRoundTripTime</code></dfn> of type <span class=
                 "idlMemberType"><a>double</a></span>
               </dt>
               <dd>
                 <p>
-                  Represents the sum of all RTT measurements in seconds since the
+                  Represents the sum of all round trip time measurements in seconds since the
                   beginning of the session, based on both STUN connectivity check
                   [[!STUN-PATH-CHAR]] responses (responsesReceived) and consent
                   [[!RFC7675]] responses (consentResponsesReceived). The average
-                  RTT can be computed from <code>totalRtt</code> by dividing it
+                  round trip time can be computed from <code>totalRoundTripTime</code> by dividing it
                   by (<code>responsesReceived</code> + <code>consentResponsesReceived</code>).
                 </p>
               </dd>
               <dt>
-                <dfn><code>currentRtt</code></dfn> of type <span class=
+                <dfn><code>currentRoundTripTime</code></dfn> of type <span class=
                 "idlMemberType"><a>double</a></span>
               </dt>
               <dd>
                 <p>
-                  Represents the latest RTT measured in seconds, computed from both STUN connectivity
+                  Represents the latest round trip time measured in seconds, computed from both STUN connectivity
                   checks [[!STUN-PATH-CHAR]] and consent responses [[!RFC7675]].
                 </p>
               </dd>
