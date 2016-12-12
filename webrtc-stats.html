@@ -1368,6 +1368,7 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCIceCandidateStats : RTCStats {
+             boolean                  isRemote;
              DOMString                ip;
              long                     port;
              DOMString                protocol;
@@ -1382,6 +1383,16 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCIceCandidateStats" data-dfn-for="RTCIceCandidateStats"
             class="dictionary-members">
+              <dt>
+                <dfn><code>isRemote</code></dfn> of type <span class=
+                "idlMemberType"><a>boolean</a></span>
+              </dt>
+              <dd>
+                <p>
+                  <code>false</code> indicates that this represents a local candidate;
+                  <code>true</code> indicates that this represents a remote candidate.
+                </p>
+              </dd>
               <dt>
                 <dfn><code>ip</code></dfn> of type <span class=
                 "idlMemberType"><a>DOMString</a></span>
