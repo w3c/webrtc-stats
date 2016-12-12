@@ -114,16 +114,16 @@
     <section class="informative">
       <h2>Basic concepts</h2>
       <p>The stats API is defined in [[!WEBRTC]]. It is defined to return
-	a set of objects that are a subclass of the RTCStats dictionary. This is
-	normatively defined in [[!WEBRTC]], but is reproduced here
-	for ease of reference.
+        a set of objects that are a subclass of the RTCStats dictionary. This is
+        normatively defined in [[!WEBRTC]], but is reproduced here
+        for ease of reference.
       </p>
       <pre class="idl">
-	dictionary RTCStats {
+        dictionary RTCStats {
     DOMHighResTimeStamp timestamp;
     RTCStatsType        type;
     DOMString           id;
-	};
+        };
       </pre>
       <section>
 	<h3>Guidelines for design of stats objects</h3>
@@ -207,7 +207,7 @@
       <p>This specification is normative for the allowed values of <dfn>RTCStatsType</dfn>.</p>
       <section id="rtcstatstype-str*">
 
-	<pre class="idl">
+        <pre class="idl">
 enum RTCStatsType {
 "codec",
 "inbound-rtp",
@@ -221,7 +221,7 @@ enum RTCStatsType {
 "remote-candidate",
 "certificate"
 };
-	</pre>
+        </pre>
 
         <p>
           The following strings are valid values for <var>RTCStatsType</var>:
@@ -332,7 +332,7 @@ enum RTCStatsType {
       </section>
       </section>
       <section>
-	<h2>Stats dictionaries</h2>
+        <h2>Stats dictionaries</h2>
       <section id="streamstats-dict*">
         <h3>
           <dfn>RTCRTPStreamStats</dfn> dictionary
@@ -350,6 +350,7 @@ enum RTCStatsType {
              unsigned long pliCount;
              unsigned long nackCount;
              unsigned long sliCount;
+             unsigned long long qpSum;
 };</pre>
           <section>
             <h2>
@@ -464,10 +465,34 @@ enum RTCStatsType {
                   as defined in [[!RFC4585]] section 6.3.2.
                 </p>
               </dd>
+              <dt><dfn><code>qpSum</code></dfn> of type
+                <span class="idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The sum of the QP values of frames passed. The count
+                  of frames is in <a>framesDecoded</a> for inbound
+                  stream stats, and in <a>framesEncoded</a> for
+                  outbound stream stats.
+                </p>
+                <p>
+                  The definition of QP value depends on
+                  the <a>codec</a>; for VP8, the QP value is the value carried
+                  in the frame header as the syntax element "y_ac_qi", and
+                  defined in [[RFC6386]] section 19.2. Its range is 0..127.
+                  <!-- Need appropriate references for VP9 and H.264 -->
+                </p>
+                <p>
+                  Note that the QP value is only
+                  an indication of quantizer values used; many formats have
+                  ways to vary the quantizer value within the frame.
+                </p>
+                <p>Only valid for video.</p>
+              </dd>
             </dl>
           </section>
         </div>
-	</section>
+        </section>
         <section id="codec-dict*">
           <h3>
             <dfn>RTCCodecStats</dfn> dictionary
@@ -554,8 +579,9 @@ enum RTCStatsType {
             RTCInboundRTPStreamStats dictionary
           </h3>
           <p>
-            <dfn>RTCInboundRTPStreamStats</dfn> dictionary represents the measurement metrics for
-            the incoming RTP stream.
+            The <dfn>RTCInboundRTPStreamStats</dfn> dictionary
+            represents the measurement metrics for
+            the incoming RTP media stream.
           </p>
           <div>
             <pre class="idl">dictionary RTCInboundRTPStreamStats : RTCRTPStreamStats {
@@ -574,6 +600,7 @@ enum RTCStatsType {
              double             burstDiscardRate;
              double             gapLossRate;
              double             gapDiscardRate;
+             unsigned long      framesDecoded;
 };</pre>
             <section>
               <h2>
@@ -747,7 +774,15 @@ enum RTCStatsType {
                   reported without multiplying by 32768.
                   </p>
                 </dd>
-
+                <dt>
+                  <dfn><code>framesDecoded</code></dfn>
+                </dt>
+                <dd>
+                  <p>
+                    Only valid for video. It represents the total number of frames correctly
+                    decoded for this SSRC. Same definition as <code>totalVideoFrames</code> in
+                    Section 5 of [[!MEDIA-SOURCE]].
+                  </p>
               </dl>
             </section>
           </div>
@@ -766,6 +801,7 @@ enum RTCStatsType {
              unsigned long long bytesSent;
              double             targetBitrate;
              double             roundTripTime;
+             unsigned long      framesEncoded;
 };</pre>
             <section>
               <h2>
@@ -818,6 +854,16 @@ enum RTCStatsType {
                     as defined in section 6.4.1. of [[!RFC3550]].
                   </p>
                 </dd>
+                <dt>
+                  <dfn><code>framesEncoded</code></dfn> of type  <span class=
+                                                                       "idlMemberType"><a>long</a></span>
+                </dt>
+                <dd>
+                  <p>
+                    Only valid for video. It represents the total
+                    number of frames successfully encoded for this RTP
+                    media stream.
+                  </p>
               </dl>
             </section>
           </div>
@@ -895,7 +941,7 @@ enum RTCStatsType {
             </dl>
           </section>
         </div>
-	</section>
+        </section>
         <section id="mststats-dict*">
           <h3>
             <dfn>RTCMediaStreamTrackStats</dfn> dictionary
@@ -1011,7 +1057,7 @@ enum RTCStatsType {
                 <dd>
                   <p>
                     Only valid for video. It represents the total number of frames sent for this
-                    SSRC.
+                    MediaStreamTrack.
                   </p>
                 </dd>
                 <dt>
@@ -1021,7 +1067,7 @@ enum RTCStatsType {
                 <dd>
                   <p>
                     Only valid for video and when remoteSource is set to <code>true</code>. It
-                    represents the total number of frames received for this SSRC.
+                    represents the total number of frames received for this MediaStreamTrack.
                   </p>
                 </dd>
                 <dt>
@@ -1030,8 +1076,10 @@ enum RTCStatsType {
                 </dt>
                 <dd>
                   <p>
-                    Only valid for video. It represents the total number of frames correctly
-                    decoded for this SSRC. Same definition as <code>totalVideoFrames</code> in
+                    Only valid for video and when remoteSource is set
+                    to <code>true</code>. It represents the total number of frames correctly
+                    decoded for this MediaStreamTrack, independent of
+                    which SSRC it was received from. It is defined as <code>totalVideoFrames</code> in
                     Section 5 of [[!MEDIA-SOURCE]].
                   </p>
                 </dd>
@@ -1043,7 +1091,7 @@ enum RTCStatsType {
                   <p>
                     Only valid for video. It is the total number of frames dropped
                     predecode or dropped because the frame missed its display
-                    deadline for this SSRC. It is the same definition as
+                    deadline for this MediastreamTrack. It is the same definition as
                     <code>droppedVideoFrames</code> in Section 5 of [[!MEDIA-SOURCE]].
                   </p>
                 </dd>
@@ -1054,7 +1102,7 @@ enum RTCStatsType {
                 <dd>
                   <p>
                     Only valid for video. It is the total number of corrupted frames
-                    that have been detected for this SSRC. It is the same definition as
+                    that have been detected for this MediaStreamTrack. It is the same definition as
                     <code>corruptedVideoFrames</code> in Section 5 of [[!MEDIA-SOURCE]].
                   </p>
                 </dd>
@@ -1845,7 +1893,7 @@ stats [
 ]
           </pre>
         </section>
-	<section>
+        <section>
       <h3>
         Example of a stats application
       </h3>
