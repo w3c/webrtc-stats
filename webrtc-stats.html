@@ -1863,7 +1863,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only use the fingerprint value as defined in Section 5 of [[!RFC4572]].
+                  The fingerprint of the certificate. Only use the fingerprint value as defined in Section 5 of [[!RFC4572]].
                 </p>
               </dd>
               <dt>
@@ -1872,7 +1872,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  For instance, "sha-256".
+                  The hash function used to compute the certificate fingerprint. For instance, "sha-256".
                 </p>
               </dd>
               <dt>
@@ -1881,14 +1881,19 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  For example, DER-encoded, base-64 representation of a certifiate.
+                  The DER-encoded base-64 representation of the certifiate.
                 </p>
               </dd>
               <dt>
                 <dfn><code>issuerCertificateId</code></dfn> of type <span class=
                 "idlMemberType"><a>DOMString</a></span>
               </dt>
-              <dd></dd>
+              <dd>
+                <p>
+                  The issuerCertificateId refers to the stats object that contains the next certificate in the certificate chain.
+                  If the current certificate is at the end of the chain (i.e. a self-signed certificate), this will not be set.
+                </p>
+              </dd>
             </dl>
           </section>
         </div>
