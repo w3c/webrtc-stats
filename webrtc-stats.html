@@ -106,7 +106,8 @@
       </p>
       <p>
         The terms <dfn>RTCPeerConnection</dfn>, <dfn>RTCDataChannel</dfn>,
-        <dfn>RTCDtlsTransport</dfn> and <dfn>RTCIceTransport</dfn> are defined in [[!WEBRTC]].
+        <dfn>RTCDtlsTransport</dfn>. <dfn>RTCDtlsTransportState</dfn> and
+        <dfn>RTCIceTransport</dfn> are defined in [[!WEBRTC]].
       </p>
       <p>
         The term <dfn>RTP stream</dfn> is defined in [[RFC7656]] section 2.1.10.
@@ -1298,13 +1299,13 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCTransportStats : RTCStats {
-             unsigned long long bytesSent;
-             unsigned long long bytesReceived;
-             DOMString          rtcpTransportStatsId;
-             boolean            activeConnection;
-             DOMString          selectedCandidatePairId;
-             DOMString          localCertificateId;
-             DOMString          remoteCertificateId;
+             unsigned long long    bytesSent;
+             unsigned long long    bytesReceived;
+             DOMString             rtcpTransportStatsId;
+             RTCDtlsTransportState state;
+             DOMString             selectedCandidatePairId;
+             DOMString             localCertificateId;
+             DOMString             remoteCertificateId;
 };</pre>
           <section>
             <h2>
@@ -1344,12 +1345,12 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>activeConnection</code></dfn> of type <span class=
-                "idlMemberType"><a>boolean</a></span>
+                <dfn><code>state</code></dfn> of type <span class=
+                "idlMemberType"><a>RTCDtlsTransportState</a></span>
               </dt>
               <dd>
                 <p>
-                  Set to <code>true</code> when transport is active.
+                  Set to the current value of the "state" field of the underlying RTCDtlsTransport.
                 </p>
               </dd>
               <dt>
