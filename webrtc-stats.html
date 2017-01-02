@@ -157,6 +157,24 @@
           (such as "trackIds") are always of type sequence&lt;DOMString&gt;, and are used to refer
           to a list of other stats objects.
         </p>
+        <p>
+          Stats are sampled by Javascript. In general, an application will not have overall control
+          over how often stats are sampled, and the implementation cannot know what the intended
+          use of the stats is. There is, by design, no control surface for the application to
+          influence how stats are generated.
+        </p>
+        <p>
+          Therefore, letting the implementation compute "average" rates is not a good idea, since
+          that implies some averaging time interval that can't be set beforehand. Instead, the
+          recommended approach is to count the number of measurements of a value and sum the
+          measurements given even if the sum is meaningless in itself; the JS application can then
+          compute averages over any desired time interval by calling getStats() twice, taking the
+          difference of the two sums and dividing by the difference of the two counts.
+        </p>
+        <p>
+          For stats that are measured against time, such as byte counts, no separate counter is
+          needed; one can instead divide by the difference in the timestamps.
+        </p>
       </section>
       <section>
         <h3>
