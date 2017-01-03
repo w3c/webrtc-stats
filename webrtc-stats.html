@@ -910,7 +910,9 @@ enum RTCStatsType {
         <div>
           <pre class="idl">dictionary RTCPeerConnectionStats : RTCStats {
              unsigned long dataChannelsOpened;
-             unsigned long dataChannelsClosed;
+            unsigned long dataChannelsClosed;
+            unsigned long dataChannelsAccepted;
+            unsigned long dataChannelsSignalledClosed;
 };</pre>
           <section>
             <h2>
@@ -924,7 +926,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the number of unique datachannels opened.
+                  Represents the number of unique datachannels returned from a successful
+                  createDataChannel() call.
                 </p>
               </dd>
               <dt>
@@ -933,10 +936,35 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the number of unique datachannels closed.
+                  Represents the number of unique datachannels closed using the close() function.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>dataChannelsAccepted</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the number of unique datachannels signalled in a "datachannel" event
+                  on the PeerConnection.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>dataChannelsSignalledClosed</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the number of unique datachannels signalled in a "close" event on the
+                  datachannel object.
                 </p>
               </dd>
             </dl>
+            <p>
+              The total number of open data channels at any time can be calculated as
+              dataChannelsOpened + dataChannelsAccepted - dataChannelsClosed -
+              dataChannelsSignalledClosed.
+            </p>
           </section>
         </div>
       </section>
