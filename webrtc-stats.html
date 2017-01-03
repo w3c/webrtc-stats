@@ -431,7 +431,8 @@ enum RTCStatsType {
                 <p>
                   Either "<code>audio</code>" or "<code>video</code>". This MUST match the media
                   type part of the information in the corresponding <code><a>codec</a></code>
-                  member of <code>RTCCodecStats</code>.
+                  member of <code>RTCCodecStats</code>, and MUST match the "kind" attribute of the
+                  related MediaStreamTrack.
                 </p>
               </dd>
               <dt>
@@ -997,6 +998,7 @@ enum RTCStatsType {
              boolean             remoteSource;
              boolean             ended;
              boolean             detached;
+             DOMString           kind;
              sequence&lt;DOMString&gt; ssrcIds;
              unsigned long       frameWidth;
              unsigned long       frameHeight;
@@ -1049,6 +1051,16 @@ enum RTCStatsType {
                 <p>
                   True if the track has been detached from the PeerConnection object. If true, all
                   stats reflect their values at the time when the track was detached.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>kind</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMString</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Either "<code>audio</code>" or "<code>video</code>". This reflects the "kind"
+                  attribute of the MediaStreamTrack.
                 </p>
               </dd>
               <dt>
