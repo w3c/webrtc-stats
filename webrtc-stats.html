@@ -269,6 +269,7 @@ enum RTCStatsType {
 "outbound-rtp",
 "peer-connection",
 "data-channel",
+"stream",
 "track",
 "transport",
 "candidate-pair",
@@ -330,12 +331,22 @@ enum RTCStatsType {
             </p>
           </dd>
           <dt>
+            <dfn><code>stream</code></dfn>
+          </dt>
+          <dd>
+            <p>
+              Contains statistics related to a specific MediaStream. It is accessed by the
+              <code><a>RTCMediaStreamStats</a></code>.
+            </p>
+          </dd>
+          <dt>
             <dfn><code>track</code></dfn>
           </dt>
           <dd>
             <p>
               Contains statistics related to a specific MediaStreamTrack and the corresponding
-              media-level metrics. It is accessed by the <code><a>RTCMediaStreamStats</a></code>.
+              media-level metrics. It is accessed by the
+              <code><a>RTCMediaStreamTrackStats</a></code>.
             </p>
           </dd>
           <dt>
@@ -381,7 +392,8 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              Information about a certificate used by an RTCIceTransport.
+              Information about a certificate used by an RTCIceTransport. It is accessed by the
+              <code><a>RTCCertificateStats</a></code>.
             </p>
           </dd>
         </dl>
