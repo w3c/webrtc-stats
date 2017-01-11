@@ -1203,15 +1203,17 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for audio, and the value is between 0..1 (linear), where 1.0
+                  Only valid for audio. The value is between 0..1 (linear), where 1.0
                   represents <code>0 dBov</code>, 0 represents silence, and 0.5 represents
                   approximately 6 dBSPL change in the sound pressure level from 0 dBov.
                 </p>
                 <p>
-                  The "audio level" value defined in [[!RFC6464]] (defined as 0..127, where 0
-                  represents 0 dBov, 126 reprsents -126 dBov and 127 represents silence) can be
-                  obtained by the calculation given in appendix A of [[RFC6465]]: level =
-                  -log10(audioLevel) * 20.
+                  The "audio level" value defined in [[RFC6464]] and used in the
+		  RTCRtpContributingSource.audioLevel of [[WEBRTC]] (defined as 0..127, where 0
+                  represents 0 dBov, 126 represents -126 dBov and 127 represents silence) is
+                  obtained by the calculation given in appendix A of [[!RFC6465]]: informally, level =
+                  -round(log10(audioLevel) * 20), with audioLevel 0.0 and values below 127 mapped
+		  to 127.
                 </p>
               </dd>
               <dt>
