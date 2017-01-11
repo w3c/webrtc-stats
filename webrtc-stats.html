@@ -942,8 +942,10 @@ enum RTCStatsType {
         </h3>
         <div>
           <pre class="idl">dictionary RTCPeerConnectionStats : RTCStats {
-             unsigned long dataChannelsOpened;
-             unsigned long dataChannelsClosed;
+            unsigned long dataChannelsOpened;
+            unsigned long dataChannelsClosed;
+            unsigned long dataChannelsRequested;
+            unsigned long dataChannelsAccepted;
 };</pre>
           <section>
             <h2>
@@ -957,7 +959,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the number of unique datachannels opened.
+                  Represents the number of unique DataChannels that have entered the "open" state
+                  during their lifetime.
                 </p>
               </dd>
               <dt>
@@ -966,10 +969,43 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the number of unique datachannels closed.
+                  Represents the number of unique DataChannels that have left the "open" state
+                  during their lifetime (due to being closed by either end or the underlying
+                  transport being closed). DataChannels that transition from "connecting" to
+                  "closing" or "closed" without ever being "open" are not counted in this number.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>dataChannelsRequested</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the number of unique DataChannels returned from a successful
+                  createDataChannel() call on the PeerConnection. If the underlying data transport
+                  is not established, these may be in the "connecting" state.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>dataChannelsAccepted</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the number of unique DataChannels signaled in a "datachannel" event on
+                  the PeerConnection.
                 </p>
               </dd>
             </dl>
+            <p>
+              The total number of open data channels at any time can be calculated as
+              dataChannelsOpened - dataChannelsClosed. This number is always positive.
+            </p>
+            <p>
+              The sum of dataChannelsRequested and dataChannelsAccepted is always greater than or
+              equal to dataChannelsOpened - the difference is equal to the number of channels that
+              have been requested, but have not reached the "open" state.
+            </p>
           </section>
         </div>
       </section>
