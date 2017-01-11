@@ -203,10 +203,10 @@
         </h3>
         <p>
           The general rule is that stats objects are considered to be created at the same time as
-          the underlying object they report on, and once created, they exist for the lifetime of the
-          PeerConnection that contains them, even when the underlying object is stopped or deleted.
-          This is important in order to report consistently on short-lived objects and to be able to
-          report totals over the lifetime of a PeerConnection.
+          the underlying object they report on, and once created, they exist for the lifetime of
+          the PeerConnection that contains them, even when the underlying object is stopped or
+          deleted. This is important in order to report consistently on short-lived objects and to
+          be able to report totals over the lifetime of a PeerConnection.
         </p>
         <p>
           When an object is closed or deleted, the <code>timestamp</code> member of the stats
@@ -1240,17 +1240,17 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for audio. The value is between 0..1 (linear), where 1.0
-                  represents <code>0 dBov</code>, 0 represents silence, and 0.5 represents
-                  approximately 6 dBSPL change in the sound pressure level from 0 dBov.
+                  Only valid for audio. The value is between 0..1 (linear), where 1.0 represents
+                  <code>0 dBov</code>, 0 represents silence, and 0.5 represents approximately 6
+                  dBSPL change in the sound pressure level from 0 dBov.
                 </p>
                 <p>
                   The "audio level" value defined in [[RFC6464]] and used in the
-		  RTCRtpContributingSource.audioLevel of [[WEBRTC]] (defined as 0..127, where 0
+                  RTCRtpContributingSource.audioLevel of [[WEBRTC]] (defined as 0..127, where 0
                   represents 0 dBov, 126 represents -126 dBov and 127 represents silence) is
-                  obtained by the calculation given in appendix A of [[!RFC6465]]: informally, level =
-                  -round(log10(audioLevel) * 20), with audioLevel 0.0 and values below 127 mapped
-		  to 127.
+                  obtained by the calculation given in appendix A of [[!RFC6465]]: informally,
+                  level = -round(log10(audioLevel) * 20), with audioLevel 0.0 and values below 127
+                  mapped to 127.
                 </p>
               </dd>
               <dt>
@@ -1982,7 +1982,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The fingerprint of the certificate. Only use the fingerprint value as defined in Section 5 of [[!RFC4572]].
+                  The fingerprint of the certificate. Only use the fingerprint value as defined in
+                  Section 5 of [[!RFC4572]].
                 </p>
               </dd>
               <dt>
@@ -1991,7 +1992,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The hash function used to compute the certificate fingerprint. For instance, "sha-256".
+                  The hash function used to compute the certificate fingerprint. For instance,
+                  "sha-256".
                 </p>
               </dd>
               <dt>
@@ -2009,8 +2011,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The issuerCertificateId refers to the stats object that contains the next certificate in the certificate chain.
-                  If the current certificate is at the end of the chain (i.e. a self-signed certificate), this will not be set.
+                  The issuerCertificateId refers to the stats object that contains the next
+                  certificate in the certificate chain. If the current certificate is at the end of
+                  the chain (i.e. a self-signed certificate), this will not be set.
                 </p>
               </dd>
             </dl>
