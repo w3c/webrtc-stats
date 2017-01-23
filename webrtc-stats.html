@@ -82,11 +82,6 @@
         Terminology
       </h2>
       <p>
-        The <code><a href=
-        "https://www.w3.org/TR/2014/REC-html5-20141028/webappapis.html#eventhandler">EventHandler</a></code>
-        represents a callback used for event handlers as defined in [[!HTML5]].
-      </p>
-      <p>
         The concepts <dfn><a href=
         "https://www.w3.org/TR/2014/REC-html5-20141028/webappapis.html#queue-a-task">queue a
         task</a></dfn>, and <dfn><a href=
@@ -118,9 +113,56 @@
         Basic concepts
       </h2>
       <p>
-        The stats API is defined in [[!WEBRTC]]. It is defined to return a set of objects that are
-        a subclass of the RTCStats dictionary. This is normatively defined in [[!WEBRTC]], but is
-        reproduced here for ease of reference.
+        The basic object of the stats model is the <a>stats object</a>. The following terms are
+        defined to describe it:
+      </p>
+      <dl>
+        <dt>
+          <dfn>Stats object</dfn>
+        </dt>
+        <dd>
+          <p>
+            This represents an internal object that keeps a set of data values, together with a
+            time for when these values are current. Most stats objects are related one-on-one to an
+            object defined in the WebRTC API; they may be thought of as being internal properties
+            of those objects.
+          </p>
+        </dd>
+        <dt>
+          <dfn>Stats object reference</dfn>
+        </dt>
+        <dd>
+          <p>
+            A stats object has a stable identifier "id". Other stats objects may contain references
+            to this stats object. In a <a>stats value set</a>, these references are represented by
+            a DOMString containing "id" value of the referenced stats object.
+          </p>
+          <p>
+            The stats object is defined by describing the stats value set it returns.
+          </p>
+        </dd>
+        <dt>
+          <dfn>Stats value set</dfn>
+        </dt>
+        <dd>
+          This is a set of values, copied out from a stats object at a specific moment in time. It
+          is recturned as a WebIDL "dictionary" through the GetStats API.
+        </dd>
+        <dt>
+          <dfn>Stats value</dfn>
+        </dt>
+        <dd>
+          Refers to a single value within a stats value set.
+        </dd>
+      </dl>
+      <p>
+        A stats object changes the values it contains continuously over its lifetime, but is never
+        visible through the GetStats API. A stats value set, once returned, never changes.
+      </p>
+      <p>
+        The stats API is defined in [[!WEBRTC]]. It is defined to return a collection of <a>stats
+        value set</a>s that are a subclass of the RTCStats dictionary. This API is normatively
+        defined in [[!WEBRTC]], but is reproduced here for ease of reference.
       </p>
       <pre class="idl">
         dictionary RTCStats {
@@ -134,11 +176,15 @@
           Guidelines for design of stats objects
         </h3>
         <p>
-          When introducing a new stats type, the following principles should be followed:
+          When introducing a new stats object, the following principles should be followed:
         </p>
         <ul>
           <li>An RTCStats object should correspond to an object defined in the specification it
           supports.
+          </li>
+          <li>The object MUST define a new value in the "RTCStastType" enum, and MUST define the
+          syntax of the <a>stats value set</a> it returns either by reference to an existing
+          sub-dictionary of <a>RTCStats</a> or by defining a new sub-dictionary of <a>RTCStats</a>.
           </li>
           <li>All members of the new object need to have definitions that make them consistently
           implementable. References to other specifications are a good way of doing this.
@@ -153,10 +199,9 @@
           (camelCase).
         </p>
         <p>
-          Names ending in "Id" (such as "datachannelId") are always of type DOMString and are used
-          to refer to other stats objects by the value of their "id" field; names ending in "Ids"
-          (such as "trackIds") are always of type sequence&lt;DOMString&gt;, and are used to refer
-          to a list of other stats objects.
+          Names ending in "Id" (such as "datachannelId") are always a <a>stats object
+          reference</a>; names ending in "Ids" (such as "trackIds") are always of type
+          sequence&lt;DOMString&gt;, where each DOMString is a <a>stats object reference</a>.
         </p>
         <p>
           Stats are sampled by Javascript. In general, an application will not have overall control
@@ -216,16 +261,16 @@
     </section><!-- VS: getStats() remains in base spec! -->
     <section>
       <h2>
-        Maintenance procedures for stats types
+        Maintenance procedures for stats object types
       </h2>
       <p>
         This document, in its editors' draft form, serves as the repository for the currently
-        defined set of stats types.
+        defined set of stats object types.
       </p>
       <p>
-        If a need for a new stats dictionary or dictionary member is found, an issue should be
-        raised against this spec on Github, and a review process will decide on whether the stat
-        should be added to the specification or not.
+        If a need for a new stats object type or stats value within a stats object is found, an
+        issue should be raised against this spec on Github, and a review process will decide on
+        whether the stat should be added to the specification or not.
       </p>
       <p>
         A pull request for a change to this document may serve as guidance for the discussion, but
