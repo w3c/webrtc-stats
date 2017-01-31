@@ -20,8 +20,11 @@
   <body>
     <section id="abstract">
       <p>
-        This document defines a set of Javascript APIs that allow access to the statistical
+        This document defines a set of WebIDL objects that allow access to the statistical
         information about a PeerConnection.
+      </p>
+      <p>
+        These objects are returned from the getStats API that is specified in [[WEBRTC]].
       </p>
     </section>
     <section id="sotd">
@@ -42,8 +45,8 @@
         to monitor the performance of the underlying network and media pipeline.
       </p>
       <p>
-        This document defines the APIs and statistic identifiers used by the web application to
-        extract metrics from the user agent.
+        This document defines the statistic identifiers used by the web application to extract
+        metrics from the user agent.
       </p>
     </section>
     <section id="conformance">
@@ -52,10 +55,10 @@
         <em>user agent</em>.
       </p>
       <p>
-        Implementations that use ECMAScript to implement the APIs and objects defined in this
-        specification <em class="rfc2119" title="MUST">MUST</em> implement them in a manner
-        consistent with the ECMAScript Bindings defined in the Web IDL specification [[WEBIDL]], as
-        this document uses that specification and terminology.
+        Implementations that use ECMAScript to implement the objects defined in this specification
+        <em class="rfc2119" title="MUST">MUST</em> implement them in a manner consistent with the
+        ECMAScript Bindings defined in the Web IDL specification [[WEBIDL]], as this document uses
+        that specification and terminology.
       </p>
       <p>
         This specification does not define what objects a conforming implementation should
