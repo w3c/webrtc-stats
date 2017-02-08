@@ -410,17 +410,17 @@ enum RTCStatsType {
         </h3>
         <div>
           <pre class="idl">dictionary RTCRTPStreamStats : RTCStats {
-             DOMString     ssrc;
-             DOMString     associateStatsId;
-             boolean       isRemote = false;
-             DOMString     mediaType;
-             DOMString     mediaTrackId;
-             DOMString     transportId;
-             DOMString     codecId;
-             unsigned long firCount;
-             unsigned long pliCount;
-             unsigned long nackCount;
-             unsigned long sliCount;
+             unsigned long      ssrc;
+             DOMString          associateStatsId;
+             boolean            isRemote = false;
+             DOMString          mediaType;
+             DOMString          mediaTrackId;
+             DOMString          transportId;
+             DOMString          codecId;
+             unsigned long      firCount;
+             unsigned long      pliCount;
+             unsigned long      nackCount;
+             unsigned long      sliCount;
              unsigned long long qpSum;
 };</pre>
           <section>
@@ -430,10 +430,15 @@ enum RTCStatsType {
             <dl data-link-for="RTCRTPStreamStats" data-dfn-for="RTCRTPStreamStats" class=
             "dictionary-members">
               <dt>
-                <dfn><code>ssrc</code></dfn> of type <span class=
-                "idlMemberType"><a>DOMString</a></span>
+                <dfn><code>ssrc</code></dfn> of type <span class="idlMemberType"><a>unsigned long
+                </a></span>
               </dt>
-              <dd></dd>
+              <dd>
+                <p>
+                  The 32-bit unsigned integer value per [[RFC3550]] used to identify the source of
+                  the stream of RTP packets that this stats object concerns.
+                </p>
+              </dd>
               <dt>
                 <dfn><code>associateStatsId</code></dfn> of type <span class=
                 "idlMemberType"><a>DOMString</a></span>
@@ -550,7 +555,7 @@ enum RTCStatsType {
                 <p>
                   The definition of QP value depends on the <a>codec</a>; for VP8, the QP value is
                   the value carried in the frame header as the syntax element "y_ac_qi", and
-                  defined in [[RFC6386]] section 19.2. Its range is 0..127. 
+                  defined in [[RFC6386]] section 19.2. Its range is 0..127.
                   <!-- Need appropriate references for VP9 and H.264 -->
                 </p>
                 <p>
@@ -2110,7 +2115,7 @@ function logError(error) {
       </h3>
       <p>
         Some stats identifiers may expose personally identifiable information, for example the IP
-        addresses of the participating endpoints when a TURN relay is not used. 
+        addresses of the participating endpoints when a TURN relay is not used.
         <!-- TODO: add guidance on how to not expose this information? -->
       </p>
     </section>
