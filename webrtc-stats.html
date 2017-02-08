@@ -118,51 +118,48 @@
       </p>
       <dl>
         <dt>
-          <dfn>Stats object</dfn>
+          <dfn>Monitored object</dfn>
         </dt>
         <dd>
           <p>
-            This represents an internal object that keeps a set of data values, together with a
-            time for when these values are current. Most stats objects are related one-on-one to an
-            object defined in the WebRTC API; they may be thought of as being internal properties
-            of those objects.
+            An internal object that keeps a set of data values. Most monitored objects are object
+            defined in the WebRTC API; they may be thought of as being internal properties of those
+            objects.
           </p>
+        </dd>
+        <dt>
+          <dfn>Stats object</dfn>
+        </dt>
+        <dd>
+          This is a set of values, copied out from a monitored object at a specific moment in time.
+          It is recturned as a WebIDL "dictionary" through the GetStats API.
         </dd>
         <dt>
           <dfn>Stats object reference</dfn>
         </dt>
         <dd>
           <p>
-            A stats object has a stable identifier "id". Other stats objects may contain references
-            to this stats object. In a <a>stats value set</a>, these references are represented by
-            a DOMString containing "id" value of the referenced stats object.
+            A monitored object has a stable identifier "id", which is reflected in all stats
+            objects produced from the monitored object. Stats objects may contain references to
+            other stats objects using this "id" value. In a <a>stats object</a>, these references
+            are represented by a DOMString containing "id" value of the referenced stats object.
           </p>
-          <p>
-            The stats object is defined by describing the stats value set it returns.
-          </p>
-        </dd>
-        <dt>
-          <dfn>Stats value set</dfn>
-        </dt>
-        <dd>
-          This is a set of values, copied out from a stats object at a specific moment in time. It
-          is recturned as a WebIDL "dictionary" through the GetStats API.
         </dd>
         <dt>
           <dfn>Stats value</dfn>
         </dt>
         <dd>
-          Refers to a single value within a stats value set.
+          Refers to a single value within a stats object.
         </dd>
       </dl>
       <p>
-        A stats object changes the values it contains continuously over its lifetime, but is never
-        visible through the GetStats API. A stats value set, once returned, never changes.
+        A monitored object changes the values it contains continuously over its lifetime, but is
+        never visible through the GetStats API. A stats object, once returned, never changes.
       </p>
       <p>
         The stats API is defined in [[!WEBRTC]]. It is defined to return a collection of <a>stats
-        value set</a>s that are a subclass of the RTCStats dictionary. This API is normatively
-        defined in [[!WEBRTC]], but is reproduced here for ease of reference.
+        object</a>s, each of which is of a subclass of the RTCStats dictionary. This API is
+        normatively defined in [[!WEBRTC]], but is reproduced here for ease of reference.
       </p>
       <pre class="idl">
         dictionary RTCStats {
@@ -183,7 +180,7 @@
           supports.
           </li>
           <li>The object MUST define a new value in the "RTCStastType" enum, and MUST define the
-          syntax of the <a>stats value set</a> it returns either by reference to an existing
+          syntax of the <a>stats object</a> it returns either by reference to an existing
           sub-dictionary of <a>RTCStats</a> or by defining a new sub-dictionary of <a>RTCStats</a>.
           </li>
           <li>All members of the new object need to have definitions that make them consistently
@@ -244,18 +241,15 @@
       </section>
       <section>
         <h3>
-          Lifetime of stats objects
+          Stats objects for deleted monitored objects
         </h3>
         <p>
-          The general rule is that stats objects are considered to be created at the same time as
-          the underlying object they report on, and once created, they exist for the lifetime of
-          the PeerConnection that contains them, even when the underlying object is stopped or
-          deleted. This is important in order to report consistently on short-lived objects and to
-          be able to report totals over the lifetime of a PeerConnection.
-        </p>
-        <p>
-          When an object is closed or deleted, the <code>timestamp</code> member of the stats
-          object stops updating; it is frozen at the time when the object stopped.
+          When a monitored object is destroyed, a final stats object is produced, carrying the
+          values current at the time of destruction. This object will be returned, with a timestamp
+          reflecting the time of destruction, whenever getStats() is called, as long as the
+          PeerConnection exists. This is important in order to report consistently on short-lived
+          objects and to be able to consistently report totals over the lifetime of a
+          PeerConnection.
         </p>
       </section>
     </section><!-- VS: getStats() remains in base spec! -->
