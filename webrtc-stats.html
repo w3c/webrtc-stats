@@ -414,7 +414,7 @@ enum RTCStatsType {
              DOMString          associateStatsId;
              boolean            isRemote = false;
              DOMString          mediaType;
-             DOMString          mediaTrackId;
+             DOMString          trackId;
              DOMString          transportId;
              DOMString          codecId;
              unsigned long      firCount;
@@ -473,10 +473,13 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>mediaTrackId</code></dfn> of type <span class=
+                <dfn><code>trackId</code></dfn> of type <span class=
                 "idlMemberType"><a>DOMString</a></span>
               </dt>
-              <dd></dd>
+              <dd>
+                The unique identifier of the stats object representing the associated
+                MediaStreamTrack.
+              </dd>
               <dt>
                 <dfn><code>transportId</code></dfn> of type <span class=
                 "idlMemberType"><a>DOMString</a></span>
