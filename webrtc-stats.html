@@ -413,18 +413,19 @@ enum RTCStatsType {
         </h3>
         <div>
           <pre class="idl">dictionary RTCRTPStreamStats : RTCStats {
-             unsigned long      ssrc;
-             DOMString          associateStatsId;
-             boolean            isRemote = false;
-             DOMString          mediaType;
-             DOMString          trackId;
-             DOMString          transportId;
-             DOMString          codecId;
-             unsigned long      firCount;
-             unsigned long      pliCount;
-             unsigned long      nackCount;
-             unsigned long      sliCount;
-             unsigned long long qpSum;
+             unsigned long       ssrc;
+             DOMString           associateStatsId;
+             boolean             isRemote = false;
+             DOMHighResTimeStamp remoteTimestamp;
+             DOMString           mediaType;
+             DOMString           trackId;
+             DOMString           transportId;
+             DOMString           codecId;
+             unsigned long       firCount;
+             unsigned long       pliCount;
+             unsigned long       nackCount;
+             unsigned long       sliCount;
+             unsigned long long  qpSum;
 };</pre>
           <section>
             <h2>
@@ -461,6 +462,23 @@ enum RTCStatsType {
                   <code>false</code> indicates that the statistics are measured locally, while
                   <code>true</code> indicates that the measurements were done at the remote
                   endpoint and reported in an RTCP RR/XR.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>remoteTimestamp</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Present if <code>isRemote</code> is <code>true</code>,
+                  <code>remoteTimestamp</code>, of type
+                  <code>DOMHighResTimeStamp</code> [[!HIGHRES-TIME]],
+                  represents the remote timestamp at which these statistics
+                  were sent by the remote endpoint (e.g., through RTCP). This
+                  differs from <code>timestamp</code>, which represents the
+                  time at which the statistics were received by the local
+                  endpoint. The time is relative to the UNIX epoch (Jan 1,
+                  1970, UTC).
                 </p>
               </dd>
               <dt>
