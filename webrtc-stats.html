@@ -474,11 +474,14 @@ enum RTCStatsType {
                   <code>remoteTimestamp</code>, of type
                   <code>DOMHighResTimeStamp</code> [[!HIGHRES-TIME]],
                   represents the remote timestamp at which these statistics
-                  were sent by the remote endpoint (e.g., through RTCP). This
-                  differs from <code>timestamp</code>, which represents the
-                  time at which the statistics were received by the local
-                  endpoint. The time is relative to the UNIX epoch (Jan 1,
-                  1970, UTC).
+                  were sent by the remote endpoint. This differs from
+                  <code>timestamp</code>, which represents the time at which
+                  the statistics were received by the local endpoint. This
+                  timestamp, if present, is derived from the NTP timestamp in
+                  an RTCP SR packet, which reflects the remote endpoint's
+                  clock. That clock may not be synchronized with the local
+                  clock. The time is relative to the UNIX epoch (Jan 1, 1970,
+                  UTC).
                 </p>
               </dd>
               <dt>
