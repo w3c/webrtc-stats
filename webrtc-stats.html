@@ -1150,8 +1150,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video MediaStreamTracks and represents the width of the video
-                  frame for this track.
+                  Only valid for video MediaStreamTracks and represents the width of the last
+                  processed video frame for this track. Before the first frame is processed this
+                  attribute is missing.
                 </p>
               </dd>
               <dt>
@@ -1160,8 +1161,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video MediaStreamTracks and represents the height of the video
-                  frame for this MediaStreamTrack.
+                  Only valid for video MediaStreamTracks and represents the height of the last
+                  processed video frame for this track. Before the first frame is processed this
+                  attribute is missing.
                 </p>
               </dd>
               <dt>
