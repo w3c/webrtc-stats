@@ -94,17 +94,13 @@ var respecConfig = {
             status:   "Internet Draft",
             publisher:  "IETF"
         },
-        "burst-gap-discard": {
-            title:    "RTCP XR Block for Independent Reporting of Burst/Gap Discard Metric",
-            href:     "https://tools.ietf.org/html/draft-ietf-xrblock-independent-burst-gap-discard",
-            authors:  [
-                "Varun Singh",
-                "Colin Perkins",
-                "Alan Clark",
-                "Rachel Huang"
-            ],
-            status:   "Internet Draft",
-            publisher:  "IETF"
+        "JSEP": {
+            "authors":["Justin Uberti","Cullen Jennings","Eric Rescorla"],
+            "href": "http://datatracker.ietf.org/doc/draft-ietf-rtcweb-jsep/",
+            "publisher": "IETF",
+            "status": "Active Internet-Draft",
+            "title": "Javascript Session Establishment Protocol",
+            "date": "16 January 2017"
         }
       },
       afterEnd: function markFingerprinting () {
