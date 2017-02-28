@@ -1500,7 +1500,7 @@ enum RTCStatsType {
              RTCIceCandidateType      candidateType;
              long                     priority;
              DOMString                url;
-             DOMString                turnUrlProtocol;
+             DOMString                relayProtocol;
              boolean                  deleted = false;
 };</pre>
           <section>
@@ -1559,12 +1559,12 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>turnUrlProtocol</code></dfn> of type <span class=
+                <dfn><code>relayProtocol</code></dfn> of type <span class=
                 "idlMemberType"><a>DOMString</a></span>
               </dt>
               <dd>
                 <p>
-                  It is the protocol used by the endpoint to communicate with the TURN server, this is only present for local candidates. Valid values for the TURN URL protocol is one of <code>udp</code>, <code>tcp</code>, or <code>tls</code>.
+                  It is the protocol used by the endpoint to communicate with the TURN server. This is only present for local candidates. Valid values for the TURN URL protocol is one of <code>udp</code>, <code>tcp</code>, or <code>tls</code>.
                 </p>
               </dd>
               <dt>
