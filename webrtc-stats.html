@@ -583,10 +583,10 @@ enum RTCStatsType {
         <div>
           <pre class="idl">dictionary RTCCodecStats : RTCStats {
              unsigned long payloadType;
-             DOMString     codec;
+             DOMString     mimeType;
              unsigned long clockRate;
              unsigned long channels;
-             DOMString     parameters;
+             DOMString     sdpFmtpLine;
              DOMString     implementation;
 };</pre>
           <section>
@@ -605,12 +605,12 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>codec</code></dfn> of type <span class=
+                <dfn><code>mimeType</code></dfn> of type <span class=
                 "idlMemberType"><a>DOMString</a></span>
               </dt>
               <dd>
                 <p>
-                  e.g., video/vp8 or equivalent.
+                  The codec MIME media type/subtype. e.g., video/vp8 or equivalent.
                 </p>
               </dd>
               <dt>
@@ -632,12 +632,12 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>parameters</code></dfn> of type <span class=
+                <dfn><code>sdpFmtpLine</code></dfn> of type <span class=
                 "idlMemberType"><a>DOMString</a></span>
               </dt>
               <dd>
                 <p>
-                  From the SDP description line.
+                  The a=fmtp line in the SDP corresponding to the codec, i.e., after the colon following the PT. This defined by [[!JSEP]] in Section 5.7.
                 </p>
               </dd>
               <dt>
@@ -807,7 +807,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The cumulative number of bursts of discarded RTP packets, Appendix A (e) of
-                  [[!burst-gap-discard]].
+                  [[!RFC8015]].
                 </p>
               </dd>
               <dt>
