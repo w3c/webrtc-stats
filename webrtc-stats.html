@@ -1665,7 +1665,6 @@ enum RTCStatsType {
                   Represents the timestamp at which the last packet
                   was received on this particular candidate pair,
                   is of the type <code>DOMHighResTimeStamp</code> [[!HIGHRES-TIME]].
-
                 </p>
               </dd>
               <dt>
@@ -1797,11 +1796,13 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  It is calculated by the underlying congestion control by combining the available
+                  It is calculated by the underlying sender-side congestion control by combining the available
                   bitrate for all the outgoing RTP streams using this candidate pair. The bitrate
                   measurement does not count the size of the IP or other transport layers like TCP
-                  or UDP. It is similar to the TIAS defined in [[!RFC3890]], i.e., it is measured
-                  in bits per second and the bitrate is calculated over a 1 second window.
+                  or UDP. Implementations that do not calculate a sender-side estimate should leave this undefined.
+                  For candidate pairs that are currently not in use, however, were used before, should
+                  use the last calculated estimate. The estimate usually corresponds to the bitrate for the
+                  packets sent at <dfn>lastPacketSentTimestamp</dfn>.
                 </p>
               </dd>
               <dt>
@@ -1810,11 +1811,13 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  It is calculated by the underlying congestion control by combining the available
+                  It is calculated by the underlying receiver-side congestion control by combining the available
                   bitrate for all the incoming RTP streams using this candidate pair. The bitrate
                   measurement does not count the size of the IP or other transport layers like TCP
-                  or UDP. It is similar to the TIAS defined in [[!RFC3890]], i.e., it is measured
-                  in bits per second and the bitrate is calculated over a 1 second window.
+                  or UDP. Implementations that do not calculate a receiver-side estimate should leave this undefined.
+                  For candidate pairs that are currently not in use, however, were used before, should
+                  use the last calculated estimate. The estimate usually corresponds to the bitrate for the
+                  packets received at <dfn>lastPacketReceivedTimestamp</dfn>.
                 </p>
               </dd>
               <dt>
