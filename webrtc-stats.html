@@ -1107,14 +1107,21 @@ enum RTCStatsType {
           <dfn>RTCMediaStreamTrackStats</dfn> dictionary
         </h3>
         <p>
-          An RTCMediaStreamTrackStats object represents the stats about a MediaStreamTrack's
-          connection to the PeerConnection object for which one calls getStats.
+          An RTCMediaStreamTrackStats object represents the stats about one attachment of a
+          MediaStreamTrack to the PeerConnection object for which one calls getStats.
         </p>
         <p>
           It appears in the stats as soon as it is attached (via addTrack, via addTransceiver, via
-          ReplaceTrack on an RTPSender object, or via being created on an RTPReceiver object). If
-          it is detached (via removeTrack or via replaceTrack), it continues to appear, but with
-          the "detached" member set to True.
+          ReplaceTrack on an RTPSender object, or via being created on an RTPReceiver object).
+        </p>
+        <p>
+          If an outgoing track is attached twice (via addTransceiver or ReplaceTrack), there will
+          be two RTCMediaStreamTrackStats objects, one for each attachment. They will have the same
+          "trackIdentifier" attribute, but different "id" attributes.
+        </p>
+        <p>
+          If the track is detached from the PeerConnection (via removeTrack or via replaceTrack),
+          it continues to appear, but with the "detached" member set to True.
         </p>
         <div>
           <pre class="idl">dictionary RTCMediaStreamTrackStats : RTCStats {
@@ -1149,7 +1156,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the <code>track.id</code> property.
+                  Represents the <code>id</code> property of the track.
                 </p>
               </dd>
               <dt>
