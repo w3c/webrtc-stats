@@ -673,6 +673,7 @@ enum RTCStatsType {
              unsigned long      packetsLost;
              double             jitter;
              double             fractionLost;
+             double             roundTripTime;
              unsigned long      packetsDiscarded;
              unsigned long      packetsRepaired;
              unsigned long      burstPacketsLost;
@@ -739,6 +740,18 @@ enum RTCStatsType {
                 <p>
                   The fraction packet loss reported for this SSRC. Calculated as defined in
                   [[!RFC3550]] section 6.4.1 and Appendix A.3.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>roundTripTime</code></dfn> of type <span class=
+                "idlMemberType"><a>double</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Round trip time is present only if <code>isRemote</code> is <code>true</code>.
+                  Estimated round trip time for this SSRC based on the RTCP timestamps in the RTCP
+                  Receiver Report (RR) and measured in seconds. Calculated as defined in section
+                  6.4.1. of [[!RFC3550]].
                 </p>
               </dd>
               <dt>
@@ -879,7 +892,6 @@ enum RTCStatsType {
              unsigned long      packetsSent;
              unsigned long long bytesSent;
              double             targetBitrate;
-             double             roundTripTime;
              unsigned long      framesEncoded;
 };</pre>
           <section>
@@ -920,17 +932,6 @@ enum RTCStatsType {
                   codec's encoder and does not count the size of the IP or other transport layers
                   like TCP or UDP. It is measured in bits per second and the bitrate is calculated
                   over a 1 second window.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>roundTripTime</code></dfn> of type <span class=
-                "idlMemberType"><a>double</a></span>
-              </dt>
-              <dd>
-                <p>
-                  Estimated round trip time for this SSRC based on the RTCP timestamps in the RTCP
-                  Receiver Report (RR) and measured in seconds. Calculated as defined in section
-                  6.4.1. of [[!RFC3550]].
                 </p>
               </dd>
               <dt>
