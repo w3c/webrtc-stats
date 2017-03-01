@@ -132,7 +132,7 @@
         </dt>
         <dd>
           This is a set of values, copied out from a monitored object at a specific moment in time.
-          It is recturned as a WebIDL "dictionary" through the GetStats API.
+          It is returned as a WebIDL dictionary through the getStats API call.
         </dd>
         <dt>
           <dfn>Stats object reference</dfn>
@@ -144,6 +144,10 @@
             other stats objects using this "id" value. In a <a>stats object</a>, these references
             are represented by a DOMString containing "id" value of the referenced stats object.
           </p>
+          <p>
+            All stats object references have type DOMString and attribute names ending in 'Id', or
+            they have type sequence&lt;DOMString&gt; and attribute names ending in 'Ids'.
+          </p>
         </dd>
         <dt>
           <dfn>Stats value</dfn>
@@ -154,12 +158,13 @@
       </dl>
       <p>
         A monitored object changes the values it contains continuously over its lifetime, but is
-        never visible through the GetStats API. A stats object, once returned, never changes.
+        never visible through the getStats API call. A stats object, once returned, never changes.
       </p>
       <p>
         The stats API is defined in [[!WEBRTC]]. It is defined to return a collection of <a>stats
-        object</a>s, each of which is of a subclass of the RTCStats dictionary. This API is
-        normatively defined in [[!WEBRTC]], but is reproduced here for ease of reference.
+        object</a>s, each of which is a dictionary inheriting directly or indirectly from the
+        <a>RTCStats</a> dictionary. This API is normatively defined in [[!WEBRTC]], but is
+        reproduced here for ease of reference.
       </p>
       <pre class="idl">
         dictionary RTCStats {
