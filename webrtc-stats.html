@@ -110,6 +110,14 @@
       <p>
         The term <dfn>RTP stream</dfn> is defined in [[RFC7656]] section 2.1.10.
       </p>
+      <p>
+        The terms <code><dfn data-cite="!WEBRTC#dom-rtcstats">RTCStats</dfn></code>, The terms
+        <code><dfn data-cite="!WEBRTC#dom-rtcstats-timestamp">RTCStats.timestamp</dfn></code>,
+        <code><dfn data-cite="!WEBRTC#dom-rtcstats-type">RTCStats.type</dfn></code>,
+        <code><dfn data-cite="!WEBRTC#dom-rtcstats-id">RTCStats.id</dfn></code>,
+        <code><dfn data-cite="!WEBRTC#dom-rtccertificate">RTCCertificate</dfn></code>, are defined
+        in [[!WEBRTC]].
+      </p>
     </section>
     <section class="informative">
       <h2>
@@ -307,9 +315,12 @@
         dictionary type <a>RTCIceCandidateStats</a>.
       </p>
       <p>
-        This specification is normative for the allowed values of <dfn>RTCStatsType</dfn>.
+        This specification is normative for the allowed values of <a>RTCStatsType</a>.
       </p>
       <section id="rtcstatstype-str*">
+        <h3>
+          <dfn>RTCStatsType</dfn> enum
+        </h3>
         <pre class="idl">
 enum RTCStatsType {
 "codec",
@@ -477,8 +488,8 @@ enum RTCStatsType {
             <dl data-link-for="RTCRTPStreamStats" data-dfn-for="RTCRTPStreamStats" class=
             "dictionary-members">
               <dt>
-                <dfn><code>ssrc</code></dfn> of type <span class="idlMemberType"><a>unsigned long
-                </a></span>
+                <dfn><code>ssrc</code></dfn> of type <span class="idlMemberType"><a>unsigned
+                long</a></span>
               </dt>
               <dd>
                 <p>
@@ -681,7 +692,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The a=fmtp line in the SDP corresponding to the codec, i.e., after the colon following the PT. This defined by [[!JSEP]] in Section 5.7.
+                  The a=fmtp line in the SDP corresponding to the codec, i.e., after the colon
+                  following the PT. This defined by [[!JSEP]] in Section 5.7.
                 </p>
               </dd>
               <dt>
@@ -1618,7 +1630,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  It is the protocol used by the endpoint to communicate with the TURN server. This is only present for local candidates. Valid values for the TURN URL protocol is one of <code>udp</code>, <code>tcp</code>, or <code>tls</code>.
+                  It is the protocol used by the endpoint to communicate with the TURN server. This
+                  is only present for local candidates. Valid values for the TURN URL protocol is
+                  one of <code>udp</code>, <code>tcp</code>, or <code>tls</code>.
                 </p>
               </dd>
               <dt>
@@ -2028,7 +2042,7 @@ enum RTCStatsType {
       </section>
       <section id="certificatestats-dict*">
         <h3>
-          RTCCertificateStats dictionary
+          <dfn>RTCCertificateStats</dfn> dictionary
         </h3>
         <div>
           <pre class="idl">dictionary RTCCertificateStats : RTCStats {
