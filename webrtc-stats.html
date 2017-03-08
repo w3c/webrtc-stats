@@ -1718,10 +1718,7 @@ enum RTCStatsType {
              unsigned long long            responsesSent;
              unsigned long long            retransmissionsReceived;
              unsigned long long            retransmissionsSent;
-             unsigned long long            consentRequestsReceived;
              unsigned long long            consentRequestsSent;
-             unsigned long long            consentResponsesReceived;
-             unsigned long long            consentResponsesSent;
 };</pre>
           <section>
             <h2>
@@ -1857,11 +1854,11 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the sum of all round trip time measurements in seconds since the
-                  beginning of the session, based on both STUN connectivity check
-                  [[!STUN-PATH-CHAR]] responses (responsesReceived) and consent [[!RFC7675]]
-                  responses (consentResponsesReceived). The average round trip time can be computed
-                  from <code>totalRoundTripTime</code> by dividing it by
-                  (<code>responsesReceived</code> + <code>consentResponsesReceived</code>).
+                  beginning of the session, based on STUN connectivity check [[!STUN-PATH-CHAR]]
+                  responses (responsesReceived), including those that reply to requests that are
+                  sent in order to verify consent [[!RFC7675]]. The average round trip time can be
+                  computed from <code>totalRoundTripTime</code> by dividing it by
+                  <code>responsesReceived</code>.
                 </p>
               </dd>
               <dt>
@@ -1871,7 +1868,8 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the latest round trip time measured in seconds, computed from both
-                  STUN connectivity checks [[!STUN-PATH-CHAR]] and consent responses [[!RFC7675]].
+                  STUN connectivity checks [[!STUN-PATH-CHAR]], including those that are sent for
+                  consent verification [[!RFC7675]].
                 </p>
               </dd>
               <dt>
@@ -1911,7 +1909,9 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the total number of connectivity check requests received (including
-                  retransmissions).
+                  retransmissions). It is impossible for the receiver to tell whether the request
+                  was sent in order to check connectivity or check consent, so all connectivity
+                  checks requests are counted here.
                 </p>
               </dd>
               <dt>
@@ -1939,7 +1939,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the total number of connectivity check responses sent.
+                  Represents the total number of connectivity check responses sent. Since we cannot
+                  distinguish connectivity check requests and consent requests, all responses are
+                  counted.
                 </p>
               </dd>
               <dt>
@@ -1948,7 +1950,10 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the total number of connectivity check retransmissions received.
+                  Represents the total number of connectivity check request retransmissions
+                  received. Retransmissions are defined as connectivity check requests with a
+                  TRANSACTION_TRANSMIT_COUNTER attribute where the "req" field is larger than 1, as
+                  defined in [[!RFC7982]].
                 </p>
               </dd>
               <dt>
@@ -1957,16 +1962,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the total number of connectivity check retransmissions sent.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>consentRequestsReceived</code></dfn> of type <span class=
-                "idlMemberType"><a>unsigned long long</a></span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the total number of consent requests received.
+                  Represents the total number of connectivity check request retransmissions sent.
                 </p>
               </dd>
               <dt>
@@ -1976,24 +1972,6 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the total number of consent requests sent.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>consentResponsesReceived</code></dfn> of type <span class=
-                "idlMemberType"><a>unsigned long long</a></span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the total number of consent responses received.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>consentResponsesSent</code></dfn> of type <span class=
-                "idlMemberType"><a>unsigned long long</a></span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the total number of consent responses sent.
                 </p>
               </dd>
             </dl>
