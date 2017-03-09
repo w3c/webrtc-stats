@@ -1366,6 +1366,7 @@ enum RTCStatsType {
              DOMString           label;
              DOMString           protocol;
              long                datachannelid;
+             DOMString           transportId;
              RTCDataChannelState state;
              unsigned long       messagesSent;
              unsigned long long  bytesSent;
@@ -1398,8 +1399,15 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The "id" attribute of the <a>RTCDataChannel</a> object
+                  The "id" attribute of the <a>RTCDataChannel</a> object.
                 </p>
+              </dd>
+              <dt>
+                <dfn><code>transportId</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMString</a></span>
+              </dt>
+              <dd>
+                A <a>stats object reference</a> for the transport used to carry this datachannel.
               </dd>
               <dt>
                 <dfn><code>state</code></dfn> of type <span class=
