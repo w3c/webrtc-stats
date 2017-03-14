@@ -468,18 +468,18 @@ enum RTCStatsType {
         </h3>
         <div>
           <pre class="idl">dictionary RTCRTPStreamStats : RTCStats {
-             unsigned long      ssrc;
-             DOMString          associateStatsId;
-             boolean            isRemote = false;
-             DOMString          mediaType;
-             DOMString          trackId;
-             DOMString          transportId;
-             DOMString          codecId;
-             unsigned long      firCount;
-             unsigned long      pliCount;
-             unsigned long      nackCount;
-             unsigned long      sliCount;
-             unsigned long long qpSum;
+             unsigned long       ssrc;
+             DOMString           associateStatsId;
+             boolean             isRemote = false;
+             DOMString           mediaType;
+             DOMString           trackId;
+             DOMString           transportId;
+             DOMString           codecId;
+             unsigned long       firCount;
+             unsigned long       pliCount;
+             unsigned long       nackCount;
+             unsigned long       sliCount;
+             unsigned long long  qpSum;
 };</pre>
           <section>
             <h2>
@@ -945,6 +945,7 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCOutboundRTPStreamStats : RTCRTPStreamStats {
+             DOMHighResTimeStamp remoteTimestamp;
              unsigned long      packetsSent;
              unsigned long long bytesSent;
              double             targetBitrate;
@@ -956,6 +957,26 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCOutboundRTPStreamStats" data-dfn-for="RTCOutboundRTPStreamStats"
             class="dictionary-members">
+              <dt>
+                <dfn><code>remoteTimestamp</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Present if <code>isRemote</code> is <code>true</code>,
+                  <code>remoteTimestamp</code>, of type
+                  <code>DOMHighResTimeStamp</code> [[!HIGHRES-TIME]],
+                  represents the remote timestamp at which these statistics
+                  were sent by the remote endpoint. This differs from
+                  <code>timestamp</code>, which represents the time at which
+                  the statistics were generated or received by the local
+                  endpoint. The <code>remoteTimestamp</code>, if present, is
+                  derived from the NTP timestamp in an RTCP SR packet, which
+                  reflects the remote endpoint's clock. That clock may not be
+                  synchronized with the local clock. The time is relative to
+                  the UNIX epoch (Jan 1, 1970, UTC).
+                </p>
+              </dd>
               <dt>
                 <dfn><code>packetsSent</code></dfn> of type <span class="idlMemberType"><a>unsigned
                 long</a></span>
