@@ -322,6 +322,11 @@
           Retired stats objects are moved there in their entirety; retired stats values are moved
           to a "partial dictionary".
         </p>
+        <p>
+          If there is no evidence that the retired object definition has ever been used (such as an
+          object that is added to the spec and renamed, redefined or removed prior to
+          implementation), the editors can decide to just remove the object from the spec.
+        </p>
       </section>
     </section>
     <section id="rtctatstype-*">
@@ -2119,26 +2124,31 @@ enum RTCStatsType {
       <h2>
         Obsolete stats
       </h2>
-      <p>
-        This section's content is an example.
-      </p>
       <div>
-        <pre class="idl">partial dictionary RTCMediaStreamTrackStats {
-          bool remote;
+        <pre class="idl">partial dictionary RTCIceCandidatePairStats {
+          double totalRtt;
+          double currentRtt;
           };
           </pre>
         <section>
           <h2>
-            Obsolete RTCMediaStreamTrackStats members
+            Obsolete RTCIceCandidatePairStats members
           </h2>
-          <dl data-dfn-for="RTCMediaStreamTrackStats">
+          <dl data-dfn-for="RTCIceCandidatePairStats">
             <dt>
-              <dfn><code>remote</code></dfn>
+              <dfn><code>totalRtt</code></dfn>
             </dt>
             <dd>
               <p>
-                The "remote" flag was removed from the underlying specification, and is therefore
-                obsolete.
+                This field got renamed to "totalRoundTripTime" in Dec 2016.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>currentRtt</code></dfn>
+            </dt>
+            <dd>
+              <p>
+                This field got renamed to "currentRoundTripTime" in Dec 2016.
               </p>
             </dd>
           </dl>
