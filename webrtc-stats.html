@@ -1725,8 +1725,6 @@ enum RTCStatsType {
         </h3>
         <div>
           <pre class="idl">dictionary RTCIceCandidatePairStats : RTCStats {
-             DOMHighResTimeStamp           lastPacketSentTimestamp;
-             DOMHighResTimeStamp           lastPacketReceivedTimestamp;
              DOMString                     transportId;
              DOMString                     localCandidateId;
              DOMString                     remoteCandidateId;
@@ -1737,6 +1735,8 @@ enum RTCStatsType {
              boolean                       readable;
              unsigned long long            bytesSent;
              unsigned long long            bytesReceived;
+             DOMHighResTimeStamp           lastPacketSentTimestamp;
+             DOMHighResTimeStamp           lastPacketReceivedTimestamp;
              double                        totalRoundTripTime;
              double                        currentRoundTripTime;
              double                        availableOutgoingBitrate;
@@ -1755,28 +1755,6 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCIceCandidatePairStats" data-dfn-for="RTCIceCandidatePairStats"
             class="dictionary-members">
-              <dt>
-                <dfn><code>lastPacketSentTimestamp</code></dfn> of type <span class=
-                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the timestamp at which the last packet
-                  was sent on this particular candidate pair,
-                  is of the type <code>DOMHighResTimeStamp</code> [[!HIGHRES-TIME]].
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>lastPacketReceivedTimestamp</code></dfn> of type <span class=
-                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the timestamp at which the last packet
-                  was received on this particular candidate pair,
-                  is of the type <code>DOMHighResTimeStamp</code> [[!HIGHRES-TIME]].
-                </p>
-              </dd>
               <dt>
                 <dfn><code>transportId</code></dfn> of type <span class=
                 "idlMemberType"><a>DOMString</a></span>
@@ -1877,6 +1855,28 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn><code>lastPacketSentTimestamp</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the timestamp at which the last packet
+                  was sent on this particular candidate pair.
+                  It is of the type <code>DOMHighResTimeStamp</code> [[!HIGHRES-TIME]].
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>lastPacketReceivedTimestamp</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the timestamp at which the last packet
+                  was received on this particular candidate pair.
+                  It is of the type <code>DOMHighResTimeStamp</code> [[!HIGHRES-TIME]].
+                </p>
+              </dd>
+              <dt>
                 <dfn><code>totalRoundTripTime</code></dfn> of type <span class=
                 "idlMemberType"><a>double</a></span>
               </dt>
@@ -1910,10 +1910,17 @@ enum RTCStatsType {
                   It is calculated by the underlying sender-side congestion control by combining the available
                   bitrate for all the outgoing RTP streams using this candidate pair. The bitrate
                   measurement does not count the size of the IP or other transport layers like TCP
-                  or UDP. Implementations that do not calculate a sender-side estimate should leave this undefined.
-                  For candidate pairs that are currently not in use, however, were used before, should
-                  use the last calculated estimate. The estimate usually corresponds to the bitrate for the
-                  packets sent at <dfn>lastPacketSentTimestamp</dfn>.
+                  or UDP. It is similar to the TIAS defined in [[!RFC3890]], i.e., it is measured
+                  in bits per second and the bitrate is calculated over a 1 second window.
+                </p>
+                <p>
+                  Implementations that do not calculate a sender-side estimate should leave this undefined.
+                  Additionally, the value should be undefined for candidate pairs that were never used.
+                  For pairs in use, the estimate is normally no lower than the bitrate for
+                  the packets sent at <dfn>lastPacketSentTimestamp</dfn>, but might be higher.
+                  For candidate pairs that are not currently in use but were used before,
+                  implementations can use the last calculated estimate provided that no further
+                  packets are sent.
                 </p>
               </dd>
               <dt>
@@ -1925,10 +1932,17 @@ enum RTCStatsType {
                   It is calculated by the underlying receiver-side congestion control by combining the available
                   bitrate for all the incoming RTP streams using this candidate pair. The bitrate
                   measurement does not count the size of the IP or other transport layers like TCP
-                  or UDP. Implementations that do not calculate a receiver-side estimate should leave this undefined.
-                  For candidate pairs that are currently not in use, however, were used before, should
-                  use the last calculated estimate. The estimate usually corresponds to the bitrate for the
-                  packets received at <dfn>lastPacketReceivedTimestamp</dfn>.
+                  or UDP. It is similar to the TIAS defined in [[!RFC3890]], i.e., it is measured
+                  in bits per second and the bitrate is calculated over a 1 second window.
+                </p>
+                <p>
+                  Implementations that do not calculate a receiver-side estimate should leave this undefined.
+                  Additionally, the value should be undefined for candidate pairs that were never used.
+                  For pairs in use, the estimate is normally no lower than the bitrate for
+                  the packets sent at <dfn>lastPacketReceivedTimestamp</dfn>, but might be higher.
+                  For candidate pairs that are not currently in use but were used before,
+                  implementations can use the last calculated estimate provided that no further
+                  packets are sent.
                 </p>
               </dd>
               <dt>
