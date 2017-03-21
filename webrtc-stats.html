@@ -273,35 +273,61 @@
       <h2>
         Maintenance procedures for stats object types
       </h2>
-      <p>
-        This document, in its editors' draft form, serves as the repository for the currently
-        defined set of stats object types.
-      </p>
-      <p>
-        If a need for a new stats object type or stats value within a stats object is found, an
-        issue should be raised against this spec on Github, and a review process will decide on
-        whether the stat should be added to the specification or not.
-      </p>
-      <p>
-        A pull request for a change to this document may serve as guidance for the discussion, but
-        the eventual merge is dependent on the review process.
-      </p>
-      <p>
-        While the WebRTC WG exist, it will serve as the review body; once it has disbanded, the W3C
-        will have to establish appropriate review.
-      </p>
-      <p>
-        The level of review sought is that of the IETF process' "expert review", as defined in
-        [[RFC5226]] section 4.1. The documentation needed includes the names of the new stats,
-        their data types, and the definitions they are based on, specified to a level that allows
-        interoperable implementation. The specification may consist of references to other
-        documents.
-      </p>
-      <p>
-        Another specification that wishes to refer to a specific version (for instance for
-        conformance) should refer to a dated version; these will be produced regularly when updates
-        happen.
-      </p>
+      <section>
+        <h3>
+          Adding new stats objects
+        </h3>
+        <p>
+          This document, in its editors' draft form, serves as the repository for the currently
+          defined set of stats object types.
+        </p>
+        <p>
+          If a need for a new stats object type or stats value within a stats object is found, an
+          issue should be raised against this spec on Github, and a review process will decide on
+          whether the stat should be added to the specification or not.
+        </p>
+        <p>
+          A pull request for a change to this document may serve as guidance for the discussion,
+          but the eventual merge is dependent on the review process.
+        </p>
+        <p>
+          While the WebRTC WG exist, it will serve as the review body; once it has disbanded, the
+          W3C will have to establish appropriate review.
+        </p>
+        <p>
+          The level of review sought is that of the IETF process' "expert review", as defined in
+          [[RFC5226]] section 4.1. The documentation needed includes the names of the new stats,
+          their data types, and the definitions they are based on, specified to a level that allows
+          interoperable implementation. The specification may consist of references to other
+          documents.
+        </p>
+        <p>
+          Another specification that wishes to refer to a specific version (for instance for
+          conformance) should refer to a dated version; these will be produced regularly when
+          updates happen.
+        </p>
+      </section>
+      <section>
+        <h3>
+          Retiring stats objects
+        </h3>
+        <p>
+          At times, it makes sense to retire the definition for a stats object or a stats value.
+          When this happens, it is not advisable to simply delete it from the spec, since there may
+          be implementations out there that use it, and it is important that the name is reserved
+          from re-use for another, incompatible definition.
+        </p>
+        <p>
+          Therefore, retired stats objects are moved to a separate section in this document.
+          Retired stats objects are moved there in their entirety; retired stats values are moved
+          to a "partial dictionary".
+        </p>
+        <p>
+          If there is no evidence that the retired object definition has ever been used (such as an
+          object that is added to the spec and renamed, redefined or removed prior to
+          implementation), the editors can decide to just remove the object from the spec.
+        </p>
+      </section>
     </section>
     <section id="rtctatstype-*">
       <h2>
@@ -2114,6 +2140,41 @@ enum RTCStatsType {
           </section>
         </div>
       </section>
+    </section>
+    <section>
+      <h2>
+        Obsolete stats
+      </h2>
+      <div>
+        <pre class="idl">partial dictionary RTCIceCandidatePairStats {
+          double totalRtt;
+          double currentRtt;
+          };
+          </pre>
+        <section>
+          <h2>
+            Obsolete RTCIceCandidatePairStats members
+          </h2>
+          <dl data-dfn-for="RTCIceCandidatePairStats">
+            <dt>
+              <dfn><code>totalRtt</code></dfn>
+            </dt>
+            <dd>
+              <p>
+                This field got renamed to "totalRoundTripTime" in Dec 2016.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>currentRtt</code></dfn>
+            </dt>
+            <dd>
+              <p>
+                This field got renamed to "currentRoundTripTime" in Dec 2016.
+              </p>
+            </dd>
+          </dl>
+        </section>
+      </div>
     </section>
     <section>
       <h2>
