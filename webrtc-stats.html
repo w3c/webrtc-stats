@@ -1202,6 +1202,10 @@ enum RTCStatsType {
              double              audioLevel;
              double              echoReturnLoss;
              double              echoReturnLossEnhancement;
+             unsgined long long  totalSamples;
+             unsgined long long  concealedSamples;
+             unsigned long long  concealedAudibleSamples;
+             unsigned long long  concealmentEvents;
 };</pre>
           <section>
             <h2>
@@ -1398,6 +1402,56 @@ enum RTCStatsType {
                 <p>
                   Only present on audio tracks sourced from a microphone where echo cancellation is
                   applied. Calculated in decibels, as defined in [[!ECHO]] (2012) section 3.15.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalSamples</code></dfn> of type <span class="idlMemberType"><a>unsigned
+                long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only present for inbound audio tracks. The total number of audio samples that have
+                  been received for this track. This includes <a>concealedSamples</a>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>concealedSamples</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only present for inbound audio tracks. The total number of audio samples that are
+                  concealed samples. A concealed sample is a sample that has been synthesized to
+                  conceal packet loss.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>concealedAudibleSamples</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only present for inbound audio tracks. The total number of concealed audio samples
+                  during audible portions of the stream. Audible means that the received audio is
+                  not considered background noise or silence by the user agent. It is up to the
+                  implementation to determine what is considered background noise, but concealments
+                  of audible samples SHOULD in general have a greater impact on user experience than
+                  concealment of non-audible samples. If the voice activity flag is present in RTP
+                  packets as per [[RFC6464]] this MAY be used to indicate audibility. Audibility MAY
+                  also be based on audio levels or more sophisticated analysis of the stream.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>concealmentEvents</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only present for inbound audio tracks. The number of concealment events. This
+                  counter increases every time a concealed sample is synthesized after a
+                  non-concealed sample. That is, multiple consecutive concealed samples will
+                  increase the <a>concealedSamples</a> count multiple times but is a single
+                  concealment event.
                 </p>
               </dd>
             </dl>
