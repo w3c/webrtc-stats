@@ -976,7 +976,8 @@ enum RTCStatsType {
              unsigned long long bytesSent;
              double             targetBitrate;
              unsigned long      framesEncoded;
-};</pre>
+             double             totalEncodeTime;
+          };</pre>
           <section>
             <h2>
               Dictionary <a class="idlType">RTCOutboundRTPStreamStats</a> Members
@@ -1045,6 +1046,20 @@ enum RTCStatsType {
                 <p>
                   Only valid for video. It represents the total number of frames successfully
                   encoded for this RTP media stream.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalEncodeTime</code></dfn> of type <span class="idlMemberType"><a>
+                long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of seconds that has been spent encoding the <a>framesEncoded</a>
+                  frames of this stream. The average encode time can be calculated by dividing this
+                  value with <a>framesEncoded</a>. The time it takes to encode one frame is the
+                  time passed between feeding the encoder a frame and the encoder returning encoded
+                  data for that frame. This does not include any additional time it may take to
+                  packetize the resulting data.
                 </p>
               </dd>
             </dl>
