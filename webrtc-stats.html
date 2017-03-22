@@ -833,7 +833,8 @@ enum RTCStatsType {
                   Round trip time is present only if <code>isRemote</code> is <code>true</code>.
                   Estimated round trip time for this SSRC based on the RTCP timestamps in the RTCP
                   Receiver Report (RR) and measured in seconds. Calculated as defined in section
-                  6.4.1. of [[!RFC3550]].
+                  6.4.1. of [[!RFC3550]]. If no RTCP Receiver Report is received, the round trip
+                  time is left undefined.
                 </p>
               </dd>
               <dt>
