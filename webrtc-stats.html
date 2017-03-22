@@ -1189,6 +1189,8 @@ enum RTCStatsType {
              boolean             ended;
              boolean             detached;
              DOMString           kind;
+             DOMHighResTimeStamp estimatedPlayoutTimestamp;
+             DOMHighResTimeStamp estimatedCaptureTimestamp;
              unsigned long       frameWidth;
              unsigned long       frameHeight;
              double              framesPerSecond;
@@ -1253,6 +1255,39 @@ enum RTCStatsType {
                 <p>
                   Either "<code>audio</code>" or "<code>video</code>". This reflects the "kind"
                   attribute of the MediaStreamTrack.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>estimatedPlayoutTimestamp</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for remote sources. This is the estimated playout time of this track.
+                  The playout time is the NTP timestamp of the last played out audio sample or video
+                  frame that has a known timestamp, extrapolated with the time elapsed since it was
+                  played out. This is the "current time" of the track and can be present even if
+                  there is no audio or video currently playing.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>estimatedCaptureTimestamp</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for remote sources. This is the estimated capture time of this track.
+                  The capture time is the NTP timestamp of the last played out audio sample or video
+                  frame that has a known timestamp + half of what the estimated round trip time was
+                  when that audio sample or video frame arrived, extrapolated with the time elapsed
+                  since that audio sample or video frame. This is the capture equivalent of the
+                  "current time" (<a>estimatedPlayoutTimestamp</a>) and can be present even if there
+                  is no audio or video currently playing. Note that while the
+                  <a>estimatedCaptureTimestamp</a> of all tracks from the same source try to
+                  estimate the remote endpoint's clock at the time of capture, differences in latest
+                  known NTP timestamps, round trip time estimates and other things not perfectly in
+                  sync likely mean that it is not valid to assume that the estimate is the same for
+                  different tracks from the same source.
                 </p>
               </dd>
               <dt>
