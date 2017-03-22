@@ -1862,7 +1862,6 @@ enum RTCStatsType {
                 <p>
                   Represents the timestamp at which the last packet
                   was sent on this particular candidate pair.
-                  It is of the type <code>DOMHighResTimeStamp</code> [[!HIGHRES-TIME]].
                 </p>
               </dd>
               <dt>
@@ -1873,7 +1872,6 @@ enum RTCStatsType {
                 <p>
                   Represents the timestamp at which the last packet
                   was received on this particular candidate pair.
-                  It is of the type <code>DOMHighResTimeStamp</code> [[!HIGHRES-TIME]].
                 </p>
               </dd>
               <dt>
@@ -1914,13 +1912,12 @@ enum RTCStatsType {
                   in bits per second and the bitrate is calculated over a 1 second window.
                 </p>
                 <p>
-                  Implementations that do not calculate a sender-side estimate should leave this undefined.
-                  Additionally, the value should be undefined for candidate pairs that were never used.
+                  Implementations that do not calculate a sender-side estimate MUST leave this undefined.
+                  Additionally, the value MUST be undefined for candidate pairs that were never used.
                   For pairs in use, the estimate is normally no lower than the bitrate for
-                  the packets sent at <dfn>lastPacketSentTimestamp</dfn>, but might be higher.
+                  the packets sent at <code>lastPacketSentTimestamp</code>, but might be higher.
                   For candidate pairs that are not currently in use but were used before,
-                  implementations can use the last calculated estimate provided that no further
-                  packets are sent.
+                  implementations MUST return undefined.
                 </p>
               </dd>
               <dt>
@@ -1936,13 +1933,12 @@ enum RTCStatsType {
                   in bits per second and the bitrate is calculated over a 1 second window.
                 </p>
                 <p>
-                  Implementations that do not calculate a receiver-side estimate should leave this undefined.
+                  Implementations that do not calculate a receiver-side estimate MUST leave this undefined.
                   Additionally, the value should be undefined for candidate pairs that were never used.
                   For pairs in use, the estimate is normally no lower than the bitrate for
-                  the packets sent at <dfn>lastPacketReceivedTimestamp</dfn>, but might be higher.
+                  the packets received at <code>lastPacketReceivedTimestamp</code>, but might be higher.
                   For candidate pairs that are not currently in use but were used before,
-                  implementations can use the last calculated estimate provided that no further
-                  packets are received.
+                  implementations MUST return undefined.
                 </p>
               </dd>
               <dt>
