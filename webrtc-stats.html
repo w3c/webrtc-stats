@@ -642,7 +642,7 @@ enum RTCStatsType {
                 <p>
                   The definition of QP value depends on the <a>codec</a>; for VP8, the QP value is
                   the value carried in the frame header as the syntax element "y_ac_qi", and
-                  defined in [[RFC6386]] section 19.2. Its range is 0..127.
+                  defined in [[RFC6386]] section 19.2. Its range is 0..127. 
                   <!-- Need appropriate references for VP9 and H.264 -->
                 </p>
                 <p>
@@ -991,16 +991,13 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Present if <code>isRemote</code> is <code>true</code>,
-                  <code>remoteTimestamp</code>, of type
-                  <code>DOMHighResTimeStamp</code> [[!HIGHRES-TIME]],
-                  represents the remote timestamp at which these statistics
-                  were sent by the remote endpoint. This differs from
-                  <code>timestamp</code>, which represents the time at which
-                  the statistics were generated or received by the local
-                  endpoint. The <code>remoteTimestamp</code>, if present, is
-                  derived from the NTP timestamp in an RTCP SR packet, which
-                  reflects the remote endpoint's clock. That clock may not be
-                  synchronized with the local clock. The time is relative to
+                  <code>remoteTimestamp</code>, of type <code>DOMHighResTimeStamp</code>
+                  [[!HIGHRES-TIME]], represents the remote timestamp at which these statistics were
+                  sent by the remote endpoint. This differs from <code>timestamp</code>, which
+                  represents the time at which the statistics were generated or received by the
+                  local endpoint. The <code>remoteTimestamp</code>, if present, is derived from the
+                  NTP timestamp in an RTCP SR packet, which reflects the remote endpoint's clock.
+                  That clock may not be synchronized with the local clock. The time is relative to
                   the UNIX epoch (Jan 1, 1970, UTC).
                 </p>
               </dd>
@@ -2304,7 +2301,7 @@ function logError(error) {
       </h3>
       <p>
         Some stats identifiers may expose personally identifiable information, for example the IP
-        addresses of the participating endpoints when a TURN relay is not used.
+        addresses of the participating endpoints when a TURN relay is not used. 
         <!-- TODO: add guidance on how to not expose this information? -->
       </p>
     </section>
@@ -2316,6 +2313,63 @@ function logError(error) {
         This section will be removed before publication. The entries are in reverse chronological
         order.
       </p>
+      <section id="since-14-dec-2016*">
+        <h3>
+          Changes e 14 Dec 2016
+        </h3>
+        <ul>
+          <li>[#102] certificate stats: describe issuerCertificateId
+          </li>
+          <li>[#114] Minor clarification regarding stats object lifetime
+          </li>
+          <li>[#157] Change type of RTCRTPStreamStats.ssrc from string to unsigled long
+          </li>
+          <li>[#149] Remove references saying "defines an API"
+          </li>
+          <li>[#148] Explanation for "remoteSource"
+          </li>
+          <li>[#156] frameWidth/frameHeight: use last decoded value
+          </li>
+          <li>[#123] Explain "sum and count" design paradigm
+          </li>
+          <li>[#126] Fix RTCStatsType for "stream"
+          </li>
+          <li>[#127] Added "kind" to RTCMediaStreamTrackStats
+          </li>
+          <li>[#129] Remove ssrcids field
+          </li>
+          <li>[#128] Define audio level rigidly
+          </li>
+          <li>[#122] Replace RTCTransportStats.active with .dtlsState
+          </li>
+          <li>[#125] Added more datachannel counters, with definitions
+          </li>
+          <li>[#142] Rename RTCRtpMediaStreamStats.trackId
+          </li>
+          <li>[#167] Moving roundTripTime from outbound to inbound
+          </li>
+          <li>[#139] Define terminology for "stats object" et al
+          </li>
+          <li>[#169] Fix issues with TURN URL protocol
+          </li>
+          <li>[#168] Align codec types with webrtc-pc
+          </li>
+          <li>[#166] Removed cancelled and renamed inprogress to in-progress
+          </li>
+          <li>[#164] Added remoteTimestamp to RTCRtpStreamTrackStats
+          </li>
+          <li>[#138] Make a RTCMediaStreamTackStats object per track attachment
+          </li>
+          <li>[#165] Remove separation of received consent and connectivity requests
+          </li>
+          <li>[#179] Adds definitions for RTCDataChannelStats members
+          </li>
+          <li>[#176] Add link from datachannel to transport
+          </li>
+          <li>[#181] Add section on obsoleted stats
+          </li>
+        </ul>
+      </section>
       <section id="since-21-sep-2016*">
         <h3>
           Changes since 21 sep 2016
