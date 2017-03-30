@@ -833,8 +833,8 @@ enum RTCStatsType {
                   Round trip time is present only if <code>isRemote</code> is <code>true</code>.
                   Estimated round trip time for this SSRC based on the RTCP timestamps in the RTCP
                   Receiver Report (RR) and measured in seconds. Calculated as defined in section
-                  6.4.1. of [[!RFC3550]]. If no RTCP Receiver Report is received with a DLSR
-                  value other than 0, the round trip time is left undefined.
+                  6.4.1. of [[!RFC3550]]. If no RTCP Receiver Report is received with a DLSR value
+                  other than 0, the round trip time is left undefined.
                 </p>
               </dd>
               <dt>
@@ -1884,8 +1884,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the timestamp at which the last packet
-                  was sent on this particular candidate pair.
+                  Represents the timestamp at which the last packet was sent on this particular
+                  candidate pair.
                 </p>
               </dd>
               <dt>
@@ -1894,8 +1894,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the timestamp at which the last packet
-                  was received on this particular candidate pair.
+                  Represents the timestamp at which the last packet was received on this particular
+                  candidate pair.
                 </p>
               </dd>
               <dt>
@@ -1936,12 +1936,12 @@ enum RTCStatsType {
                   in bits per second and the bitrate is calculated over a 1 second window.
                 </p>
                 <p>
-                  Implementations that do not calculate a sender-side estimate MUST leave this undefined.
-                  Additionally, the value MUST be undefined for candidate pairs that were never used.
-                  For pairs in use, the estimate is normally no lower than the bitrate for
-                  the packets sent at <code>lastPacketSentTimestamp</code>, but might be higher.
-                  For candidate pairs that are not currently in use but were used before,
-                  implementations MUST return undefined.
+                  Implementations that do not calculate a sender-side estimate MUST leave this
+                  undefined. Additionally, the value MUST be undefined for candidate pairs that
+                  were never used. For pairs in use, the estimate is normally no lower than the
+                  bitrate for the packets sent at <code>lastPacketSentTimestamp</code>, but might
+                  be higher. For candidate pairs that are not currently in use but were used
+                  before, implementations MUST return undefined.
                 </p>
               </dd>
               <dt>
@@ -1957,12 +1957,12 @@ enum RTCStatsType {
                   in bits per second and the bitrate is calculated over a 1 second window.
                 </p>
                 <p>
-                  Implementations that do not calculate a receiver-side estimate MUST leave this undefined.
-                  Additionally, the value should be undefined for candidate pairs that were never used.
-                  For pairs in use, the estimate is normally no lower than the bitrate for
-                  the packets received at <code>lastPacketReceivedTimestamp</code>, but might be higher.
-                  For candidate pairs that are not currently in use but were used before,
-                  implementations MUST return undefined.
+                  Implementations that do not calculate a receiver-side estimate MUST leave this
+                  undefined. Additionally, the value should be undefined for candidate pairs that
+                  were never used. For pairs in use, the estimate is normally no lower than the
+                  bitrate for the packets received at <code>lastPacketReceivedTimestamp</code>, but
+                  might be higher. For candidate pairs that are not currently in use but were used
+                  before, implementations MUST return undefined.
                 </p>
               </dd>
               <dt>
@@ -2315,7 +2315,7 @@ function logError(error) {
       </p>
       <section id="since-14-dec-2016*">
         <h3>
-          Changes e 14 Dec 2016
+          Changes between 14 Dec 2016 and 30 Mar 2017
         </h3>
         <ul>
           <li>[#102] certificate stats: describe issuerCertificateId
@@ -2367,6 +2367,10 @@ function logError(error) {
           <li>[#176] Add link from datachannel to transport
           </li>
           <li>[#181] Add section on obsoleted stats
+          </li>
+          <li>[#182] Bandwidth estimations again
+          </li>
+          <li>[#188] RTT undefined when no RTCP RR
           </li>
         </ul>
       </section>
