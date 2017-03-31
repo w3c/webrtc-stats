@@ -833,7 +833,8 @@ enum RTCStatsType {
                   Round trip time is present only if <code>isRemote</code> is <code>true</code>.
                   Estimated round trip time for this SSRC based on the RTCP timestamps in the RTCP
                   Receiver Report (RR) and measured in seconds. Calculated as defined in section
-                  6.4.1. of [[!RFC3550]].
+                  6.4.1. of [[!RFC3550]]. If no RTCP Receiver Report is received with a DLSR value
+                  other than 0, the round trip time is left undefined.
                 </p>
               </dd>
               <dt>
@@ -976,6 +977,7 @@ enum RTCStatsType {
              unsigned long long bytesSent;
              double             targetBitrate;
              unsigned long      framesEncoded;
+             double             totalEncodeTime;
 };</pre>
           <section>
             <h2>
@@ -990,16 +992,13 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Present if <code>isRemote</code> is <code>true</code>,
-                  <code>remoteTimestamp</code>, of type
-                  <code>DOMHighResTimeStamp</code> [[!HIGHRES-TIME]],
-                  represents the remote timestamp at which these statistics
-                  were sent by the remote endpoint. This differs from
-                  <code>timestamp</code>, which represents the time at which
-                  the statistics were generated or received by the local
-                  endpoint. The <code>remoteTimestamp</code>, if present, is
-                  derived from the NTP timestamp in an RTCP SR packet, which
-                  reflects the remote endpoint's clock. That clock may not be
-                  synchronized with the local clock. The time is relative to
+                  <code>remoteTimestamp</code>, of type <code>DOMHighResTimeStamp</code>
+                  [[!HIGHRES-TIME]], represents the remote timestamp at which these statistics were
+                  sent by the remote endpoint. This differs from <code>timestamp</code>, which
+                  represents the time at which the statistics were generated or received by the
+                  local endpoint. The <code>remoteTimestamp</code>, if present, is derived from the
+                  NTP timestamp in an RTCP SR packet, which reflects the remote endpoint's clock.
+                  That clock may not be synchronized with the local clock. The time is relative to
                   the UNIX epoch (Jan 1, 1970, UTC).
                 </p>
               </dd>
@@ -1045,6 +1044,20 @@ enum RTCStatsType {
                 <p>
                   Only valid for video. It represents the total number of frames successfully
                   encoded for this RTP media stream.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalEncodeTime</code></dfn> of type <span class="idlMemberType"><a>
+                double</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of seconds that has been spent encoding the <a>framesEncoded</a>
+                  frames of this stream. The average encode time can be calculated by dividing this
+                  value with <a>framesEncoded</a>. The time it takes to encode one frame is the
+                  time passed between feeding the encoder a frame and the encoder returning encoded
+                  data for that frame. This does not include any additional time it may take to
+                  packetize the resulting data.
                 </p>
               </dd>
             </dl>
@@ -1815,6 +1828,8 @@ enum RTCStatsType {
              boolean                       readable;
              unsigned long long            bytesSent;
              unsigned long long            bytesReceived;
+             DOMHighResTimeStamp           lastPacketSentTimestamp;
+             DOMHighResTimeStamp           lastPacketReceivedTimestamp;
              double                        totalRoundTripTime;
              double                        currentRoundTripTime;
              double                        availableOutgoingBitrate;
@@ -1933,6 +1948,26 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn><code>lastPacketSentTimestamp</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the timestamp at which the last packet was sent on this particular
+                  candidate pair.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>lastPacketReceivedTimestamp</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the timestamp at which the last packet was received on this particular
+                  candidate pair.
+                </p>
+              </dd>
+              <dt>
                 <dfn><code>totalRoundTripTime</code></dfn> of type <span class=
                 "idlMemberType"><a>double</a></span>
               </dt>
@@ -1969,6 +2004,14 @@ enum RTCStatsType {
                   or UDP. It is similar to the TIAS defined in [[!RFC3890]], i.e., it is measured
                   in bits per second and the bitrate is calculated over a 1 second window.
                 </p>
+                <p>
+                  Implementations that do not calculate a sender-side estimate MUST leave this
+                  undefined. Additionally, the value MUST be undefined for candidate pairs that
+                  were never used. For pairs in use, the estimate is normally no lower than the
+                  bitrate for the packets sent at <code>lastPacketSentTimestamp</code>, but might
+                  be higher. For candidate pairs that are not currently in use but were used
+                  before, implementations MUST return undefined.
+                </p>
               </dd>
               <dt>
                 <dfn><code>availableIncomingBitrate</code></dfn> of type <span class=
@@ -1981,6 +2024,14 @@ enum RTCStatsType {
                   measurement does not count the size of the IP or other transport layers like TCP
                   or UDP. It is similar to the TIAS defined in [[!RFC3890]], i.e., it is measured
                   in bits per second and the bitrate is calculated over a 1 second window.
+                </p>
+                <p>
+                  Implementations that do not calculate a receiver-side estimate MUST leave this
+                  undefined. Additionally, the value should be undefined for candidate pairs that
+                  were never used. For pairs in use, the estimate is normally no lower than the
+                  bitrate for the packets received at <code>lastPacketReceivedTimestamp</code>, but
+                  might be higher. For candidate pairs that are not currently in use but were used
+                  before, implementations MUST return undefined.
                 </p>
               </dd>
               <dt>
@@ -2331,6 +2382,67 @@ function logError(error) {
         This section will be removed before publication. The entries are in reverse chronological
         order.
       </p>
+      <section id="since-14-dec-2016*">
+        <h3>
+          Changes between 14 Dec 2016 and 30 Mar 2017
+        </h3>
+        <ul>
+          <li>[#102] certificate stats: describe issuerCertificateId
+          </li>
+          <li>[#114] Minor clarification regarding stats object lifetime
+          </li>
+          <li>[#157] Change type of RTCRTPStreamStats.ssrc from string to unsigled long
+          </li>
+          <li>[#149] Remove references saying "defines an API"
+          </li>
+          <li>[#148] Explanation for "remoteSource"
+          </li>
+          <li>[#156] frameWidth/frameHeight: use last decoded value
+          </li>
+          <li>[#123] Explain "sum and count" design paradigm
+          </li>
+          <li>[#126] Fix RTCStatsType for "stream"
+          </li>
+          <li>[#127] Added "kind" to RTCMediaStreamTrackStats
+          </li>
+          <li>[#129] Remove ssrcids field
+          </li>
+          <li>[#128] Define audio level rigidly
+          </li>
+          <li>[#122] Replace RTCTransportStats.active with .dtlsState
+          </li>
+          <li>[#125] Added more datachannel counters, with definitions
+          </li>
+          <li>[#142] Rename RTCRtpMediaStreamStats.trackId
+          </li>
+          <li>[#167] Moving roundTripTime from outbound to inbound
+          </li>
+          <li>[#139] Define terminology for "stats object" et al
+          </li>
+          <li>[#169] Fix issues with TURN URL protocol
+          </li>
+          <li>[#168] Align codec types with webrtc-pc
+          </li>
+          <li>[#166] Removed cancelled and renamed inprogress to in-progress
+          </li>
+          <li>[#164] Added remoteTimestamp to RTCRtpStreamTrackStats
+          </li>
+          <li>[#138] Make a RTCMediaStreamTackStats object per track attachment
+          </li>
+          <li>[#165] Remove separation of received consent and connectivity requests
+          </li>
+          <li>[#179] Adds definitions for RTCDataChannelStats members
+          </li>
+          <li>[#176] Add link from datachannel to transport
+          </li>
+          <li>[#181] Add section on obsoleted stats
+          </li>
+          <li>[#182] Bandwidth estimations again
+          </li>
+          <li>[#188] RTT undefined when no RTCP RR
+          </li>
+        </ul>
+      </section>
       <section id="since-21-sep-2016*">
         <h3>
           Changes since 21 sep 2016
