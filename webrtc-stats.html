@@ -642,7 +642,7 @@ enum RTCStatsType {
                 <p>
                   The definition of QP value depends on the <a>codec</a>; for VP8, the QP value is
                   the value carried in the frame header as the syntax element "y_ac_qi", and
-                  defined in [[RFC6386]] section 19.2. Its range is 0..127. 
+                  defined in [[RFC6386]] section 19.2. Its range is 0..127.
                   <!-- Need appropriate references for VP9 and H.264 -->
                 </p>
                 <p>
@@ -977,6 +977,7 @@ enum RTCStatsType {
              unsigned long long bytesSent;
              double             targetBitrate;
              unsigned long      framesEncoded;
+             double             totalEncodeTime;
 };</pre>
           <section>
             <h2>
@@ -1043,6 +1044,20 @@ enum RTCStatsType {
                 <p>
                   Only valid for video. It represents the total number of frames successfully
                   encoded for this RTP media stream.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalEncodeTime</code></dfn> of type <span class="idlMemberType"><a>
+                double</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of seconds that has been spent encoding the <a>framesEncoded</a>
+                  frames of this stream. The average encode time can be calculated by dividing this
+                  value with <a>framesEncoded</a>. The time it takes to encode one frame is the
+                  time passed between feeding the encoder a frame and the encoder returning encoded
+                  data for that frame. This does not include any additional time it may take to
+                  packetize the resulting data.
                 </p>
               </dd>
             </dl>
@@ -2301,7 +2316,7 @@ function logError(error) {
       </h3>
       <p>
         Some stats identifiers may expose personally identifiable information, for example the IP
-        addresses of the participating endpoints when a TURN relay is not used. 
+        addresses of the participating endpoints when a TURN relay is not used.
         <!-- TODO: add guidance on how to not expose this information? -->
       </p>
     </section>
