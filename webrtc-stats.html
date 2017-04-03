@@ -352,6 +352,8 @@ enum RTCStatsType {
 "codec",
 "inbound-rtp",
 "outbound-rtp",
+"remote-inbound-rtp",
+"remote-outbound-rtp",
 "peer-connection",
 "data-channel",
 "stream",
@@ -394,6 +396,30 @@ enum RTCStatsType {
             <p>
               Statistics for an outbound RTP stream that is currently sent with this
               <code>RTCPeerConnection</code> object. It is accessed by the
+              <code><a>RTCOutboundRTPStreamStats</a></code>.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>remote-inbound-rtp</code></dfn>
+          </dt>
+          <dd>
+            <p>
+              Statistics for the remote endpoint's inbound RTP stream
+              corresponding to an outbound stream that is currently sent with
+              this <code>RTCPeerConnection</code> object. It is measured at the
+              remote endpoint and reported in an RTCP RR/XR. It is accessed by
+              the <code><a>RTCInboundRTPStreamStats</a></code>.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>remote-outbound-rtp</code></dfn>
+          </dt>
+          <dd>
+            <p>
+              Statistics for the remote endpoint's outbound RTP stream
+              corresponding to an inbound stream that is currently received with
+              this <code>RTCPeerConnection</code> object. It is measured at the
+              remote endpoint and reported in an RTCP SR. It is accessed by the
               <code><a>RTCOutboundRTPStreamStats</a></code>.
             </p>
           </dd>
