@@ -766,22 +766,17 @@ enum RTCStatsType {
           </section>
         </div>
       </section>
-      <section id="inboundrtpstats-dict*">
+      <section id="receivedrtpstats-dict*">
         <h3>
-          RTCInboundRTPStreamStats dictionary
+          <dfn>RTCReceivedRTPStreamStats</dfn> dictionary
         </h3>
-        <p>
-          The <dfn>RTCInboundRTPStreamStats</dfn> dictionary represents the measurement metrics for
-          the incoming RTP media stream.
-        </p>
         <div>
-          <pre class="idl">dictionary RTCInboundRTPStreamStats : RTCRTPStreamStats {
+          <pre class="idl">dictionary RTCReceivedRTPStreamStats : RTCRTPStreamStats {
              unsigned long      packetsReceived;
              unsigned long long bytesReceived;
              unsigned long      packetsLost;
              double             jitter;
              double             fractionLost;
-             double             roundTripTime;
              unsigned long      packetsDiscarded;
              unsigned long      packetsRepaired;
              unsigned long      burstPacketsLost;
@@ -792,13 +787,12 @@ enum RTCStatsType {
              double             burstDiscardRate;
              double             gapLossRate;
              double             gapDiscardRate;
-             unsigned long      framesDecoded;
 };</pre>
           <section>
             <h2>
-              Dictionary <a class="idlType">RTCInboundRTPStreamStats</a> Members
+              Dictionary <a class="idlType">RTCReceivedRTPStreamStats</a> Members
             </h2>
-            <dl data-link-for="RTCInboundRTPStreamStats" data-dfn-for="RTCInboundRTPStreamStats"
+            <dl data-link-for="RTCReceivedRTPStreamStats" data-dfn-for="RTCReceivedRTPStreamStats"
             class="dictionary-members">
               <dt>
                 <dfn><code>packetsReceived</code></dfn> of type <span class=
@@ -848,19 +842,6 @@ enum RTCStatsType {
                 <p>
                   The fraction packet loss reported for this SSRC. Calculated as defined in
                   [[!RFC3550]] section 6.4.1 and Appendix A.3.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>roundTripTime</code></dfn> of type <span class=
-                "idlMemberType"><a>double</a></span>
-              </dt>
-              <dd>
-                <p>
-                  Round trip time is present only if <code>isRemote</code> is <code>true</code>.
-                  Estimated round trip time for this SSRC based on the RTCP timestamps in the RTCP
-                  Receiver Report (RR) and measured in seconds. Calculated as defined in section
-                  6.4.1. of [[!RFC3550]]. If no RTCP Receiver Report is received with a DLSR value
-                  other than 0, the round trip time is left undefined.
                 </p>
               </dd>
               <dt>
@@ -974,6 +955,28 @@ enum RTCStatsType {
                   [[!RFC7004]], however, the actual value is reported without multiplying by 32768.
                 </p>
               </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="inboundrtpstats-dict*">
+        <h3>
+          <dfn>RTCInboundRTPStreamStats</dfn> dictionary
+        </h3>
+        <p>
+          The <dfn>RTCInboundRTPStreamStats</dfn> dictionary represents the measurement metrics for
+          the incoming RTP media stream.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCInboundRTPStreamStats : RTCReceivedRTPStreamStats {
+             unsigned long      framesDecoded;
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCInboundRTPStreamStats</a> Members
+            </h2>
+            <dl data-link-for="RTCInboundRTPStreamStats" data-dfn-for="RTCInboundRTPStreamStats"
+            class="dictionary-members">
               <dt>
                 <dfn><code>framesDecoded</code></dfn>
               </dt>
@@ -988,46 +991,56 @@ enum RTCStatsType {
           </section>
         </div>
       </section>
-      <section id="outboundrtpstats-dict*">
+      <section id="remoteinboundrtpstats-dict*">
         <h3>
-          RTCOutboundRTPStreamStats dictionary
+          <dfn>RTCRemoteInboundRTPStreamStats</dfn> dictionary
         </h3>
         <p>
-          <dfn>RTCOutboundRTPStreamStats</dfn> dictionary represents the measurement metrics for
-          the outgoing RTP stream.
+          The <dfn>RTCRemoteInboundRTPStreamStats</dfn> dictionary represents
+          the remote endpoint's measurement metrics for its incoming RTP stream
+          (our outgoing RTP stream).
         </p>
         <div>
-          <pre class="idl">dictionary RTCOutboundRTPStreamStats : RTCRTPStreamStats {
-             DOMHighResTimeStamp remoteTimestamp;
-             unsigned long      packetsSent;
-             unsigned long long bytesSent;
-             double             targetBitrate;
-             unsigned long      framesEncoded;
-             double             totalEncodeTime;
+          <pre class="idl">dictionary RTCRemoteInboundRTPStreamStats : RTCReceivedRTPStreamStats {
+             double             roundTripTime;
 };</pre>
           <section>
             <h2>
-              Dictionary <a class="idlType">RTCOutboundRTPStreamStats</a> Members
+              Dictionary <a class="idlType">RTCRemoteInboundRTPStreamStats</a> Members
             </h2>
-            <dl data-link-for="RTCOutboundRTPStreamStats" data-dfn-for="RTCOutboundRTPStreamStats"
+            <dl data-link-for="RTCRemoteInboundRTPStreamStats" data-dfn-for="RTCRemoteInboundRTPStreamStats"
             class="dictionary-members">
               <dt>
-                <dfn><code>remoteTimestamp</code></dfn> of type <span class=
-                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
+                <dfn><code>roundTripTime</code></dfn> of type <span class=
+                "idlMemberType"><a>double</a></span>
               </dt>
               <dd>
                 <p>
-                  Present if <code>isRemote</code> is <code>true</code>,
-                  <code>remoteTimestamp</code>, of type <code>DOMHighResTimeStamp</code>
-                  [[!HIGHRES-TIME]], represents the remote timestamp at which these statistics were
-                  sent by the remote endpoint. This differs from <code>timestamp</code>, which
-                  represents the time at which the statistics were generated or received by the
-                  local endpoint. The <code>remoteTimestamp</code>, if present, is derived from the
-                  NTP timestamp in an RTCP SR packet, which reflects the remote endpoint's clock.
-                  That clock may not be synchronized with the local clock. The time is relative to
-                  the UNIX epoch (Jan 1, 1970, UTC).
+                  Estimated round trip time for this SSRC based on the RTCP timestamps in the RTCP
+                  Receiver Report (RR) and measured in seconds. Calculated as defined in section
+                  6.4.1. of [[!RFC3550]]. If no RTCP Receiver Report is received with a DLSR value
+                  other than 0, the round trip time is left undefined.
                 </p>
               </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="sentrtpstats-dict*">
+        <h3>
+          <dfn>RTCSentRTPStreamStats</dfn> dictionary
+        </h3>
+        <div>
+          <pre class="idl">dictionary RTCSentRTPStreamStats : RTCRTPStreamStats {
+             unsigned long      packetsSent;
+             unsigned long long bytesSent;
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCSentRTPStreamStats</a> Members
+            </h2>
+            <dl data-link-for="RTCSentRTPStreamStats" data-dfn-for="RTCSentRTPStreamStats"
+            class="dictionary-members">
               <dt>
                 <dfn><code>packetsSent</code></dfn> of type <span class="idlMemberType"><a>unsigned
                 long</a></span>
@@ -1048,6 +1061,30 @@ enum RTCStatsType {
                   section 6.4.1.
                 </p>
               </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="outboundrtpstats-dict*">
+        <h3>
+          <dfn>RTCOutboundRTPStreamStats</dfn> dictionary
+        </h3>
+        <p>
+          The <dfn>RTCOutboundRTPStreamStats</dfn> dictionary represents the
+          measurement metrics for the outgoing RTP stream.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCOutboundRTPStreamStats : RTCSentRTPStreamStats {
+             double             targetBitrate;
+             unsigned long      framesEncoded;
+             double             totalEncodeTime;
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCOutboundRTPStreamStats</a> Members
+            </h2>
+            <dl data-link-for="RTCOutboundRTPStreamStats" data-dfn-for="RTCOutboundRTPStreamStats"
+            class="dictionary-members">
               <dt>
                 <dfn><code>targetBitrate</code></dfn> of type <span class=
                 "idlMemberType"><a>double</a></span>
@@ -1084,6 +1121,45 @@ enum RTCStatsType {
                   time passed between feeding the encoder a frame and the encoder returning encoded
                   data for that frame. This does not include any additional time it may take to
                   packetize the resulting data.
+                </p>
+              </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="remoteoutboundrtpstats-dict*">
+        <h3>
+          <dfn>RTCRemoteOutboundRTPStreamStats</dfn> dictionary
+        </h3>
+        <p>
+          The <dfn>RTCRemoteOutboundRTPStreamStats</dfn> dictionary represents
+          the remote endpoint's measurement metrics for its outgoing RTP stream
+          (our incoming RTP stream).
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCRemoteOutboundRTPStreamStats : RTCSentRTPStreamStats {
+             DOMHighResTimeStamp remoteTimestamp;
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCRemoteOutboundRTPStreamStats</a> Members
+            </h2>
+            <dl data-link-for="RTCRemoteOutboundRTPStreamStats" data-dfn-for="RTCRemoteOutboundRTPStreamStats"
+            class="dictionary-members">
+              <dt>
+                <dfn><code>remoteTimestamp</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
+              </dt>
+              <dd>
+                <p>
+                  <code>remoteTimestamp</code>, of type <code>DOMHighResTimeStamp</code>
+                  [[!HIGHRES-TIME]], represents the remote timestamp at which these statistics were
+                  sent by the remote endpoint. This differs from <code>timestamp</code>, which
+                  represents the time at which the statistics were generated or received by the
+                  local endpoint. The <code>remoteTimestamp</code>, if present, is derived from the
+                  NTP timestamp in an RTCP SR packet, which reflects the remote endpoint's clock.
+                  That clock may not be synchronized with the local clock. The time is relative to
+                  the UNIX epoch (Jan 1, 1970, UTC).
                 </p>
               </dd>
             </dl>
@@ -2267,14 +2343,14 @@ enum RTCStatsType {
         </p>
         <pre class="example highlight">
 stats [
-   dictionary (of type RTPoutboundStatsDictionary) {
+   dictionary (of type RTCOutboundRTPStreamStats) {
       ssrc=1234
       id=foobar
       type=outboundrtp
       isRemote=false
       associateStatsId=barfoo
   },
-  dictionary (of type RTPinboundStatsDictionary) {
+  dictionary (of type RTCRemoteInboundRTPStreamStats) {
       ssrc=1234
       id=barfoo
       type=inboundrtp
