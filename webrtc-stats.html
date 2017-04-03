@@ -963,7 +963,7 @@ enum RTCStatsType {
                 <p>
                   The <code>remoteId</code> is used for looking up the remote
                   <code><a>RTCRemoteOutboundRTPStreamStats</a></code> object for
-                  a given SSRC.
+                  the same SSRC.
                 </p>
               </dd>
               <dt>
@@ -1007,8 +1007,8 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The <code>localId</code> is used for looking up the local
-                  <code><a>RTCOutboundRTPStreamStats</a></code> object for a
-                  given SSRC.
+                  <code><a>RTCOutboundRTPStreamStats</a></code> object for the
+                  same SSRC.
                 </p>
               </dd>
               <dt>
@@ -1095,7 +1095,7 @@ enum RTCStatsType {
                 <p>
                   The <code>remoteId</code> is used for looking up the remote
                   <code><a>RTCRemoteInboundRTPStreamStats</a></code> object for
-                  a given SSRC.
+                  the same SSRC.
                 </p>
               </dd>
               <dt>
@@ -1167,8 +1167,8 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The <code>localId</code> is used for looking up the local
-                  <code><a>RTCInboundRTPStreamStats</a></code> object for a
-                  given SSRC.
+                  <code><a>RTCInboundRTPStreamStats</a></code> object for the
+                  same SSRC.
                 </p>
               </dd>
               <dt>
@@ -2358,31 +2358,6 @@ enum RTCStatsType {
       <h2>
         Examples
       </h2>
-      <section>
-        <h4>
-          Example of association of local and remote statistics
-        </h4>
-        <p>
-          The following example code shows the association of remote statistics with local
-          statistics in a <code>RTCStats</code> dictionary.
-        </p>
-        <pre class="example highlight">
-stats [
-   dictionary (of type RTCOutboundRTPStreamStats) {
-      ssrc=1234
-      id=foobar
-      type="outbound-rtp"
-      remoteId=barfoo
-  },
-  dictionary (of type RTCRemoteInboundRTPStreamStats) {
-      ssrc=1234
-      id=barfoo
-      type="remote-inbound-rtp"
-      localId=foobar
-  }
-]
-          </pre>
-      </section>
       <section>
         <h3>
           Example of a stats application
