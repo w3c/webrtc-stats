@@ -73,8 +73,8 @@
         <li>It MUST support generating statistics for the type RTCOutboundRTPStreamStats, with
         attributes packetsSent, bytesSent.
         </li>
-        <li>For all subclasses of RTCRtpStreamStats, it MUST include ssrc, associateStatsId,
-        isRemote, mediaType.
+        <li>For all subclasses of RTCRTPStreamStats, it MUST include ssrc, associateStatsId,
+        mediaType.
         </li>
         <li>It MAY support generating other stats.
         </li>
@@ -522,7 +522,6 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCRTPStreamStats : RTCStats {
              unsigned long       ssrc;
              DOMString           associateStatsId;
-             boolean             isRemote = false;
              DOMString           mediaType;
              DOMString           trackId;
              DOMString           transportId;
@@ -557,17 +556,6 @@ enum RTCStatsType {
                 <p>
                   The <code>associateStatsId</code> is used for looking up the corresponding
                   (local/remote) <code><a>RTCStats</a></code> object for a given SSRC.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>isRemote</code></dfn> of type <span class=
-                "idlMemberType"><a>boolean</a></span>, defaulting to <code>false</code>
-              </dt>
-              <dd>
-                <p>
-                  <code>false</code> indicates that the statistics are measured locally, while
-                  <code>true</code> indicates that the measurements were done at the remote
-                  endpoint and reported in an RTCP RR/XR.
                 </p>
               </dd>
               <dt>
@@ -2346,15 +2334,13 @@ stats [
    dictionary (of type RTCOutboundRTPStreamStats) {
       ssrc=1234
       id=foobar
-      type=outboundrtp
-      isRemote=false
+      type="outbound-rtp"
       associateStatsId=barfoo
   },
   dictionary (of type RTCRemoteInboundRTPStreamStats) {
       ssrc=1234
       id=barfoo
-      type=inboundrtp
-      isRemote=true
+      type="remote-inbound-rtp"
       associateStatsId=foobar
   }
 ]
