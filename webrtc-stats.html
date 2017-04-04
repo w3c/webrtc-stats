@@ -2304,8 +2304,8 @@ function processStats() {
             var packetsSent = now.packetsSent - base.packetsSent;
             var packetsReceived = remoteNow.packetsReceived - remoteBase.packetsReceived;
 
-            // if fractionLost is > 0.3, we have probably found the culprit
-            var fractionLost = (packetsSent - packetsReceived) / packetsSent;
+            // if intervalFractionLoss is > 0.3, we've probably found the culprit
+            var intervalFractionLoss = (packetsSent - packetsReceived) / packetsSent;
         }
     });
 }
