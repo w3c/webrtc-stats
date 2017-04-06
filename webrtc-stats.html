@@ -664,6 +664,8 @@ enum RTCStatsType {
         <div>
           <pre class="idl">dictionary RTCCodecStats : RTCStats {
              unsigned long payloadType;
+             RTCCodecType  codecType;
+             DOMString     transportId;
              DOMString     mimeType;
              unsigned long clockRate;
              unsigned long channels;
@@ -682,7 +684,29 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Payload type as used in RTP encoding.
+                  Payload type as used in RTP encoding or decoding.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>codecType</code></dfn> of type <span class=
+                "idlMemberType"><a>RTCCodecType</a></span>
+              </dt>
+              <dd>
+                <p>
+                  <code>"encode"</code> or <code>"decode"</code>, depending on
+                  whether this object represents a media format that the
+                  implementation is prepared to encode or decode.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>transportId</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMString</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The unique identifier of the transport on which this codec is
+                  being used, which can be used to look up the corresponding
+                  <code><a>RTCTransportStats</a></code> object.
                 </p>
               </dd>
               <dt>
@@ -739,6 +763,51 @@ enum RTCStatsType {
             </dl>
           </section>
         </div>
+        <section>
+          <h3>
+            <dfn>RTCCodecType</dfn> enum
+          </h3>
+          <div>
+            <pre class="idl">enum RTCCodecType {
+    "encode",
+    "decode",
+};</pre>
+            <table data-link-for="RTCCodecType" data-dfn-for=
+            "RTCCodecType" class="simple">
+              <tbody>
+                <tr>
+                  <th colspan="2">
+                    Enumeration description
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <dfn><code>encode</code></dfn>
+                  </td>
+                  <td>
+                    <p>
+                      The attached <code><a>RTCCodecStats</a></code> represents
+                      a media format that is being encoded, or that the
+                      implementation is prepared to encode.
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <dfn><code>decode</code></dfn>
+                  </td>
+                  <td>
+                    <p>
+                      The attached <code><a>RTCCodecStats</a></code> represents
+                      a media format that the implementation is prepared to
+                      decode.
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
       </section>
       <section id="inboundrtpstats-dict*">
         <h3>
