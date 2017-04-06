@@ -73,8 +73,8 @@
         <li>It MUST support generating statistics for the type RTCOutboundRTPStreamStats, with
         attributes packetsSent, bytesSent.
         </li>
-        <li>For all subclasses of RTCRTPStreamStats, it MUST include ssrc, remoteId,
-        localId, mediaType.
+        <li>For all subclasses of RTCRTPStreamStats, it MUST include ssrc, mediaType,
+        and either remoteId or localId as appropriate.
         </li>
         <li>It MAY support generating other stats.
         </li>
