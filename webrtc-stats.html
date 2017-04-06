@@ -361,6 +361,7 @@ enum RTCStatsType {
 "outbound-rtp",
 "remote-inbound-rtp",
 "remote-outbound-rtp",
+"csrc",
 "peer-connection",
 "data-channel",
 "stream",
@@ -430,6 +431,16 @@ enum RTCStatsType {
               remote endpoint and reported in an RTCP Sender Report (SR). It is
               accessed by the
               <code><a>RTCRemoteOutboundRTPStreamStats</a></code>.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>csrc</code></dfn>
+          </dt>
+          <dd>
+            <p>
+              Statistics for a contributing source (CSRC) that contributed to
+              an inbound RTP stream. It is accessed by the
+              <code><a>RTCRTPContributingSourceStats</a></code>.
             </p>
           </dd>
           <dt>
@@ -1268,6 +1279,103 @@ enum RTCStatsType {
           </section>
         </div>
       </section>
+      <section id="contributingsourcestats-dict*">
+        <h3>
+          <dfn>RTCRTPContributingSourceStats</dfn> dictionary
+        </h3>
+        <p>
+          The <code>RTCRTPContributingSourceStats</code> dictionary represents
+          the measurement metrics for a contributing source (CSRC) that is
+          contributing to an incoming RTP stream. Each contributing source
+          produces a stream of RTP packets, which are combined by a mixer into
+          a single stream of RTP packets that is ultimately received by the
+          WebRTC endpoint. Information about the sources that contributed to
+          this combined stream may be provided in the CSRC list or [[RFC6465]]
+          header extension of received RTP packets. The
+          <code><a data-lt="RTCStats.timestamp">timestamp</a></code> of this
+          stats object is the most recent time an RTP packet the source
+          contributed to was received and counted by <code><a data-link-for=
+          "RTCRTPContributingSourceStats">packetsContributedTo</a></code>.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCRTPContributingSourceStats : RTCStats {
+             unsigned long contributorSsrc;
+             DOMString     inboundRtpStreamId;
+             unsigned long packetsContributedTo;
+             double        audioLevel;
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCRTPContributingSourceStats</a> Members
+            </h2>
+            <dl data-link-for="RTCRTPContributingSourceStats"
+                data-dfn-for="RTCRTPContributingSourceStats"
+                class="dictionary-members">
+              <dt>
+                <dfn><code>contributorSsrc</code></dfn> of type <span class=
+                 "idlMemberType"><a>unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The SSRC identifier of the contributing source represented by
+                  this stats object, as defined by [[!RFC3550]]. It is a 32-bit
+                  unsigned integer that appears in the CSRC list of any packets
+                  the relevant source contributed to.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>inboundRtpStreamId</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMString</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The ID of the <code><a>RTCInboundRTPStreamStats</a></code>
+                  object representing the inbound RTP stream that this
+                  contributing source is contributing to.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>packetsContributedTo</code></dfn> of type <span
+                  class="idlMemberType"><a>unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The total number of RTP packets that this contributing source
+                  contributed to. This value is incremented each time a packet
+                  is counted by
+                  <code>RTCInboundRTPStreamStats.<a data-link-for=
+                  "RTCInboundRTPStreamStats">packetsReceived</a></code>,
+                  and the packet's CSRC list (as defined by [[!RFC3550]]
+                  section 5.1) contains the SSRC identifier of this
+                  contributing source, <code><a>contributorSsrc</a></code>.</p>
+              </dd>
+              <dt>
+                <dfn><code>audioLevel</code></dfn> of type <span class=
+                "idlMemberType"><a>double</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Present if the last received RTP packet that this source
+                  contributed to contained an [[!RFC6465]] mixer-to-client
+                  audio level header extension. The value of
+                  <code>audioLevel</code> is between 0..1 (linear), where 1.0
+                  represents 0 dBov, 0 represents silence, and 0.5 represents
+                  approximately 6 dBSPL change in the sound pressure level from
+                  0 dBov.
+                </p>
+                <p>
+                  The [[!RFC6465]] header extension contains values in the
+                  range 0..127, in units of -dBov, where 127 represents
+                  silence. To convert these values to the linear 0..1 range of
+                  <code>audioLevel</code>, a value of 127 is converted to 0,
+                  and all other values are converted using the equation:
+                  <code>f(rfc6465_level) = 10^(-rfc6465_level/20)</code>.
+                </p>
+              </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
       <section id="pcstats-dict*">
         <h3>
           <dfn>RTCPeerConnectionStats</dfn> dictionary
@@ -1625,16 +1733,17 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for audio. The value is between 0..1 (linear), where 1.0 represents
-                  <code>0 dBov</code>, 0 represents silence, and 0.5 represents approximately 6
-                  dBSPL change in the sound pressure level from 0 dBov.
+                  Only valid for audio. The value is between 0..1 (linear),
+                  where 1.0 represents 0 dBov, 0 represents silence, and 0.5
+                  represents approximately 6 dBSPL change in the sound pressure
+                  level from 0 dBov.
                 </p>
                 <p>
                   The "audio level" value defined in [[RFC6464]] and used in the
                   RTCRtpSynchronizationSource.audioLevel of [[WEBRTC]] (defined as 0..127, where 0
                   represents 0 dBov, 126 represents -126 dBov and 127 represents silence) is
                   obtained by the calculation given in appendix A of [[!RFC6465]]: informally,
-                  level = -round(log10(audioLevel) * 20), with audioLevel 0.0 and values below 127
+                  level = -round(log10(audioLevel) * 20), with audioLevel 0.0 and values above 127
                   mapped to 127.
                 </p>
               </dd>
