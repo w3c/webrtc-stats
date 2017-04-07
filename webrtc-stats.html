@@ -73,8 +73,10 @@
         <li>It MUST support generating statistics for the type RTCOutboundRTPStreamStats, with
         attributes packetsSent, bytesSent.
         </li>
-        <li>For all subclasses of RTCRTPStreamStats, it MUST include ssrc, mediaType,
-        and either remoteId or localId as appropriate.
+        <li>For all subclasses of RTCRTPStreamStats, it MUST include ssrc and mediaType.
+        When stats exist for both sides of a connection, in the form of an
+        inbound-rtp / remote-outbound-rtp pair or an outbound-rtp /
+        remote-inbound-rtp pair, the members remoteId and localId MUST also be present.
         </li>
         <li>It MAY support generating other stats.
         </li>
@@ -408,7 +410,7 @@ enum RTCStatsType {
               corresponding to an outbound stream that is currently sent with
               this <code>RTCPeerConnection</code> object. It is measured at the
               remote endpoint and reported in an RTCP RR/XR. It is accessed by
-              the <code><a>RTCInboundRTPStreamStats</a></code>.
+              the <code><a>RTCRemoteInboundRTPStreamStats</a></code>.
             </p>
           </dd>
           <dt>
@@ -420,7 +422,7 @@ enum RTCStatsType {
               corresponding to an inbound stream that is currently received with
               this <code>RTCPeerConnection</code> object. It is measured at the
               remote endpoint and reported in an RTCP SR. It is accessed by the
-              <code><a>RTCOutboundRTPStreamStats</a></code>.
+              <code><a>RTCRemoteOutboundRTPStreamStats</a></code>.
             </p>
           </dd>
           <dt>
