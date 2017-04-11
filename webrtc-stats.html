@@ -2304,45 +2304,47 @@ stats [
           determine if the cause of it is packet loss. The following example code might be used:
         </p>
         <pre class="example highlight">var baselineReport, currentReport;
-var selector = pc.getRemoteStreams()[0].getAudioTracks()[0];
+var sender = pc.getSenders()[0];
 
-pc.getStats(selector, function (report) {
+sender.getStats().then(function (report) {
     baselineReport = report;
-}, logError);
-
-// ... wait a bit
-setTimeout(function () {
-    pc.getStats(selector, function (report) {
-        currentReport = report;
-        processStats();
-    }, logError);
-}, aBit);
+})
+.then(function() {
+    return new Promise(function(resolve) {
+        setTimeout(resolve, aBit); // ... wait a bit
+    });
+})
+.then(function() {
+    return sender.getStats();
+})
+.then(function (report) {
+    currentReport = report;
+    processStats();
+})
+.catch(function (error) {
+  console.log(error.toString());
+});
 
 function processStats() {
     // compare the elements from the current report with the baseline
-    for (var i in currentReport) {
-        var now = currentReport[i];
-        if (now.type != "outbund-rtp")
+    for (let now of currentReport.values()) {
+        if (now.type != "outbound-rtp")
             continue;
 
         // get the corresponding stats from the baseline report
-        base = baselineReport[now.id];
+        let base = baselineReport.get(now.id);
 
         if (base) {
-            remoteNow = currentReport[now.associateStatsId];
-            remoteBase = baselineReport[base.associateStatsId];
+            remoteNow = currentReport.get(now.associateStatsId);
+            remoteBase = baselineReport.get(base.associateStatsId);
 
             var packetsSent = now.packetsSent - base.packetsSent;
             var packetsReceived = remoteNow.packetsReceived - remoteBase.packetsReceived;
 
-            // if fractionLost is &gt; 0.3, we have probably found the culprit
-            var fractionLost = (packetsSent - packetsReceived) / packetsSent;
+            // if intervalFractionLoss is > 0.3, we've probably found the culprit
+            var intervalFractionLoss = (packetsSent - packetsReceived) / packetsSent;
         }
-    }
-}
-
-function logError(error) {
-    log(error.name + ": " + error.message);
+    });
 }
 </pre>
       </section>
