@@ -1295,13 +1295,14 @@ enum RTCStatsType {
                   when that audio sample or video frame arrived, extrapolated with the time elapsed
                   since that audio sample or video frame. This is the capture equivalent of the
                   "current time" (<a>playoutTimestamp</a>) and can be present even if there is no
-                  audio or video currently playing. The estimated round trip time is computed from
-                  both STUN connectivity checks [[!STUN-PATH-CHAR]], including those that are sent
-                  for consent verification [[!RFC7675]]. Note that while the <a>captureTimestamp</a>
-                  of all tracks from the same source try to estimate the remote endpoint's clock at
-                  the time of capture, differences in latest known NTP timestamps, round trip time
-                  estimates and other things not perfectly in sync likely mean that it is not valid
-                  to assume that the estimate is the same for different tracks from the same source.
+                  audio or video currently playing. The estimated round trip time is the value
+                  computed from the latest STUN connectivity check [[!STUN-PATH-CHAR]], including
+                  checks that are sent for consent verification [[!RFC7675]]. Note that while the
+                  <a>captureTimestamp</a> of all tracks from the same source try to estimate the
+                  remote endpoint's clock at the time of capture, differences in latest known NTP
+                  timestamps, round trip time estimates and other things not perfectly in sync
+                  likely mean that it is not valid to assume that the estimate is the same for
+                  different tracks from the same source.
                 </p>
               </dd>
               <dt>
