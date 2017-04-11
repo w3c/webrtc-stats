@@ -1535,7 +1535,9 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCTransportStats : RTCStats {
+             unsigned long         packetsSent;
              unsigned long long    bytesSent;
+             unsigned long         packetsReceived;
              unsigned long long    bytesReceived;
              DOMString             rtcpTransportStatsId;
              RTCDtlsTransportState dtlsState;
@@ -1549,6 +1551,15 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCTransportStats" data-dfn-for="RTCTransportStats" class=
             "dictionary-members">
+              <dt>
+                <dfn><code>packetsSent</code></dfn> of type <span class="idlMemberType"><a>unsigned
+                long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of packets sent over this transport.
+                </p>
+              </dd>
               <dt>
                 <dfn><code>bytesSent</code></dfn> of type <span class="idlMemberType"><a>unsigned
                 long long</a></span>
@@ -1567,6 +1578,15 @@ enum RTCStatsType {
                 <p>
                   Represents the total number of bytes received on this
                   <code>PeerConnection</code>, i.e., not including headers or padding.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>packetsReceived</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of packets received on this transport.
                 </p>
               </dd>
               <dt>
