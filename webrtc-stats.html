@@ -1771,7 +1771,6 @@ enum RTCStatsType {
              unsigned long long            priority;
              boolean                       nominated;
              boolean                       writable;
-             boolean                       readable;
              unsigned long long            bytesSent;
              unsigned long long            bytesReceived;
              DOMHighResTimeStamp           lastPacketSentTimestamp;
@@ -1856,21 +1855,13 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>writable</code></dfn> of type <span class=
-                "idlMemberType"><a>boolean</a></span>
+                <dfn><code>writable</code></dfn> of type <span class="idlMemberType"><a>boolean</a>
+                </span>
               </dt>
               <dd>
                 <p>
-                  Has gotten ACK to an ICE request.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>readable</code></dfn> of type <span class=
-                "idlMemberType"><a>boolean</a></span>
-              </dt>
-              <dd>
-                <p>
-                  Has gotten a valid incoming ICE request.
+                  Has received a valid STUN binding response and the consent has not expired as
+                  defined in [[!RFC7675]] section 5.1.
                 </p>
               </dd>
               <dt>
