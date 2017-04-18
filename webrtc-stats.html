@@ -1787,8 +1787,8 @@ enum RTCStatsType {
              boolean                       writable;
              boolean                       readable;
              unsigned long                 packetsSent;
-             unsigned long long            bytesSent;
              unsigned long                 packetsReceived;
+             unsigned long long            bytesSent;
              unsigned long long            bytesReceived;
              DOMHighResTimeStamp           lastPacketSentTimestamp;
              DOMHighResTimeStamp           lastPacketReceivedTimestamp;
@@ -1899,6 +1899,15 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn><code>packetsReceived</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of packets received on this candidate pair.
+                </p>
+              </dd>
+              <dt>
                 <dfn><code>bytesSent</code></dfn> of type <span class="idlMemberType"><a>unsigned
                 long long</a></span>
               </dt>
@@ -1906,15 +1915,6 @@ enum RTCStatsType {
                 <p>
                   Represents the total number of payload bytes sent on this candidate pair, i.e.,
                   not including headers or padding.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>packetsReceived</code></dfn> of type <span class="idlMemberType"><a>
-                unsigned long</a></span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the total number of packets received on this candidate pair.
                 </p>
               </dd>
               <dt>
