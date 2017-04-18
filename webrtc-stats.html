@@ -1786,6 +1786,8 @@ enum RTCStatsType {
              boolean                       nominated;
              boolean                       writable;
              boolean                       readable;
+             unsigned long                 packetsSent;
+             unsigned long                 packetsReceived;
              unsigned long long            bytesSent;
              unsigned long long            bytesReceived;
              DOMHighResTimeStamp           lastPacketSentTimestamp;
@@ -1885,6 +1887,24 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Has gotten a valid incoming ICE request.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>packetsSent</code></dfn> of type <span class="idlMemberType"><a>unsigned
+                long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of packets sent on this candidate pair.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>packetsReceived</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of packets received on this candidate pair.
                 </p>
               </dd>
               <dt>
