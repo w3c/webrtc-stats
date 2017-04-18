@@ -1205,6 +1205,7 @@ enum RTCStatsType {
              unsigned long       frameWidth;
              unsigned long       frameHeight;
              double              framesPerSecond;
+             unsigned long       framesCaptured;
              unsigned long       framesSent;
              unsigned long       framesReceived;
              unsigned long       framesDecoded;
@@ -1297,6 +1298,19 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Only valid for video. It represents the nominal FPS value.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>framesCaptured</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for local video. It represents the total number of frames captured for
+                  this MediaStreamTrack, before encoding. For example, if this track represents a
+                  camera this is the number of frames produced by the camera for this track, whose
+                  framerate could vary due to hardware limitations or environmental factors such as
+                  lighting conditions.
                 </p>
               </dd>
               <dt>
@@ -1535,6 +1549,8 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCTransportStats : RTCStats {
+             unsigned long         packetsSent;
+             unsigned long         packetsReceived;
              unsigned long long    bytesSent;
              unsigned long long    bytesReceived;
              DOMString             rtcpTransportStatsId;
@@ -1549,6 +1565,24 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCTransportStats" data-dfn-for="RTCTransportStats" class=
             "dictionary-members">
+              <dt>
+                <dfn><code>packetsSent</code></dfn> of type <span class="idlMemberType"><a>unsigned
+                long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of packets sent over this transport.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>packetsReceived</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of packets received on this transport.
+                </p>
+              </dd>
               <dt>
                 <dfn><code>bytesSent</code></dfn> of type <span class="idlMemberType"><a>unsigned
                 long long</a></span>
@@ -1771,6 +1805,8 @@ enum RTCStatsType {
              unsigned long long            priority;
              boolean                       nominated;
              boolean                       writable;
+             unsigned long                 packetsSent;
+             unsigned long                 packetsReceived;
              unsigned long long            bytesSent;
              unsigned long long            bytesReceived;
              DOMHighResTimeStamp           lastPacketSentTimestamp;
@@ -1862,6 +1898,24 @@ enum RTCStatsType {
                 <p>
                   Has received a valid STUN binding response and the consent has not expired as
                   defined in [[!RFC7675]] section 5.1.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>packetsSent</code></dfn> of type <span class="idlMemberType"><a>unsigned
+                long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of packets sent on this candidate pair.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>packetsReceived</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of packets received on this candidate pair.
                 </p>
               </dd>
               <dt>
