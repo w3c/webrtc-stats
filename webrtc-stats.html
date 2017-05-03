@@ -1218,7 +1218,6 @@ enum RTCStatsType {
              unsigned long long  totalSamplesSent;
              unsigned long long  totalSamplesReceived;
              unsigned long long  concealedSamples;
-             unsigned long long  concealedAudibleSamples;
              unsigned long long  concealmentEvents;
 };</pre>
           <section>
@@ -1447,24 +1446,6 @@ enum RTCStatsType {
                   Only present for inbound audio tracks. The total number of inbound audio samples
                   that are concealed samples. A concealed sample is a sample that is based on data
                   that was synthesized to conceal packet loss and does not represent incoming data.
-                  This includes <a>concealedAudibleSamples</a>.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>concealedAudibleSamples</code></dfn> of type <span class=
-                "idlMemberType"><a>unsigned long long</a></span>
-              </dt>
-              <dd>
-                <p>
-                  Only present for inbound audio tracks. The total number of concealed audio samples
-                  (see <a>concealedSamples</a>) that was played out during an audible portions of the
-                  stream. Audible means that the received audio is not considered background noise or
-                  silence by the user agent. It is up to the implementation to determine what is
-                  considered background noise, but concealments of audible samples SHOULD in general
-                  have a greater impact on user experience than concealment of non-audible samples.
-                  If the voice activity flag is present in RTP packets as per [[RFC6464]] this MAY
-                  be used to indicate audibility. Audibility MAY also be based on audio levels or
-                  more sophisticated analysis of the stream.
                 </p>
               </dd>
               <dt>
