@@ -1278,9 +1278,15 @@ enum RTCStatsType {
                 <p>
                   Only valid for remote sources. This is the estimated playout time of this track.
                   The playout time is the NTP timestamp of the last played out audio sample or video
-                  frame that has a known timestamp, extrapolated with the time elapsed since it was
-                  played out. This is the "current time" of the track in NTP clock time of the
-                  sender and can be present even if there is no audio or video currently playing.
+                  frame that has a known timestamp (from an RTCP SR packet mapping RTP timestamps to
+                  NTP timestamps), extrapolated with the time elapsed since it was played out. This
+                  is the "current time" of the track in NTP clock time of the sender and can be
+                  present even if there is no audio or video currently playing.
+                </p>
+                  This can be useful for estimating how much audio and video is out of sync for two
+                  tracks from the same source, <code>audioTrackStats.playoutTimestamp -
+                  videoTrackStats.playoutTimestamp</code>.
+                <p>
                 </p>
               </dd>
               <dt>
@@ -1289,20 +1295,17 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for remote sources. This is the estimated capture time of this track.
-                  The capture time is the NTP timestamp of the last played out audio sample or video
-                  frame that has a known timestamp + half of what the estimated round trip time was
-                  when that audio sample or video frame arrived, extrapolated with the time elapsed
-                  since that audio sample or video frame. This is the capture equivalent of the
-                  "current time" (<a>playoutTimestamp</a>) and can be present even if there is no
-                  audio or video currently playing. The estimated round trip time is the value
-                  computed from the latest STUN connectivity check [[!STUN-PATH-CHAR]], including
-                  checks that are sent for consent verification [[!RFC7675]]. Note that while the
-                  <a>captureTimestamp</a> of all tracks from the same source try to estimate the
-                  remote endpoint's clock at the time of capture, differences in latest known NTP
-                  timestamps, round trip time estimates and other things not perfectly in sync
-                  likely mean that it is not valid to assume that the estimate is the same for
-                  different tracks from the same source.
+                  Only valid for remote sources. This is the estimated capture time of this track,
+                  i.e. what the "current time" is for the remote capturer. It is estimated by
+                  looking at the latest RTCP SR packet containing an NTP timestamp. The difference
+                  between the local clock when the packet arrived and the NTP timestamp gives an
+                  estimate of half the round trip time. The <code>captureTimestamp</code> is the
+                  current local time plus the latest half-RTT estimate and can be present even if
+                  no audio or video is currently playing.
+                </p>
+                <p>
+                  The end to end audio or video delay estimate can be calculated as <code>
+                  trackStats.captureTimestamp - trackStats.playoutTimestamp</code>.
                 </p>
               </dd>
               <dt>
