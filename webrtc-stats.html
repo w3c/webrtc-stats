@@ -1526,7 +1526,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video. It represents the nominal FPS value.
+                  Only valid for video. It represents the nominal FPS value before the degradation
+                  preference is applied. It is the number of complete frames in the last second. For sending tracks it is the current captured FPS
+                  and for the receiving tracks it is the current decoding framerate.
                 </p>
               </dd>
               <dt>
