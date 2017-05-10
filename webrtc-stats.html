@@ -1402,6 +1402,7 @@ enum RTCStatsType {
              boolean             ended;
              boolean             detached;
              DOMString           kind;
+             DOMHighResTimeStamp estimatedPlayoutTimestamp;
              unsigned long       frameWidth;
              unsigned long       frameHeight;
              double              framesPerSecond;
@@ -1471,6 +1472,25 @@ enum RTCStatsType {
                 <p>
                   Either "<code>audio</code>" or "<code>video</code>". This reflects the "kind"
                   attribute of the MediaStreamTrack.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>estimatedPlayoutTimestamp</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for remote sources. This is the estimated playout time of this track.
+                  The playout time is the NTP timestamp of the last playable audio sample or video
+                  frame that has a known timestamp (from an RTCP SR packet mapping RTP timestamps to
+                  NTP timestamps), extrapolated with the time elapsed since it was ready to be
+                  played out. This is the "current time" of the track in NTP clock time of the
+                  sender and can be present even if there is no audio or video currently playing.
+                </p>
+                <p>
+                  This can be useful for estimating how much audio and video is out of sync for two
+                  tracks from the same source, <code>audioTrackStats.estimatedPlayoutTimestamp -
+                  videoTrackStats.estimatedPlayoutTimestamp</code>.
                 </p>
               </dd>
               <dt>
