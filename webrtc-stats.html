@@ -768,6 +768,7 @@ enum RTCStatsType {
              double             burstDiscardRate;
              double             gapLossRate;
              double             gapDiscardRate;
+             DOMHighResTimeStamp  lastPacketReceivedTimestamp;
 };</pre>
           <section>
             <h2>
@@ -936,6 +937,15 @@ enum RTCStatsType {
                   [[!RFC7004]], however, the actual value is reported without multiplying by 32768.
                 </p>
               </dd>
+              <dt>
+                <dfn><code>lastPacketReceivedTimestamp</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the timestamp at which the last packet was received for this media stream track.
+                </p>
+              </dd>
             </dl>
           </section>
         </div>
@@ -1039,6 +1049,8 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCSentRTPStreamStats : RTCRTPStreamStats {
              unsigned long      packetsSent;
              unsigned long long bytesSent;
+             DOMHighResTimeStamp  lastPacketSentTimestamp;
+             double             averageRTCPInterval;
 };</pre>
           <section>
             <h2>
@@ -1064,6 +1076,27 @@ enum RTCStatsType {
                 <p>
                   Total number of bytes sent for this SSRC. Calculated as defined in [[!RFC3550]]
                   section 6.4.1.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>lastPacketSentTimestamp</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the timestamp at which the last packet was sent for this media stream track.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>averageRTCPInterval</code></dfn> of type <span class=
+                "idlMemberType"><a>double</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The average RTCP interval between two consecutive compound RTCP packets. This
+                  calculated by the sending endpoint when sending compound RTCP reports. Compound
+                  packets must contain at least an RTCP RR or SR packet and an SDES packet with the
+                  CNAME item.
                 </p>
               </dd>
             </dl>
