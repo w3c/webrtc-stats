@@ -1402,8 +1402,7 @@ enum RTCStatsType {
              boolean             ended;
              boolean             detached;
              DOMString           kind;
-             DOMHighResTimeStamp playoutTimestamp;
-             DOMHighResTimeStamp captureTimestamp;
+             DOMHighResTimeStamp estimatedPlayoutTimestamp;
              unsigned long       frameWidth;
              unsigned long       frameHeight;
              double              framesPerSecond;
@@ -1476,41 +1475,22 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>playoutTimestamp</code></dfn> of type <span class="idlMemberType"><a>
-                DOMHighResTimeStamp</a></span>
+                <dfn><code>estimatedPlayoutTimestamp</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
               </dt>
               <dd>
                 <p>
                   Only valid for remote sources. This is the estimated playout time of this track.
-                  The playout time is the NTP timestamp of the last played out audio sample or video
+                  The playout time is the NTP timestamp of the last playable audio sample or video
                   frame that has a known timestamp (from an RTCP SR packet mapping RTP timestamps to
-                  NTP timestamps), extrapolated with the time elapsed since it was played out. This
-                  is the "current time" of the track in NTP clock time of the sender and can be
-                  present even if there is no audio or video currently playing.
+                  NTP timestamps), extrapolated with the time elapsed since it was ready to be
+                  played out. This is the "current time" of the track in NTP clock time of the
+                  sender and can be present even if there is no audio or video currently playing.
                 </p>
+                <p>
                   This can be useful for estimating how much audio and video is out of sync for two
-                  tracks from the same source, <code>audioTrackStats.playoutTimestamp -
-                  videoTrackStats.playoutTimestamp</code>.
-                <p>
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>captureTimestamp</code></dfn> of type <span class="idlMemberType"><a>
-                DOMHighResTimeStamp</a></span>
-              </dt>
-              <dd>
-                <p>
-                  Only valid for remote sources. This is the estimated capture time of this track,
-                  i.e. what the "current time" is for the remote capturer. It is estimated by
-                  looking at the latest RTCP SR packet containing an NTP timestamp. The difference
-                  between the local clock when the packet arrived and the NTP timestamp gives an
-                  estimate of half the round trip time. The <code>captureTimestamp</code> is the
-                  current local time plus the latest half-RTT estimate and can be present even if
-                  no audio or video is currently playing.
-                </p>
-                <p>
-                  The end to end audio or video delay estimate can be calculated as <code>
-                  trackStats.captureTimestamp - trackStats.playoutTimestamp</code>.
+                  tracks from the same source, <code>audioTrackStats.estimatedPlayoutTimestamp -
+                  videoTrackStats.estimatedPlayoutTimestamp</code>.
                 </p>
               </dd>
               <dt>
