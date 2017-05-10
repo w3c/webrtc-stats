@@ -671,6 +671,8 @@ enum RTCStatsType {
         <div>
           <pre class="idl">dictionary RTCCodecStats : RTCStats {
              unsigned long payloadType;
+             RTCCodecType  codecType;
+             DOMString     transportId;
              DOMString     mimeType;
              unsigned long clockRate;
              unsigned long channels;
@@ -689,7 +691,29 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Payload type as used in RTP encoding.
+                  Payload type as used in RTP encoding or decoding.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>codecType</code></dfn> of type <span class=
+                "idlMemberType"><a>RTCCodecType</a></span>
+              </dt>
+              <dd>
+                <p>
+                  <code>"encode"</code> or <code>"decode"</code>, depending on
+                  whether this object represents a media format that the
+                  implementation is prepared to encode or decode.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>transportId</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMString</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The unique identifier of the transport on which this codec is
+                  being used, which can be used to look up the corresponding
+                  <code><a>RTCTransportStats</a></code> object.
                 </p>
               </dd>
               <dt>
@@ -746,6 +770,51 @@ enum RTCStatsType {
             </dl>
           </section>
         </div>
+        <section>
+          <h3>
+            <dfn>RTCCodecType</dfn> enum
+          </h3>
+          <div>
+            <pre class="idl">enum RTCCodecType {
+    "encode",
+    "decode",
+};</pre>
+            <table data-link-for="RTCCodecType" data-dfn-for=
+            "RTCCodecType" class="simple">
+              <tbody>
+                <tr>
+                  <th colspan="2">
+                    Enumeration description
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <dfn><code>encode</code></dfn>
+                  </td>
+                  <td>
+                    <p>
+                      The attached <code><a>RTCCodecStats</a></code> represents
+                      a media format that is being encoded, or that the
+                      implementation is prepared to encode.
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <dfn><code>decode</code></dfn>
+                  </td>
+                  <td>
+                    <p>
+                      The attached <code><a>RTCCodecStats</a></code> represents
+                      a media format that the implementation is prepared to
+                      decode.
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
       </section>
       <section id="receivedrtpstats-dict*">
         <h3>
@@ -1347,6 +1416,10 @@ enum RTCStatsType {
              double              audioLevel;
              double              echoReturnLoss;
              double              echoReturnLossEnhancement;
+             unsigned long long  totalSamplesSent;
+             unsigned long long  totalSamplesReceived;
+             unsigned long long  concealedSamples;
+             unsigned long long  concealmentEvents;
 };</pre>
           <section>
             <h2>
@@ -1556,6 +1629,50 @@ enum RTCStatsType {
                 <p>
                   Only present on audio tracks sourced from a microphone where echo cancellation is
                   applied. Calculated in decibels, as defined in [[!ECHO]] (2012) section 3.15.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalSamplesSent</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only present for outbound audio tracks. The total number of audio samples that have
+                  been sent for this track.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalSamplesReceived</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only present for inbound audio tracks. The total number of audio samples that have
+                  been received for this track. This includes <a>concealedSamples</a>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>concealedSamples</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only present for inbound audio tracks. The total number of inbound audio samples
+                  that are concealed samples. A concealed sample is a sample that is based on data
+                  that was synthesized to conceal packet loss and does not represent incoming data.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>concealmentEvents</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only present for inbound audio tracks. The number of concealment events. This
+                  counter increases every time a concealed sample is synthesized after a
+                  non-concealed sample. That is, multiple consecutive concealed samples will
+                  increase the <a>concealedSamples</a> count multiple times but is a single
+                  concealment event.
                 </p>
               </dd>
             </dl>
