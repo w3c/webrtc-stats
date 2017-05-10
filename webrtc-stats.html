@@ -1420,6 +1420,7 @@ enum RTCStatsType {
              unsigned long long  totalSamplesReceived;
              unsigned long long  concealedSamples;
              unsigned long long  concealmentEvents;
+             double              jitterBufferDelay;
 };</pre>
           <section>
             <h2>
@@ -1673,6 +1674,21 @@ enum RTCStatsType {
                   non-concealed sample. That is, multiple consecutive concealed samples will
                   increase the <a>concealedSamples</a> count multiple times but is a single
                   concealment event.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>jitterBufferDelay</code></dfn> of type <span class=
+                "idlMemberType"><a>double</a></span>
+              </dt>
+              <dd>
+                <p>
+                  It is the total time each audio sample or video frame takes from the time it
+                  is received to the time it is rendered. The delay is measured from the time
+                  the first packet belonging to an audio/video frame enters the jitter buffer
+                  to the time the complete frame is sent for rendering. The average jitter
+                  buffer delay can be calculated by dividing the <code>jitterBufferDelay</code>
+                  with the <code>framesDecoded</code> (for video) or
+                  <code>totalSamplesReceived</code> (for audio) .
                 </p>
               </dd>
             </dl>
