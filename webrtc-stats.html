@@ -2070,6 +2070,7 @@ enum RTCStatsType {
              unsigned long long            retransmissionsSent;
              unsigned long long            consentRequestsSent;
              DOMHighResTimeStamp           consentExpiredTimestamp;
+             unsigned long long            sumCheckInterval;
 };</pre>
           <section>
             <h2>
@@ -2346,6 +2347,16 @@ enum RTCStatsType {
                   (Jan 1, 1970, UTC). If a valid STUN binding response has not been made
                   (<code>responsesReceived</code> is zero) or the latest one has not expired this
                   value must be undefined.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>sumCheckInterval</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the sum of the intervals between two consecutive connectivity checks
+                  sent. The average can be calculated by dividing this interval by the number of requestsSent.
                 </p>
               </dd>
             </dl>
