@@ -1416,6 +1416,10 @@ enum RTCStatsType {
              double              audioLevel;
              double              echoReturnLoss;
              double              echoReturnLossEnhancement;
+             unsigned long long  totalSamplesSent;
+             unsigned long long  totalSamplesReceived;
+             unsigned long long  concealedSamples;
+             unsigned long long  concealmentEvents;
 };</pre>
           <section>
             <h2>
@@ -1625,6 +1629,50 @@ enum RTCStatsType {
                 <p>
                   Only present on audio tracks sourced from a microphone where echo cancellation is
                   applied. Calculated in decibels, as defined in [[!ECHO]] (2012) section 3.15.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalSamplesSent</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only present for outbound audio tracks. The total number of audio samples that have
+                  been sent for this track.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalSamplesReceived</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only present for inbound audio tracks. The total number of audio samples that have
+                  been received for this track. This includes <a>concealedSamples</a>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>concealedSamples</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only present for inbound audio tracks. The total number of inbound audio samples
+                  that are concealed samples. A concealed sample is a sample that is based on data
+                  that was synthesized to conceal packet loss and does not represent incoming data.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>concealmentEvents</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only present for inbound audio tracks. The number of concealment events. This
+                  counter increases every time a concealed sample is synthesized after a
+                  non-concealed sample. That is, multiple consecutive concealed samples will
+                  increase the <a>concealedSamples</a> count multiple times but is a single
+                  concealment event.
                 </p>
               </dd>
             </dl>
