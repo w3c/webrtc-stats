@@ -2058,6 +2058,8 @@ enum RTCStatsType {
              unsigned long long            bytesReceived;
              DOMHighResTimeStamp           lastPacketSentTimestamp;
              DOMHighResTimeStamp           lastPacketReceivedTimestamp;
+             DOMHighResTimeStamp           lastRequestTimestamp;
+             DOMHighResTimeStamp           lastResponseTimestamp;
              double                        totalRoundTripTime;
              double                        currentRoundTripTime;
              double                        availableOutgoingBitrate;
@@ -2183,7 +2185,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the timestamp at which the last packet was sent on this particular
-                  candidate pair.
+                  candidate pair, excluding STUN packets.
                 </p>
               </dd>
               <dt>
@@ -2193,7 +2195,27 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the timestamp at which the last packet was received on this particular
-                  candidate pair.
+                  candidate pair, excluding STUN packets.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>lastRequestTimestamp</code></dfn> of type <span class="idlMemberType">
+                <a>DOMHighResTimeStamp</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the timestamp at which the last STUN request was sent on this
+                  particular candidate pair.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>lastResponseTimestamp</code></dfn> of type <span class="idlMemberType">
+                <a>DOMHighResTimeStamp</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the timestamp at which the last STUN response was received on this
+                  particular candidate pair.
                 </p>
               </dd>
               <dt>
