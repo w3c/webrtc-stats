@@ -1038,7 +1038,9 @@ enum RTCStatsType {
         <div>
           <pre class="idl">dictionary RTCSentRTPStreamStats : RTCRTPStreamStats {
              unsigned long      packetsSent;
+             unsigned long      packetsDiscardedOnSend;
              unsigned long long bytesSent;
+             unsigned long long bytesDiscardedOnSend;
 };</pre>
           <section>
             <h2>
@@ -1057,6 +1059,16 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn><code>packetsDiscardedOnSend</code></dfn> of type <span class="idlMemberType">
+                <a>unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of RTP packets for this SSRC that have been discarded due to socket
+                  errors, i.e. a socket error occured when handing the byttes to the socket.
+                </p>
+              </dd>
+              <dt>
                 <dfn><code>bytesSent</code></dfn> of type <span class="idlMemberType"><a>unsigned
                 long long</a></span>
               </dt>
@@ -1064,6 +1076,16 @@ enum RTCStatsType {
                 <p>
                   Total number of bytes sent for this SSRC. Calculated as defined in [[!RFC3550]]
                   section 6.4.1.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>bytesDiscardedOnSend</code></dfn> of type <span class="idlMemberType">
+                <a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of bytes for this SSRC that have been discarded due to socket
+                  errors, i.e. a socket error occured when handing the packet to the socket.
                 </p>
               </dd>
             </dl>
