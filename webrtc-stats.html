@@ -106,8 +106,8 @@
       </p>
       <p>
         The terms <dfn>RTCPeerConnection</dfn>, <dfn>RTCDataChannel</dfn>,
-        <dfn>RTCDtlsTransport</dfn>, <dfn>RTCDtlsTransportState</dfn> and
-        <dfn>RTCIceTransport</dfn> are defined in [[!WEBRTC]].
+        <dfn>RTCDtlsTransport</dfn>, <dfn>RTCDtlsTransportState</dfn>,
+        <dfn>RTCIceTransport</dfn>, and <dfn>RTCPriorityType</dfn> are defined in [[!WEBRTC]].
       </p>
       <p>
         The term <dfn>RTP stream</dfn> is defined in [[RFC7656]] section 2.1.10.
@@ -1420,6 +1420,7 @@ enum RTCStatsType {
              unsigned long long  totalSamplesReceived;
              unsigned long long  concealedSamples;
              unsigned long long  concealmentEvents;
+             RTCPriorityType     priority;
 };</pre>
           <section>
             <h2>
@@ -1673,6 +1674,16 @@ enum RTCStatsType {
                   non-concealed sample. That is, multiple consecutive concealed samples will
                   increase the <a>concealedSamples</a> count multiple times but is a single
                   concealment event.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>priority</code></dfn> of type <span class="idlMemberType"><a>
+                RTCPriorityType</a></span>
+              </dt>
+              <dd>
+                <p>
+                  <p>Indicates the priority set for the track. It is specified in
+                  [[!RTCWEB-TRANSPORT]], Section 4.</p>
                 </p>
               </dd>
             </dl>
