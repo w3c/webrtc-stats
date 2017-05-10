@@ -106,8 +106,8 @@
       </p>
       <p>
         The terms <dfn>RTCPeerConnection</dfn>, <dfn>RTCDataChannel</dfn>,
-        <dfn>RTCDtlsTransport</dfn>, <dfn>RTCDtlsTransportState</dfn> and
-        <dfn>RTCIceTransport</dfn> are defined in [[!WEBRTC]].
+        <dfn>RTCDtlsTransport</dfn>, <dfn>RTCDtlsTransportState</dfn>,
+        <dfn>RTCIceTransport</dfn>, and <dfn>RTCPriorityType</dfn> are defined in [[!WEBRTC]].
       </p>
       <p>
         The term <dfn>RTP stream</dfn> is defined in [[RFC7656]] section 2.1.10.
@@ -186,6 +186,11 @@
     DOMString           id;
         };
       </pre>
+      <p>
+        Timestamps are expressed with DOMHighResTimeStamp [[!HIGHRES-TIME]]. Unless otherwise
+        specified, timestamps are relative to the UNIX epoch (Jan 1, 1970, UTC) and are measured
+        by a local clock.
+      </p>
       <section>
         <h3>
           Guidelines for design of stats objects
@@ -1256,8 +1261,7 @@ enum RTCStatsType {
                   represents the time at which the statistics were generated or received by the
                   local endpoint. The <code>remoteTimestamp</code>, if present, is derived from the
                   NTP timestamp in an RTCP Sender Report (SR) packet, which reflects the remote
-                  endpoint's clock. That clock may not be synchronized with the local clock. The
-                  time is relative to the UNIX epoch (Jan 1, 1970, UTC).
+                  endpoint's clock. That clock may not be synchronized with the local clock.
                 </p>
               </dd>
             </dl>
@@ -1402,6 +1406,7 @@ enum RTCStatsType {
              boolean             ended;
              boolean             detached;
              DOMString           kind;
+             DOMHighResTimeStamp estimatedPlayoutTimestamp;
              unsigned long       frameWidth;
              unsigned long       frameHeight;
              double              framesPerSecond;
@@ -1421,6 +1426,7 @@ enum RTCStatsType {
              unsigned long long  concealedSamples;
              unsigned long long  concealmentEvents;
              double              jitterBufferDelay;
+             RTCPriorityType     priority;
 };</pre>
           <section>
             <h2>
@@ -1472,6 +1478,25 @@ enum RTCStatsType {
                 <p>
                   Either "<code>audio</code>" or "<code>video</code>". This reflects the "kind"
                   attribute of the MediaStreamTrack.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>estimatedPlayoutTimestamp</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for remote sources. This is the estimated playout time of this track.
+                  The playout time is the NTP timestamp of the last playable audio sample or video
+                  frame that has a known timestamp (from an RTCP SR packet mapping RTP timestamps to
+                  NTP timestamps), extrapolated with the time elapsed since it was ready to be
+                  played out. This is the "current time" of the track in NTP clock time of the
+                  sender and can be present even if there is no audio or video currently playing.
+                </p>
+                <p>
+                  This can be useful for estimating how much audio and video is out of sync for two
+                  tracks from the same source, <code>audioTrackStats.estimatedPlayoutTimestamp -
+                  videoTrackStats.estimatedPlayoutTimestamp</code>.
                 </p>
               </dd>
               <dt>
@@ -1605,7 +1630,7 @@ enum RTCStatsType {
                 </p>
                 <p>
                   The "audio level" value defined in [[RFC6464]] and used in the
-                  RTCRtpContributingSource.audioLevel of [[WEBRTC]] (defined as 0..127, where 0
+                  RTCRtpSynchronizationSource.audioLevel of [[WEBRTC]] (defined as 0..127, where 0
                   represents 0 dBov, 126 represents -126 dBov and 127 represents silence) is
                   obtained by the calculation given in appendix A of [[!RFC6465]]: informally,
                   level = -round(log10(audioLevel) * 20), with audioLevel 0.0 and values below 127
@@ -1685,10 +1710,19 @@ enum RTCStatsType {
                   It is the total time each audio sample or video frame takes from the time it
                   is received to the time it is rendered. The delay is measured from the time
                   the first packet belonging to an audio/video frame enters the jitter buffer
-                  to the time the complete frame is sent for rendering. The average jitter
-                  buffer delay can be calculated by dividing the <code>jitterBufferDelay</code>
-                  with the <code>framesDecoded</code> (for video) or
-                  <code>totalSamplesReceived</code> (for audio) .
+                  to the time the complete frame is sent for rendering after decoding. The average 
+                  jitter buffer delay can be calculated by dividing the <code>jitterBufferDelay</code>
+                  with the <code>framesDecoded</code> (for video) or <code>totalSamplesReceived</code> (for audio).
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>priority</code></dfn> of type <span class="idlMemberType"><a>
+                RTCPriorityType</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Indicates the priority set for the track. It is specified in
+                  [[!RTCWEB-TRANSPORT]], Section 4.
                 </p>
               </dd>
             </dl>
@@ -2358,10 +2392,9 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the timestamp at which the latest valid STUN binding response expired,
-                  as defined in [[!RFC7675]] section 5.1. The time is relative to the UNIX epoch
-                  (Jan 1, 1970, UTC). If a valid STUN binding response has not been made
-                  (<code>responsesReceived</code> is zero) or the latest one has not expired this
-                  value must be undefined.
+                  as defined in [[!RFC7675]] section 5.1. If a valid STUN binding response has not
+                  been made (<code>responsesReceived</code> is zero) or the latest one has not
+                  expired this value must be undefined.
                 </p>
               </dd>
             </dl>
