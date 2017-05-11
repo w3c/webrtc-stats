@@ -1125,6 +1125,8 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCSentRTPStreamStats : RTCRTPStreamStats {
              unsigned long      packetsSent;
              unsigned long long bytesSent;
+             unsigned long      packetsRetransmitted;
+             unsigned long long bytesRetransmitted;
 };</pre>
           <section>
             <h2>
@@ -1149,6 +1151,26 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Total number of bytes sent for this SSRC. Calculated as defined in [[!RFC3550]]
+                  section 6.4.1.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>packetsRetransmitted</code></dfn> of type <span class="idlMemberType"><a>unsigned
+                long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of RTP packets retransmitted by the sender on receiving a retransmission request (e.g., NACK) from the receiver for this SSRC. The retransmitted packet may be sent as defined in
+                  [[!RFC4588]].
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>bytesRetransmitted</code></dfn> of type <span class="idlMemberType"><a>unsigned
+                long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of bytes retransmitted for this SSRC. Calculated as defined in [[!RFC3550]]
                   section 6.4.1.
                 </p>
               </dd>
