@@ -107,7 +107,8 @@
       <p>
         The terms <dfn>RTCPeerConnection</dfn>, <dfn>RTCDataChannel</dfn>,
         <dfn>RTCDtlsTransport</dfn>, <dfn>RTCDtlsTransportState</dfn>,
-        <dfn>RTCIceTransport</dfn>, and <dfn>RTCPriorityType</dfn> are defined in [[!WEBRTC]].
+        <dfn>RTCIceTransport</dfn>, <dfn>RTCIceRole</dfn> and <dfn>RTCPriorityType</dfn> are defined
+        in [[!WEBRTC]].
       </p>
       <p>
         The term <dfn>RTP stream</dfn> is defined in [[RFC7656]] section 2.1.10.
@@ -1948,6 +1949,7 @@ enum RTCStatsType {
              unsigned long long    bytesSent;
              unsigned long long    bytesReceived;
              DOMString             rtcpTransportStatsId;
+             RTCIceRole            iceRole;
              RTCDtlsTransportState dtlsState;
              DOMString             selectedCandidatePairId;
              DOMString             localCertificateId;
@@ -2006,6 +2008,16 @@ enum RTCStatsType {
                   If RTP and RTCP are not multiplexed, this is the <code>id</code> of the transport
                   that gives stats for the RTCP component, and this record has only the RTP
                   component stats.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>iceRole</code></dfn> of type <span class="idlMemberType"><a>RTCIceRole
+                </a></span>
+              </dt>
+              <dd>
+                <p>
+                  Set to the current value of the "role" attribute of the underlying
+                  RTCDtlsTransport's "transport".
                 </p>
               </dd>
               <dt>
