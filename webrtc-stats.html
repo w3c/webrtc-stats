@@ -2220,6 +2220,7 @@ enum RTCStatsType {
              double                        currentRoundTripTime;
              double                        availableOutgoingBitrate;
              double                        availableIncomingBitrate;
+             unsigned long                 circuitBreakerTriggerCount;
              unsigned long long            requestsReceived;
              unsigned long long            requestsSent;
              unsigned long long            responsesReceived;
@@ -2419,6 +2420,18 @@ enum RTCStatsType {
                   bitrate for the packets received at <code>lastPacketReceivedTimestamp</code>, but
                   might be higher. For candidate pairs that are not currently in use but were used
                   before, implementations MUST return undefined.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>circuitBreakerTriggerCount</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the number of times the circuit breaker is triggered for this particular
+                  5-tuple. Ceasing transmission when a circuit breaker is triggered is defined in
+                  Section 4.5 of [[!RFC8083]]. The field MUST return undefined for user-agents that
+                  do not implement the circuit-breaker algorithm.
                 </p>
               </dd>
               <dt>
