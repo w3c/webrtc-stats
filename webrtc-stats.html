@@ -1554,6 +1554,7 @@ enum RTCStatsType {
              unsigned long       partialFramesLost;
              unsigned long       fullFramesLost;
              double              audioLevel;
+             double              totalAudioEnergy;
              boolean             voiceActivityFlag;
              double              echoReturnLoss;
              double              echoReturnLossEnhancement;
@@ -1774,6 +1775,32 @@ enum RTCStatsType {
                   obtained by the calculation given in appendix A of [[!RFC6465]]: informally,
                   level = -round(log10(audioLevel) * 20), with audioLevel 0.0 and values above 127
                   mapped to 127.
+                </p>
+              </dd>
+              </dd>
+              <dt>
+                <dfn><code>totalAudioEnergy</code></dfn> of type <span class=
+                "idlMemberType"><a>double</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio. This value MUST be computed as follows:
+                  for each audio sample sent/received for this object (and
+                  counted by <code><a>totalSamplesSent</a></code> or
+                  <code><a>totalSamplesReceived</a></code>), add the square of
+                  the sample's value divided by the highest-intensity encodable
+                  value.
+                </p>
+                <p>
+                  This can be used to obtain a root mean square value that uses
+                  the same units as <code><a>audioLevel</a></code>, using the
+                  formula
+                  <code>Math.sqrt(totalAudioEnergy)/totalSamplesSent</code>,
+                  substituting <code>totalSamplesReceived</code> for a received
+                  track. This calculation can also be performed using the
+                  differences between the values of two different
+                  <code>getStats()</code> calls, in order to compute the
+                  average audio level over any desired time interval.
                 </p>
               </dd>
               <dt>
