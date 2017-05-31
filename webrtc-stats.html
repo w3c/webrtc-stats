@@ -1560,6 +1560,7 @@ enum RTCStatsType {
              double              echoReturnLossEnhancement;
              unsigned long long  totalSamplesSent;
              unsigned long long  totalSamplesReceived;
+             double              totalSamplesDuration;
              unsigned long long  concealedSamples;
              unsigned long long  concealmentEvents;
              double              jitterBufferDelay;
@@ -1789,18 +1790,29 @@ enum RTCStatsType {
                   counted by <code><a>totalSamplesSent</a></code> or
                   <code><a>totalSamplesReceived</a></code>), add the square of
                   the sample's value divided by the highest-intensity encodable
-                  value.
+                  value, multiplied by the duration of the sample in seconds.
                 </p>
                 <p>
-                  This can be used to obtain a root mean square value that uses
-                  the same units as <code><a>audioLevel</a></code>, using the
-                  formula
-                  <code>Math.sqrt(totalAudioEnergy)/totalSamplesSent</code>,
-                  substituting <code>totalSamplesReceived</code> for a received
-                  track. This calculation can also be performed using the
+                  This can be used to obtain a root mean square (RMS) value
+                  that uses the same units as <code><a>audioLevel</a></code>,
+                  using the formula
+                  <code>Math.sqrt(totalAudioEnergy/totalSamplesDuration)</code>.
+                  This calculation can also be performed using the
                   differences between the values of two different
                   <code>getStats()</code> calls, in order to compute the
                   average audio level over any desired time interval.
+                </p>
+                <p>
+                  For example, if a 10ms packet of audio is received with an
+                  RMS of 0.5 (out of 1.0), this should add <code>0.5 * 0.5 *
+                  0.01 = 0.0025</code> to <code>totalAudioEnergy</code>. If
+                  another 10ms packet with an RMS of 0.1 is received, this should
+                  similarly add <code>0.0001</code> to
+                  <code>totalAudioEnergy</code>. Then,
+                  <code>Math.sqrt(totalAudioEnergy/totalSamplesDuration)</code>
+                  becomes <code>Math.sqrt(0.0026/0.02) = 0.36</code>, which is
+                  the same value that would be obtained by doing an RMS
+                  calculation over the contiguous 20ms segment of audio.
                 </p>
               </dd>
               <dt>
@@ -1857,6 +1869,20 @@ enum RTCStatsType {
                 <p>
                   Only present for inbound audio tracks. The total number of audio samples that have
                   been received for this track. This includes <a>concealedSamples</a>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalSamplesDuration</code></dfn> of type <span class="idlMemberType"><a>
+                double</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only present for audio tracks. Represents the total duration
+                  in seconds of all samples that have sent or received (and
+                  thus counted by <code><a>totalSamplesSent</a></code> or
+                  <code><a>totalSamplesReceived</a></code>). Can be used with
+                  <code><a>totalAudioEnergy</a></code> to compute an average audio
+                  level over different intervals.
                 </p>
               </dd>
               <dt>
