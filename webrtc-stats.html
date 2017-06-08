@@ -1865,7 +1865,7 @@ enum RTCStatsType {
                   It is the total time each audio sample or video frame takes from the time it
                   is received to the time it is rendered. The delay is measured from the time
                   the first packet belonging to an audio/video frame enters the jitter buffer
-                  to the time the complete frame is sent for rendering after decoding. The average 
+                  to the time the complete frame is sent for rendering after decoding. The average
                   jitter buffer delay can be calculated by dividing the <code>jitterBufferDelay</code>
                   with the <code>framesDecoded</code> (for video) or <code>totalSamplesReceived</code> (for audio).
                 </p>
@@ -2274,6 +2274,9 @@ enum RTCStatsType {
              unsigned long long            bytesReceived;
              DOMHighResTimeStamp           lastPacketSentTimestamp;
              DOMHighResTimeStamp           lastPacketReceivedTimestamp;
+             DOMHighResTimeStamp           firstRequestTimestamp;
+             DOMHighResTimeStamp           lastRequestTimestamp;
+             DOMHighResTimeStamp           lastResponseTimestamp;
              double                        totalRoundTripTime;
              double                        currentRoundTripTime;
              double                        availableOutgoingBitrate;
@@ -2400,7 +2403,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the timestamp at which the last packet was sent on this particular
-                  candidate pair.
+                  candidate pair, excluding STUN packets.
                 </p>
               </dd>
               <dt>
@@ -2410,7 +2413,39 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the timestamp at which the last packet was received on this particular
-                  candidate pair.
+                  candidate pair, excluding STUN packets.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>firstRequestTimestamp</code></dfn> of type <span class="idlMemberType">
+                <a>DOMHighResTimeStamp</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the timestamp at which the first STUN request was sent on this
+                  particular candidate pair.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>lastRequestTimestamp</code></dfn> of type <span class="idlMemberType">
+                <a>DOMHighResTimeStamp</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the timestamp at which the last STUN request was sent on this
+                  particular candidate pair. The average interval between two consecutive
+                  connectivity checks sent can be calculated with <code>(lastRequestTimestamp -
+                  firstRequestTimestamp) / requestsSent</code>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>lastResponseTimestamp</code></dfn> of type <span class="idlMemberType">
+                <a>DOMHighResTimeStamp</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the timestamp at which the last STUN response was received on this
+                  particular candidate pair.
                 </p>
               </dd>
               <dt>
