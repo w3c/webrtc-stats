@@ -1756,12 +1756,13 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Only valid for audio. Whether the last RTP packet sent or played out by this track
-                  contained voice activity or not based on the V bit of the extension header defined
-                  in [[RFC6464]], if present.
+                  contained voice activity or not based on the presence of the V bit in the
+                  extension header, as defined in [[RFC6464]].
                 </p>
                 <p>
-                  This value is defined in RTCRtpSynchronizationSource.voiceActivityFlag of
-                  [[WEBRTC]] for the latest RTP packet played out from a given SSRC.
+                  This value indicates the voice activity in the latest RTP
+                  packet played out from a given SSRC, and is defined in the
+                  <code>RTCRtpSynchronizationSource.voiceActivityFlag</code> of [[WEBRTC].
                 </p>
               </dd>
               <dt>
