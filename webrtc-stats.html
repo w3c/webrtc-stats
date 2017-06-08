@@ -1554,6 +1554,7 @@ enum RTCStatsType {
              unsigned long       partialFramesLost;
              unsigned long       fullFramesLost;
              double              audioLevel;
+             boolean             voiceActivityFlag;
              double              echoReturnLoss;
              double              echoReturnLossEnhancement;
              unsigned long long  totalSamplesSent;
@@ -1773,6 +1774,22 @@ enum RTCStatsType {
                   obtained by the calculation given in appendix A of [[!RFC6465]]: informally,
                   level = -round(log10(audioLevel) * 20), with audioLevel 0.0 and values above 127
                   mapped to 127.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>voiceActivityFlag</code></dfn> of type <span class="idlMemberType"><a>
+                boolean</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio. Whether the last RTP packet sent or played out by this track
+                  contained voice activity or not based on the presence of the V bit in the
+                  extension header, as defined in [[RFC6464]].
+                </p>
+                <p>
+                  This value indicates the voice activity in the latest RTP
+                  packet played out from a given SSRC, and is defined in the
+                  <code>RTCRtpSynchronizationSource.voiceActivityFlag</code> of [[WEBRTC].
                 </p>
               </dd>
               <dt>
