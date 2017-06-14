@@ -2955,6 +2955,57 @@ function processStats() {
       </p>
       <section id="since-14-dec-2016*">
         <h3>
+          Changes between 31 Mar 2017 and 14 Jun 2017
+        </h3>
+        <ul>
+          <li>[#184] Stat for how much time it takes to encode video
+          </li>
+          <li>[#185] Added sample counters to RTCMediaStreamTrackStats
+          </li>
+          <li>[#187] Metrics to keep track of audio and video sync added to
+            RTCMediaStreamTrackStats members </li>
+          <li>[#191] Refactor out isRemote
+          </li>
+          <li>[#192] Update example to match webrtc spec's + senders.getStats
+          </li>
+          <li>[#194] Adding RTCRTPContributingSourceStats stats report object
+          </li>
+          <li>[#195] Adding "codec type" and transportId to RTCCodecStats
+          </li>
+          <li>[#196] Removed writable/readable, and added consentExpiredTimestamp to
+            RTCIceCandidatePairStats </li>
+          <li>[#197] packetsSent/Received added to RTCTransportStats
+          </li>
+          <li>[#198] packetsSent/Received added to RTCIceCandidatePairStats
+          </li>
+          <li>[#199] framesCaptured added to RTCMediaStreamTrackStats
+          </li>
+          <li>[#203] Packets discarded on send
+          </li>
+          <li>[#208] voiceActivityFlag added to RTCMediaStreamTrackStats
+          </li>
+          <li>[#209] definition for 'framesPerSecond'
+          </li>
+          <li>[#210] Added paragraph about timestamp and reference DOMHighResTimeStamp
+          </li>
+          <li>[#211] timestamps needed for circuit breakers and a/v sync
+          </li>
+          <li>[#212] added priority to RTCMediaStreamTrackStats
+          </li>
+          <li>[#213] added last[Request/Response]Timestamp and firstRequestTimestamp to
+            RTCIceCandidatePairStats </li>
+          <li>[#216] stats for number of circuit breaker triggered
+          </li>
+          <li>[#217] added jitter buffer delay added to RTCMediaStreamTrackStats
+          </li>
+          <li>[#218] added iceRole to RTCTransportStats
+          </li>
+          <li>[#221] Added audio level stat that can be used to compute averages
+          </li>
+        </ul>
+      </section>
+      <section id="since-14-dec-2016*">
+        <h3>
           Changes between 14 Dec 2016 and 30 Mar 2017
         </h3>
         <ul>
@@ -3123,8 +3174,8 @@ function processStats() {
         <p>
           The editors wish to thank the Working Group chairs, Stefan Håkansson, and the Team
           Contact, Dominique Hazaël-Massieux, for their support. The editors would like to thank
-          Bernard Aboba, Jan-Ivar Bruaroey, and Cullen Jennings for their contributions to this
-          specification.
+          Bernard Aboba, Taylor Brandstetter, Henrik Boström, Jan-Ivar Bruaroey, Karthik Budigere,
+          Cullen Jennings, and Lennart Schulte for their contributions to this specification.
         </p>
       </section>
     </section>
