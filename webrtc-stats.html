@@ -1788,19 +1788,24 @@ enum RTCStatsType {
                   Only valid for audio. This value MUST be computed as follows:
                   for each audio sample sent/received for this object (and
                   counted by <code><a>totalSamplesSent</a></code> or
-                  <code><a>totalSamplesReceived</a></code>), add the square of
-                  the sample's value divided by the highest-intensity encodable
-                  value, multiplied by the duration of the sample in seconds.
+                  <code><a>totalSamplesReceived</a></code>), add the sample's
+                  value divided by the highest-intensity encodable value,
+                  squared and then multiplied by the duration of the sample in
+                  seconds. In other words, <code>duration *
+                  Math.pow(energy/maxEnergy, 2)</code>.
                 </p>
                 <p>
                   This can be used to obtain a root mean square (RMS) value
                   that uses the same units as <code><a>audioLevel</a></code>,
+                  as defined in [[RFC6464]]. It can be converted to these units
                   using the formula
                   <code>Math.sqrt(totalAudioEnergy/totalSamplesDuration)</code>.
                   This calculation can also be performed using the
                   differences between the values of two different
                   <code>getStats()</code> calls, in order to compute the
-                  average audio level over any desired time interval.
+                  average audio level over any desired time interval. In other
+                  words, do <code>Math.sqrt((energy2 - energy1)/(duration2 -
+                    duration1))</code>.
                 </p>
                 <p>
                   For example, if a 10ms packet of audio is received with an
