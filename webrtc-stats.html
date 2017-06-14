@@ -1554,11 +1554,13 @@ enum RTCStatsType {
              unsigned long       partialFramesLost;
              unsigned long       fullFramesLost;
              double              audioLevel;
+             double              totalAudioEnergy;
              boolean             voiceActivityFlag;
              double              echoReturnLoss;
              double              echoReturnLossEnhancement;
              unsigned long long  totalSamplesSent;
              unsigned long long  totalSamplesReceived;
+             double              totalSamplesDuration;
              unsigned long long  concealedSamples;
              unsigned long long  concealmentEvents;
              double              jitterBufferDelay;
@@ -1776,6 +1778,48 @@ enum RTCStatsType {
                   mapped to 127.
                 </p>
               </dd>
+              </dd>
+              <dt>
+                <dfn><code>totalAudioEnergy</code></dfn> of type <span class=
+                "idlMemberType"><a>double</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio. This value MUST be computed as follows:
+                  for each audio sample sent/received for this object (and
+                  counted by <code><a>totalSamplesSent</a></code> or
+                  <code><a>totalSamplesReceived</a></code>), add the sample's
+                  value divided by the highest-intensity encodable value,
+                  squared and then multiplied by the duration of the sample in
+                  seconds. In other words, <code>duration *
+                  Math.pow(energy/maxEnergy, 2)</code>.
+                </p>
+                <p>
+                  This can be used to obtain a root mean square (RMS) value
+                  that uses the same units as <code><a>audioLevel</a></code>,
+                  as defined in [[RFC6464]]. It can be converted to these units
+                  using the formula
+                  <code>Math.sqrt(totalAudioEnergy/totalSamplesDuration)</code>.
+                  This calculation can also be performed using the
+                  differences between the values of two different
+                  <code>getStats()</code> calls, in order to compute the
+                  average audio level over any desired time interval. In other
+                  words, do <code>Math.sqrt((energy2 - energy1)/(duration2 -
+                    duration1))</code>.
+                </p>
+                <p>
+                  For example, if a 10ms packet of audio is received with an
+                  RMS of 0.5 (out of 1.0), this should add <code>0.5 * 0.5 *
+                  0.01 = 0.0025</code> to <code>totalAudioEnergy</code>. If
+                  another 10ms packet with an RMS of 0.1 is received, this should
+                  similarly add <code>0.0001</code> to
+                  <code>totalAudioEnergy</code>. Then,
+                  <code>Math.sqrt(totalAudioEnergy/totalSamplesDuration)</code>
+                  becomes <code>Math.sqrt(0.0026/0.02) = 0.36</code>, which is
+                  the same value that would be obtained by doing an RMS
+                  calculation over the contiguous 20ms segment of audio.
+                </p>
+              </dd>
               <dt>
                 <dfn><code>voiceActivityFlag</code></dfn> of type <span class="idlMemberType"><a>
                 boolean</a></span>
@@ -1830,6 +1874,20 @@ enum RTCStatsType {
                 <p>
                   Only present for inbound audio tracks. The total number of audio samples that have
                   been received for this track. This includes <a>concealedSamples</a>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalSamplesDuration</code></dfn> of type <span class="idlMemberType"><a>
+                double</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only present for audio tracks. Represents the total duration
+                  in seconds of all samples that have sent or received (and
+                  thus counted by <code><a>totalSamplesSent</a></code> or
+                  <code><a>totalSamplesReceived</a></code>). Can be used with
+                  <code><a>totalAudioEnergy</a></code> to compute an average audio
+                  level over different intervals.
                 </p>
               </dd>
               <dt>
