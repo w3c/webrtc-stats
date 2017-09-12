@@ -268,6 +268,26 @@
           PeerConnection.
         </p>
       </section>
+      <section>
+        <h3>
+          Guidelines for getStats() results caching
+        </h3>
+        <p>
+          A call to getStats() touches many components of WebRTC and may take significant time to
+          execute. An implementation may utilize caching for performance benefits and return the
+          same result as a previous getStats() call.
+        </p>
+        <p>
+          The cache MUST NOT be valid for more than 1 second. The recommended time for cache
+          consistency is no greater than 200 ms.
+        </p>
+        <p>
+          API calls that modify the state of the PeerConnection or its components MUST invalidate
+          the cache. For example, calling getStats() immediately after addTrack() or
+          setRemoteDescription() has been resolved is guaranteed to reflect the changes that these
+          calls had on the PeerConnection.
+        </p>
+      </section>
     </section><!-- VS: getStats() remains in base spec! -->
     <section>
       <h2>
