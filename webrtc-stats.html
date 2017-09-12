@@ -1193,7 +1193,9 @@ enum RTCStatsType {
              unsigned long       frameHeight;
              double              framesPerSecond;
              unsigned long       framesSent;
+             unsigned long       keyFramesSent;
              unsigned long       framesReceived;
+             unsigned long       keyFramesReceived;
              unsigned long       framesDecoded;
              unsigned long       framesDropped;
              unsigned long       framesCorrupted;
@@ -1293,17 +1295,38 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Only valid for video. It represents the total number of frames sent for this
+                  MediaStreamTrack, including key frames and non-key frames.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>keyFramesSent</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. It represents the total number of key frames sent for this
                   MediaStreamTrack.
                 </p>
               </dd>
               <dt>
-                <dfn><code>framesReceived</code></dfn> of type <span class=
-                "idlMemberType"><a>unsigned long</a></span>
+                <dfn><code>framesReceived</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long</a></span>
               </dt>
               <dd>
                 <p>
                   Only valid for video and when remoteSource is set to <code>true</code>. It
-                  represents the total number of frames received for this MediaStreamTrack.
+                  represents the total number of frames received for this MediaStreamTrack,
+                  including key and non-key frames.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>keyFramesReceived</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video and when remoteSource is set to <code>true</code>. It
+                  represents the total number of key frames received for this MediaStreamTrack.
                 </p>
               </dd>
               <dt>
