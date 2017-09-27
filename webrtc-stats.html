@@ -220,7 +220,7 @@
           (camelCase).
         </p>
         <p>
-          Names ending in "Id" (such as "datachannelId") are always a <a>stats object
+          Names ending in "Id" (such as "transportId") are always a <a>stats object
           reference</a>; names ending in "Ids" (such as "trackIds") are always of type
           sequence&lt;DOMString&gt;, where each DOMString is a <a>stats object reference</a>.
         </p>
@@ -1982,7 +1982,7 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCDataChannelStats : RTCStats {
              DOMString           label;
              DOMString           protocol;
-             long                datachannelid;
+             long                dataChannelIdentifier;
              DOMString           transportId;
              RTCDataChannelState state;
              unsigned long       messagesSent;
@@ -2011,7 +2011,7 @@ enum RTCStatsType {
                 The "protocol" value of the <a>RTCDataChannel</a> object.
               </dd>
               <dt>
-                <dfn><code>datachannelid</code></dfn> of type <span class=
+                <dfn><code>dataChannelIdentifier</code></dfn> of type <span class=
                 "idlMemberType"><a>long</a></span>
               </dt>
               <dd>
