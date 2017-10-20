@@ -1306,7 +1306,8 @@ enum RTCStatsType {
                 <p>
                   Only valid for video. It represents the total number of key frames sent for this
                   MediaStreamTrack, such as Infra-frames in VP8 [[RFC6386]] or I-frames in H.264
-                  [[RFC6184]].
+                  [[RFC6184]]. This is a subset of <dfn><code>framesSent</code></dfn>.
+                  <code>framesSent - keyFramesSent</code> gives you the number of delta frames sent.
                 </p>
               </dd>
               <dt>
@@ -1328,6 +1329,9 @@ enum RTCStatsType {
                   Only valid for video and when remoteSource is set to <code>true</code>. It
                   represents the total number of key frames received for this MediaStreamTrack,
                   such as Infra-frames in VP8 [[RFC6386]] or I-frames in H.264 [[RFC6184]].
+                  This is a subset of <dfn><code>framesReceived</code></dfn>.
+                  <code>framesReceived - keyFramesReceived</code> gives you the number of delta
+                  frames received.
                 </p>
               </dd>
               <dt>
