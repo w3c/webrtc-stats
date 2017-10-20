@@ -278,11 +278,13 @@
           calls for performance benefits, however any implementation must adhere to the following:
         </p>
         <p>
-          When the state of the PeerConnection visible changes as a result of an API call, a
+          When the state of the PeerConnection visibly changes as a result of an API call, a
           promise resolving or an event firing, subsequent getStats() calls MUST return up-to-date
-          dictionaries for the affected objects. For example, if a track is added (call to
-          addTrack() or the setRemoteDescription() promise resolving or associated events firing)
-          this is reflected in subsequent getStats() calls.
+          dictionaries for the affected objects. For example, if a track is added with addTrack()
+          subsequent getStats() calls MUST resolve with a corresponding RTCMediaStreamTrackStats
+          object. If you call setRemoteDescription() removing a remote track, upon the promise
+          resolving or an associated event (stream's onremovetrack or track's onmute) firing,
+          calling getStats() MUST resolve with an up-to-date RTCMediaStreamTrackStats object.
         </p>
       </section>
     </section><!-- VS: getStats() remains in base spec! -->
