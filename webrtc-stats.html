@@ -278,7 +278,7 @@
           calls for performance benefits, however any implementation must adhere to the following:
         </p>
         <p>
-          When the state of the PeerConnection visible changes, i.e. as a result of an API call, a
+          When the state of the PeerConnection visible changes as a result of an API call, a
           promise resolving or an event firing, subsequent getStats() calls MUST return up-to-date
           dictionaries for the affected objects. For example, if a track is added (call to
           addTrack() or the setRemoteDescription() promise resolving or associated events firing)
