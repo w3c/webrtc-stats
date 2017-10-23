@@ -279,7 +279,7 @@
         </p>
         <p>
           When the state of the PeerConnection visibly changes as a result of an API call, a
-          promise resolving or an event firing, subsequent getStats() calls MUST return up-to-date
+          promise resolving or an event firing, subsequent new getStats() calls MUST return up-to-date
           dictionaries for the affected objects. For example, if a track is added with addTrack()
           subsequent getStats() calls MUST resolve with a corresponding RTCMediaStreamTrackStats
           object. If you call setRemoteDescription() removing a remote track, upon the promise
