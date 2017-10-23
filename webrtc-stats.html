@@ -1580,7 +1580,9 @@ enum RTCStatsType {
              double              framesPerSecond;
              unsigned long       framesCaptured;
              unsigned long       framesSent;
+             unsigned long       keyFramesSent;
              unsigned long       framesReceived;
+             unsigned long       keyFramesReceived;
              unsigned long       framesDecoded;
              unsigned long       framesDropped;
              unsigned long       framesCorrupted;
@@ -1727,13 +1729,39 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>framesReceived</code></dfn> of type <span class=
-                "idlMemberType"><a>unsigned long</a></span>
+                <dfn><code>keyFramesSent</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. It represents the total number of key frames sent for this
+                  MediaStreamTrack, such as Infra-frames in VP8 [[RFC6386]] or I-frames in H.264
+                  [[RFC6184]]. This is a subset of <dfn><code>framesSent</code></dfn>.
+                  <code>framesSent - keyFramesSent</code> gives you the number of delta frames sent.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>framesReceived</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long</a></span>
               </dt>
               <dd>
                 <p>
                   Only valid for video and when remoteSource is set to <code>true</code>. It
                   represents the total number of frames received for this MediaStreamTrack.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>keyFramesReceived</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video and when remoteSource is set to <code>true</code>. It
+                  represents the total number of key frames received for this MediaStreamTrack,
+                  such as Infra-frames in VP8 [[RFC6386]] or I-frames in H.264 [[RFC6184]].
+                  This is a subset of <dfn><code>framesReceived</code></dfn>.
+                  <code>framesReceived - keyFramesReceived</code> gives you the number of delta
+                  frames received.
                 </p>
               </dd>
               <dt>
