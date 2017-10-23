@@ -2270,6 +2270,14 @@ enum RTCStatsType {
                   the ICE standard, it's not possible to know what type of
                   network interface a remote candidate is using.
                 </p>
+                <div class="note">
+                  This stat only tells you about the network interface used by
+                  the first "hop"; it's possible that a connection will be
+                  bottlenecked by another type of network. For example, when
+                  using Wi-Fi tethering, the <code>networkType</code> of the
+                  relevant candidate would be <code>"wifi"</code>, even when
+                  the next hop is over a cellular connection.
+                </div>
               </dd>
               <dt>
                 <dfn><code>ip</code></dfn> of type <span class=
