@@ -12,4 +12,4 @@ To run the tests defined for the repo, do the following:
 * make check
 
 To produce a consistently formatted file:
-* make tidy (but note bug [#263](https://github.com/w3c/webrtc-stats/issues/263))
+* make tidy
