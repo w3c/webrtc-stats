@@ -192,6 +192,37 @@
         a local clock.
       </p>
       <section>
+      <h3>Additional RTCStats attributes that are defined in this specification</h3>
+      </p>
+      <pre class="idl">
+        partial dictionary RTCStats {
+        boolean objectDeleted = false;
+        };
+      </pre>
+      <p>The following housekeeping objects are added to <code>RTCStats</code>:
+      </p>
+      <dl data-link-for="RTCStats" data-dfn-for="RTCStats">
+        <dt>
+          <dfn><code>objectDeleted</code></dfn>
+        </dt>
+        <dd>
+          <p>
+            Indicates whether the monitored object still exists. Stats objects that no longer
+            correspond to a monitored object will have "objectDeleted" set to true, while stats objects
+            that correspond to existing monitored objecs will not have the "objectDeleted" member.
+          </p>
+          <p>
+             When a monitored object is destroyed, a final stats object is produced, carrying the
+             values current at the time of destruction. This object will be returned, with a timestamp
+             reflecting the time of destruction, whenever getStats() is called, as long as the
+             PeerConnection exists. This is important in order to report consistently on short-lived
+             objects and to be able to consistently report totals over the lifetime of a
+             PeerConnection.
+          </p>
+        </dd>
+      </dl>
+    </section>
+      <section>
         <h3>
           Guidelines for design of stats objects
         </h3>
