@@ -224,6 +224,11 @@
           where each DOMString is a <a>stats object reference</a>.
         </p>
         <p>
+          If the natural name for a stats value would end in "id" (such as when the stats value
+          is an in-protocol identifier for the monitored object), the recommended practice is to
+          let the name end in "identifier", such as "ssrcIdentifier" or "dataChannelIdentifier".
+        </p>
+        <p>
           Stats are sampled by Javascript. In general, an application will not have overall control
           over how often stats are sampled, and the implementation cannot know what the intended
           use of the stats is. There is, by design, no control surface for the application to
