@@ -8,7 +8,6 @@ To see the editors' work-in-progress copy, use http://rawgit.com/w3c/webrtc-stat
 To run the tests defined for the repo, do the following:
 * make clean
 * make setup
-* make clean
 * make update
 * make check
 
