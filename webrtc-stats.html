@@ -1974,7 +1974,7 @@ enum RTCStatsType {
                   It is the total time each audio sample or video frame takes from the time it is
                   received and enters the jitter buffer to the time it exits the jitter buffer. This
                   increases upon samples/frames exiting, having completed their time in the buffer
-                  (and increasing <code>jitterBufferOutput</code>). The average jitter buffer delay
+                  (incrementing <code>jitterBufferOutput</code>). The average jitter buffer delay
                   can be calculated by dividing the <code>jitterBufferDelay</code> with the
                   <code>jitterBufferOutput</code>.
                 </p>
@@ -1986,7 +1986,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The total number of audio samples or video frames that have come out of the jitter
-                  buffer (increasing the <code>jitterBufferDelay</code>).
+                  buffer (increasing <code>jitterBufferDelay</code>).
                 </p>
               </dd>
               <dt>
