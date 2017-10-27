@@ -666,7 +666,7 @@ enum RTCStatsType {
                 <p>
                   The definition of QP value depends on the <a>codec</a>; for VP8, the QP value is
                   the value carried in the frame header as the syntax element "y_ac_qi", and
-                  defined in [[RFC6386]] section 19.2. Its range is 0..127. 
+                  defined in [[RFC6386]] section 19.2. Its range is 0..127.
                   <!-- Need appropriate references for VP9 and H.264 -->
                 </p>
                 <p>
@@ -1216,6 +1216,10 @@ enum RTCStatsType {
              unsigned long        framesEncoded;
              double               totalEncodeTime;
              double               averageRTCPInterval;
+             RTCQualityLimitationReason  qualityLimitationReason;
+             double                      qualityCpuLimitationDuration;
+             double                      qualityBandwidthLimitationDuration;
+             double                      qualityTotalLimitationDuration;
 };</pre>
           <section>
             <h2>
@@ -1294,8 +1298,113 @@ enum RTCStatsType {
                   CNAME item.
                 </p>
               </dd>
+              <dt>
+                <dfn><code>qualityLimitationReason</code></dfn> of type <span class=
+                "idlMemberType"><a>RTCQualityLimitationReason</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. The current reason for limiting the resolution and/or
+                  framerate, or "none" if not limited.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>qualityCpuLimitationDuration</code></dfn> of type <span class=
+                "idlMemberType"><a>double</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The total time in seconds that this stream has spent being "cpu" limited.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>qualityBandwidthLimitationDuration</code></dfn> of type <span class=
+                "idlMemberType"><a>double</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The total time in seconds that this stream has spent being "bandwidth" limited.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>qualityTotalLimitationDuration</code></dfn> of type <span class=
+                "idlMemberType"><a>double</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The total time in seconds that this stream has spent being limited (that
+                  <code>qualityLimitationReason</code> has had a value other than "none"). The time
+                  spent being limited by reason "other" can be calculated as
+                  <code>qualityTotalLimitationDuration - qualityCpuLimitationDuration -
+                  qualityBandwidthLimitationDuration</code>.
+                </p>
+              </dd>
             </dl>
           </section>
+        </div>
+      </section>
+      <section>
+        <h3>
+          <dfn>RTCQualityLimitationReason</dfn> enum
+        </h3>
+        <div>
+          <pre class="idl">enum RTCQualityLimitationReason {
+            "none",
+            "cpu",
+            "bandwidth",
+            "other",
+          };</pre>
+          <table data-link-for="RTCQualityLimitationReason" data-dfn-for="RTCQualityLimitationReason" class="simple">
+            <tbody>
+              <tr>
+                <th colspan="2">
+                  Enumeration description
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  <dfn><code>none</code></dfn>
+                </td>
+                <td>
+                  <p>
+                    The resolution and/or framerate is not limited.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <dfn><code>cpu</code></dfn>
+                </td>
+                <td>
+                  <p>
+                    The resolution and/or framerate is primarily limited due to CPU load.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <dfn><code>bandwidth</code></dfn>
+                </td>
+                <td>
+                  <p>
+                    The resolution and/or framerate is primarily limited due to by bandwidth
+                    or packet loss.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <dfn><code>other</code></dfn>
+                </td>
+                <td>
+                  <p>
+                    The resolution and/or framerate is primarily limited for a reason other
+                    than the above.
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
       <section id="remoteoutboundrtpstats-dict*">
@@ -2959,7 +3068,7 @@ function processStats() {
       </h3>
       <p>
         Some stats identifiers may expose personally identifiable information, for example the IP
-        addresses of the participating endpoints when a TURN relay is not used. 
+        addresses of the participating endpoints when a TURN relay is not used.
         <!-- TODO: add guidance on how to not expose this information? -->
       </p>
     </section>
