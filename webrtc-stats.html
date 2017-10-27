@@ -666,7 +666,7 @@ enum RTCStatsType {
                 <p>
                   The definition of QP value depends on the <a>codec</a>; for VP8, the QP value is
                   the value carried in the frame header as the syntax element "y_ac_qi", and
-                  defined in [[RFC6386]] section 19.2. Its range is 0..127. 
+                  defined in [[RFC6386]] section 19.2. Its range is 0..127.
                   <!-- Need appropriate references for VP9 and H.264 -->
                 </p>
                 <p>
@@ -838,7 +838,7 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCReceivedRTPStreamStats : RTCRTPStreamStats {
              unsigned long      packetsReceived;
              unsigned long long bytesReceived;
-             unsigned long      packetsLost;
+             long               packetsLost;
              double             jitter;
              double             fractionLost;
              unsigned long      packetsDiscarded;
@@ -880,13 +880,14 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>packetsLost</code></dfn> of type <span class="idlMemberType"><a>unsigned
-                long</a></span>
+                <dfn><code>packetsLost</code></dfn> of type <span class="idlMemberType"><a>long</a>
+                </span>
               </dt>
               <dd>
                 <p>
                   Total number of RTP packets lost for this SSRC. Calculated as defined in
-                  [[!RFC3550]] section 6.4.1.
+                  [[!RFC3550]] section 6.4.1. Note that because of how this is estimated, it can be
+                  negative if more packets are received than sent.
                 </p>
               </dd>
               <dt>
@@ -2959,7 +2960,7 @@ function processStats() {
       </h3>
       <p>
         Some stats identifiers may expose personally identifiable information, for example the IP
-        addresses of the participating endpoints when a TURN relay is not used. 
+        addresses of the participating endpoints when a TURN relay is not used.
         <!-- TODO: add guidance on how to not expose this information? -->
       </p>
     </section>
