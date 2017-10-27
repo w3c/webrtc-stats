@@ -1216,10 +1216,9 @@ enum RTCStatsType {
              unsigned long        framesEncoded;
              double               totalEncodeTime;
              double               averageRTCPInterval;
-             RTCQualityLimitationReason  qualityLimitationReason;
-             double                      qualityCpuLimitationDuration;
-             double                      qualityBandwidthLimitationDuration;
-             double                      qualityTotalLimitationDuration;
+             RTCQualityLimitationReason                 qualityLimitationReason;
+             record&lt;RTCQualityLimitationReason, double&gt; qualityLimitationDurations;
+             double                                     qualityTotalLimitationDuration;
 };</pre>
           <section>
             <h2>
@@ -1309,21 +1308,14 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>qualityCpuLimitationDuration</code></dfn> of type <span class=
-                "idlMemberType"><a>double</a></span>
+                <dfn><code>qualityLimitationDurations</code></dfn> of type <span class=
+                "idlMemberType"><a>record&lt;RTCQualityLimitationReason, double&gt;</a></span>
               </dt>
               <dd>
                 <p>
-                  The total time in seconds that this stream has spent being "cpu" limited.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>qualityBandwidthLimitationDuration</code></dfn> of type <span class=
-                "idlMemberType"><a>double</a></span>
-              </dt>
-              <dd>
-                <p>
-                  The total time in seconds that this stream has spent being "bandwidth" limited.
+                  A record of the total time, in seconds, that this stream has spent being
+                  resolution and/or framerate limited for the reason specified by the record's
+                  key.
                 </p>
               </dd>
               <dt>
@@ -1332,11 +1324,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The total time in seconds that this stream has spent being limited (that
-                  <code>qualityLimitationReason</code> has had a value other than "none"). The time
-                  spent being limited by reason "other" can be calculated as
-                  <code>qualityTotalLimitationDuration - qualityCpuLimitationDuration -
-                  qualityBandwidthLimitationDuration</code>.
+                  The total time, in seconds, that this stream has spent being resolution and/or
+                  framerate limited (that <code>qualityLimitationReason</code> has had a value
+                  other than "none").
                 </p>
               </dd>
             </dl>
