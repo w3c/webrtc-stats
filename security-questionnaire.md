@@ -20,7 +20,7 @@ Not beyond what is already exposed by the [WebRTC 1.0] specification itself
 
 The properties exposed by `RTCReceivedRTPStreamStats`, `RTCRemoteInboundRTPStreamStats`, `RTCSentRTPStreamStats`, `RTCOutboundRTPStreamStats`, `RTCRemoteOutboundRTPStreamStats`, `RTCIceCandidatePairStats`, `RTCTransportStats` expose network-layer data not currently available to the JavaScript layer.
 
-In addition, the behavior of WebRTC Stats (in particular `RTCMediaStreamTrackStats`) on [isolated media streams] (which aren't otherwise available to the JavaScript layer) is currently ill-defined.
+In addition, we expect that the behavior of WebRTC Stats (in particular `RTCMediaStreamTrackStats`) on [isolated media streams] (which aren't otherwise available to the JavaScript layer) will need further work (see https://github.com/w3c/webrtc-pc/issues/1613).
 
 ## [3.6 Does this specification enable new script execution/loading mechanisms?]
 

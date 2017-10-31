@@ -2962,7 +2962,8 @@ function processStats() {
       <p>In addition, the properties exposed by <a>RTCReceivedRTPStreamStats</a>, <a>RTCRemoteInboundRTPStreamStats</a>, <a>RTCSentRTPStreamStats</a>, <a>RTCOutboundRTPStreamStats</a>, <a>RTCRemoteOutboundRTPStreamStats</a>, <a>RTCIceCandidatePairStats</a>, <a>RTCTransportStats</a> expose network-layer data not currently available to the JavaScript layer.</p>
       <p>Beyond the risks associated with revealing <a data-cite="WEBRTC#revealing-ip-addresses">IP addresses as discussed in the WebRTC 1.0 specification</a>, some combination of the network properties uniquely exposed by this specification can be correlated with  location.</p>
       <p>For instance, the round-trip time exposed in <a>RTCRemoteInboundRTPStreamStats</a> can give some coarse indication on how far aparts the peers are located, and thus, if one of the peer's location is known, this may reveal information about the other peer.</p>
-      <p class="issue">TODO: Clarify impact of <a>RTCMediaStreamTrackStats</a> on <a data-cite="WEBRTC#isolated-media-streams">isolated media streams</a>.</p>
+      <p>When applied to isolated streams, media metrics may allow an application to infer some characteristics of the isolated stream, such as if anyone is speaking (by watching the <code>volume</code> statistic).</p>
+      <p class="issue">TODO: Consider whether certain stats need to be not reported on <a data-cite="WEBRTC#isolated-media-streams">isolated media streams</a>.</p>
     </section>
     <section id="change-log*">
       <h2>
