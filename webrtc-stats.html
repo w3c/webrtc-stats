@@ -216,7 +216,7 @@
         </ul>
         <p>
           The new members of the stats dictionary need to be named according to standard practice
-          (camelCase).
+          (camelCase), as per [[API-DESIGN-PRINCIPLES]].
         </p>
         <p>
           Names ending in "Id" (such as "transportId") are always a <a>stats object reference</a>;
@@ -224,9 +224,9 @@
           where each DOMString is a <a>stats object reference</a>.
         </p>
         <p>
-          If the natural name for a stats value would end in "id" (such as when the stats value
-          is an in-protocol identifier for the monitored object), the recommended practice is to
-          let the name end in "identifier", such as "ssrcIdentifier" or "dataChannelIdentifier".
+          If the natural name for a stats value would end in "id" (such as when the stats value is
+          an in-protocol identifier for the monitored object), the recommended practice is to let
+          the name end in "identifier", such as "ssrcIdentifier" or "dataChannelIdentifier".
         </p>
         <p>
           Stats are sampled by Javascript. In general, an application will not have overall control
