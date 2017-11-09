@@ -2242,6 +2242,7 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCIceCandidateStats : RTCStats {
              DOMString                transportId;
              boolean                  isRemote;
+             RTCNetworkType           networkType;
              DOMString                ip;
              long                     port;
              DOMString                protocol;
@@ -2276,6 +2277,27 @@ enum RTCStatsType {
                   <code>false</code> indicates that this represents a local candidate;
                   <code>true</code> indicates that this represents a remote candidate.
                 </p>
+              </dd>
+              <dt>
+                <dfn><code>networkType</code></dfn> of type <span class=
+                "idlMemberType"><a>RTCNetworkType</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the type of network interface used by the base of
+                  a local candidate (the address the ICE agent sends from).
+                  Only present for local candidates; without an extension to
+                  the ICE standard, it's not possible to know what type of
+                  network interface a remote candidate is using.
+                </p>
+                <div class="note">
+                  This stat only tells you about the network interface used by
+                  the first "hop"; it's possible that a connection will be
+                  bottlenecked by another type of network. For example, when
+                  using Wi-Fi tethering, the <code>networkType</code> of the
+                  relevant candidate would be <code>"wifi"</code>, even when
+                  the next hop is over a cellular connection.
+                </div>
               </dd>
               <dt>
                 <dfn><code>ip</code></dfn> of type <span class=
@@ -2365,6 +2387,105 @@ enum RTCStatsType {
             </dl>
           </section>
         </div>
+        <section>
+          <h3>
+            <dfn>RTCNetworkType</dfn> enum
+          </h3>
+          <div>
+            <pre class="idl">
+enum RTCNetworkType {
+    "bluetooth",
+    "cellular",
+    "ethernet",
+    "wifi",
+    "wimax",
+    "other",
+    "unknown"
+};</pre>
+            <table data-link-for="RTCNetworkType" data-dfn-for=
+            "RTCNetworkType" class="simple">
+              <tbody>
+                <tr>
+                  <th colspan="2">
+                    Enumeration description
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <dfn><code>bluetooth</code></dfn>
+                  </td>
+                  <td>
+                    <p>
+                      A Bluetooth connection.
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <dfn><code>cellular</code></dfn>
+                  </td>
+                  <td>
+                    <p>
+                      A cellular connection (e.g., EDGE, HSPA, LTE, etc.).
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <dfn><code>ethernet</code></dfn>
+                  </td>
+                  <td>
+                    <p>
+                      An Ethernet connection.
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <dfn><code>wifi</code></dfn>
+                  </td>
+                  <td>
+                    <p>
+                      A Wi-Fi connection.
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <dfn><code>wimax</code></dfn>
+                  </td>
+                  <td>
+                    <p>
+                      A WiMAX connection.
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <dfn><code>other</code></dfn>
+                  </td>
+                  <td>
+                    <p>
+                      The connection type is known, but isn't one of the
+                      enumerated types.
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <dfn><code>unknown</code></dfn>
+                  </td>
+                  <td>
+                    <p>
+                      The user agent is unable (or unwilling) to determine the
+                      underlying connection technology.
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
       </section>
       <section id="candidatepair-dict*">
         <h3>
