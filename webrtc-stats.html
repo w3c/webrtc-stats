@@ -2286,8 +2286,8 @@ enum RTCStatsType {
                 <p>
                   Represents the type of network interface used by the base of
                   a local candidate (the address the ICE agent sends from).
-                  Only present for local candidates; without an extension to
-                  the ICE standard, it's not possible to know what type of
+                  Only present for local candidates; it's not possible to know
+                  what type of
                   network interface a remote candidate is using.
                 </p>
                 <div class="note">
@@ -2399,7 +2399,7 @@ enum RTCNetworkType {
     "ethernet",
     "wifi",
     "wimax",
-    "other",
+    "vpn",
     "unknown"
 };</pre>
             <table data-link-for="RTCNetworkType" data-dfn-for=
@@ -2462,12 +2462,12 @@ enum RTCNetworkType {
                 </tr>
                 <tr>
                   <td>
-                    <dfn><code>other</code></dfn>
+                    <dfn><code>vpn</code></dfn>
                   </td>
                   <td>
                     <p>
-                      The connection type is known, but isn't one of the
-                      enumerated types.
+                      The connection runs over a VPN. The underlying network
+                      type is not available.
                     </p>
                   </td>
                 </tr>
@@ -2477,7 +2477,7 @@ enum RTCNetworkType {
                   </td>
                   <td>
                     <p>
-                      The user agent is unable (or unwilling) to determine the
+                      The user agent is unable or unwilling to identify the
                       underlying connection technology.
                     </p>
                   </td>
