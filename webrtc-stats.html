@@ -280,6 +280,25 @@
           PeerConnection.
         </p>
       </section>
+      <section>
+        <h3>
+          Guidelines for getStats() results caching/throttling
+        </h3>
+        <p>
+          A call to getStats() touches many components of WebRTC and may take significant time to
+          execute. The implementation may or may not utilize caching or throttling of getStats()
+          calls for performance benefits, however any implementation must adhere to the following:
+        </p>
+        <p>
+          When the state of the PeerConnection visibly changes as a result of an API call, a
+          promise resolving or an event firing, subsequent new getStats() calls must return up-to-date
+          dictionaries for the affected objects. For example, if a track is added with addTrack()
+          subsequent getStats() calls must resolve with a corresponding RTCMediaStreamTrackStats
+          object. If you call setRemoteDescription() removing a remote track, upon the promise
+          resolving or an associated event (stream's onremovetrack or track's onmute) firing,
+          calling getStats() must resolve with an up-to-date RTCMediaStreamTrackStats object.
+        </p>
+      </section>
     </section><!-- VS: getStats() remains in base spec! -->
     <section>
       <h2>
