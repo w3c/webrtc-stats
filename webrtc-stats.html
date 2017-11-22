@@ -3096,13 +3096,14 @@ function processStats() {
     </section>
     <section>
       <h3>
-        Security Considerations
+        Security and Privacy Considerations
       </h3>
-      <p>
-        Some stats identifiers may expose personally identifiable information, for example the IP
-        addresses of the participating endpoints when a TURN relay is not used.
-        <!-- TODO: add guidance on how to not expose this information? -->
-      </p>
+      <p>The data exposed by WebRTC Statistics include most of the media and network data also exposed by [[!GETUSERMEDIA]] and [[!WEBRTC]] - as such, all the privacy and security considerations of these specifications related to data exposure apply as well to this specifciation.</p>
+      <p>In addition, the properties exposed by <a>RTCReceivedRTPStreamStats</a>, <a>RTCRemoteInboundRTPStreamStats</a>, <a>RTCSentRTPStreamStats</a>, <a>RTCOutboundRTPStreamStats</a>, <a>RTCRemoteOutboundRTPStreamStats</a>, <a>RTCIceCandidatePairStats</a>, <a>RTCTransportStats</a> expose network-layer data not currently available to the JavaScript layer.</p>
+      <p>Beyond the risks associated with revealing <a data-cite="WEBRTC#revealing-ip-addresses">IP addresses as discussed in the WebRTC 1.0 specification</a>, some combination of the network properties uniquely exposed by this specification can be correlated with  location.</p>
+      <p>For instance, the round-trip time exposed in <a>RTCRemoteInboundRTPStreamStats</a> can give some coarse indication on how far aparts the peers are located, and thus, if one of the peer's location is known, this may reveal information about the other peer.</p>
+      <p>When applied to isolated streams, media metrics may allow an application to infer some characteristics of the isolated stream, such as if anyone is speaking (by watching the <code>volume</code> statistic).</p>
+      <p class="issue">TODO: Consider whether certain stats need to be not reported on <a data-cite="WEBRTC#isolated-media-streams">isolated media streams</a>.</p>
     </section>
     <section id="change-log*">
       <h2>
