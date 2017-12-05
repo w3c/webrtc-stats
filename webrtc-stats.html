@@ -1315,7 +1315,7 @@ enum RTCStatsType {
                 <p>
                   A record of the total time, in seconds, that this stream has spent being
                   resolution and/or framerate limited for the reason specified by the record's
-                  key.
+                  key. The record includes a mapping for all RTCQualityLimitationReason types.
                 </p>
               </dd>
               <dt>
@@ -1377,8 +1377,10 @@ enum RTCStatsType {
                 </td>
                 <td>
                   <p>
-                    The resolution and/or framerate is primarily limited due to by bandwidth
-                    or packet loss.
+                    The resolution and/or framerate is primarily limited due to congestion
+                    cues during bandwidth estimation. Typical, congestion control algorithms
+                    use inter-arrival time, round-trip time, packet or other congestion cues
+                    to perform bandwidth estimation.
                   </p>
                 </td>
               </tr>
