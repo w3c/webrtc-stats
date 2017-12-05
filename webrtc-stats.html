@@ -216,7 +216,7 @@
         </ul>
         <p>
           The new members of the stats dictionary need to be named according to standard practice
-          (camelCase).
+          (camelCase), as per [[API-DESIGN-PRINCIPLES]].
         </p>
         <p>
           Names ending in "Id" (such as "transportId") are always a <a>stats object reference</a>;
@@ -224,9 +224,9 @@
           where each DOMString is a <a>stats object reference</a>.
         </p>
         <p>
-          If the natural name for a stats value would end in "id" (such as when the stats value
-          is an in-protocol identifier for the monitored object), the recommended practice is to
-          let the name end in "identifier", such as "ssrcIdentifier" or "dataChannelIdentifier".
+          If the natural name for a stats value would end in "id" (such as when the stats value is
+          an in-protocol identifier for the monitored object), the recommended practice is to let
+          the name end in "identifier", such as "ssrcIdentifier" or "dataChannelIdentifier".
         </p>
         <p>
           Stats are sampled by Javascript. In general, an application will not have overall control
@@ -278,6 +278,25 @@
           PeerConnection exists. This is important in order to report consistently on short-lived
           objects and to be able to consistently report totals over the lifetime of a
           PeerConnection.
+        </p>
+      </section>
+      <section>
+        <h3>
+          Guidelines for getStats() results caching/throttling
+        </h3>
+        <p>
+          A call to getStats() touches many components of WebRTC and may take significant time to
+          execute. The implementation may or may not utilize caching or throttling of getStats()
+          calls for performance benefits, however any implementation must adhere to the following:
+        </p>
+        <p>
+          When the state of the PeerConnection visibly changes as a result of an API call, a
+          promise resolving or an event firing, subsequent new getStats() calls must return up-to-date
+          dictionaries for the affected objects. For example, if a track is added with addTrack()
+          subsequent getStats() calls must resolve with a corresponding RTCMediaStreamTrackStats
+          object. If you call setRemoteDescription() removing a remote track, upon the promise
+          resolving or an associated event (stream's onremovetrack or track's onmute) firing,
+          calling getStats() must resolve with an up-to-date RTCMediaStreamTrackStats object.
         </p>
       </section>
     </section><!-- VS: getStats() remains in base spec! -->
@@ -838,7 +857,7 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCReceivedRTPStreamStats : RTCRTPStreamStats {
              unsigned long      packetsReceived;
              unsigned long long bytesReceived;
-             unsigned long      packetsLost;
+             long               packetsLost;
              double             jitter;
              double             fractionLost;
              unsigned long      packetsDiscarded;
@@ -880,13 +899,14 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>packetsLost</code></dfn> of type <span class="idlMemberType"><a>unsigned
-                long</a></span>
+                <dfn><code>packetsLost</code></dfn> of type <span class="idlMemberType"><a>long</a>
+                </span>
               </dt>
               <dd>
                 <p>
                   Total number of RTP packets lost for this SSRC. Calculated as defined in
-                  [[!RFC3550]] section 6.4.1.
+                  [[!RFC3550]] section 6.4.1. Note that because of how this is estimated, it can be
+                  negative if more packets are received than sent.
                 </p>
               </dd>
               <dt>
@@ -1971,12 +1991,12 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  It is the total time each audio sample or video frame takes from the time it is
-                  received and enters the jitter buffer to the time it exits the jitter buffer. This
-                  increases upon samples/frames exiting, having completed their time in the buffer
-                  (incrementing <code>jitterBufferOutput</code>). The average jitter buffer delay
-                  can be calculated by dividing the <code>jitterBufferDelay</code> with the
-                  <code>jitterBufferOutput</code>.
+                  It is the sum of the time, in seconds, each audio sample or video frame takes from
+                  the time it is received and enters the jitter buffer to the time it exits the
+                  jitter buffer. This increases upon samples/frames exiting, having completed their
+                  time in the buffer (incrementing <code>jitterBufferOutput</code>). The average
+                  jitter buffer delay can be calculated by dividing the <code>jitterBufferDelay</code>
+                  with the <code>jitterBufferOutput</code>.
                 </p>
               </dd>
               <dt>
@@ -2251,6 +2271,7 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCIceCandidateStats : RTCStats {
              DOMString                transportId;
              boolean                  isRemote;
+             RTCNetworkType           networkType;
              DOMString                ip;
              long                     port;
              DOMString                protocol;
@@ -2285,6 +2306,27 @@ enum RTCStatsType {
                   <code>false</code> indicates that this represents a local candidate;
                   <code>true</code> indicates that this represents a remote candidate.
                 </p>
+              </dd>
+              <dt>
+                <dfn><code>networkType</code></dfn> of type <span class=
+                "idlMemberType"><a>RTCNetworkType</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the type of network interface used by the base of
+                  a local candidate (the address the ICE agent sends from).
+                  Only present for local candidates; it's not possible to know
+                  what type of
+                  network interface a remote candidate is using.
+                </p>
+                <div class="note">
+                  This stat only tells you about the network interface used by
+                  the first "hop"; it's possible that a connection will be
+                  bottlenecked by another type of network. For example, when
+                  using Wi-Fi tethering, the <code>networkType</code> of the
+                  relevant candidate would be <code>"wifi"</code>, even when
+                  the next hop is over a cellular connection.
+                </div>
               </dd>
               <dt>
                 <dfn><code>ip</code></dfn> of type <span class=
@@ -2374,6 +2416,105 @@ enum RTCStatsType {
             </dl>
           </section>
         </div>
+        <section>
+          <h3>
+            <dfn>RTCNetworkType</dfn> enum
+          </h3>
+          <div>
+            <pre class="idl">
+enum RTCNetworkType {
+    "bluetooth",
+    "cellular",
+    "ethernet",
+    "wifi",
+    "wimax",
+    "vpn",
+    "unknown"
+};</pre>
+            <table data-link-for="RTCNetworkType" data-dfn-for=
+            "RTCNetworkType" class="simple">
+              <tbody>
+                <tr>
+                  <th colspan="2">
+                    Enumeration description
+                  </th>
+                </tr>
+                <tr>
+                  <td>
+                    <dfn><code>bluetooth</code></dfn>
+                  </td>
+                  <td>
+                    <p>
+                      A Bluetooth connection.
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <dfn><code>cellular</code></dfn>
+                  </td>
+                  <td>
+                    <p>
+                      A cellular connection (e.g., EDGE, HSPA, LTE, etc.).
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <dfn><code>ethernet</code></dfn>
+                  </td>
+                  <td>
+                    <p>
+                      An Ethernet connection.
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <dfn><code>wifi</code></dfn>
+                  </td>
+                  <td>
+                    <p>
+                      A Wi-Fi connection.
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <dfn><code>wimax</code></dfn>
+                  </td>
+                  <td>
+                    <p>
+                      A WiMAX connection.
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <dfn><code>vpn</code></dfn>
+                  </td>
+                  <td>
+                    <p>
+                      The connection runs over a VPN. The underlying network
+                      type is not available.
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <dfn><code>unknown</code></dfn>
+                  </td>
+                  <td>
+                    <p>
+                      The user agent is unable or unwilling to identify the
+                      underlying connection technology.
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
       </section>
       <section id="candidatepair-dict*">
         <h3>
@@ -2965,13 +3106,14 @@ function processStats() {
     </section>
     <section>
       <h3>
-        Security Considerations
+        Security and Privacy Considerations
       </h3>
-      <p>
-        Some stats identifiers may expose personally identifiable information, for example the IP
-        addresses of the participating endpoints when a TURN relay is not used.
-        <!-- TODO: add guidance on how to not expose this information? -->
-      </p>
+      <p>The data exposed by WebRTC Statistics include most of the media and network data also exposed by [[!GETUSERMEDIA]] and [[!WEBRTC]] - as such, all the privacy and security considerations of these specifications related to data exposure apply as well to this specifciation.</p>
+      <p>In addition, the properties exposed by <a>RTCReceivedRTPStreamStats</a>, <a>RTCRemoteInboundRTPStreamStats</a>, <a>RTCSentRTPStreamStats</a>, <a>RTCOutboundRTPStreamStats</a>, <a>RTCRemoteOutboundRTPStreamStats</a>, <a>RTCIceCandidatePairStats</a>, <a>RTCTransportStats</a> expose network-layer data not currently available to the JavaScript layer.</p>
+      <p>Beyond the risks associated with revealing <a data-cite="WEBRTC#revealing-ip-addresses">IP addresses as discussed in the WebRTC 1.0 specification</a>, some combination of the network properties uniquely exposed by this specification can be correlated with  location.</p>
+      <p>For instance, the round-trip time exposed in <a>RTCRemoteInboundRTPStreamStats</a> can give some coarse indication on how far aparts the peers are located, and thus, if one of the peer's location is known, this may reveal information about the other peer.</p>
+      <p>When applied to isolated streams, media metrics may allow an application to infer some characteristics of the isolated stream, such as if anyone is speaking (by watching the <code>volume</code> statistic).</p>
+      <p class="issue">TODO: Consider whether certain stats need to be not reported on <a data-cite="WEBRTC#isolated-media-streams">isolated media streams</a>.</p>
     </section>
     <section id="change-log*">
       <h2>
