@@ -1312,9 +1312,13 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  A record of the total time, in seconds, that this stream has spent being
-                  resolution and/or framerate limited for the reason specified by the record's
-                  key. The record includes a mapping for all RTCQualityLimitationReason types.
+                  Only valid for video. A record of the total time, in seconds, that this stream
+                  has spent in each quality limitation state. The record includes a mapping for
+                  all <a>RTCQualityLimitationReason</a> types, including "none".
+                </p>
+                <p>
+                  The sum of all entries minus <code>qualityLimidationDurations["none"]</code>
+                  gives the total time that the stream has been limited.
                 </p>
               </dd>
             </dl>
