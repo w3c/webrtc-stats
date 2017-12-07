@@ -1851,16 +1851,16 @@ enum RTCStatsType {
         </p>
         <p>
           It appears in the stats as soon as it is attached (via addTrack, via addTransceiver, via
-          ReplaceTrack on an RTPSender object).
+          replaceTrack on an RTCRtpSender object).
         </p>
         <p>
-          If a video track is attached twice (via addTransceiver or ReplaceTrack), there will
+          If a video track is attached twice (via addTransceiver or replaceTrack), there will
           be two RTCLocalVideoStreamTrackStats objects, one for each attachment. They will have the same
           "trackIdentifier" attribute, but different "id" attributes.
         </p>
         <p>
           If the track is detached from the PeerConnection (via removeTrack or via replaceTrack),
-          it continues to appear, but with the "detached" member set to True.
+          it continues to appear, but with the "detached" member set to <code>true</code>.
         </p>
         <div>
           <pre class="idl">dictionary RTCLocalVideoStreamTrackStats : RTCVideoStreamTrackStats {
@@ -1921,7 +1921,7 @@ enum RTCStatsType {
           video MediaStreamTrack coming from a PeerConnection object for which one calls getStats.
         </p>
         <p>
-          It appears in the stats as soon as it is created on an RTPReceiver object.
+          It appears in the stats as soon as it is created on an RTCRtpReceiver object.
         </p>
         <div>
           <pre class="idl">dictionary RTCRemoteVideoStreamTrackStats : RTCVideoStreamTrackStats {
@@ -2180,16 +2180,16 @@ enum RTCStatsType {
         </p>
         <p>
           It appears in the stats as soon as it is attached (via addTrack, via addTransceiver, via
-          ReplaceTrack on an RTPSender object).
+          replaceTrack on an RTCRtpSender object).
         </p>
         <p>
-          If an audio track is attached twice (via addTransceiver or ReplaceTrack), there will
+          If an audio track is attached twice (via addTransceiver or replaceTrack), there will
           be two RTCLocalAudioStreamTrackStats objects, one for each attachment. They will have the same
           "trackIdentifier" attribute, but different "id" attributes.
         </p>
         <p>
           If the track is detached from the PeerConnection (via removeTrack or via replaceTrack),
-          it continues to appear, but with the "detached" member set to True.
+          it continues to appear, but with the "detached" member set to <code>true</code>.
         </p>
         <div>
           <pre class="idl">dictionary RTCLocalAudioStreamTrackStats : RTCAudioStreamTrackStats {
@@ -2245,7 +2245,7 @@ enum RTCStatsType {
           audio MediaStreamTrack coming from a PeerConnection object for which one calls getStats.
         </p>
         <p>
-          It appears in the stats as soon as it is created on an RTPReceiver object.
+          It appears in the stats as soon as it is created on an RTCRtpReceiver object.
         </p>
         <div>
           <pre class="idl">dictionary RTCRemoteAudioStreamTrackStats : RTCAudioStreamTrackStats {
