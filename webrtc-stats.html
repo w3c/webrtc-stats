@@ -1236,6 +1236,8 @@ enum RTCStatsType {
              unsigned long        framesEncoded;
              double               totalEncodeTime;
              double               averageRTCPInterval;
+             RTCQualityLimitationReason                 qualityLimitationReason;
+             record&lt;RTCQualityLimitationReason, double&gt; qualityLimitationDurations;
 };</pre>
           <section>
             <h2>
@@ -1314,8 +1316,99 @@ enum RTCStatsType {
                   CNAME item.
                 </p>
               </dd>
+              <dt>
+                <dfn><code>qualityLimitationReason</code></dfn> of type <span class=
+                "idlMemberType"><a>RTCQualityLimitationReason</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. The current reason for limiting the resolution and/or
+                  framerate, or "none" if not limited.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>qualityLimitationDurations</code></dfn> of type <span class=
+                "idlMemberType"><a>record&lt;RTCQualityLimitationReason, double&gt;</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. A record of the total time, in seconds, that this stream
+                  has spent in each quality limitation state. The record includes a mapping for
+                  all <a>RTCQualityLimitationReason</a> types, including "none".
+                </p>
+                <p>
+                  The sum of all entries minus <code>qualityLimidationDurations["none"]</code>
+                  gives the total time that the stream has been limited.
+                </p>
+              </dd>
             </dl>
           </section>
+        </div>
+      </section>
+      <section>
+        <h3>
+          <dfn>RTCQualityLimitationReason</dfn> enum
+        </h3>
+        <div>
+          <pre class="idl">enum RTCQualityLimitationReason {
+            "none",
+            "cpu",
+            "bandwidth",
+            "other",
+          };</pre>
+          <table data-link-for="RTCQualityLimitationReason" data-dfn-for="RTCQualityLimitationReason" class="simple">
+            <tbody>
+              <tr>
+                <th colspan="2">
+                  Enumeration description
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  <dfn><code>none</code></dfn>
+                </td>
+                <td>
+                  <p>
+                    The resolution and/or framerate is not limited.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <dfn><code>cpu</code></dfn>
+                </td>
+                <td>
+                  <p>
+                    The resolution and/or framerate is primarily limited due to CPU load.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <dfn><code>bandwidth</code></dfn>
+                </td>
+                <td>
+                  <p>
+                    The resolution and/or framerate is primarily limited due to congestion
+                    cues during bandwidth estimation. Typical, congestion control algorithms
+                    use inter-arrival time, round-trip time, packet or other congestion cues
+                    to perform bandwidth estimation.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <dfn><code>other</code></dfn>
+                </td>
+                <td>
+                  <p>
+                    The resolution and/or framerate is primarily limited for a reason other
+                    than the above.
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
       <section id="remoteoutboundrtpstats-dict*">
