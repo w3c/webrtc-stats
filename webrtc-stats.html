@@ -2151,6 +2151,8 @@ enum RTCStatsType {
              DOMString             selectedCandidatePairId;
              DOMString             localCertificateId;
              DOMString             remoteCertificateId;
+             DOMString             dtlsCipher;
+             DOMString             srtpCipher;
 };</pre>
           <section>
             <h2>
@@ -2253,6 +2255,31 @@ enum RTCStatsType {
               <dd>
                 <p>
                   For components where DTLS is negotiated, give remote certificate.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>dtlsCipher</code></dfn> of
+                type <span class="idlMemberType"><a>DOMString</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Descriptive name of the cipher suite used for the DTLS
+                  transport, as defined in the "Description" column of
+                  the IANA cipher
+                  suite registry [[!IANA-TLS-CIPHERS]].
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>srtpCipher</code></dfn> of
+                type <span class="idlMemberType"><a>DOMString</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Descriptive name of the protection profile used for
+                  the SRTP transport, as defined in the "Profile"
+                  column of the IANA DTLS-SRTP protection profile
+                  registry [[!IANA-DTLS-SRTP]]
+                  and described further in [[RFC5764]].
                 </p>
               </dd>
             </dl>
