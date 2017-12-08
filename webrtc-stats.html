@@ -1616,6 +1616,7 @@ enum RTCStatsType {
              unsigned long long  concealedSamples;
              unsigned long long  concealmentEvents;
              double              jitterBufferDelay;
+             unsigned long long  jitterBufferEmittedCount;
              RTCPriorityType     priority;
 };</pre>
           <section>
@@ -1991,12 +1992,21 @@ enum RTCStatsType {
               <dd>
                 <p>
                   It is the sum of the time, in seconds, each audio sample or video frame takes from
-                  the time it is received to the time it is rendered. The delay is measured from the
-                  time the first packet belonging to an audio/video frame enters the jitter buffer
-                  to the time the complete frame is sent for rendering after decoding. The average
-                  jitter buffer delay can be calculated by dividing the
-                  <code>jitterBufferDelay</code> with the <code>framesDecoded</code> (for video) or
-                  <code>totalSamplesReceived</code> (for audio).
+                  the time it is received and to the time it exits the jitter buffer. This increases
+                  upon samples/frames exiting, having completed their time in the buffer (incrementing
+                  <code>jitterBufferEmittedCount</code>). The average jitter buffer delay can be
+                  calculated by dividing the <code>jitterBufferDelay</code> with the
+                  <code>jitterBufferEmittedCount</code>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>jitterBufferEmittedCount</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The total number of audio samples or video frames that have come out of the jitter
+                  buffer (increasing <code>jitterBufferDelay</code>).
                 </p>
               </dd>
               <dt>
