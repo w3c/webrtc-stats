@@ -1267,7 +1267,7 @@ enum RTCStatsType {
              double               totalEncodeTime;
              double               averageRTCPInterval;
              RTCQualityLimitationReason                 qualityLimitationReason;
-             record_RTCQualityLimitationReason__double_ qualityLimitationDurations;
+             record&lt;DOMString, double&gt; qualityLimitationDurations;
 };</pre>
           <section>
             <h2>
@@ -1358,7 +1358,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>qualityLimitationDurations</code></dfn> of type <span class=
-                "idlMemberType"><a>record_RTCQualityLimitationReason__double_</a></span>
+                "idlMemberType"><a>record&lt;DOMString, double&gt;</a></span>
               </dt>
               <dd>
                 <p>
