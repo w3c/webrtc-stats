@@ -937,8 +937,12 @@ enum RTCStatsType {
                 The cumulative number of packets discarded because
                 they are duplicated. Duplicate packets are not counted
                 in <code><a>packetsDiscarded</a></code>.<br/>
+                Duplicated packets have the same RTP sequence number and
+                content as a previously received packet. If multiple duplicates
+                of a packet are received, all of them are counted.<br/>
                 An improved estimate of lost packets can be calculated
-                by adding packetsDuplicated to packetsLost; this will
+                by adding <a>packetsDuplicated</a> to <a>packetsLost</a>;
+                this will
                 always result in a positive number, but not the same
                 number as RFC 3550 would calculate.
               <dt>
