@@ -890,6 +890,7 @@ enum RTCStatsType {
              long               packetsLost;
              double             jitter;
              double             fractionLost;
+             unsigned long      packetsDuplicated;
              unsigned long      packetsDiscarded;
              unsigned long      packetsFailedDecryption;
              unsigned long      packetsRepaired;
@@ -959,6 +960,21 @@ enum RTCStatsType {
                   [[!RFC3550]] section 6.4.1 and Appendix A.3.
                 </p>
               </dd>
+              <dt>
+                <dfn><code>packetsDuplicated</code></dfn> of type <span class="idlMemberType"><a>unsigned long</a></span>
+              </dt>
+              <dd>
+                The cumulative number of packets discarded because
+                they are duplicated. Duplicate packets are not counted
+                in <code><a>packetsDiscarded</a></code>.<br/>
+                Duplicated packets have the same RTP sequence number and
+                content as a previously received packet. If multiple duplicates
+                of a packet are received, all of them are counted.<br/>
+                An improved estimate of lost packets can be calculated
+                by adding <a>packetsDuplicated</a> to <a>packetsLost</a>;
+                this will
+                always result in a positive number, but not the same
+                number as RFC 3550 would calculate.
               <dt>
                 <dfn><code>packetsFailedDecryption</code></dfn> of type <span class=
                 "idlMemberType"><a>unsigned long</a></span>
