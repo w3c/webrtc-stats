@@ -889,7 +889,6 @@ enum RTCStatsType {
              unsigned long long bytesReceived;
              long               packetsLost;
              double             jitter;
-             double             fractionLost;
              unsigned long      packetsDiscarded;
              unsigned long      packetsFailedDecryption;
              unsigned long      packetsRepaired;
@@ -947,16 +946,6 @@ enum RTCStatsType {
                 <p>
                   Packet Jitter measured in seconds for this SSRC. Calculated as defined in section
                   6.4.1. of [[!RFC3550]].
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>fractionLost</code></dfn> of type <span class=
-                "idlMemberType"><a>double</a></span>
-              </dt>
-              <dd>
-                <p>
-                  The fraction packet loss reported for this SSRC. Calculated as defined in
-                  [[!RFC3550]] section 6.4.1 and Appendix A.3.
                 </p>
               </dd>
               <dt>
@@ -1152,6 +1141,7 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCRemoteInboundRTPStreamStats : RTCReceivedRTPStreamStats {
              DOMString          localId;
              double             roundTripTime;
+             double             fractionLost;
 };</pre>
           <section>
             <h2>
@@ -1181,6 +1171,17 @@ enum RTCStatsType {
                   other than 0, the round trip time is left undefined.
                 </p>
               </dd>
+              <dt>
+                <dfn><code>fractionLost</code></dfn> of type <span class=
+                "idlMemberType"><a>double</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The fraction packet loss reported for this SSRC. Calculated as defined in
+                  [[!RFC3550]] section 6.4.1 and Appendix A.3.
+                </p>
+              </dd>
+
             </dl>
           </section>
         </div>
