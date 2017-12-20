@@ -1996,6 +1996,23 @@ enum RTCStatsType {
                   level = -round(log10(audioLevel) * 20), with audioLevel 0.0 and values above 127
                   mapped to 127.
                 </p>
+                <p>
+                  The <a>audioLevel</a> represents the output audio
+                  level of the track; thus, if the track is sourced
+                  from an <a>RTCReceiver</a>, does no audio
+                  processing, has a constant level, and has
+                  a <a>volume</a> setting of 1.0, the audio level is
+                  expected to be the same as the audio level of the
+                  source SSRC, while if the <a>volume</a> setting is
+                  0.5, the audioLevel is expected to be half that
+                  value.
+                </p>
+                <p>
+                  The audioLevel is averaged over some small
+                  interval, using the algortihm described
+                  under <a>totalAudioEnergy</a>. The interval used is
+                  implementation dependent.
+                </p>
               </dd>
               <dt>
                 <dfn><code>totalAudioEnergy</code></dfn> of type <span class=
