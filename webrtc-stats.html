@@ -584,6 +584,63 @@ enum RTCStatsType {
       <h2>
         Stats dictionaries
       </h2>
+      <section>
+        <h3>The RTP statistics hierarchy</h3>
+        <p>
+          The dictionaries for RTP statistics are structured as a
+          hierarchy, so that those stats that make sense in many
+          different contexts are represented just once in IDL.<br/>
+          The hierarchy is as follows:
+        </p>
+        <p><a>RTCRTPStreamStats</a>: Stats that apply to any end of any RTP
+          stream</p>
+          <ul>
+            <li>
+              <p><a>RTCReceivedRTPStreamStats</a>: Stats measured at
+                the receiving end of an RTP stream, known
+                either because they're measured locally or transmitted
+                via RTCP.
+              </p>
+              <ul>
+                <li>
+                  <p><a>RTCInboundRTPStreamStats</a>: Stats that can
+                    only be measured at the local receiving end of an
+                    RTP stream.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    <a>RTCRemoteInboundRTPStreamStats</a>: Stats
+                    relevant to the remote receiving
+                    end of an RTP stream - usually computed by combining local
+                    data with data received via RTCP receiver reports.
+                </li>
+              </ul>
+            </li>
+            <li>
+              <p>
+                <a>RTCSentRTPStreamStats</a>: Stats measured at the
+                sending end of an RTP stream, known either because
+                they're measured locally or transmitted via RTCP
+                (usually in RTCP SR records).
+              </p>
+              <ul>
+                <li>
+                  <a>RTCOutboundRTPStreamStats</a>: Stats measured
+                  locally.
+                </li>
+                <li>
+                  <p>
+                    <a>RTCRemoteOutboundRTPStreamStats</a>: Stats
+                    relevant to the remote sending end of an RTP stream,
+                    usually computed based on an RTCP
+                    SR record.
+                  </p>
+                </li>
+              </ul>
+            </li>
+          </ul>
+      </section>
       <section id="streamstats-dict*">
         <h3>
           <dfn>RTCRTPStreamStats</dfn> dictionary
