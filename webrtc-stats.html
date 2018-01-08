@@ -1093,7 +1093,8 @@ enum RTCStatsType {
              unsigned long        framesDecoded;
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
              unsigned long      packetsFailedDecryption;
-};</pre>
+             record&lt;USVString, unsigned long> perDscpCodePointPacketsReceived;
+            };</pre>
           <section>
             <h2>
               Dictionary <a class="idlType">RTCInboundRTPStreamStats</a> Members
@@ -1140,6 +1141,14 @@ enum RTCStatsType {
                   The cumulative number of RTP packets that failed to be decrypted according to the
                   procedures in [[!RFC3711]]. These packets are not counted by
                   <code><a>packetsDiscarded</a></code>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>perDscpCodePointPacketsReceived</code></dfn> of type <span class="idlMemberType"><a>record&lt;USVString, unsigned long></a></span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of packets received for this SSRC, per DSCP code point. DSCP code points are identified as decimal integers in string form. Note that due to network remapping and bleaching, these numbers are not expected to match the numbers seen on sending. Not all OSes make this information available.
                 </p>
               </dd>
             </dl>
@@ -1286,6 +1295,7 @@ enum RTCStatsType {
              double               averageRTCPInterval;
              RTCQualityLimitationReason                 qualityLimitationReason;
              record&lt;DOMString, double&gt; qualityLimitationDurations;
+             record&lt;USVString, unsigned long> perDscpCodePointPacketsSent;
 };</pre>
           <section>
             <h2>
@@ -1387,6 +1397,14 @@ enum RTCStatsType {
                 <p>
                   The sum of all entries minus <code>qualityLimidationDurations["none"]</code>
                   gives the total time that the stream has been limited.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>perDscpCodePointPacketsSent</code></dfn> of type <span class="idlMemberType"><a>record&lt;USVString, unsigned long></a></span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of packets sent for this SSRC, per DSCP code point. DSCP code points are identified as decimal integers in string form.
                 </p>
               </dd>
             </dl>
