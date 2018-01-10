@@ -420,6 +420,8 @@ enum RTCStatsType {
 "data-channel",
 "stream",
 "track",
+"sender",
+"receiver",
 "transport",
 "candidate-pair",
 "local-candidate",
@@ -520,15 +522,39 @@ enum RTCStatsType {
               <code><a>RTCMediaStreamStats</a></code>.
             </p>
           </dd>
-          <dt>
+           <dt>
             <dfn><code>track</code></dfn>
+           </dt>
+           <dd>
+             <p>
+              Contains statistics related to a specific MediaStreamTrack and the corresponding
+              media-level metrics. It is accessed by either
+              <code><a>RTCLocalVideoStreamTrackStats</a></code> or
+              <code><a>RTCLocalAudioStreamTrackStats</a></code>, both inherited from
+              <code><a>RTCMediaStreamTrackStats</a></code>.
+             </p>
+           </dd>
+          <dt>
+            <dfn><code>sender</code></dfn>
           </dt>
           <dd>
             <p>
-              Contains statistics related to a specific MediaStreamTrack and the corresponding
+              Contains statistics related to a specific RTCRtpSender and the corresponding
               media-level metrics. It is accessed by the
-              <code><a>RTCMediaStreamTrackStats</a></code>.
+              <code><a>RTCAudioSenderStats</a></code> or the <code><a>RTCVideoSenderStats</a></code>
+              depending on <code>kind</code>.
             </p>
+          </dd>
+          <dt>
+            <dfn><code>receiver</code></dfn>
+          </dt>
+          <dd>
+            <p>
+              Contains statistics related to a specific receiver and the corresponding
+              media-level metrics. It is accessed by the
+              <code><a>RTCAudioReceiverStats</a></code> or the <code><a>RTCVideoSenderStats</a></code>
+              depending on <code>kind</code>.
+           </p>
           </dd>
           <dt>
             <dfn><code>transport</code></dfn>
@@ -1708,56 +1734,11 @@ enum RTCStatsType {
         <h3>
           <dfn>RTCMediaStreamTrackStats</dfn> dictionary
         </h3>
-        <p>
-          An RTCMediaStreamTrackStats object represents the stats about one attachment of a
-          MediaStreamTrack to the PeerConnection object for which one calls getStats.
-        </p>
-        <p>
-          It appears in the stats as soon as it is attached (via addTrack, via addTransceiver, via
-          ReplaceTrack on an RTPSender object, or via being created on an RTPReceiver object).
-        </p>
-        <p>
-          If an outgoing track is attached twice (via addTransceiver or ReplaceTrack), there will
-          be two RTCMediaStreamTrackStats objects, one for each attachment. They will have the same
-          "trackIdentifier" attribute, but different "id" attributes.
-        </p>
-        <p>
-          If the track is detached from the PeerConnection (via removeTrack or via replaceTrack),
-          it continues to appear, but with the "detached" member set to True.
-        </p>
         <div>
           <pre class="idl">dictionary RTCMediaStreamTrackStats : RTCStats {
              DOMString           trackIdentifier;
-             boolean             remoteSource;
              boolean             ended;
-             boolean             detached;
              DOMString           kind;
-             DOMHighResTimeStamp estimatedPlayoutTimestamp;
-             unsigned long       frameWidth;
-             unsigned long       frameHeight;
-             double              framesPerSecond;
-             unsigned long       framesCaptured;
-             unsigned long       framesSent;
-             unsigned long       keyFramesSent;
-             unsigned long       framesReceived;
-             unsigned long       keyFramesReceived;
-             unsigned long       framesDecoded;
-             unsigned long       framesDropped;
-             unsigned long       framesCorrupted;
-             unsigned long       partialFramesLost;
-             unsigned long       fullFramesLost;
-             double              audioLevel;
-             double              totalAudioEnergy;
-             boolean             voiceActivityFlag;
-             double              echoReturnLoss;
-             double              echoReturnLossEnhancement;
-             unsigned long long  totalSamplesSent;
-             unsigned long long  totalSamplesReceived;
-             double              totalSamplesDuration;
-             unsigned long long  concealedSamples;
-             unsigned long long  concealmentEvents;
-             double              jitterBufferDelay;
-             unsigned long long  jitterBufferEmittedCount;
              RTCPriorityType     priority;
 };</pre>
           <section>
@@ -1793,16 +1774,6 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>detached</code></dfn> of type <span class=
-                "idlMemberType"><a>boolean</a></span>
-              </dt>
-              <dd>
-                <p>
-                  True if the track has been detached from the PeerConnection object. If true, all
-                  stats reflect their values at the time when the track was detached.
-                </p>
-              </dd>
-              <dt>
                 <dfn><code>kind</code></dfn> of type <span class=
                 "idlMemberType"><a>DOMString</a></span>
               </dt>
@@ -1813,32 +1784,43 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>estimatedPlayoutTimestamp</code></dfn> of type <span class=
-                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
+                <dfn><code>priority</code></dfn> of type <span class="idlMemberType"><a>
+                RTCPriorityType</a></span>
               </dt>
               <dd>
                 <p>
-                  Only valid for remote sources. This is the estimated playout time of this track.
-                  The playout time is the NTP timestamp of the last playable audio sample or video
-                  frame that has a known timestamp (from an RTCP SR packet mapping RTP timestamps
-                  to NTP timestamps), extrapolated with the time elapsed since it was ready to be
-                  played out. This is the "current time" of the track in NTP clock time of the
-                  sender and can be present even if there is no audio or video currently playing.
-                </p>
-                <p>
-                  This can be useful for estimating how much audio and video is out of sync for two
-                  tracks from the same source, <code>audioTrackStats.estimatedPlayoutTimestamp -
-                  videoTrackStats.estimatedPlayoutTimestamp</code>.
+                  Indicates the priority set for the track. It is specified in
+                  [[!RTCWEB-TRANSPORT]], Section 4.
                 </p>
               </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="vststats-dict*">
+        <h3>
+          <dfn>RTCVideoStreamTrackStats</dfn> dictionary
+        </h3>
+        <div>
+          <pre class="idl">dictionary RTCVideoStreamTrackStats : RTCMediaStreamTrackStats {
+             unsigned long       frameWidth;
+             unsigned long       frameHeight;
+             double              framesPerSecond;
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCVideoStreamTrackStats</a> Members
+            </h2>
+            <dl data-link-for="RTCVideoStreamTrackStats" data-dfn-for="RTCVideoStreamTrackStats"
+            class="dictionary-members">
               <dt>
                 <dfn><code>frameWidth</code></dfn> of type <span class="idlMemberType"><a>unsigned
                 long</a></span>
               </dt>
               <dd>
                 <p>
-                  Only valid for video MediaStreamTracks and represents the width of the last
-                  processed video frame for this track. Before the first frame is processed this
+                  Represents the width of the last
+                  processed frame for this track. Before the first frame is processed this
                   attribute is missing.
                 </p>
               </dd>
@@ -1848,8 +1830,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video MediaStreamTracks and represents the height of the last
-                  processed video frame for this track. Before the first frame is processed this
+                  Represents the height of the last
+                  processed frame for this track. Before the first frame is processed this
                   attribute is missing.
                 </p>
               </dd>
@@ -1859,23 +1841,56 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video. It represents the nominal FPS value before the degradation
+                  Represents the nominal FPS value before the degradation
                   preference is applied. It is the number of complete frames in the last second.
                   For sending tracks it is the current captured FPS and for the receiving tracks it
                   is the current decoding framerate.
                 </p>
               </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="vsstats-dict*">
+        <h3>
+          <dfn>RTCVideoSenderStats</dfn> dictionary
+        </h3>
+        <p>
+          An RTCVideoSenderStats object represents the stats about one video sender of a
+          PeerConnection object for which one calls getStats.
+        </p>
+        <p>
+          It appears in the stats as soon as the sender is added by either addTrack or
+          addTransceiver, or by media negotiation.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCVideoSenderStats : RTCVideoStreamTrackStats {
+             unsigned long       framesCaptured;
+             unsigned long       framesSent;
+             unsigned long       keyFramesSent;
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCVideoSenderStats</a> Members
+            </h2>
+            <dl data-link-for="RTCVideoSenderStats" data-dfn-for="RTCVideoSenderStats"
+            class="dictionary-members">
               <dt>
                 <dfn><code>framesCaptured</code></dfn> of type <span class=
                 "idlMemberType"><a>unsigned long</a></span>
               </dt>
               <dd>
                 <p>
-                  Only valid for local video. It represents the total number of frames captured for
-                  this MediaStreamTrack, before encoding. For example, if this track represents a
-                  camera this is the number of frames produced by the camera for this track, whose
-                  framerate could vary due to hardware limitations or environmental factors such as
-                  lighting conditions.
+                  Represents the total number of frames captured, before encoding,
+                  for this RTCRtpSender (or for this MediaStreamTrack, if
+                  <code>type</code> is <code>"track"</code>).
+                  For example, if <code>type</code> is <code>"sender"</code> and
+                  this sender's track represents a camera, then this is the number
+                  of frames produced by the camera for this track while being sent
+                  by this sender, combined with the number of frames produced by
+                  all tracks previously attached to this sender while being sent by
+                  this sender. Framerates can vary due to hardware limitations or
+                  environmental factors such as lighting conditions.
                 </p>
               </dd>
               <dt>
@@ -1884,8 +1899,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video. It represents the total number of frames sent for this
-                  MediaStreamTrack.
+                  Represents the total number of frames sent by this RTCRtpSender
+                  (or for this MediaStreamTrack, if <code>type</code> is
+                  <code>"track"</code>).
                 </p>
               </dd>
               <dt>
@@ -1894,10 +1910,124 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video. It represents the total number of key frames sent for this
-                  MediaStreamTrack, such as Infra-frames in VP8 [[RFC6386]] or I-frames in H.264
+                  Represents the total number of key
+                  frames sent by this RTCRtpSender (or for this MediaStreamTrack,
+                  if <code>type</code> is <code>"track"</code>), such as
+                  Infra-frames in VP8 [[RFC6386]] or I-frames in H.264
                   [[RFC6184]]. This is a subset of <code>framesSent</code>. <code>framesSent -
                   keyFramesSent</code> gives you the number of delta frames sent.
+                </p>
+              </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="lvststats-dict*">
+        <h3>
+          <dfn>RTCLocalVideoStreamTrackStats</dfn> dictionary
+        </h3>
+        <p>
+          An RTCLocalVideoStreamTrackStats object represents the stats about one attachment of a
+          video MediaStreamTrack to the PeerConnection object for which one calls getStats.
+        </p>
+        <p>
+          It appears in the stats as soon as it is attached (via addTrack, via addTransceiver, via
+          replaceTrack on an RTCRtpSender object).
+        </p>
+        <p>
+          If a video track is attached twice (via addTransceiver or replaceTrack), there will
+          be two RTCLocalVideoStreamTrackStats objects, one for each attachment. They will have the same
+          "trackIdentifier" attribute, but different "id" attributes.
+        </p>
+        <p>
+          If the track is detached from the PeerConnection (via removeTrack or via replaceTrack),
+          it continues to appear, but with the "objectDeleted" member set to <code>true</code>.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCLocalVideoStreamTrackStats : RTCVideoSenderStats {
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCLocalVideoStreamTrackStats</a> Members
+            </h2>
+            <dl data-link-for="RTCLocalVideoStreamTrackStats" data-dfn-for="RTCLocalVideoStreamTrackStats"
+            class="dictionary-members">
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="rvststats-dict*">
+        <h3>
+          <dfn>RTCVideoReceiverStats</dfn> dictionary
+        </h3>
+        <p>
+          An RTCVideoReceiverStats object represents the stats about one
+          video receiver of a PeerConnection object for which one calls getStats.
+        </p>
+        <p>
+          It appears in the stats as soon as the RTCRtpReceiver is added by either addTrack or
+          addTransceiver, or by media negotiation.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCVideoReceiverStats : RTCVideoStreamTrackStats {
+             DOMHighResTimeStamp estimatedPlayoutTimestamp;
+             double              jitterBufferDelay;
+             unsigned long long  jitterBufferEmittedCount;
+             unsigned long       framesReceived;
+             unsigned long       keyFramesReceived;
+             unsigned long       framesDecoded;
+             unsigned long       framesDropped;
+             unsigned long       framesCorrupted;
+             unsigned long       partialFramesLost;
+             unsigned long       fullFramesLost;
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCVideoReceiverStats</a> Members
+            </h2>
+            <dl data-link-for="RTCVideoReceiverStats" data-dfn-for="RTCVideoReceiverStats"
+            class="dictionary-members">
+              <dt>
+                <dfn><code>estimatedPlayoutTimestamp</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
+              </dt>
+              <dd>
+                <p>
+                  This is the estimated playout time of this receiver's track.
+                  The playout time is the NTP timestamp of the last playable video
+                  frame that has a known timestamp (from an RTCP SR packet mapping RTP timestamps to
+                  NTP timestamps), extrapolated with the time elapsed since it was ready to be
+                  played out. This is the "current time" of the track in NTP clock time of the
+                  sender and can be present even if there is no video currently playing.
+                </p>
+                <p>
+                  This can be useful for estimating how much audio and video is out of sync for two
+                  tracks from the same remote source, <code>audioTrackStats.estimatedPlayoutTimestamp -
+                  videoTrackStats.estimatedPlayoutTimestamp</code>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>jitterBufferDelay</code></dfn> of type <span class=
+                "idlMemberType"><a>double</a></span>
+              </dt>
+              <dd>
+                <p>
+                  It is the sum of the time, in seconds, each frame takes from the time it
+                  is received and to the time it exits the jitter buffer. This increases upon
+                  frames exiting, having completed their time in the buffer (incrementing
+                  <code>jitterBufferEmittedCount</code>). The average jitter buffer delay can be
+                  calculated by dividing the <code>jitterBufferDelay</code> with the
+                  <code>jitterBufferEmittedCount</code>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>jitterBufferEmittedCount</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The total number of frames that have come out of the jitter
+                  buffer (increasing <code>jitterBufferDelay</code>).
                 </p>
               </dd>
               <dt>
@@ -1906,8 +2036,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video and when remoteSource is set to <code>true</code>. It
-                  represents the total number of frames received for this MediaStreamTrack.
+                  Represents the total number of frames received for this receiver.
                 </p>
               </dd>
               <dt>
@@ -1916,8 +2045,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video and when remoteSource is set to <code>true</code>. It
-                  represents the total number of key frames received for this MediaStreamTrack,
+                  Represents the total number of key frames received for this MediaStreamTrack,
                   such as Infra-frames in VP8 [[RFC6386]] or I-frames in H.264 [[RFC6184]]. This is
                   a subset of <code>framesReceived</code>. <code>framesReceived -
                   keyFramesReceived</code> gives you the number of delta frames received.
@@ -1929,9 +2057,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video and when remoteSource is set to <code>true</code>. It
-                  represents the total number of frames correctly decoded for this
-                  MediaStreamTrack, independent of which SSRC it was received from. It is defined
+                  Represents the total number of frames correctly decoded for this
+                  receiver, independent of which SSRC it was received from. It is defined
                   as <code>totalVideoFrames</code> in Section 5 of [[!MEDIA-SOURCE]].
                 </p>
               </dd>
@@ -1941,8 +2068,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video. It is the total number of frames dropped predecode or
-                  dropped because the frame missed its display deadline for this MediastreamTrack.
+                  The total number of frames dropped predecode or
+                  dropped because the frame missed its display deadline for this receiver's track.
                   It is the same definition as <code>droppedVideoFrames</code> in Section 5 of
                   [[!MEDIA-SOURCE]].
                 </p>
@@ -1953,8 +2080,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video. It is the total number of corrupted frames that have been
-                  detected for this MediaStreamTrack. It is the same definition as
+                  The total number of corrupted frames that have been
+                  detected for this receiver. It is the same definition as
                   <code>corruptedVideoFrames</code> in Section 5 of [[!MEDIA-SOURCE]].
                 </p>
               </dd>
@@ -1964,7 +2091,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video. <code>partialFramesLost</code> is the cumulative number of
+                  The cumulative number of
                   partial frames lost, as defined in Appendix A (j) of [[!RFC7004]].
                 </p>
               </dd>
@@ -1974,17 +2101,38 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video. <code>fullFramesLost</code> is the cumulative number of
+                  The cumulative number of
                   full frames lost, as defined in Appendix A (i) of [[!RFC7004]].
                 </p>
               </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="aststats-dict*">
+        <h3>
+          <dfn>RTCAudioStreamTrackStats</dfn> dictionary
+        </h3>
+        <div>
+          <pre class="idl">dictionary RTCAudioStreamTrackStats : RTCMediaStreamTrackStats {
+             double              audioLevel;
+             double              totalAudioEnergy;
+             boolean             voiceActivityFlag;
+             double              totalSamplesDuration;
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCAudioStreamTrackStats</a> Members
+            </h2>
+            <dl data-link-for="RTCAudioStreamTrackStats" data-dfn-for="RTCAudioStreamTrackStats"
+            class="dictionary-members">
               <dt>
                 <dfn><code>audioLevel</code></dfn> of type <span class=
                 "idlMemberType"><a>double</a></span>
               </dt>
               <dd>
                 <p>
-                  Only valid for audio. The value is between 0..1 (linear), where 1.0 represents 0
+                  The value is between 0..1 (linear), where 1.0 represents 0
                   dBov, 0 represents silence, and 0.5 represents approximately 6 dBSPL change in
                   the sound pressure level from 0 dBov.
                 </p>
@@ -2003,7 +2151,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for audio. This value MUST be computed as follows: for each audio
+                  This value MUST be computed as follows: for each audio
                   sample sent/received for this object (and counted by
                   <code><a>totalSamplesSent</a></code> or
                   <code><a>totalSamplesReceived</a></code>), add the sample's value divided by the
@@ -2038,7 +2186,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for audio. Whether the last RTP packet sent or played out by this
+                  Whether the last RTP packet sent or played out by this
                   track contained voice activity or not based on the presence of the V bit in the
                   extension header, as defined in [[RFC6464]].
                 </p>
@@ -2049,12 +2197,55 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn><code>totalSamplesDuration</code></dfn> of type <span class="idlMemberType"><a>
+                double</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total duration
+                  in seconds of all samples that have sent or received (and
+                  thus counted by <code><a>totalSamplesSent</a></code> or
+                  <code><a>totalSamplesReceived</a></code>). Can be used with
+                  <code><a>totalAudioEnergy</a></code> to compute an average audio
+                  level over different intervals.
+                </p>
+              </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="asstats-dict*">
+        <h3>
+          <dfn>RTCAudioSenderStats</dfn> dictionary
+        </h3>
+        <p>
+          An RTCAudioSenderStats object represents the stats about one audio sender of a
+          PeerConnection object for which one calls getStats.
+        </p>
+        <p>
+          It appears in the stats as soon as the RTCRtpSender is added by either addTrack or
+          addTransceiver, or by media negotiation.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCAudioSenderStats : RTCAudioStreamTrackStats {
+             double              echoReturnLoss;
+             double              echoReturnLossEnhancement;
+             unsigned long long  totalSamplesSent;
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCAudioSenderStats</a> Members
+            </h2>
+            <dl data-link-for="RTCAudioSenderStats" data-dfn-for="RTCAudioSenderStats"
+            class="dictionary-members">
+              <dt>
                 <dfn><code>echoReturnLoss</code></dfn> of type <span class=
                 "idlMemberType"><a>double</a></span>
               </dt>
               <dd>
                 <p>
-                  Only present on audio tracks sourced from a microphone where echo cancellation is
+                  Only present while the sender is sending a track sourced from a
+                  microphone where echo cancellation is
                   applied. Calculated in decibels, as defined in [[!ECHO]] (2012) section 3.14.
                 </p>
               </dd>
@@ -2064,7 +2255,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only present on audio tracks sourced from a microphone where echo cancellation is
+                  Only present while the sender is sending a track sourced from a
+                  microphone where echo cancellation is
                   applied. Calculated in decibels, as defined in [[!ECHO]] (2012) section 3.15.
                 </p>
               </dd>
@@ -2074,56 +2266,91 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only present for outbound audio tracks. The total number of audio samples that
-                  have been sent for this track.
+                  The total number of samples that have been sent by this sender.
                 </p>
               </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="laststats-dict*">
+        <h3>
+          <dfn>RTCLocalAudioStreamTrackStats</dfn> dictionary
+        </h3>
+        <p>
+          An RTCLocalAudioStreamTrackStats object represents the stats about one attachment of an
+          audio MediaStreamTrack to the PeerConnection object for which one calls getStats.
+        </p>
+        <p>
+          It appears in the stats as soon as it is attached (via addTrack, via addTransceiver, via
+          replaceTrack on an RTCRtpSender object).
+        </p>
+        <p>
+          If an audio track is attached twice (via addTransceiver or replaceTrack), there will
+          be two RTCLocalAudioStreamTrackStats objects, one for each attachment. They will have the same
+          "trackIdentifier" attribute, but different "id" attributes.
+        </p>
+        <p>
+          If the track is detached from the PeerConnection (via removeTrack or via replaceTrack),
+          it continues to appear, but with the "objectDeleted" member set to <code>true</code>.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCLocalAudioStreamTrackStats : RTCVideoSenderStats {
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCLocalAudioStreamTrackStats</a> Members
+            </h2>
+            <dl data-link-for="RTCLocalAudioStreamTrackStats" data-dfn-for="RTCLocalAudioStreamTrackStats"
+            class="dictionary-members">
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="raststats-dict*">
+        <h3>
+          <dfn>RTCAudioReceiverStats</dfn> dictionary
+        </h3>
+        <p>
+          An RTCAudioReceiverStats object represents the stats about one
+          audio receiver of a PeerConnection object for which one calls getStats.
+        </p>
+        <p>
+          It appears in the stats as soon as the RTCRtpReceiver is added by either addTrack or
+          addTransceiver, or by media negotiation.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCAudioReceiverStats : RTCAudioStreamTrackStats {
+             DOMHighResTimeStamp estimatedPlayoutTimestamp;
+             double              jitterBufferDelay;
+             unsigned long long  jitterBufferEmittedCount;
+             unsigned long long  totalSamplesReceived;
+             unsigned long long  concealedSamples;
+             unsigned long long  concealmentEvents;
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCAudioReceiverStats</a> Members
+            </h2>
+            <dl data-link-for="RTCAudioReceiverStats" data-dfn-for="RTCAudioReceiverStats"
+            class="dictionary-members">
               <dt>
-                <dfn><code>totalSamplesReceived</code></dfn> of type <span class=
-                "idlMemberType"><a>unsigned long long</a></span>
+                <dfn><code>estimatedPlayoutTimestamp</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMHighResTimeStamp</a></span>
               </dt>
               <dd>
                 <p>
-                  Only present for inbound audio tracks. The total number of audio samples that
-                  have been received for this track. This includes <a>concealedSamples</a>.
+                  This is the estimated playout time of this receiver's track.
+                  The playout time is the NTP timestamp of the last playable sample
+                  that has a known timestamp (from an RTCP SR packet mapping RTP timestamps to
+                  NTP timestamps), extrapolated with the time elapsed since it was ready to be
+                  played out. This is the "current time" of the track in NTP clock time of the
+                  sender and can be present even if there is no audio currently playing.
                 </p>
-              </dd>
-              <dt>
-                <dfn><code>totalSamplesDuration</code></dfn> of type <span class=
-                "idlMemberType"><a>double</a></span>
-              </dt>
-              <dd>
                 <p>
-                  Only present for audio tracks. Represents the total duration in seconds of all
-                  samples that have sent or received (and thus counted by
-                  <code><a>totalSamplesSent</a></code> or
-                  <code><a>totalSamplesReceived</a></code>). Can be used with
-                  <code><a>totalAudioEnergy</a></code> to compute an average audio level over
-                  different intervals.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>concealedSamples</code></dfn> of type <span class=
-                "idlMemberType"><a>unsigned long long</a></span>
-              </dt>
-              <dd>
-                <p>
-                  Only present for inbound audio tracks. The total number of inbound audio samples
-                  that are concealed samples. A concealed sample is a sample that is based on data
-                  that was synthesized to conceal packet loss and does not represent incoming data.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>concealmentEvents</code></dfn> of type <span class=
-                "idlMemberType"><a>unsigned long long</a></span>
-              </dt>
-              <dd>
-                <p>
-                  Only present for inbound audio tracks. The number of concealment events. This
-                  counter increases every time a concealed sample is synthesized after a
-                  non-concealed sample. That is, multiple consecutive concealed samples will
-                  increase the <a>concealedSamples</a> count multiple times but is a single
-                  concealment event.
+                  This can be useful for estimating how much audio and video is out of sync for two
+                  tracks from the same source, <code>audioTrackStats.estimatedPlayoutTimestamp -
+                  videoTrackStats.estimatedPlayoutTimestamp</code>.
                 </p>
               </dd>
               <dt>
@@ -2132,9 +2359,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  It is the sum of the time, in seconds, each audio sample or video frame takes from
-                  the time it is received and to the time it exits the jitter buffer. This increases
-                  upon samples/frames exiting, having completed their time in the buffer (incrementing
+                  It is the sum of the time, in seconds, each sample takes from the time it
+                  is received and to the time it exits the jitter buffer. This increases upon
+                  samples exiting, having completed their time in the buffer (incrementing
                   <code>jitterBufferEmittedCount</code>). The average jitter buffer delay can be
                   calculated by dividing the <code>jitterBufferDelay</code> with the
                   <code>jitterBufferEmittedCount</code>.
@@ -2146,18 +2373,42 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The total number of audio samples or video frames that have come out of the jitter
+                  The total number of samples that have come out of the jitter
                   buffer (increasing <code>jitterBufferDelay</code>).
                 </p>
               </dd>
               <dt>
-                <dfn><code>priority</code></dfn> of type <span class=
-                "idlMemberType"><a>RTCPriorityType</a></span>
+                <dfn><code>totalSamplesReceived</code></dfn> of type <span class="idlMemberType"><a>
+                unsigned long long</a></span>
               </dt>
               <dd>
                 <p>
-                  Indicates the priority set for the track. It is specified in
-                  [[!RTCWEB-TRANSPORT]], Section 4.
+                  The total number of samples that have
+                  been received by this receiver. This includes <a>concealedSamples</a>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>concealedSamples</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The total number of samples
+                  that are concealed samples. A concealed sample is a sample that is based on data
+                  that was synthesized to conceal packet loss and does not represent incoming data.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>concealmentEvents</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The number of concealment events. This
+                  counter increases every time a concealed sample is synthesized after a
+                  non-concealed sample. That is, multiple consecutive concealed samples will
+                  increase the <a>concealedSamples</a> count multiple times but is a single
+                  concealment event.
                 </p>
               </dd>
             </dl>
