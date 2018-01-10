@@ -3,7 +3,6 @@ language: python
 branches:
   only:
     - /.*/
-    - gh-pages
 
 python:
   - "2.7_with_system_site_packages"
@@ -39,4 +38,4 @@ env:
     - secure: "VD097GRyqSACTjhUDkrPnZv80shH2Uh5g66cxXsO95hVA1ZrLUtbwS4aQshcQrcl28uVpsJ2E/OpeHHg1HbmNv9uVdsvbnEztGxu7wm6xUi0ZXK81uYqOZtvbbnipjZywe45wTjLYJOGiYgsN9yEN1arHXAPR9lmNInt0QIf10M="
 
 after_success:
-  - test $TRAVIS_BRANCH = "gh-pages" -a $TRAVIS_PULL_REQUEST = false && curl "https://labs.w3.org/echidna/api/request" --data "url=$URL" --data "decision=$DECISION" --data "token=$TOKEN"
+  - test $TRAVIS_BRANCH = "master" -a $TRAVIS_PULL_REQUEST = false && curl "https://labs.w3.org/echidna/api/request" --data "url=$URL" --data "decision=$DECISION" --data "token=$TOKEN"
