@@ -1941,11 +1941,10 @@ enum RTCStatsType {
         </p>
         <p>
           If the track is detached from the PeerConnection (via removeTrack or via replaceTrack),
-          it continues to appear, but with the "detached" member set to <code>true</code>.
+          it continues to appear, but with the "objectDeleted" member set to <code>true</code>.
         </p>
         <div>
           <pre class="idl">dictionary RTCLocalVideoStreamTrackStats : RTCVideoSenderStats {
-             boolean             detached;
 };</pre>
           <section>
             <h2>
@@ -1953,16 +1952,6 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCLocalVideoStreamTrackStats" data-dfn-for="RTCLocalVideoStreamTrackStats"
             class="dictionary-members">
-              <dt>
-                <dfn><code>detached</code></dfn> of type <span class=
-                "idlMemberType"><a>boolean</a></span>
-              </dt>
-              <dd>
-                <p>
-                  True if the track has been detached from the PeerConnection object. If true, all
-                  stats reflect their values at the time when the track was detached.
-                </p>
-              </dd>
             </dl>
           </section>
         </div>
@@ -2303,11 +2292,10 @@ enum RTCStatsType {
         </p>
         <p>
           If the track is detached from the PeerConnection (via removeTrack or via replaceTrack),
-          it continues to appear, but with the "detached" member set to <code>true</code>.
+          it continues to appear, but with the "objectDeleted" member set to <code>true</code>.
         </p>
         <div>
           <pre class="idl">dictionary RTCLocalAudioStreamTrackStats : RTCVideoSenderStats {
-             boolean             detached;
 };</pre>
           <section>
             <h2>
@@ -2315,16 +2303,6 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCLocalAudioStreamTrackStats" data-dfn-for="RTCLocalAudioStreamTrackStats"
             class="dictionary-members">
-              <dt>
-                <dfn><code>detached</code></dfn> of type <span class=
-                "idlMemberType"><a>boolean</a></span>
-              </dt>
-              <dd>
-                <p>
-                  True if the track has been detached from the PeerConnection object. If true, all
-                  stats reflect their values at the time when the track was detached.
-                </p>
-              </dd>
             </dl>
           </section>
         </div>
