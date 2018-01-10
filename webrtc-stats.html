@@ -599,7 +599,7 @@ enum RTCStatsType {
               <p><a>RTCReceivedRTPStreamStats</a>: Stats measured at
                 the receiving end of an RTP stream, known
                 either because they're measured locally or transmitted
-                via RTCP.
+                via an RTCP Receiver Report (RR) or Extended Report (XR).
               </p>
               <ul>
                 <li>
@@ -613,7 +613,7 @@ enum RTCStatsType {
                     <a>RTCRemoteInboundRTPStreamStats</a>: Stats
                     relevant to the remote receiving
                     end of an RTP stream - usually computed by combining local
-                    data with data received via RTCP receiver reports.
+                    data with data received via an RTCP RR or XR.
                 </li>
               </ul>
             </li>
@@ -621,8 +621,8 @@ enum RTCStatsType {
               <p>
                 <a>RTCSentRTPStreamStats</a>: Stats measured at the
                 sending end of an RTP stream, known either because
-                they're measured locally or transmitted via RTCP
-                (usually in RTCP SR records).
+                they're measured locally or because they're received
+                via RTCP, usually in an RTCP Sender Report (SR).
               </p>
               <ul>
                 <li>
@@ -634,7 +634,7 @@ enum RTCStatsType {
                     <a>RTCRemoteOutboundRTPStreamStats</a>: Stats
                     relevant to the remote sending end of an RTP stream,
                     usually computed based on an RTCP
-                    SR record.
+                    SR.
                   </p>
                 </li>
               </ul>
