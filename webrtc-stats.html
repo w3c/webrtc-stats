@@ -1820,7 +1820,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the width of the last
-                  processed video frame for this track. Before the first frame is processed this
+                  processed frame for this track. Before the first frame is processed this
                   attribute is missing.
                 </p>
               </dd>
@@ -1831,7 +1831,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the height of the last
-                  processed video frame for this track. Before the first frame is processed this
+                  processed frame for this track. Before the first frame is processed this
                   attribute is missing.
                 </p>
               </dd>
@@ -2023,7 +2023,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  It is the sum of the time, in seconds, each video frame takes from the time it
+                  It is the sum of the time, in seconds, each frame takes from the time it
                   is received and to the time it exits the jitter buffer. This increases upon
                   frames exiting, having completed their time in the buffer (incrementing
                   <code>jitterBufferEmittedCount</code>). The average jitter buffer delay can be
@@ -2037,7 +2037,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The total number of video frames that have come out of the jitter
+                  The total number of frames that have come out of the jitter
                   buffer (increasing <code>jitterBufferDelay</code>).
                 </p>
               </dd>
@@ -2278,7 +2278,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The total number of audio samples that have been sent by this sender.
+                  The total number of samples that have been sent by this sender.
                 </p>
               </dd>
             </dl>
@@ -2364,7 +2364,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   This is the estimated playout time of this receiver's track.
-                  The playout time is the NTP timestamp of the last playable audio sample
+                  The playout time is the NTP timestamp of the last playable sample
                   that has a known timestamp (from an RTCP SR packet mapping RTP timestamps to
                   NTP timestamps), extrapolated with the time elapsed since it was ready to be
                   played out. This is the "current time" of the track in NTP clock time of the
@@ -2382,7 +2382,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  It is the sum of the time, in seconds, each audio sample takes from the time it
+                  It is the sum of the time, in seconds, each sample takes from the time it
                   is received and to the time it exits the jitter buffer. This increases upon
                   samples exiting, having completed their time in the buffer (incrementing
                   <code>jitterBufferEmittedCount</code>). The average jitter buffer delay can be
@@ -2396,7 +2396,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The total number of audio samples that have come out of the jitter
+                  The total number of samples that have come out of the jitter
                   buffer (increasing <code>jitterBufferDelay</code>).
                 </p>
               </dd>
@@ -2406,7 +2406,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The total number of audio samples that have
+                  The total number of samples that have
                   been received by this receiver. This includes <a>concealedSamples</a>.
                 </p>
               </dd>
