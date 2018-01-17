@@ -2219,8 +2219,7 @@ enum RTCStatsType {
                   the sound pressure level from 0 dBov.
                 </p>
                 <p>
-                  The "audio level" value defined in [[RFC6464]] and used in the
-                  RTCRtpSynchronizationSource.audioLevel of [[WEBRTC]] (defined as 0..127, where 0
+                  The "audio level" value defined in [[RFC6464]] (as 0..127, where 0
                   represents 0 dBov, 126 represents -126 dBov and 127 represents silence) is
                   obtained by the calculation given in appendix A of [[!RFC6465]]: informally,
                   level = -round(log10(audioLevel) * 20), with audioLevel 0.0 and values above 127
