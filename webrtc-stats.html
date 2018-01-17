@@ -885,8 +885,8 @@ enum RTCStatsType {
         </h3>
         <div>
           <pre class="idl">dictionary RTCReceivedRTPStreamStats : RTCRTPStreamStats {
-             long               packetsLost;
              unsigned long      packetsReceived;
+             long               packetsLost;
              double             jitter;
              double             fractionLost;
              unsigned long      packetsDiscarded;
@@ -908,17 +908,6 @@ enum RTCStatsType {
             <dl data-link-for="RTCReceivedRTPStreamStats" data-dfn-for="RTCReceivedRTPStreamStats"
             class="dictionary-members">
               <dt>
-                <dfn><code>packetsLost</code></dfn> of type <span class="idlMemberType"><a>long</a>
-                </span>
-              </dt>
-              <dd>
-                <p>
-                  Total number of RTP packets lost for this SSRC. Calculated as defined in
-                  [[!RFC3550]] section 6.4.1. Note that because of how this is estimated, it can be
-                  negative if more packets are received than sent.
-                </p>
-              </dd>
-              <dt>
                 <dfn><code>packetsReceived</code></dfn> of type <span class=
                 "idlMemberType"><a>unsigned long</a></span>
               </dt>
@@ -929,6 +918,17 @@ enum RTCStatsType {
                   endpoint the packetsReceived can be calculated by subtracting the packets lost
                   from the expected Highest Sequence Number reported in the RTCP Sender Report as
                   discussed in Appendix A.3. in [[!RFC3550]].
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>packetsLost</code></dfn> of type <span class="idlMemberType"><a>long</a>
+                </span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of RTP packets lost for this SSRC. Calculated as defined in
+                  [[!RFC3550]] section 6.4.1. Note that because of how this is estimated, it can be
+                  negative if more packets are received than sent.
                 </p>
               </dd>
               <dt>
