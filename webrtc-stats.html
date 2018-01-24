@@ -799,7 +799,7 @@ enum RTCStatsType {
                 <p>
                   The definition of QP value depends on the <a>codec</a>; for VP8, the QP value is
                   the value carried in the frame header as the syntax element "y_ac_qi", and
-                  defined in [[RFC6386]] section 19.2. Its range is 0..127. 
+                  defined in [[RFC6386]] section 19.2. Its range is 0..127.
                   <!-- Need appropriate references for VP9 and H.264 -->
                 </p>
                 <p>
@@ -1192,8 +1192,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Only valid for video. It represents the total number of frames correctly decoded
-                  for this SSRC. Same definition as <code>totalVideoFrames</code> in Section 5 of
-                  [[!MEDIA-SOURCE]].
+                  for this SSRC, i.e., frames that would be displayed if no frames are dropped.
                 </p>
               </dd>
               <dt>
@@ -2135,9 +2134,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the total number of frames correctly decoded for this receiver,
-                  independent of which SSRC it was received from. It is defined as
-                  <code>totalVideoFrames</code> in Section 5 of [[!MEDIA-SOURCE]].
+                  Only valid for video. It represents the total number of frames correctly decoded
+                  for this SSRC, i.e., frames that would be displayed if no frames are dropped.
                 </p>
               </dd>
               <dt>
@@ -2147,8 +2145,8 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The total number of frames dropped predecode or dropped because the frame missed
-                  its display deadline for this receiver's track. It is the same definition as
-                  <code>droppedVideoFrames</code> in Section 5 of [[!MEDIA-SOURCE]].
+                  its display deadline for this receiver's track. As defined in Appendix A (g) of
+                  [[!RFC7004]].
                 </p>
               </dd>
               <dt>
@@ -2158,8 +2156,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The total number of corrupted frames that have been detected for this receiver.
-                  It is the same definition as <code>corruptedVideoFrames</code> in Section 5 of
-                  [[!MEDIA-SOURCE]].
+                  As defined in Appendix A (j) of [[!RFC7004]].
                 </p>
               </dd>
               <dt>
