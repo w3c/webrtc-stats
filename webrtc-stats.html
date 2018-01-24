@@ -2113,7 +2113,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the total number of frames received for this receiver.
+                  Represents the total number of complete frames received for this receiver.
                 </p>
               </dd>
               <dt>
@@ -2122,10 +2122,13 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the total number of key frames received for this MediaStreamTrack,
+                  Represents the total number of complete key frames received for this MediaStreamTrack,
                   such as Infra-frames in VP8 [[RFC6386]] or I-frames in H.264 [[RFC6184]]. This is
                   a subset of <code>framesReceived</code>. <code>framesReceived -
                   keyFramesReceived</code> gives you the number of delta frames received.
+                  This metric is incremented when the key frame is sent to the decoder. It is
+                  not incremented if a partial key frames is received and sent for decoding,
+                  i.e., not recovered via retransmission or FEC.
                 </p>
               </dd>
               <dt>
