@@ -2053,7 +2053,6 @@ enum RTCStatsType {
              unsigned long       keyFramesReceived;
              unsigned long       framesDecoded;
              unsigned long       framesDropped;
-             unsigned long       framesCorrupted;
              unsigned long       partialFramesLost;
              unsigned long       fullFramesLost;
 };</pre>
@@ -2150,16 +2149,6 @@ enum RTCStatsType {
                   The total number of frames dropped predecode or dropped because the frame missed
                   its display deadline for this receiver's track. As defined in Appendix A (g) of
                   [[!RFC7004]].
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>framesCorrupted</code></dfn> of type <span class=
-                "idlMemberType"><a>unsigned long</a></span>
-              </dt>
-              <dd>
-                <p>
-                  The total number of corrupted frames that have been detected for this receiver.
-                  As defined in Appendix A (j) of [[!RFC7004]].
                 </p>
               </dd>
               <dt>
