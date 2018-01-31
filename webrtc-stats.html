@@ -799,7 +799,7 @@ enum RTCStatsType {
                 <p>
                   The definition of QP value depends on the <a>codec</a>; for VP8, the QP value is
                   the value carried in the frame header as the syntax element "y_ac_qi", and
-                  defined in [[RFC6386]] section 19.2. Its range is 0..127. 
+                  defined in [[RFC6386]] section 19.2. Its range is 0..127.
                   <!-- Need appropriate references for VP9 and H.264 -->
                 </p>
                 <p>
@@ -1192,8 +1192,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Only valid for video. It represents the total number of frames correctly decoded
-                  for this SSRC. Same definition as <code>totalVideoFrames</code> in Section 5 of
-                  [[!MEDIA-SOURCE]].
+                  for this SSRC, i.e., frames that would be displayed if no frames are dropped.
                 </p>
               </dd>
               <dt>
@@ -2054,7 +2053,6 @@ enum RTCStatsType {
              unsigned long       keyFramesReceived;
              unsigned long       framesDecoded;
              unsigned long       framesDropped;
-             unsigned long       framesCorrupted;
              unsigned long       partialFramesLost;
              unsigned long       fullFramesLost;
 };</pre>
@@ -2114,7 +2112,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the total number of frames received for this receiver.
+                  Represents the total number of complete frames received for this receiver.
+                  This metric is incremented when the complete frame is received.
                 </p>
               </dd>
               <dt>
@@ -2123,10 +2122,13 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the total number of key frames received for this MediaStreamTrack,
+                  Represents the total number of complete key frames received for this MediaStreamTrack,
                   such as Infra-frames in VP8 [[RFC6386]] or I-frames in H.264 [[RFC6184]]. This is
                   a subset of <code>framesReceived</code>. <code>framesReceived -
                   keyFramesReceived</code> gives you the number of delta frames received.
+                  This metric is incremented when the complete key frame is received. It is
+                  not incremented if a partial key frames is received and sent for decoding,
+                  i.e., the frame could not be recovered via retransmission or FEC.
                 </p>
               </dd>
               <dt>
@@ -2135,9 +2137,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the total number of frames correctly decoded for this receiver,
-                  independent of which SSRC it was received from. It is defined as
-                  <code>totalVideoFrames</code> in Section 5 of [[!MEDIA-SOURCE]].
+                  Only valid for video. It represents the total number of frames correctly decoded
+                  for this SSRC, i.e., frames that would be displayed if no frames are dropped.
                 </p>
               </dd>
               <dt>
@@ -2147,19 +2148,8 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The total number of frames dropped predecode or dropped because the frame missed
-                  its display deadline for this receiver's track. It is the same definition as
-                  <code>droppedVideoFrames</code> in Section 5 of [[!MEDIA-SOURCE]].
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>framesCorrupted</code></dfn> of type <span class=
-                "idlMemberType"><a>unsigned long</a></span>
-              </dt>
-              <dd>
-                <p>
-                  The total number of corrupted frames that have been detected for this receiver.
-                  It is the same definition as <code>corruptedVideoFrames</code> in Section 5 of
-                  [[!MEDIA-SOURCE]].
+                  its display deadline for this receiver's track. As defined in Appendix A (g) of
+                  [[!RFC7004]].
                 </p>
               </dd>
               <dt>
@@ -2169,7 +2159,9 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The cumulative number of partial frames lost, as defined in Appendix A (j) of
-                  [[!RFC7004]].
+                  [[!RFC7004]]. This metric is incremented when the frame is sent to the decoder.
+                  If the partial frame is received and recovered via retransmission or FEC before
+                  decoding, the framesReceived counter is incremented.
                 </p>
               </dd>
               <dt>
