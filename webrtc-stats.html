@@ -972,7 +972,6 @@ enum RTCStatsType {
              unsigned long      packetsReceived;
              long               packetsLost;
              double             jitter;
-             unsigned long      packetsDuplicated;
              unsigned long      packetsDiscarded;
              unsigned long      packetsRepaired;
              unsigned long      burstPacketsLost;
@@ -1023,20 +1022,6 @@ enum RTCStatsType {
                   Packet Jitter measured in seconds for this SSRC. Calculated as defined in section
                   6.4.1. of [[!RFC3550]].
                 </p>
-              </dd>
-              <dt>
-                <dfn><code>packetsDuplicated</code></dfn> of type <span class=
-                "idlMemberType"><a>unsigned long</a></span>
-              </dt>
-              <dd>
-                The cumulative number of packets discarded because they are duplicated. Duplicate
-                packets are not counted in <code><a>packetsDiscarded</a></code>.<br>
-                Duplicated packets have the same RTP sequence number and content as a previously
-                received packet. If multiple duplicates of a packet are received, all of them are
-                counted.<br>
-                An improved estimate of lost packets can be calculated by adding
-                <a>packetsDuplicated</a> to <a>packetsLost</a>; this will always result in a
-                positive number, but not the same number as RFC 3550 would calculate.
               </dd>
               <dt>
                 <dfn><code>packetsDiscarded</code></dfn> of type <span class=
@@ -1159,7 +1144,8 @@ enum RTCStatsType {
         </h3>
         <p>
           The <dfn>RTCInboundRTPStreamStats</dfn> dictionary represents the measurement metrics for
-          the incoming RTP media stream.
+          the incoming RTP media stream. The timestamp reported in the statistics object is the time
+          at which the data was sampled.
         </p>
         <div>
           <pre class="idl">dictionary RTCInboundRTPStreamStats : RTCReceivedRTPStreamStats {
@@ -1167,8 +1153,10 @@ enum RTCStatsType {
              unsigned long        framesDecoded;
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
              double               averageRtcpInterval;
+             unsigned long        fecPacketsReceived;
              unsigned long long   bytesReceived;
-             unsigned long      packetsFailedDecryption;
+             unsigned long        packetsFailedDecryption;
+             unsigned long        packetsDuplicated;
              record&lt;USVString, unsigned long&gt; perDscpPacketsReceived;
             };</pre>
           <section>
@@ -1193,8 +1181,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Only valid for video. It represents the total number of frames correctly decoded
-                  for this SSRC. Same definition as <code>totalVideoFrames</code> in Section 5 of
-                  [[!MEDIA-SOURCE]].
+                  for this SSRC, i.e., frames that would be displayed if no frames are dropped.
                 </p>
               </dd>
               <dt>
@@ -1221,6 +1208,16 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn><code>fecPacketsReceived</code></dfn> of type <span class="idlMemberType"><a>unsigned
+                long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of RTP FEC packets received for this SSRC. This counter can also be incremented
+                  when receiving FEC packets in-band with media packets (e.g., with Opus).
+                </p>
+              </dd>
+              <dt>
                 <dfn><code>bytesReceived</code></dfn> of type <span class=
                 "idlMemberType"><a>unsigned long long</a></span>
               </dt>
@@ -1240,6 +1237,20 @@ enum RTCStatsType {
                   procedures in [[!RFC3711]]. These packets are not counted by
                   <code><a>packetsDiscarded</a></code>.
                 </p>
+              </dd>
+              <dt>
+                <dfn><code>packetsDuplicated</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long</a></span>
+              </dt>
+              <dd>
+                The cumulative number of packets discarded because they are duplicated. Duplicate
+                packets are not counted in <code><a>packetsDiscarded</a></code>.<br>
+                Duplicated packets have the same RTP sequence number and content as a previously
+                received packet. If multiple duplicates of a packet are received, all of them are
+                counted.<br>
+                An improved estimate of lost packets can be calculated by adding
+                <a>packetsDuplicated</a> to <a>packetsLost</a>; this will always result in a
+                positive number, but not the same number as RFC 3550 would calculate.
               </dd>
               <dt>
                 <dfn><code>perDscpPacketsReceived</code></dfn> of type <span class=
@@ -1264,7 +1275,9 @@ enum RTCStatsType {
         </h3>
         <p>
           The <dfn>RTCRemoteInboundRTPStreamStats</dfn> dictionary represents the remote endpoint's
-          measurement metrics for its incoming RTP stream (our outgoing RTP stream).
+          measurement metrics for a particular incoming RTP stream (corresponding to an outgoing
+          RTP stream at the sending endpoint). The timestamp reported in the statistics object is
+          the time at which the corresponding RTCP RR was received.
         </p>
         <div>
           <pre class="idl">dictionary RTCRemoteInboundRTPStreamStats : RTCReceivedRTPStreamStats {
@@ -1322,6 +1335,7 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCSentRTPStreamStats : RTCRTPStreamStats {
              unsigned long      packetsSent;
              unsigned long      packetsDiscardedOnSend;
+             unsigned long      fecPacketsSent;
              unsigned long long bytesSent;
              unsigned long long bytesDiscardedOnSend;
 };</pre>
@@ -1351,6 +1365,16 @@ enum RTCStatsType {
                   errors, i.e. a socket error occured when handing the packets to the socket. This
                   might happen due to various reasons, including full buffer or no available
                   memory.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>fecPacketsSent</code></dfn> of type <span class="idlMemberType"><a>unsigned
+                long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of RTP FEC packets sent for this SSRC. This counter can also be incremented
+                  when sending FEC packets in-band with media packets (e.g., with Opus).
                 </p>
               </dd>
               <dt>
@@ -1385,7 +1409,8 @@ enum RTCStatsType {
         </h3>
         <p>
           The <dfn>RTCOutboundRTPStreamStats</dfn> dictionary represents the measurement metrics
-          for the outgoing RTP stream.
+          for the outgoing RTP stream. The timestamp reported in the statistics object is the time
+          at which the data was sampled.
         </p>
         <div>
           <pre class="idl">dictionary RTCOutboundRTPStreamStats : RTCSentRTPStreamStats {
@@ -1588,7 +1613,9 @@ enum RTCStatsType {
         </h3>
         <p>
           The <dfn>RTCRemoteOutboundRTPStreamStats</dfn> dictionary represents the remote
-          endpoint's measurement metrics for its outgoing RTP stream (our incoming RTP stream).
+          endpoint's measurement metrics for its outgoing RTP stream (corresponding to an
+          outgoing RTP stream at the sending endpoint). The timestamp reported in the
+          statistics object is the time at which the corresponding RTCP SR was received.
         </p>
         <div>
           <pre class="idl">dictionary RTCRemoteOutboundRTPStreamStats : RTCSentRTPStreamStats {
@@ -2067,7 +2094,6 @@ enum RTCStatsType {
              unsigned long       keyFramesReceived;
              unsigned long       framesDecoded;
              unsigned long       framesDropped;
-             unsigned long       framesCorrupted;
              unsigned long       partialFramesLost;
              unsigned long       fullFramesLost;
 };</pre>
@@ -2127,7 +2153,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the total number of frames received for this receiver.
+                  Represents the total number of complete frames received for this receiver.
+                  This metric is incremented when the complete frame is received.
                 </p>
               </dd>
               <dt>
@@ -2136,10 +2163,13 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the total number of key frames received for this MediaStreamTrack,
+                  Represents the total number of complete key frames received for this MediaStreamTrack,
                   such as Infra-frames in VP8 [[RFC6386]] or I-frames in H.264 [[RFC6184]]. This is
                   a subset of <code>framesReceived</code>. <code>framesReceived -
                   keyFramesReceived</code> gives you the number of delta frames received.
+                  This metric is incremented when the complete key frame is received. It is
+                  not incremented if a partial key frames is received and sent for decoding,
+                  i.e., the frame could not be recovered via retransmission or FEC.
                 </p>
               </dd>
               <dt>
@@ -2148,9 +2178,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the total number of frames correctly decoded for this receiver,
-                  independent of which SSRC it was received from. It is defined as
-                  <code>totalVideoFrames</code> in Section 5 of [[!MEDIA-SOURCE]].
+                  Only valid for video. It represents the total number of frames correctly decoded
+                  for this SSRC, i.e., frames that would be displayed if no frames are dropped.
                 </p>
               </dd>
               <dt>
@@ -2160,19 +2189,8 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The total number of frames dropped predecode or dropped because the frame missed
-                  its display deadline for this receiver's track. It is the same definition as
-                  <code>droppedVideoFrames</code> in Section 5 of [[!MEDIA-SOURCE]].
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>framesCorrupted</code></dfn> of type <span class=
-                "idlMemberType"><a>unsigned long</a></span>
-              </dt>
-              <dd>
-                <p>
-                  The total number of corrupted frames that have been detected for this receiver.
-                  It is the same definition as <code>corruptedVideoFrames</code> in Section 5 of
-                  [[!MEDIA-SOURCE]].
+                  its display deadline for this receiver's track. As defined in Appendix A (g) of
+                  [[!RFC7004]].
                 </p>
               </dd>
               <dt>
@@ -2182,7 +2200,9 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The cumulative number of partial frames lost, as defined in Appendix A (j) of
-                  [[!RFC7004]].
+                  [[!RFC7004]]. This metric is incremented when the frame is sent to the decoder.
+                  If the partial frame is received and recovered via retransmission or FEC before
+                  decoding, the framesReceived counter is incremented.
                 </p>
               </dd>
               <dt>
