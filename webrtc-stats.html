@@ -1144,7 +1144,8 @@ enum RTCStatsType {
         </h3>
         <p>
           The <dfn>RTCInboundRTPStreamStats</dfn> dictionary represents the measurement metrics for
-          the incoming RTP media stream.
+          the incoming RTP media stream. The timestamp reported in the statistics object is the time
+          at which the data was sampled.
         </p>
         <div>
           <pre class="idl">dictionary RTCInboundRTPStreamStats : RTCReceivedRTPStreamStats {
@@ -1261,7 +1262,9 @@ enum RTCStatsType {
         </h3>
         <p>
           The <dfn>RTCRemoteInboundRTPStreamStats</dfn> dictionary represents the remote endpoint's
-          measurement metrics for its incoming RTP stream (our outgoing RTP stream).
+          measurement metrics for a particular incoming RTP stream (corresponding to an outgoing
+          RTP stream at the sending endpoint). The timestamp reported in the statistics object is
+          the time at which the corresponding RTCP RR was received.
         </p>
         <div>
           <pre class="idl">dictionary RTCRemoteInboundRTPStreamStats : RTCReceivedRTPStreamStats {
@@ -1393,7 +1396,8 @@ enum RTCStatsType {
         </h3>
         <p>
           The <dfn>RTCOutboundRTPStreamStats</dfn> dictionary represents the measurement metrics
-          for the outgoing RTP stream.
+          for the outgoing RTP stream. The timestamp reported in the statistics object is the time
+          at which the data was sampled.
         </p>
         <div>
           <pre class="idl">dictionary RTCOutboundRTPStreamStats : RTCSentRTPStreamStats {
@@ -1596,7 +1600,9 @@ enum RTCStatsType {
         </h3>
         <p>
           The <dfn>RTCRemoteOutboundRTPStreamStats</dfn> dictionary represents the remote
-          endpoint's measurement metrics for its outgoing RTP stream (our incoming RTP stream).
+          endpoint's measurement metrics for its outgoing RTP stream (corresponding to an
+          outgoing RTP stream at the sending endpoint). The timestamp reported in the
+          statistics object is the time at which the corresponding RTCP SR was received.
         </p>
         <div>
           <pre class="idl">dictionary RTCRemoteOutboundRTPStreamStats : RTCSentRTPStreamStats {
