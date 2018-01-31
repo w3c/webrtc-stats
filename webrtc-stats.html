@@ -118,7 +118,9 @@
         <code><dfn data-cite="!WEBRTC#dom-rtcstats-type">RTCStats.type</dfn></code>,
         <code><dfn data-cite="!WEBRTC#dom-rtcstats-id">RTCStats.id</dfn></code>,
         <code><dfn data-cite="!WEBRTC#dom-rtccertificate">RTCCertificate</dfn></code>, are defined
-        in [[!WEBRTC]].
+        <code><dfn data-cite="!WEBRTC#dom-rtccertificate">RTCCertificate</dfn></code>,
+        <code><dfn data-cite="!WEBRTC#event-statslifetimeended">statslifetimeended</dfn></code> are
+        defined in [[!WEBRTC]].
         <code><dfn data-cite="!HIGHRES-TIME#dom-performance-timeOrigin">performance.timeOrigin</dfn></code>
         and <code><dfn data-cite="!HIGHRES-TIME#dom-performance-now">performance.now()</dfn></code>
         are defined in [[!HIGHRES-TIME]].
@@ -197,40 +199,6 @@
       </p>
       <section>
         <h3>
-          Additional RTCStats attributes that are defined in this specification
-        </h3>
-        <pre class="idl">
-        partial dictionary RTCStats {
-        boolean objectDeleted = false;
-        };
-      </pre>
-        <p>
-          The following housekeeping objects are added to <code>RTCStats</code>:
-        </p>
-        <dl data-link-for="RTCStats" data-dfn-for="RTCStats">
-          <dt>
-            <dfn><code>objectDeleted</code></dfn>
-          </dt>
-          <dd>
-            <p>
-              Indicates whether the monitored object still exists. Stats objects that no longer
-              correspond to a monitored object will have "objectDeleted" set to true, while stats
-              objects that correspond to existing monitored objecs will not have the
-              "objectDeleted" member.
-            </p>
-            <p>
-              When a monitored object is destroyed, a final stats object is produced, carrying the
-              values current at the time of destruction. This object will be returned, with a
-              timestamp reflecting the time of destruction, whenever getStats() is called, as long
-              as the PeerConnection exists. This is important in order to report consistently on
-              short-lived objects and to be able to consistently report totals over the lifetime of
-              a PeerConnection.
-            </p>
-          </dd>
-        </dl>
-      </section>
-      <section>
-        <h3>
           Guidelines for design of stats objects
         </h3>
         <p>
@@ -307,15 +275,26 @@
       </section>
       <section>
         <h3>
-          Stats objects for deleted monitored objects
+          Lifetime considerations for monitored objects
         </h3>
         <p>
+          The object descriptions will say what the lifetime of an object is. If no lifetime is
+          noted, the object lasts until the PeerConnection object is destroyed.
+        </p>
+        <p>
           When a monitored object is destroyed, a final stats object is produced, carrying the
-          values current at the time of destruction. This object will be returned, with a timestamp
-          reflecting the time of destruction, whenever getStats() is called, as long as the
-          PeerConnection exists. This is important in order to report consistently on short-lived
-          objects and to be able to consistently report totals over the lifetime of a
-          PeerConnection.
+          values current at the time of destruction. This object will be made available, with a
+          timestamp reflecting the time of destruction, using the
+          <code><a>statslifetimeended</a></code> event on the associated PeerConnection. This is
+          important in order to report consistently on short-lived objects and to be able to
+          consistently report totals over the lifetime of a PeerConnection.
+        </p>
+        <p>
+          When an object is destroyed, we can guarantee that no subsequent getStats() call will
+          reference the destroyed object. We also guarantee that the stats id of the destroyed
+          object will never be reused for another object. This ensures that an application that
+          collects deleted objects will always be able to uniquely identify the object pointed to
+          in the result of any getStats() call.
         </p>
       </section>
       <section>
@@ -542,6 +521,10 @@ enum RTCStatsType {
               <code><a>RTCSenderAudioTrackAttachmentStats</a></code>, both inherited from
               <code><a>RTCMediaHandlerStats</a></code>.
             </p>
+            <p>
+              The monitored "track" object is deleted when the track is disconnected from the
+              PeerConnection.
+            </p>
           </dd>
           <dt>
             <dfn><code>sender</code></dfn>
@@ -580,6 +563,10 @@ enum RTCStatsType {
               ICE candidate pair statistics related to the <code>RTCIceTransport</code> objects. It
               is accessed by the <code><a>RTCIceCandidatePairStats</a></code>.
             </p>
+            <p>
+              A candidate pair is deleted when the RTCIceTransport does an ICE restart, and the
+              candidate pair is no longer in use.
+            </p>
           </dd>
           <dt>
             <dfn><code>local-candidate</code></dfn>
@@ -590,6 +577,10 @@ enum RTCStatsType {
               It is accessed by the <code><a>RTCIceCandidateStats</a></code> for the local
               candidate.
             </p>
+            <p>
+              A local candidate is deleted when the RTCIceTransport does an ICE restart, and the
+              candidate is no longer in use.
+            </p>
           </dd>
           <dt>
             <dfn><code>remote-candidate</code></dfn>
@@ -599,6 +590,10 @@ enum RTCStatsType {
               ICE remote candidate statistics related to the <code>RTCIceTransport</code> objects.
               It is accessed by the <code><a>RTCIceCandidateStats</a></code> for the remote
               candidate.
+            </p>
+            <p>
+              A remote candidate is deleted when the RTCIceTransport does an ICE restart, and the
+              candidate is no longer in use.
             </p>
           </dd>
           <dt>
