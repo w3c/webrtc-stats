@@ -119,6 +119,9 @@
         <code><dfn data-cite="!WEBRTC#dom-rtcstats-id">RTCStats.id</dfn></code>,
         <code><dfn data-cite="!WEBRTC#dom-rtccertificate">RTCCertificate</dfn></code>, are defined
         in [[!WEBRTC]].
+        <code><dfn data-cite="!HIGHRES-TIME#dom-performance-timeOrigin">performance.timeOrigin</dfn></code>
+        and <code><dfn data-cite="!HIGHRES-TIME#dom-performance-now">performance.now()</dfn></code>
+        are defined in [[!HIGHRES-TIME]].
       </p>
     </section>
     <section class="informative">
@@ -187,9 +190,10 @@
         };
       </pre>
       <p>
-        Timestamps are expressed with DOMHighResTimeStamp [[!HIGHRES-TIME]]. Unless otherwise
-        specified, timestamps are relative to the UNIX epoch (Jan 1, 1970, UTC) and are measured by
-        a local clock.
+        Timestamps are expressed with DOMHighResTimeStamp
+        [[!HIGHRES-TIME]], and are defined
+        as <a>performance.timeOrigin</a> + <a>performance.now()</a> at
+        the time the information is collected.
       </p>
       <section>
         <h3>
