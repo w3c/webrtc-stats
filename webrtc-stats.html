@@ -1153,6 +1153,7 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCInboundRTPStreamStats : RTCReceivedRTPStreamStats {
+             DOMString            receiverId;
              DOMString            remoteId;
              unsigned long        framesDecoded;
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
@@ -1169,6 +1170,16 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCInboundRTPStreamStats" data-dfn-for="RTCInboundRTPStreamStats"
             class="dictionary-members">
+              <dt>
+                <dfn><code>receiverId</code></dfn> of type <span class="idlMemberType"><a>DOMString
+                </a></span>
+              </dt>
+              <dd>
+                <p>
+                  The stats ID used to look up the <code><a>RTCAudioReceiverStats</a></code> or
+                  <code><a>RTCVideoReceiverStats</a></code> object receiving this stream.
+                </p>
+              </dd>
               <dt>
                 <dfn><code>remoteId</code></dfn> of type <span class=
                 "idlMemberType"><a>DOMString</a></span>
@@ -1418,6 +1429,7 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCOutboundRTPStreamStats : RTCSentRTPStreamStats {
+             DOMString            senderId;
              DOMString            remoteId;
              DOMHighResTimeStamp  lastPacketSentTimestamp;
              double               targetBitrate;
@@ -1434,6 +1446,16 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCOutboundRTPStreamStats" data-dfn-for="RTCOutboundRTPStreamStats"
             class="dictionary-members">
+              <dt>
+                <dfn><code>senderId</code></dfn> of type <span class="idlMemberType"><a>DOMString
+                </a></span>
+              </dt>
+              <dd>
+                <p>
+                  The stats ID used to look up the <code><a>RTCAudioSenderStats</a></code> or
+                  <code><a>RTCVideoSenderStats</a></code> object sending this stream.
+                </p>
+              </dd>
               <dt>
                 <dfn><code>remoteId</code></dfn> of type <span class=
                 "idlMemberType"><a>DOMString</a></span>
