@@ -676,7 +676,6 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCRTPStreamStats : RTCStats {
              unsigned long       ssrc;
              DOMString           mediaType;
-             DOMString           trackId;
              DOMString           transportId;
              DOMString           codecId;
              unsigned long       firCount;
@@ -712,14 +711,6 @@ enum RTCStatsType {
                   member of <code>RTCCodecStats</code>, and MUST match the "kind" attribute of the
                   related MediaStreamTrack.
                 </p>
-              </dd>
-              <dt>
-                <dfn><code>trackId</code></dfn> of type <span class=
-                "idlMemberType"><a>DOMString</a></span>
-              </dt>
-              <dd>
-                The unique identifier of the stats object representing the associated
-                MediaStreamTrack.
               </dd>
               <dt>
                 <dfn><code>transportId</code></dfn> of type <span class=
@@ -1149,6 +1140,7 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCInboundRTPStreamStats : RTCReceivedRTPStreamStats {
+             DOMString            trackId;
              DOMString            remoteId;
              unsigned long        framesDecoded;
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
@@ -1165,6 +1157,15 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCInboundRTPStreamStats" data-dfn-for="RTCInboundRTPStreamStats"
             class="dictionary-members">
+              <dt>
+                <dfn><code>trackId</code></dfn> of type <span class="idlMemberType"><a>DOMString
+                </a></span>
+              </dt>
+              <dd>
+                The identifier of the stats object representing the receiving track, an
+                <code><a>RTCReceiverAudioTrackAttachmentStats</a></code> or
+                <code><a>RTCReceiverVideoTrackAttachmentStats</a></code>.
+              </dd>
               <dt>
                 <dfn><code>remoteId</code></dfn> of type <span class=
                 "idlMemberType"><a>DOMString</a></span>
@@ -1414,6 +1415,7 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCOutboundRTPStreamStats : RTCSentRTPStreamStats {
+             DOMString            trackId;
              DOMString            remoteId;
              DOMHighResTimeStamp  lastPacketSentTimestamp;
              double               targetBitrate;
@@ -1430,6 +1432,15 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCOutboundRTPStreamStats" data-dfn-for="RTCOutboundRTPStreamStats"
             class="dictionary-members">
+              <dt>
+                <dfn><code>trackId</code></dfn> of type <span class="idlMemberType"><a>DOMString
+                </a></span>
+              </dt>
+              <dd>
+                The identifier of the stats object representing the current track attachment to
+                the sender of this stream, an <code><a>RTCSenderAudioTrackAttachmentStats</a></code>
+                or <code><a>RTCSenderVideoTrackAttachmentStats</a></code>.
+              </dd>
               <dt>
                 <dfn><code>remoteId</code></dfn> of type <span class=
                 "idlMemberType"><a>DOMString</a></span>
