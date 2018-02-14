@@ -332,10 +332,10 @@
           promise resolving or an event firing, subsequent new getStats() calls must return
           up-to-date dictionaries for the affected objects. For example, if a track is added with
           addTrack() subsequent getStats() calls must resolve with a corresponding
-          RTCMediaStreamTrackStats object. If you call setRemoteDescription() removing a remote
+          RTCMediaHandlerStats object. If you call setRemoteDescription() removing a remote
           track, upon the promise resolving or an associated event (stream's onremovetrack or
           track's onmute) firing, calling getStats() must resolve with an up-to-date
-          RTCMediaStreamTrackStats object.
+          RTCMediaHandlerStats object.
         </p>
       </section>
     </section><!-- VS: getStats() remains in base spec! -->
@@ -538,9 +538,9 @@ enum RTCStatsType {
             <p>
               Contains statistics related to a specific MediaStreamTrack and the corresponding
               media-level metrics. It is accessed by either
-              <code><a>RTCLocalVideoStreamTrackStats</a></code> or
-              <code><a>RTCLocalAudioStreamTrackStats</a></code>, both inherited from
-              <code><a>RTCMediaStreamTrackStats</a></code>.
+              <code><a>RTCSenderVideoTrackAttachmentStats</a></code> or
+              <code><a>RTCSenderAudioTrackAttachmentStats</a></code>, both inherited from
+              <code><a>RTCMediaHandlerStats</a></code>.
             </p>
           </dd>
           <dt>
@@ -1882,10 +1882,10 @@ enum RTCStatsType {
       </section>
       <section id="mststats-dict*">
         <h3>
-          <dfn>RTCMediaStreamTrackStats</dfn> dictionary
+          <dfn>RTCMediaHandlerStats</dfn> dictionary
         </h3>
         <div>
-          <pre class="idl">dictionary RTCMediaStreamTrackStats : RTCStats {
+          <pre class="idl">dictionary RTCMediaHandlerStats : RTCStats {
              DOMString           trackIdentifier;
              boolean             ended;
              DOMString           kind;
@@ -1893,9 +1893,9 @@ enum RTCStatsType {
 };</pre>
           <section>
             <h2>
-              Dictionary <a class="idlType">RTCMediaStreamTrackStats</a> Members
+              Dictionary <a class="idlType">RTCMediaHandlerStats</a> Members
             </h2>
-            <dl data-link-for="RTCMediaStreamTrackStats" data-dfn-for="RTCMediaStreamTrackStats"
+            <dl data-link-for="RTCMediaHandlerStats" data-dfn-for="RTCMediaHandlerStats"
             class="dictionary-members">
               <dt>
                 <dfn><code>trackIdentifier</code></dfn> of type <span class=
@@ -1949,19 +1949,19 @@ enum RTCStatsType {
       </section>
       <section id="vststats-dict*">
         <h3>
-          <dfn>RTCVideoStreamTrackStats</dfn> dictionary
+          <dfn>RTCVideoHandlerStats</dfn> dictionary
         </h3>
         <div>
-          <pre class="idl">dictionary RTCVideoStreamTrackStats : RTCMediaStreamTrackStats {
+          <pre class="idl">dictionary RTCVideoHandlerStats : RTCMediaHandlerStats {
              unsigned long       frameWidth;
              unsigned long       frameHeight;
              double              framesPerSecond;
 };</pre>
           <section>
             <h2>
-              Dictionary <a class="idlType">RTCVideoStreamTrackStats</a> Members
+              Dictionary <a class="idlType">RTCVideoHandlerStats</a> Members
             </h2>
-            <dl data-link-for="RTCVideoStreamTrackStats" data-dfn-for="RTCVideoStreamTrackStats"
+            <dl data-link-for="RTCVideoHandlerStats" data-dfn-for="RTCVideoHandlerStats"
             class="dictionary-members">
               <dt>
                 <dfn><code>frameWidth</code></dfn> of type <span class="idlMemberType"><a>unsigned
@@ -2012,7 +2012,7 @@ enum RTCStatsType {
           addTransceiver, or by media negotiation.
         </p>
         <div>
-          <pre class="idl">dictionary RTCVideoSenderStats : RTCVideoStreamTrackStats {
+          <pre class="idl">dictionary RTCVideoSenderStats : RTCVideoHandlerStats {
              unsigned long       framesCaptured;
              unsigned long       framesSent;
              unsigned long       keyFramesSent;
@@ -2068,10 +2068,10 @@ enum RTCStatsType {
       </section>
       <section id="lvststats-dict*">
         <h3>
-          <dfn>RTCLocalVideoStreamTrackStats</dfn> dictionary
+          <dfn>RTCSenderVideoTrackAttachmentStats</dfn> dictionary
         </h3>
         <p>
-          An RTCLocalVideoStreamTrackStats object represents the stats about one attachment of a
+          An RTCSenderVideoTrackAttachmentStats object represents the stats about one attachment of a
           video MediaStreamTrack to the PeerConnection object for which one calls getStats.
         </p>
         <p>
@@ -2080,7 +2080,7 @@ enum RTCStatsType {
         </p>
         <p>
           If a video track is attached twice (via addTransceiver or replaceTrack), there will be
-          two RTCLocalVideoStreamTrackStats objects, one for each attachment. They will have the
+          two RTCSenderVideoTrackAttachmentStats objects, one for each attachment. They will have the
           same "trackIdentifier" attribute, but different "id" attributes.
         </p>
         <p>
@@ -2088,14 +2088,14 @@ enum RTCStatsType {
           it continues to appear, but with the "objectDeleted" member set to <code>true</code>.
         </p>
         <div>
-          <pre class="idl">dictionary RTCLocalVideoStreamTrackStats : RTCVideoSenderStats {
+          <pre class="idl">dictionary RTCSenderVideoTrackAttachmentStats : RTCVideoSenderStats {
 };</pre>
           <section>
             <h2>
-              Dictionary <a class="idlType">RTCLocalVideoStreamTrackStats</a> Members
+              Dictionary <a class="idlType">RTCSenderVideoTrackAttachmentStats</a> Members
             </h2>
-            <dl data-link-for="RTCLocalVideoStreamTrackStats" data-dfn-for=
-            "RTCLocalVideoStreamTrackStats" class="dictionary-members"></dl>
+            <dl data-link-for="RTCSenderVideoTrackAttachmentStats" data-dfn-for=
+            "RTCSenderVideoTrackAttachmentStats" class="dictionary-members"></dl>
           </section>
         </div>
       </section>
@@ -2112,7 +2112,7 @@ enum RTCStatsType {
           addTransceiver, or by media negotiation.
         </p>
         <div>
-          <pre class="idl">dictionary RTCVideoReceiverStats : RTCVideoStreamTrackStats {
+          <pre class="idl">dictionary RTCVideoReceiverStats : RTCVideoHandlerStats {
              DOMHighResTimeStamp estimatedPlayoutTimestamp;
              double              jitterBufferDelay;
              unsigned long long  jitterBufferEmittedCount;
@@ -2247,10 +2247,10 @@ enum RTCStatsType {
       </section>
       <section id="aststats-dict*">
         <h3>
-          <dfn>RTCAudioStreamTrackStats</dfn> dictionary
+          <dfn>RTCAudioHandlerStats</dfn> dictionary
         </h3>
         <div>
-          <pre class="idl">dictionary RTCAudioStreamTrackStats : RTCMediaStreamTrackStats {
+          <pre class="idl">dictionary RTCAudioHandlerStats : RTCMediaHandlerStats {
              double              audioLevel;
              double              totalAudioEnergy;
              boolean             voiceActivityFlag;
@@ -2258,9 +2258,9 @@ enum RTCStatsType {
 };</pre>
           <section>
             <h2>
-              Dictionary <a class="idlType">RTCAudioStreamTrackStats</a> Members
+              Dictionary <a class="idlType">RTCAudioHandlerStats</a> Members
             </h2>
-            <dl data-link-for="RTCAudioStreamTrackStats" data-dfn-for="RTCAudioStreamTrackStats"
+            <dl data-link-for="RTCAudioHandlerStats" data-dfn-for="RTCAudioHandlerStats"
             class="dictionary-members">
               <dt>
                 <dfn><code>audioLevel</code></dfn> of type <span class=
@@ -2375,7 +2375,7 @@ enum RTCStatsType {
           addTransceiver, or by media negotiation.
         </p>
         <div>
-          <pre class="idl">dictionary RTCAudioSenderStats : RTCAudioStreamTrackStats {
+          <pre class="idl">dictionary RTCAudioSenderStats : RTCAudioHandlerStats {
              double              echoReturnLoss;
              double              echoReturnLossEnhancement;
              unsigned long long  totalSamplesSent;
@@ -2423,10 +2423,10 @@ enum RTCStatsType {
       </section>
       <section id="laststats-dict*">
         <h3>
-          <dfn>RTCLocalAudioStreamTrackStats</dfn> dictionary
+          <dfn>RTCSenderAudioTrackAttachmentStats</dfn> dictionary
         </h3>
         <p>
-          An RTCLocalAudioStreamTrackStats object represents the stats about one attachment of an
+          An RTCSenderAudioTrackAttachmentStats object represents the stats about one attachment of an
           audio MediaStreamTrack to the PeerConnection object for which one calls getStats.
         </p>
         <p>
@@ -2435,7 +2435,7 @@ enum RTCStatsType {
         </p>
         <p>
           If an audio track is attached twice (via addTransceiver or replaceTrack), there will be
-          two RTCLocalAudioStreamTrackStats objects, one for each attachment. They will have the
+          two RTCSenderAudioTrackAttachmentStats objects, one for each attachment. They will have the
           same "trackIdentifier" attribute, but different "id" attributes.
         </p>
         <p>
@@ -2443,14 +2443,14 @@ enum RTCStatsType {
           it continues to appear, but with the "objectDeleted" member set to <code>true</code>.
         </p>
         <div>
-          <pre class="idl">dictionary RTCLocalAudioStreamTrackStats : RTCVideoSenderStats {
+          <pre class="idl">dictionary RTCSenderAudioTrackAttachmentStats : RTCAudioSenderStats {
 };</pre>
           <section>
             <h2>
-              Dictionary <a class="idlType">RTCLocalAudioStreamTrackStats</a> Members
+              Dictionary <a class="idlType">RTCSenderAudioTrackAttachmentStats</a> Members
             </h2>
-            <dl data-link-for="RTCLocalAudioStreamTrackStats" data-dfn-for=
-            "RTCLocalAudioStreamTrackStats" class="dictionary-members"></dl>
+            <dl data-link-for="RTCSenderAudioTrackAttachmentStats" data-dfn-for=
+            "RTCSenderAudioTrackAttachmentStats" class="dictionary-members"></dl>
           </section>
         </div>
       </section>
@@ -2467,7 +2467,7 @@ enum RTCStatsType {
           addTransceiver, or by media negotiation.
         </p>
         <div>
-          <pre class="idl">dictionary RTCAudioReceiverStats : RTCAudioStreamTrackStats {
+          <pre class="idl">dictionary RTCAudioReceiverStats : RTCAudioHandlerStats {
              DOMHighResTimeStamp estimatedPlayoutTimestamp;
              double              jitterBufferDelay;
              unsigned long long  jitterBufferEmittedCount;
