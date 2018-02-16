@@ -113,15 +113,16 @@
         The term <dfn>RTP stream</dfn> is defined in [[RFC7656]] section 2.1.10.
       </p>
       <p>
-        The terms <code><dfn data-cite="!WEBRTC#dom-rtcstats">RTCStats</dfn></code>, The terms
+        The terms <code><dfn data-cite="!WEBRTC#dom-rtcstats">RTCStats</dfn></code>,
         <code><dfn data-cite="!WEBRTC#dom-rtcstats-timestamp">RTCStats.timestamp</dfn></code>,
         <code><dfn data-cite="!WEBRTC#dom-rtcstats-type">RTCStats.type</dfn></code>,
         <code><dfn data-cite="!WEBRTC#dom-rtcstats-id">RTCStats.id</dfn></code>,
-        <code><dfn data-cite="!WEBRTC#dom-rtccertificate">RTCCertificate</dfn></code>, are defined
-        <code><dfn data-cite="!WEBRTC#dom-rtccertificate">RTCCertificate</dfn></code>,
-        <code><dfn data-cite="!WEBRTC#event-statslifetimeended">statslifetimeended</dfn></code> are
+        <code><dfn data-cite="!WEBRTC#dom-rtccertificate">RTCCertificate</dfn></code>, and
+        <code><dfn data-cite="!WEBRTC#event-statsended">statslifetimeended</dfn></code> are
         defined in [[!WEBRTC]].
-        <code><dfn data-cite="!HIGHRES-TIME#dom-performance-timeOrigin">performance.timeOrigin</dfn></code>
+      </p>
+      <p>
+        The terms <code><dfn data-cite="!HIGHRES-TIME#dom-performance-timeOrigin">performance.timeOrigin</dfn></code>
         and <code><dfn data-cite="!HIGHRES-TIME#dom-performance-now">performance.now()</dfn></code>
         are defined in [[!HIGHRES-TIME]].
       </p>
@@ -252,6 +253,7 @@
           For stats that are measured against time, such as byte counts, no separate counter is
           needed; one can instead divide by the difference in the timestamps.
         </p>
+        
       </section>
       <section>
         <h3>
@@ -278,22 +280,42 @@
           Lifetime considerations for monitored objects
         </h3>
         <p>
-          The object descriptions will say what the lifetime of an object is. If no lifetime is
-          noted, the object lasts until the PeerConnection object is destroyed.
+          The object descriptions will say what the lifetime of a <a>monitored object</a> from the
+          perspective of stats is. When a monitored object is "deleted", it no longer appears in stats;
+          until this happens, it will appear. This may or may not correspond to the actual lifetime
+          of an object in an implementation; what matters for this specification is what appears in stats.
         </p>
         <p>
-          When a monitored object is destroyed, a final stats object is produced, carrying the
-          values current at the time of destruction. This object will be made available, with a
-          timestamp reflecting the time of destruction, using the
+          If a monitored object can only exist
+          in a few instances over the lifetime of a PeerConnection, it may be simplest to consider it
+          "eternal" and never delete it from the set of objects reported on in stats.
+          This type of object will remain visible until the PeerConnection
+          is no longer available; it is also visible in getStats() after pc.close(). This is the default
+          when no lifetime is mentioned in its specification.
+        </p>
+        <p>
+          Objects that might exist in many instances over time SHOULD have a defined time at which
+          they are deleted, at which time a "statsended" event is fired on their behalf. Each
+          event that causes deletions to happen SHOULD fire only one "statsended" event; for instance,
+          an ICE restart SHOULD fire only one event containing the stats for all the discarded candidates
+          and pairs, but may also cause a later event to be fired when the currently-in-use candidate pair
+          and its candidates are discarded.
+        </p>
+        <p>
+          When a <a>monitored object</a> is deleted, a final stats object is produced, carrying the
+          values current at the time of deletion. This object will be made available, with a
+          timestamp reflecting the time of deletion, using the
           <code><a>statslifetimeended</a></code> event on the associated PeerConnection. This is
           important in order to report consistently on short-lived objects and to be able to
           consistently report totals over the lifetime of a PeerConnection.
         </p>
         <p>
-          When an object is destroyed, we can guarantee that no subsequent getStats() call will
-          reference the destroyed object. We also guarantee that the stats id of the destroyed
+          When an object is deleted, we can guarantee that no subsequent getStats() call will
+          contain a <a>stats object reference</a> that references the deleted object
+          We also guarantee that the stats id of the deleted
           object will never be reused for another object. This ensures that an application that
-          collects deleted objects will always be able to uniquely identify the object pointed to
+          collects <a>stats object</a>s for deleted <a>monitored object</a>s will always be able to
+          uniquely identify the object pointed to
           in the result of any getStats() call.
         </p>
       </section>
@@ -315,6 +337,10 @@
           track, upon the promise resolving or an associated event (stream's onremovetrack or
           track's onmute) firing, calling getStats() must resolve with an up-to-date
           RTCMediaHandlerStats object.
+        </p>
+        <p>
+          When the "statsended" event is fired, subsequent getStats() calls MUST NOT return stats
+          for the <a>monitored object</a> that was reported on in the "statsended" event.
         </p>
       </section>
     </section><!-- VS: getStats() remains in base spec! -->
@@ -515,15 +541,16 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              Contains statistics related to a specific MediaStreamTrack and the corresponding
+              Contains statistics related to a specific MediaStreamTrack's attachment
+              to an RTCRtpSender and the corresponding
               media-level metrics. It is accessed by either
               <code><a>RTCSenderVideoTrackAttachmentStats</a></code> or
               <code><a>RTCSenderAudioTrackAttachmentStats</a></code>, both inherited from
               <code><a>RTCMediaHandlerStats</a></code>.
             </p>
             <p>
-              The monitored "track" object is deleted when the track is disconnected from the
-              PeerConnection.
+              The monitored "track" object is deleted when the sender it reports on has
+              its "track" value changed to no longer refer to the same track.
             </p>
           </dd>
           <dt>
@@ -564,8 +591,11 @@ enum RTCStatsType {
               is accessed by the <code><a>RTCIceCandidatePairStats</a></code>.
             </p>
             <p>
-              A candidate pair is deleted when the RTCIceTransport does an ICE restart, and the
-              candidate pair is no longer in use.
+              A candidate pair that is not the current pair for a transport is deleted when the
+              RTCIceTransport does an ICE restart, at the time the state changes to "new". The
+              candidate pair that is the current pair for a transport is deleted after an ICE restart
+              when the RTCIceTransport switches to using a candidate pair generated from the new
+              candidates; this time doesn't correspond to any other externally observable event.
             </p>
           </dd>
           <dt>
@@ -579,7 +609,7 @@ enum RTCStatsType {
             </p>
             <p>
               A local candidate is deleted when the RTCIceTransport does an ICE restart, and the
-              candidate is no longer in use.
+              candidate is no longer a member of any non-deleted candidate pair.
             </p>
           </dd>
           <dt>
@@ -593,7 +623,7 @@ enum RTCStatsType {
             </p>
             <p>
               A remote candidate is deleted when the RTCIceTransport does an ICE restart, and the
-              candidate is no longer in use.
+              candidate is no longer a member of any non-deleted candidate pair.
             </p>
           </dd>
           <dt>
