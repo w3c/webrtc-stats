@@ -2059,9 +2059,10 @@ enum RTCStatsType {
                   Represents the total number of huge frames sent by this RTCRtpSender (or for this
                   MediaStreamTrack, if <code>type</code> is <code>"track"</code>). Huge frames, by
                   definition, are frames with encoded size at least 2.5 times the target bitrate
-                  per second divided by target fps set for the encoder at the time. These are
-                  usually difficult to encode frames with a lot of changes in the picture. This can
-                  be used to estimate, e.g slide changes in the streamed presentation.
+                  per second divided by target fps set for the encoder at the time the frame was
+                  encoded. These are usually difficult to encode frames with a lot of changes in the
+                  picture. This can be used to estimate, e.g slide changes in the streamed
+                  presentation.
                 </p>
               </dd>
               <dt>
