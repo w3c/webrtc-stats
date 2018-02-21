@@ -3082,7 +3082,6 @@ enum RTCNetworkType {
              DOMString                     localCandidateId;
              DOMString                     remoteCandidateId;
              RTCStatsIceCandidatePairState state;
-             unsigned long long            priority;
              boolean                       nominated;
              unsigned long                 packetsSent;
              unsigned long                 packetsReceived;
@@ -3153,15 +3152,6 @@ enum RTCNetworkType {
                 <p>
                   Represents the state of the checklist for the local and remote candidates in a
                   pair.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>priority</code></dfn> of type <span class="idlMemberType"><a>unsigned
-                long long</a></span>
-              </dt>
-              <dd>
-                <p>
-                  Calculated from candidate priorities as defined in [[!RFC5245]] section 5.7.2.
                 </p>
               </dd>
               <dt>
@@ -3575,6 +3565,7 @@ enum RTCNetworkType {
         <pre class="idl">partial dictionary RTCIceCandidatePairStats {
           double totalRtt;
           double currentRtt;
+          unsigned long long priority;
           };
           </pre>
         <section>
@@ -3596,6 +3587,15 @@ enum RTCNetworkType {
             <dd>
               <p>
                 This field got renamed to "currentRoundTripTime" in Dec 2016.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>priority</code></dfn>
+            </dt>
+            <dd>
+              <p>
+                This field got removed in Feb 2018, as it cannot be represented in 53 bits.
+                It can be recalculated if needed as defined in [[RFC5245]] section 5.7.2.
               </p>
             </dd>
           </dl>
