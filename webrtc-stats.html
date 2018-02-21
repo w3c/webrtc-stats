@@ -118,7 +118,7 @@
         <code><dfn data-cite="!WEBRTC#dom-rtcstats-type">RTCStats.type</dfn></code>,
         <code><dfn data-cite="!WEBRTC#dom-rtcstats-id">RTCStats.id</dfn></code>,
         <code><dfn data-cite="!WEBRTC#dom-rtccertificate">RTCCertificate</dfn></code>, and
-        <code><dfn data-cite="!WEBRTC#event-statsended">statslifetimeended</dfn></code> are
+        <code><dfn data-cite="!WEBRTC#event-statsended">statsended</dfn></code> are
         defined in [[!WEBRTC]].
       </p>
       <p>
@@ -294,18 +294,19 @@
           when no lifetime is mentioned in its specification.
         </p>
         <p>
-          Objects that might exist in many instances over time SHOULD have a defined time at which
-          they are deleted, at which time a "statsended" event is fired on their behalf. Each
-          event that causes deletions to happen SHOULD fire only one "statsended" event; for instance,
-          an ICE restart SHOULD fire only one event containing the stats for all the discarded candidates
-          and pairs, but may also cause a later event to be fired when the currently-in-use candidate pair
-          and its candidates are discarded.
+          Objects that might exist in many instances over time should have a defined time at which
+          they are deleted, at which time a <a>statsended</a> event is fired on their behalf. Each
+          event that causes deletions to happen MUST fire only one <a>statsended</a> event, but there are
+          cases where one action causes multiple deletion events; for instance,
+          an ICE restart will fire only one event containing the stats for all the discarded candidates
+          and pairs, but will also cause a later event to be fired when the currently-in-use candidate
+          pair and its candidates are discarded.
         </p>
         <p>
           When a <a>monitored object</a> is deleted, a final stats object is produced, carrying the
           values current at the time of deletion. This object will be made available, with a
           timestamp reflecting the time of deletion, using the
-          <code><a>statslifetimeended</a></code> event on the associated PeerConnection. This is
+          <code><a>statsended</a></code> event on the associated PeerConnection. This is
           important in order to report consistently on short-lived objects and to be able to
           consistently report totals over the lifetime of a PeerConnection.
         </p>
@@ -339,8 +340,8 @@
           RTCMediaHandlerStats object.
         </p>
         <p>
-          When the "statsended" event is fired, subsequent getStats() calls MUST NOT return stats
-          for the <a>monitored object</a> that was reported on in the "statsended" event.
+          When the <a>statsended</a> event is fired, subsequent getStats() calls MUST NOT return stats
+          for the <a>monitored object</a> that was reported on in the <a>statsended</a> event.
         </p>
       </section>
     </section><!-- VS: getStats() remains in base spec! -->
