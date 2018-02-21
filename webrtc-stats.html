@@ -73,7 +73,7 @@
         <li>It MUST support generating statistics for the type RTCOutboundRtpStreamStats, with
         attributes packetsSent, bytesSent.
         </li>
-        <li>For all subclasses of RTCRtpStreamStats, it MUST include ssrc and mediaType. When stats
+        <li>For all subclasses of RTCRtpStreamStats, it MUST include ssrc and kind. When stats
         exist for both sides of a connection, in the form of an inbound-rtp / remote-outbound-rtp
         pair or an outbound-rtp / remote-inbound-rtp pair, the members remoteId and localId MUST
         also be present.
@@ -679,7 +679,7 @@ enum RTCStatsType {
         <div>
           <pre class="idl">dictionary RTCRtpStreamStats : RTCStats {
              unsigned long       ssrc;
-             DOMString           mediaType;
+             DOMString           kind;
              DOMString           trackId;
              DOMString           transportId;
              DOMString           codecId;
@@ -706,8 +706,7 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>mediaType</code></dfn> of type <span class=
-                "idlMemberType"><a>DOMString</a></span>
+                <dfn><code>kind</code></dfn> of type <span class="idlMemberType"><a>DOMString</a></span>
               </dt>
               <dd>
                 <p>
@@ -1930,7 +1929,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Either "<code>audio</code>" or "<code>video</code>". This reflects the "kind"
-                  attribute of the MediaStreamTrack.
+                  attribute of the MediaStreamTrack, see [[!GETUSERMEDIA]].
                 </p>
               </dd>
               <dt>
@@ -3600,11 +3599,23 @@ enum RTCNetworkType {
             </dd>
           </dl>
         </section>
+          <pre class="idl">partial dictionary RTCRTPStreamStats : RTCStats {
+             DOMString           mediaType;
+             double              averageRTCPInterval;
+};</pre>
         <section>
         <h2>
             Obsolete RTCRtpStreamStats members
           </h2>
           <dl data-dfn-for="RTCRtpStreamStats">
+            <dt>
+              <dfn><code>mediaType</code></dfn> of type <span class="idlMemberType"><a>DOMString</a></span>
+            </dt>
+            <dd>
+              <p>
+                This field got renamed to "kind" in Feb 2018.
+              </p>
+            </dd>
             <dt>
               <dfn><code>averageRTCPInterval</code></dfn>
             </dt>
