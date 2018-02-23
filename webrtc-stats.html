@@ -304,8 +304,7 @@
         </p>
         <p>
           When a <a>monitored object</a> is deleted, a final stats object is produced, carrying the
-          values current at the time of deletion. This object will be made available, with a
-          timestamp reflecting the time of deletion, using the
+          values current at the time of deletion. This object will be made available using the
           <code><a>statsended</a></code> event on the associated PeerConnection. This is
           important in order to report consistently on short-lived objects and to be able to
           consistently report totals over the lifetime of a PeerConnection.
