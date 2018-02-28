@@ -1,3 +1,7 @@
+# WebRTC Stats
+
+[![Build Status](https://travis-ci.org/w3c/webrtc-stats.svg?branch=master)](https://travis-ci.org/w3c/webrtc-stats)
+
 This is the webrtc-stats document, a working document of the W3C
 WEBRTC working group.
 
