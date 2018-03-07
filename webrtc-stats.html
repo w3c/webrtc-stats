@@ -21,7 +21,7 @@
     <section id="abstract">
       <p>
         This document defines a set of WebIDL objects that allow access to the statistical
-        information about a PeerConnection.
+        information about a RTCPeerConnection.
       </p>
       <p>
         These objects are returned from the getStats API that is specified in [[WEBRTC]].
@@ -287,9 +287,9 @@
         </p>
         <p>
           If a monitored object can only exist in a few instances over the lifetime of a
-          PeerConnection, it may be simplest to consider it "eternal" and never delete it from the
+          RTCPeerConnection, it may be simplest to consider it "eternal" and never delete it from the
           set of objects reported on in stats. This type of object will remain visible until the
-          PeerConnection is no longer available; it is also visible in getStats() after pc.close().
+          RTCPeerConnection is no longer available; it is also visible in getStats() after pc.close().
           This is the default when no lifetime is mentioned in its specification.
         </p>
         <p>
@@ -304,9 +304,9 @@
         <p>
           When a <a>monitored object</a> is deleted, a final stats object is produced, carrying the
           values current at the time of deletion. This object will be made available using the
-          <code><a>statsended</a></code> event on the associated PeerConnection. This is important
+          <code><a>statsended</a></code> event on the associated RTCPeerConnection. This is important
           in order to report consistently on short-lived objects and to be able to consistently
-          report totals over the lifetime of a PeerConnection.
+          report totals over the lifetime of a RTCPeerConnection.
         </p>
         <p>
           When an object is deleted, we can guarantee that no subsequent getStats() call will
@@ -327,7 +327,7 @@
           calls for performance benefits, however any implementation must adhere to the following:
         </p>
         <p>
-          When the state of the PeerConnection visibly changes as a result of an API call, a
+          When the state of the RTCPeerConnection visibly changes as a result of an API call, a
           promise resolving or an event firing, subsequent new getStats() calls must return
           up-to-date dictionaries for the affected objects. For example, if a track is added with
           addTrack() subsequent getStats() calls must resolve with a corresponding
@@ -1853,7 +1853,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the number of unique DataChannels returned from a successful
-                  createDataChannel() call on the PeerConnection. If the underlying data transport
+                  createDataChannel() call on the RTCPeerConnection. If the underlying data transport
                   is not established, these may be in the "connecting" state.
                 </p>
               </dd>
@@ -1864,7 +1864,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the number of unique DataChannels signaled in a "datachannel" event on
-                  the PeerConnection.
+                  the RTCPeerConnection.
                 </p>
               </dd>
             </dl>
@@ -2042,7 +2042,7 @@ enum RTCStatsType {
         </h3>
         <p>
           An RTCVideoSenderStats object represents the stats about one video sender of a
-          PeerConnection object for which one calls getStats.
+          RTCPeerConnection object for which one calls getStats.
         </p>
         <p>
           It appears in the stats as soon as the sender is added by either addTrack or
@@ -2134,7 +2134,7 @@ enum RTCStatsType {
         </h3>
         <p>
           An RTCSenderVideoTrackAttachmentStats object represents the stats about one attachment of
-          a video MediaStreamTrack to the PeerConnection object for which one calls getStats.
+          a video MediaStreamTrack to the RTCPeerConnection object for which one calls getStats.
         </p>
         <p>
           It appears in the stats as soon as it is attached (via addTrack, via addTransceiver, via
@@ -2146,7 +2146,7 @@ enum RTCStatsType {
           the same "trackIdentifier" attribute, but different "id" attributes.
         </p>
         <p>
-          If the track is detached from the PeerConnection (via removeTrack or via replaceTrack),
+          If the track is detached from the RTCPeerConnection (via removeTrack or via replaceTrack),
           it continues to appear, but with the "objectDeleted" member set to <code>true</code>.
         </p>
         <div>
@@ -2167,7 +2167,7 @@ enum RTCStatsType {
         </h3>
         <p>
           An RTCVideoReceiverStats object represents the stats about one video receiver of a
-          PeerConnection object for which one calls getStats.
+          RTCPeerConnection object for which one calls getStats.
         </p>
         <p>
           It appears in the stats as soon as the RTCRtpReceiver is added by either addTrack or
@@ -2430,7 +2430,7 @@ enum RTCStatsType {
         </h3>
         <p>
           An RTCAudioSenderStats object represents the stats about one audio sender of a
-          PeerConnection object for which one calls getStats.
+          RTCPeerConnection object for which one calls getStats.
         </p>
         <p>
           It appears in the stats as soon as the RTCRtpSender is added by either addTrack or
@@ -2489,7 +2489,7 @@ enum RTCStatsType {
         </h3>
         <p>
           An RTCSenderAudioTrackAttachmentStats object represents the stats about one attachment of
-          an audio MediaStreamTrack to the PeerConnection object for which one calls getStats.
+          an audio MediaStreamTrack to the RTCPeerConnection object for which one calls getStats.
         </p>
         <p>
           It appears in the stats as soon as it is attached (via addTrack, via addTransceiver, via
@@ -2501,7 +2501,7 @@ enum RTCStatsType {
           the same "trackIdentifier" attribute, but different "id" attributes.
         </p>
         <p>
-          If the track is detached from the PeerConnection (via removeTrack or via replaceTrack),
+          If the track is detached from the RTCPeerConnection (via removeTrack or via replaceTrack),
           it continues to appear, but with the "objectDeleted" member set to <code>true</code>.
         </p>
         <div>
@@ -2522,7 +2522,7 @@ enum RTCStatsType {
         </h3>
         <p>
           An RTCAudioReceiverStats object represents the stats about one audio receiver of a
-          PeerConnection object for which one calls getStats.
+          RTCPeerConnection object for which one calls getStats.
         </p>
         <p>
           It appears in the stats as soon as the RTCRtpReceiver is added by either addTrack or
