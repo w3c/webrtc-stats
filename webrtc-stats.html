@@ -2894,7 +2894,6 @@ enum RTCStatsType {
         <div>
           <pre class="idl">dictionary RTCIceCandidateStats : RTCStats {
              DOMString                transportId;
-             boolean                  isRemote;
              RTCNetworkType           networkType;
              DOMString                ip;
              long                     port;
@@ -2919,16 +2918,6 @@ enum RTCStatsType {
                 <p>
                   It is a unique identifier that is associated to the object that was inspected to
                   produce the <code>RTCIceCandidateStats</code> associated with this candidate.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>isRemote</code></dfn> of type <span class=
-                "idlMemberType"><a>boolean</a></span>
-              </dt>
-              <dd>
-                <p>
-                  <code>false</code> indicates that this represents a local candidate;
-                  <code>true</code> indicates that this represents a remote candidate.
                 </p>
               </dd>
               <dt>
@@ -3625,6 +3614,27 @@ enum RTCNetworkType {
         Obsolete stats
       </h2>
       <div>
+        <pre class="idl">partial dictionary RTCIceCandidateStats {
+           boolean                  isRemote;
+        };
+        </pre>
+        <section>
+          <h2>
+            Obsolete RTCIceCandidateStats members
+          </h2>
+          <dl data-dfn-for="RTCIceCandidateStats">
+            <dt>
+              <dfn><code>isRemote</code></dfn> of type <span class=
+              "idlMemberType"><a>boolean</a></span>
+            </dt>
+            <dd>
+              <p>
+                <code>false</code> indicates that this represents a local candidate;
+                <code>true</code> indicates that this represents a remote candidate.
+              </p>
+            </dd>
+          </dl>
+        </section>
         <pre class="idl">partial dictionary RTCIceCandidatePairStats {
           double totalRtt;
           double currentRtt;
