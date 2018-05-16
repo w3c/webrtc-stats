@@ -647,7 +647,18 @@ enum RTCStatsType {
         </h3>
         <p>
           The dictionaries for RTP statistics are structured as a hierarchy, so that those stats
-          that make sense in many different contexts are represented just once in IDL.<br>
+          that make sense in many different contexts are represented just once in IDL.</p>
+        <p>
+          The lifetime of all RTP <a>monitored object</a>s starts when
+          the RTP stream is first used: When the first RTP packet is sent or
+          received on the
+          SSRC it represents, or when the first RTCP packet is sent or received
+          that refers to the SSRC of the RTP stream.
+        </p>
+        <p>
+          RTP monitored objects are not deleted.
+        </p>
+        <p>
           The hierarchy is as follows:
         </p>
         <p>
