@@ -3805,12 +3805,16 @@ function processStats() {
       <p>
         When applied to isolated streams, media metrics may allow an application to infer some
         characteristics of the isolated stream, such as if anyone is speaking (by watching the
-        <code>volume</code> statistic).
+        <code>audioLevel</code> statistic).
       </p>
-      <p class="issue">
-        TODO: Consider whether certain stats need to be not reported on <a data-cite=
-        "WEBRTC#isolated-media-streams">isolated media streams</a>.
+      <p>
+        The following stats are deemed to be sensitive, and MUST NOT be reported for an
+        <a data-cite="WEBRTC#isolated-media-streams">isolated media stream</a>:
       </p>
+      <ul>
+        <li><a>RTCAudioHandlerStats.audioLevel</a>.</li>
+        <li><a>RTCRtpContributingSourceStats</a> (the whole dictionary).</li>
+      </ul>
     </section>
     <section id="change-log*">
       <h2>
