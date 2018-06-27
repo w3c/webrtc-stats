@@ -2766,8 +2766,10 @@ enum RTCStatsType {
              DOMString             selectedCandidatePairId;
              DOMString             localCertificateId;
              DOMString             remoteCertificateId;
+             DOMString             tlsVersion;
              DOMString             dtlsCipher;
              DOMString             srtpCipher;
+             DOMString             tlsGroup;
 };</pre>
           <section>
             <h2>
@@ -2873,6 +2875,20 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn><code>tlsVersion</code></dfn> of type <span class="idlMemberType"><a>DOMString</a></span>
+              </dt>
+              <dd>
+                <p>
+                  For components where DTLS is negotiated, the TLS version agreed.
+                  Only present after DTLS negotiation is complete.
+                </p>
+                <p>
+                  The value comes from ServerHello.supported_versions if present, otherwise
+                  from ServerHello.version. It is represented as four hex digits, representing
+                  the two bytes of the version.
+                </p>
+              </dd>
+              <dt>
                 <dfn><code>dtlsCipher</code></dfn> of type <span class=
                 "idlMemberType"><a>DOMString</a></span>
               </dt>
@@ -2891,6 +2907,17 @@ enum RTCStatsType {
                   Descriptive name of the protection profile used for the SRTP transport, as
                   defined in the "Profile" column of the IANA DTLS-SRTP protection profile registry
                   [[!IANA-DTLS-SRTP]] and described further in [[RFC5764]].
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>tlsGroup</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMString</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Descriptive name of the group used for the encryption, as defined in the
+                  "Description" column of the IANA TLS Supported Groups registry
+                  (will be !IANA-TLS-GROUPS when I have registered that).
                 </p>
               </dd>
             </dl>
