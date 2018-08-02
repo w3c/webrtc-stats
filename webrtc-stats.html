@@ -3687,7 +3687,7 @@ enum RTCNetworkType {
             </dd>
           </dl>
         </section>
-        <pre class="idl">partial dictionary RTCRTPStreamStats {
+        <pre class="idl">partial dictionary RTCRtpStreamStats {
              DOMString           mediaType;
              double              averageRTCPInterval;
 };</pre>
@@ -3887,7 +3887,7 @@ function processStats() {
           </li>
           <li>[#114] Minor clarification regarding stats object lifetime
           </li>
-          <li>[#157] Change type of RTCRTPStreamStats.ssrc from string to unsigled long
+          <li>[#157] Change type of RTCRtpStreamStats.ssrc from string to unsigled long
           </li>
           <li>[#149] Remove references saying "defines an API"
           </li>
@@ -4022,7 +4022,7 @@ function processStats() {
           Changes since 03 February 2015
         </h3>
         <ol>
-          <li>[#10] Added RTCRTPStreamStats.mediaType.
+          <li>[#10] Added RTCRtpStreamStats.mediaType.
           </li>
         </ol>
       </section>
