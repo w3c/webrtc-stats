@@ -3632,109 +3632,107 @@ enum RTCNetworkType {
           </section>
         </div>
       </section>
-
-    <section id="stunserverconnection-dict*">
-      <h3>
-        <dfn>RTCStunServerConnectionStats</dfn> dictionary
-      </h3>
-      <div>
-        <pre class="idl">dictionary RTCStunServerConnectionStats : RTCStats {
-           DOMString url;
-           DOMString address;
-           long port;
-           DOMString protocol;
-           RTCNetworkType networkType;
-           unsigned long totalRequestsSent;
-           unsigned long totalResponsesReceived;
-           double totalRoundTripTime;
-};</pre>
-        <section>
-          <h2>
-            Dictionary <a class="idlType">RTCStunServerConnectionStats</a> Members
-          </h2>
-          <dl data-link-for="RTCStunServerConnectionStats" data-dfn-for=
-          "RTCStunServerConnectionStats" class="dictionary-members">
-            <dt>
-              <dfn><code>url</code></dfn> of type <span class=
-              "idlMemberType"><a>DOMString</a></span>
-            </dt>
-            <dd>
-              <p>
-                The URL of the TURN or STUN server.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>address</code></dfn> of type <span class=
-              "idlMemberType"><a>DOMString</a></span>
-            </dt>
-            <dd>
-              <p>
-                It is the IP address of the local interface, allowing for IPv4 addresses
-                and IPv6 addresses, and fully qualified domain names (FQDNs).
-                See [RFC5245] section 15.1 for details.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>port</code></dfn> of type <span class=
-              "idlMemberType"><a>long</a></span>
-            </dt>
-            <dd>
-              <p>
-                It is the port number used by the client.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>protocol</code></dfn> of type <span class=
-              "idlMemberType"><a>DOMString</a></span>
-            </dt>
-            <dd>
-              <p>
-                Valid values for transport is one of <code>udp</code> and <code>tcp</code>.
-                Based on the "transport" defined in [RFC5245] section 15.1.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>networkType</code></dfn> of type <span class=
-              "idlMemberType"><a>RTCNetworkType</a></span>
-            </dt>
-            <dd>
-              <p>
-                Represents the type of network interface used.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>totalRequestsSent</code></dfn> of type <span class=
-              "idlMemberType"><a>unsigned long</a></span>
-            </dt>
-            <dd>
-              <p>
-                The total amount of requests that have been sent to this server.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>totalResponsesReceived</code></dfn> of type <span class=
-              "idlMemberType"><a>unsigned long</a></span>
-            </dt>
-            <dd>
-              <p>
-                The total amount of responses received from this server.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>totalRoundTripTime</code></dfn> of type <span class=
-              "idlMemberType"><a>double</a></span>
-            </dt>
-            <dd>
-              <p>
-                The sum of RTTs for all requests that have been sent where a
-                response has been received.
-              </p>
-            </dd>
-          </dl>
-        </section>
-      </div>
-    </section>
-
+      <section id="stunserverconnection-dict*">
+        <h3>
+          <dfn>RTCStunServerConnectionStats</dfn> dictionary
+        </h3>
+        <div>
+          <pre class="idl">dictionary RTCStunServerConnectionStats : RTCStats {
+             DOMString url;
+             DOMString address;
+             long port;
+             DOMString protocol;
+             RTCNetworkType networkType;
+             unsigned long totalRequestsSent;
+             unsigned long totalResponsesReceived;
+             double totalRoundTripTime;
+  };</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCStunServerConnectionStats</a> Members
+            </h2>
+            <dl data-link-for="RTCStunServerConnectionStats" data-dfn-for=
+            "RTCStunServerConnectionStats" class="dictionary-members">
+              <dt>
+                <dfn><code>url</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMString</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The URL of the TURN or STUN server.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>address</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMString</a></span>
+              </dt>
+              <dd>
+                <p>
+                  It is the IP address of the local interface, allowing for IPv4 addresses
+                  and IPv6 addresses, and fully qualified domain names (FQDNs).
+                  See [RFC5245] section 15.1 for details.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>port</code></dfn> of type <span class=
+                "idlMemberType"><a>long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  It is the port number used by the client.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>protocol</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMString</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Valid values for transport is one of <code>udp</code> and <code>tcp</code>.
+                  Based on the "transport" defined in [RFC5245] section 15.1.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>networkType</code></dfn> of type <span class=
+                "idlMemberType"><a>RTCNetworkType</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the type of network interface used.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalRequestsSent</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The total amount of requests that have been sent to this server.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalResponsesReceived</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The total amount of responses received from this server.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalRoundTripTime</code></dfn> of type <span class=
+                "idlMemberType"><a>double</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The sum of RTTs for all requests that have been sent where a
+                  response has been received.
+                </p>
+              </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
     </section>
     <section>
       <h2>
