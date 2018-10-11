@@ -3043,9 +3043,12 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The URL of the TURN or STUN server indicated in the that translated this IP
-                  address. It is the URL address surfaced in an
-                  <code>RTCPeerConnectionIceEvent</code>.
+                  For local candidates this is the URL of the ICE server from
+                  which the candidate was obtained. It is the same as the
+                  <a href="https://w3c.github.io/webrtc-pc/#rtcpeerconnectioniceevent">url surfaced in the RTCPeerConnectionIceEvent</a>.
+                </p>
+                <p>
+                  For remote candidates, this property is not present.
                 </p>
               </dd>
               <dt>
@@ -3061,7 +3064,7 @@ enum RTCStatsType {
                   active.
                 </p>
                 <p>
-                  For remote candidates, this property is not applicable.
+                  For remote candidates, this property is not present.
                 </p>
               </dd>
             </dl>
