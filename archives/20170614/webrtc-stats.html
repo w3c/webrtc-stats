@@ -3232,6 +3232,7 @@ table.simple {
 <span class="idlMember" id="idl-def-rtcdatachannelstats-bytessent" data-idl="" data-title="bytesSent" data-dfn-for="rtcdatachannelstats">    <span class="idlMemberType"><a href="https://heycam.github.io/webidl/#idl-unsigned-long-long">unsigned long long</a></span>  <span class="idlMemberName"><a data-lt="bytesSent" href="http://rawgit.com/w3c/webrtc-stats/master/webrtc-stats.html#dom-rtcdatachannelstats-bytessent" class="internalDFN" data-link-type="dfn" data-for="RTCDataChannelStats"><code>bytesSent</code></a></span>;</span>
 <span class="idlMember" id="idl-def-rtcdatachannelstats-messagesreceived" data-idl="" data-title="messagesReceived" data-dfn-for="rtcdatachannelstats">    <span class="idlMemberType"><a href="https://heycam.github.io/webidl/#idl-unsigned-long">unsigned long</a></span>       <span class="idlMemberName"><a data-lt="messagesReceived" href="http://rawgit.com/w3c/webrtc-stats/master/webrtc-stats.html#dom-rtcdatachannelstats-messagesreceived" class="internalDFN" data-link-type="dfn" data-for="RTCDataChannelStats"><code>messagesReceived</code></a></span>;</span>
 <span class="idlMember" id="idl-def-rtcdatachannelstats-bytesreceived" data-idl="" data-title="bytesReceived" data-dfn-for="rtcdatachannelstats">    <span class="idlMemberType"><a href="https://heycam.github.io/webidl/#idl-unsigned-long-long">unsigned long long</a></span>  <span class="idlMemberName"><a data-lt="bytesReceived" href="http://rawgit.com/w3c/webrtc-stats/master/webrtc-stats.html#dom-rtcdatachannelstats-bytesreceived" class="internalDFN" data-link-type="dfn" data-for="RTCDataChannelStats"><code>bytesReceived</code></a></span>;</span>
+<span class="idlMember" id="idl-def-rtcdatachannelstats-currentRoundTripTime" data-idl="" data-title="currentRoundTripTime" data-dfn-for="rtcdatachannelstats">    <span class="idlMemberType"><a href="https://heycam.github.io/webidl/#idl-double">double</a></span>  <span class="idlMemberName"><a data-lt="currentRoundTripTime" href="http://rawgit.com/w3c/webrtc-stats/master/webrtc-stats.html#dom-rtcdatachannelstats-currentRoundTripTime" class="internalDFN" data-link-type="dfn" data-for="RTCDataChannelStats"><code>currentRoundTripTime</code></a></span>;</span>
 };</span></pre></div>
           <section typeof="bibo:Chapter" resource="#dictionary-rtcdatachannelstats-members" property="bibo:hasPart">
             <h4 id="dictionary-rtcdatachannelstats-members" resource="#dictionary-rtcdatachannelstats-members"><span property="xhv:role" resource="xhv:heading">
@@ -3305,6 +3306,16 @@ table.simple {
                   <code>RTCDatachannel</code>, i.e., not including headers or padding.
                 </p>
               </dd>
+
+              <dt>
+                <dfn data-dfn-for="rtcdatachannelstats" data-dfn-type="dfn" id="dom-rtcdatachannelstats-currentRoundTripTime" data-idl="" data-title="currentRoundTripTime"><code>currentRoundTripTime</code></dfn> of type <span class="idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the latest round trip time measured in seconds, exposed by [<cite><a class="bibref" href="">usrsctp - spinfo_srtt</a></cite>].
+                </p>
+              </dd>
+
             </dl>
           </section>
         </div>
