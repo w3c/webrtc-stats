@@ -2978,6 +2978,11 @@ enum RTCStatsType {
                   relevant candidate would be <code>"wifi"</code>, even when the next hop is over a
                   cellular connection.
                 </div>
+                <p class="fingerprint">
+                  This reveals information that would otherwise not be available to web pages,
+                  which can increase the fingerprint surface.
+                  Implementations may decide to not expose this member.
+                </p>
               </dd>
               <dt>
                 <dfn><code>address</code></dfn> of type <span class=
