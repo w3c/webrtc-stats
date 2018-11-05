@@ -2989,17 +2989,18 @@ enum RTCStatsType {
                   addresses, and fully qualified domain names (FQDNs). See
                   [[!RFC5245]] section 15.1 for details.
                 </p>
-                <div class="note">
+                <p>
                   A user agent should make sure to limit exposure of remote candidate addresses to
                   the ones already known to the web application, in particular peer reflexive remote
                   candidate addresses. If a user agent cannot tell whether a remote candidate
-                  address is known to the web application, it MUST NOT surface this address value in
-                  any RTCICECandidateStats dictionary. Once a RTCPeerConnection instance is notified
-                  by the web application of an address using <a
+                  address is known to the web application, it MUST leave the 'address' member as
+                  undefined in the corresponding RTCICECandidateStats dictionary. Once a
+                  RTCPeerConnection instance is notified by the web application of an address using
+                  <a
                   href="https://w3c.github.io/webrtc-pc/#dom-rtcpeerconnection-addicecandidate">addIceCandidate</a>
                   the user agent can surface the 'address' member in any remote RTCIceCandidateStats
                   dictionary of the corresponding RTCPeerConnection.
-                </div>
+                </p>
               </dd>
               <dt>
                 <dfn><code>port</code></dfn> of type <span class="idlMemberType"><a>long</a></span>
