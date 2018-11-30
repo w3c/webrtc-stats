@@ -2990,17 +2990,17 @@ enum RTCStatsType {
                   [[!RFC5245]] section 15.1 for details.
                 </p>
                 <p>
-                  A user agent should make sure to limit exposure of remote candidate addresses to
-                  the ones already known to the web application, in particular peer reflexive remote
-                  candidate addresses. If a user agent cannot tell whether a remote candidate
-                  address is known to the web application, it MUST leave the 'address' member as
-                  undefined in the corresponding RTCICECandidateStats dictionary. Once a
-                  RTCPeerConnection instance learns on an address by the web application using
-                  <a
-                  href="https://w3c.github.io/webrtc-pc/#dom-rtcpeerconnection-addicecandidate">addIceCandidate</a>
-                  the user agent can expose the 'address' member value in any remote RTCIceCandidateStats
-                  dictionary of the corresponding RTCPeerConnection that matches the newly learnt
-                  address.
+                  The user agent should make sure that only remote candidate addresses that the web
+                  application has configured on the corresponding RTCPeerConnection are exposed;
+                  This is especially important for peer reflexive remote candidates.
+
+                  By default, the user agent MUST leave the 'address' member as undefined in the
+                  RTCICECandidateStats dictionary of any remote candidate. Once a RTCPeerConnection
+                  instance learns on an address by the web application using <a
+                  href="https://w3c.github.io/webrtc-pc/#dom-rtcpeerconnection-addicecandidate">addIceCandidate</a>,
+                  the user agent can expose the 'address' member value in any remote
+                  RTCIceCandidateStats dictionary of the corresponding RTCPeerConnection that
+                  matches the newly learnt address.
                 </p>
               </dd>
               <dt>
