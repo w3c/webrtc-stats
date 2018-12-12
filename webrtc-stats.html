@@ -2936,7 +2936,7 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCIceCandidateStats : RTCStats {
              DOMString                transportId;
              RTCNetworkType           networkType;
-             DOMString                address;
+             DOMString?               address;
              long                     port;
              DOMString                protocol;
              RTCIceCandidateType      candidateType;
@@ -2992,6 +2992,19 @@ enum RTCStatsType {
                   It is the address of the candidate, allowing for IPv4 addresses, IPv6
                   addresses, and fully qualified domain names (FQDNs). See
                   [[!RFC5245]] section 15.1 for details.
+                </p>
+                <p>
+                  The user agent should make sure that only remote candidate addresses that the web
+                  application has configured on the corresponding RTCPeerConnection are exposed;
+                  This is especially important for peer reflexive remote candidates.
+
+                  By default, the user agent MUST leave the 'address' member as null in the
+                  RTCICECandidateStats dictionary of any remote candidate. Once a RTCPeerConnection
+                  instance learns on an address by the web application using <a
+                  href="https://w3c.github.io/webrtc-pc/#dom-rtcpeerconnection-addicecandidate">addIceCandidate</a>,
+                  the user agent can expose the 'address' member value in any remote
+                  RTCIceCandidateStats dictionary of the corresponding RTCPeerConnection that
+                  matches the newly learnt address.
                 </p>
               </dd>
               <dt>
