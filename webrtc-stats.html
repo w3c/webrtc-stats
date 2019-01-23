@@ -3639,7 +3639,6 @@ enum RTCNetworkType {
         <div>
           <pre class="idl">dictionary RTCStunServerConnectionStats : RTCStats {
              DOMString url;
-             DOMString address;
              long port;
              DOMString protocol;
              RTCNetworkType networkType;
@@ -3660,17 +3659,6 @@ enum RTCNetworkType {
               <dd>
                 <p>
                   The URL of the TURN or STUN server.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>address</code></dfn> of type <span class=
-                "idlMemberType"><a>DOMString</a></span>
-              </dt>
-              <dd>
-                <p>
-                  It is the IP address of the local interface, allowing for IPv4 addresses
-                  and IPv6 addresses, and fully qualified domain names (FQDNs).
-                  See [RFC5245] section 15.1 for details.
                 </p>
               </dd>
               <dt>
