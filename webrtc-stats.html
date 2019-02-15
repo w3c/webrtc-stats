@@ -731,11 +731,6 @@ enum RTCStatsType {
              DOMString           kind;
              DOMString           transportId;
              DOMString           codecId;
-             unsigned long       firCount;
-             unsigned long       pliCount;
-             unsigned long       nackCount;
-             unsigned long       sliCount;
-             unsigned long long  qpSum;
 };</pre>
           <section>
             <h2>
@@ -783,75 +778,6 @@ enum RTCStatsType {
                 <p>
                   It is a unique identifier that is associated to the object that was inspected to
                   produce the <code>RTCCodecStats</code> associated with this RTP stream.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>firCount</code></dfn> of type <span class="idlMemberType"><a>unsigned
-                long</a></span>
-              </dt>
-              <dd>
-                <p>
-                  Count the total number of Full Intra Request (FIR) packets received by the
-                  sender. This metric is only valid for video and is sent by receiver. Calculated
-                  as defined in [[!RFC5104]] section 4.3.1. and does not use the metric indicated
-                  in [[RFC2032]], because it was deprecated by [[RFC4587]].
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>pliCount</code></dfn> of type <span class="idlMemberType"><a>unsigned
-                long</a></span>
-              </dt>
-              <dd>
-                <p>
-                  Count the total number of Picture Loss Indication (PLI) packets received by the
-                  sender. This metric is only valid for video and is sent by receiver. Calculated
-                  as defined in [[!RFC4585]] section 6.3.1.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>nackCount</code></dfn> of type <span class="idlMemberType"><a>unsigned
-                long</a></span>
-              </dt>
-              <dd>
-                <p>
-                  Count the total number of Negative ACKnowledgement (NACK) packets received by the
-                  sender and is sent by receiver. Calculated as defined in [[!RFC4585]] section
-                  6.2.1.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>sliCount</code></dfn> of type <span class="idlMemberType"><a>unsigned
-                long</a></span>
-              </dt>
-              <dd>
-                <p>
-                  Count the total number of Slice Loss Indication (SLI) packets received by the
-                  sender. This metric is only valid for video and is sent by receiver. Calculated
-                  as defined in [[!RFC4585]] section 6.3.2.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>qpSum</code></dfn> of type <span class="idlMemberType"><a>unsigned long
-                long</a></span>
-              </dt>
-              <dd>
-                <p>
-                  The sum of the QP values of frames passed. The count of frames is in
-                  <a>framesDecoded</a> for inbound stream stats, and in <a>framesEncoded</a> for
-                  outbound stream stats.
-                </p>
-                <p>
-                  The definition of QP value depends on the <a>codec</a>; for VP8, the QP value is
-                  the value carried in the frame header as the syntax element "y_ac_qi", and
-                  defined in [[RFC6386]] section 19.2. Its range is 0..127.
-                  <!-- Need appropriate references for VP9 and H.264 -->
-                </p>
-                <p>
-                  Note that the QP value is only an indication of quantizer values used; many
-                  formats have ways to vary the quantizer value within the frame.
-                </p>
-                <p>
-                  Only valid for video.
                 </p>
               </dd>
             </dl>
@@ -1197,6 +1123,7 @@ enum RTCStatsType {
              DOMString            receiverId;
              DOMString            remoteId;
              unsigned long        framesDecoded;
+             unsigned long long   qpSum;
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
              double               averageRtcpInterval;
              unsigned long        fecPacketsReceived;
@@ -1204,6 +1131,10 @@ enum RTCStatsType {
              unsigned long        packetsFailedDecryption;
              unsigned long        packetsDuplicated;
              record&lt;USVString, unsigned long&gt; perDscpPacketsReceived;
+             unsigned long        nackCount;
+             unsigned long        firCount;
+             unsigned long        pliCount;
+             unsigned long        sliCount;
             };</pre>
           <section>
             <h2>
@@ -1247,6 +1178,26 @@ enum RTCStatsType {
                 <p>
                   Only valid for video. It represents the total number of frames correctly decoded
                   for this SSRC, i.e., frames that would be displayed if no frames are dropped.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>qpSum</code></dfn> of type <span class="idlMemberType"><a>unsigned long
+                long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. The sum of the QP values of frames decoded
+                  by this receiver. The count of frames is in <a>framesDecoded</a>.
+                </p>
+                <p>
+                  The definition of QP value depends on the <a>codec</a>; for VP8, the QP value is
+                  the value carried in the frame header as the syntax element "y_ac_qi", and
+                  defined in [[RFC6386]] section 19.2. Its range is 0..127.
+                  <!-- Need appropriate references for VP9 and H.264 -->
+                </p>
+                <p>
+                  Note that the QP value is only an indication of quantizer values used; many
+                  formats have ways to vary the quantizer value within the frame.
                 </p>
               </dd>
               <dt>
@@ -1329,6 +1280,51 @@ enum RTCStatsType {
                   form. Note that due to network remapping and bleaching, these numbers are not
                   expected to match the numbers seen on sending. Not all OSes make this information
                   available.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>firCount</code></dfn> of type <span class="idlMemberType"><a>unsigned
+                long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. Count the total number of Full Intra Request
+                  (FIR) packets sent by this receiver. Calculated
+                  as defined in [[!RFC5104]] section 4.3.1. and does not use the metric indicated
+                  in [[RFC2032]], because it was deprecated by [[RFC4587]].
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>pliCount</code></dfn> of type <span class="idlMemberType"><a>unsigned
+                long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. Count the total number of Picture Loss Indication
+                  (PLI) packets sent by this receiver. Calculated
+                  as defined in [[!RFC4585]] section 6.3.1.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>nackCount</code></dfn> of type <span class="idlMemberType"><a>unsigned
+                long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Count the total number of Negative ACKnowledgement (NACK) packets
+                  sent by this receiver. Calculated as defined in [[!RFC4585]] section
+                  6.2.1.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>sliCount</code></dfn> of type <span class="idlMemberType"><a>unsigned
+                long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. Count the total number of Slice Loss Indication
+                  (SLI) packets sent by this receiver. Calculated
+                  as defined in [[!RFC4585]] section 6.3.2.
                 </p>
               </dd>
             </dl>
@@ -1487,11 +1483,16 @@ enum RTCStatsType {
              DOMHighResTimeStamp  lastPacketSentTimestamp;
              double               targetBitrate;
              unsigned long        framesEncoded;
+             unsigned long long   qpSum;
              double               totalEncodeTime;
              double               averageRtcpInterval;
              RTCQualityLimitationReason                 qualityLimitationReason;
              record&lt;DOMString, double&gt; qualityLimitationDurations;
              record&lt;USVString, unsigned long&gt; perDscpPacketsSent;
+             unsigned long        nackCount;
+             unsigned long        firCount;
+             unsigned long        pliCount;
+             unsigned long        sliCount;
 };</pre>
           <section>
             <h2>
@@ -1564,6 +1565,26 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn><code>qpSum</code></dfn> of type <span class="idlMemberType"><a>unsigned long
+                long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. The sum of the QP values of frames encoded
+                  by this sender. The count of frames is in <a>framesEncoded</a>.
+                </p>
+                <p>
+                  The definition of QP value depends on the <a>codec</a>; for VP8, the QP value is
+                  the value carried in the frame header as the syntax element "y_ac_qi", and
+                  defined in [[RFC6386]] section 19.2. Its range is 0..127.
+                  <!-- Need appropriate references for VP9 and H.264 -->
+                </p>
+                <p>
+                  Note that the QP value is only an indication of quantizer values used; many
+                  formats have ways to vary the quantizer value within the frame.
+                </p>
+              </dd>
+              <dt>
                 <dfn><code>totalEncodeTime</code></dfn> of type <span class=
                 "idlMemberType"><a>double</a></span>
               </dt>
@@ -1622,6 +1643,51 @@ enum RTCStatsType {
                 <p>
                   Total number of packets sent for this SSRC, per DSCP. DSCPs are identified as
                   decimal integers in string form.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>nackCount</code></dfn> of type <span class="idlMemberType"><a>unsigned
+                long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Count the total number of Negative ACKnowledgement (NACK) packets
+                  received by this sender. Calculated as defined in [[!RFC4585]] section
+                  6.2.1.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>firCount</code></dfn> of type <span class="idlMemberType"><a>unsigned
+                long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. Count the total number of Full Intra Request
+                  (FIR) packets received by this sender. Calculated
+                  as defined in [[!RFC5104]] section 4.3.1. and does not use the metric indicated
+                  in [[RFC2032]], because it was deprecated by [[RFC4587]].
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>pliCount</code></dfn> of type <span class="idlMemberType"><a>unsigned
+                long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. Count the total number of Picture Loss Indication
+                  (PLI) packets received by this sender. Calculated
+                  as defined in [[!RFC4585]] section 6.3.1.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>sliCount</code></dfn> of type <span class="idlMemberType"><a>unsigned
+                long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. Count the total number of Slice Loss Indication
+                  (SLI) packets received by this sender. Calculated
+                  as defined in [[!RFC4585]] section 6.3.2.
                 </p>
               </dd>
             </dl>
