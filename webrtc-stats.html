@@ -63,12 +63,13 @@
       <p>
         This specification does not define what objects a conforming implementation should
         generate. Specifications that refer to this specification have the need to specify
-        conformance. They should put in their document text like this:
+        conformance. They should put in their document text that could like
+        this (EXAMPLE ONLY):
       </p>
       <ul>
         <li>An implementation MUST support generating statistics for the type
-        RTCInboundRtpStreamStats, with attributes packetsReceived, bytesReceived, packetsLost,
-        jitter, and fractionLost.
+        RTCInboundRtpStreamStats, with attributes packetsReceived, bytesReceived, packetsLost, and
+        jitter.
         </li>
         <li>It MUST support generating statistics for the type RTCOutboundRtpStreamStats, with
         attributes packetsSent, bytesSent.
@@ -3857,6 +3858,24 @@ enum RTCNetworkType {
             <dd>
               <p>
                 This field got renamed to "averageRtcpInterval" in Jan 2018.
+              </p>
+            </dd>
+          </dl>
+        </section>
+        <pre class="idl">partial dictionary RTCInboundStreamStats {
+          double fractionLost;
+};</pre>
+        <section>
+          <h2>Obsolete RTCInboundStreamStats members</h2>
+          <dl data-dfn-for="RTCInboundStreamStats">
+            <dt>
+              <dfn><code>fractionLost</code></dfn> of
+              type <span class="idlMemberType"><a>double</a></span>
+            </dt>
+            <dd>
+              <p>
+                This field was moved to RTCRemoteInboundStreamStats in
+                December 2017.
               </p>
             </dd>
           </dl>
