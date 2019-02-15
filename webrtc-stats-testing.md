@@ -10,9 +10,11 @@ Tests are split in three parts: API semantics, availability of metrics, and corr
 
 Tests if the getStats API returns the correct stats object depending on the API input (i.e., filter by senders, etc). Also these tests should check if the reported statistics conform to the peerconnection state machine, i.e., check when obsolete stats are removed when the conditions are met, etc. The test should be carried out in a way that all the RTCStatsType dictionaries are covered, however, in some cases it may make sense to test parts of the media pipeline as a whole, for example sender and receiver transport and media (audio and video) stats.
 
+Web Platform Tests [WPT] currently runs these tests, available at: https://wpt.fyi/results/webrtc-stats
+
 ## Availability of metrics
 
-Tests if all metrics specified as mandatory are returned in the stats. This should be verified against the phases of the peerconnection 
+Tests if all metrics specified as mandatory are returned in the stats. This should be verified against the phases of the peerconnection: 
 
 + When the peer connection is in new state, this is before the call is setup
 + When the peer connection is in connecting state, this is while setting up a call, 
@@ -25,9 +27,11 @@ In every case, the test should produce a connection between two PeerConnections,
 
 1. The stats objects and the corresponding metrics are created in the correct peerconnection phases. 
 
-2. The stats objects and fields are returned in the correct format or type (integer, double, String, etc). Additionally, we are verifying that 
+2. The stats objects and fields are returned in the correct format or type (integer, double, String, etc). Additionally, we are verifying that a value is returned.
 
 It should be noted that if the getStats API is called at short intervals, they might return cached values. These tests need to make sure that the measurement results are not incorrectly returned because of browser internals caching the result. If specification is unclear on any of these aspects, the specification needs to be updated.
+
+Verification for availability of metrics for Chrome, Firefox, and Safari is available at: https://webrtc-stats.callstats.io/verify/
 
 ## Correctness of metrics
 These set of tests are supposed to validate that the implementation returns valid (close to correct values). For example, that the sent packet counters are increasing and the corresponding received packet counters are less than equal to the sent counters.
@@ -37,3 +41,5 @@ Additionally, the validation should take into account when various state changes
 
 ### References
 [KITE] KITE is a test engine designed to test WebRTC interoperability across browsers https://github.com/webrtc/KITE
+[WPT] Web Platform Test for webrtc-stats https://wpt.fyi/results/webrtc-stats
+[VERIFY] Verify the getStats() implementation status for different browsers  https://webrtc-stats.callstats.io/verify/
