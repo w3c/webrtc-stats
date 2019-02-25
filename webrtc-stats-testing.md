@@ -10,7 +10,7 @@ Tests are split in three parts: API semantics, availability of metrics, and corr
 
 Tests if the getStats API returns the correct stats object depending on the API input (i.e., filter by senders, etc). Also these tests should check if the reported statistics conform to the peerconnection state machine, i.e., check when obsolete stats are removed when the conditions are met, etc. The test should be carried out in a way that all the RTCStatsType dictionaries are covered, however, in some cases it may make sense to test parts of the media pipeline as a whole, for example sender and receiver transport and media (audio and video) stats.
 
-Web Platform Tests [WPT] currently runs these tests, available at: https://wpt.fyi/results/webrtc-stats
+Web Platform Tests [WPT] currently runs these tests, available at: https://wpt.fyi/results/webrtc-stats. There are also browser specific tests [Chrome-Tests].
 
 ## Availability of metrics
 
@@ -23,7 +23,7 @@ Tests if all metrics specified as mandatory are returned in the stats. This shou
 + When the peer connection is in failed state, this is when a call is dropped 
 + When the peer connection is in closed state, this is after call has ended.
 
-In every case, the test should produce a connection between two PeerConnections, and call getStats()on them. In these tests, we are mainly verifying three aspects:
+In every case, the test should produce a connection between two PeerConnections, and call getStats() on them. In these tests, we are mainly verifying three aspects:
 
 1. The stats objects and the corresponding metrics are created in the correct peerconnection phases. 
 
@@ -43,3 +43,4 @@ Additionally, the validation should take into account when various state changes
 [KITE] KITE is a test engine designed to test WebRTC interoperability across browsers https://github.com/webrtc/KITE
 [WPT] Web Platform Test for webrtc-stats https://wpt.fyi/results/webrtc-stats
 [VERIFY] Verify the getStats() implementation status for different browsers  https://webrtc-stats.callstats.io/verify/
+[Chrome-tests] Chrome's Web Platform Tests for WebRTC https://cs.chromium.org/chromium/src/third_party/blink/web_tests/external/wpt/webrtc/
