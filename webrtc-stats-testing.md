@@ -23,7 +23,7 @@ Tests if all metrics specified as mandatory are returned in the stats. This shou
 + When the peer connection is in failed state, this is when a call is dropped 
 + When the peer connection is in closed state, this is after call has ended.
 
-In every case, the test should produce a connection between two PeerConnections, and call getStats() on them. In these tests, we are mainly verifying three aspects:
+In every case, the test should produce a connection between two PeerConnections, and call the getStats API on those peerconnections. We are mainly verifying three aspects with these tests, they are:
 
 1. The stats objects and the corresponding metrics are created in the correct peerconnection phases. 
 
