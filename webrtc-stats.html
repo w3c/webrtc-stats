@@ -1242,8 +1242,10 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Total number of RTP FEC packets received for this SSRC where the error correction
-                  payload was discarded due to having received the original packet. This is a
-                  subset of <a>fecPacketsReceived</a>.
+                  payload was discarded by the application. This may happen 1. if all the source
+                  packets protected by the FEC packet were received, or 2. if the FEC packet arrived
+                  late, i.e., outside the recovery window, and the lost RTP packets have already
+                  been skipped during playout. This is a subset of <a>fecPacketsReceived</a>.
                 </p>
               </dd>
               <dt>
