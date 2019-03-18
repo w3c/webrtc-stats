@@ -1948,7 +1948,9 @@ enum RTCStatsType {
                 <p>
                   Only present for inbound audio tracks. The total number of inbound audio samples
                   that are concealed samples. A concealed sample is a sample that is based on data
-                  that was synthesized to conceal packet loss and does not represent incoming data.
+                  that was synthesized to conceal packet loss or packets arriving late and does not
+                  represent incoming data. These samples are generated when we don't have the
+                  necessary non-concealed samples in the buffer.
                 </p>
               </dd>
               <dt>
