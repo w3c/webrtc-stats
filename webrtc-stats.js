@@ -104,6 +104,7 @@ var respecConfig = {
         }
       },
       afterEnd: function markFingerprinting () {
+        var self = this;
         Array.prototype.forEach.call(
             document.querySelectorAll(".fingerprint"),
             function (el) {
@@ -114,5 +115,15 @@ var respecConfig = {
                 img.height = 21;
                 el.appendChild(img);
             });
+        Array.prototype.forEach.call(
+            document.querySelectorAll(".status-ED, .status-not-ED"),
+            function (el) {
+            if ((el.classList.contains("status-ED") && self.specStatus != "ED")
+                || (el.classList.contains("status-not-ED") && self.specStatus == "ED")) {
+              el.remove();
+            }
+          });
+
       }
+
     };
