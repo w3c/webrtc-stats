@@ -1127,6 +1127,7 @@ enum RTCStatsType {
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
              double               averageRtcpInterval;
              unsigned long        fecPacketsReceived;
+             unsigned long        fecPacketsDiscarded;
              unsigned long long   bytesReceived;
              unsigned long        packetsFailedDecryption;
              unsigned long        packetsDuplicated;
@@ -1232,6 +1233,17 @@ enum RTCStatsType {
                   Total number of RTP FEC packets received for this SSRC. This counter can also be
                   incremented when receiving FEC packets in-band with media packets (e.g., with
                   Opus).
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>fecPacketsDiscarded</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of RTP FEC packets received for this SSRC where the error correction
+                  payload was discarded due to having received the original packet. This is a
+                  subset of <a>fecPacketsReceived</a>.
                 </p>
               </dd>
               <dt>
