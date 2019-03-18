@@ -1595,6 +1595,8 @@ enum RTCStatsType {
              double              totalSamplesDuration;
              unsigned long long  concealedSamples;
              unsigned long long  concealmentEvents;
+             unsigned long long  deceleratedSamples;
+             unsigned long long  acceleratedSamples;
              double              jitterBufferDelay;
              RTCPriorityType     priority;
 };</pre>
@@ -1962,6 +1964,26 @@ enum RTCStatsType {
                   non-concealed sample. That is, multiple consecutive concealed samples will
                   increase the <a>concealedSamples</a> count multiple times but is a single
                   concealment event.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>deceleratedSamples</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The total number of samples inserted in order to decelerate playout speed.
+                  This can happen to prevent the jitter buffer from becoming empty.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>acceleratedSamples</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The total number of samples discarded in order to accelerate playout speed.
+                  This can happen to prevent the jitter buffer from becoming full.
                 </p>
               </dd>
               <dt>
