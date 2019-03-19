@@ -2627,7 +2627,7 @@ enum RTCStatsType {
              unsigned long long  jitterBufferEmittedCount;
              unsigned long long  totalSamplesReceived;
              unsigned long long  concealedSamples;
-             unsigned long long  audibleConcealedSamples;
+             unsigned long long  silentConcealedSamples;
              unsigned long long  concealmentEvents;
 };</pre>
           <section>
@@ -2701,13 +2701,13 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>audibleConcealedSamples</code></dfn> of type <span class=
+                <dfn><code>silentConcealedSamples</code></dfn> of type <span class=
                 "idlMemberType"><a>unsigned long long</a></span>
               </dt>
               <dd>
                 <p>
-                  The total number of concealed samples inserted that are non-silent. This is a
-                  subset of <a>concealedSamples</a>.
+                  The total number of concealed samples inserted that are silent. Playing out
+                  silent samples result in no audio. This is a subset of <a>concealedSamples</a>.
                 </p>
               </dd>
               <dt>
