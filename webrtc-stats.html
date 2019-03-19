@@ -2695,9 +2695,10 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The total number of samples that are concealed samples. A concealed sample is a
-                  sample that is based on data that was synthesized to conceal packet loss or
-                  packets arriving late and does not represent incoming data. These samples are
-                  generated when we don't have the necessary non-concealed samples in the buffer.
+                  sample that is based on data that was synthesized to conceal missing samples
+                  during playout. Concealed samples may be inserted when a packet is lost
+                  (reported in <a>packetsLost</a>) or the packet arrives too late to be played out
+                  (reported in <a>packetsDiscarded</a>).
                 </p>
               </dd>
               <dt>
