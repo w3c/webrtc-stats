@@ -2642,6 +2642,7 @@ enum RTCStatsType {
              unsigned long long  jitterBufferEmittedCount;
              unsigned long long  totalSamplesReceived;
              unsigned long long  concealedSamples;
+             unsigned long long  silentConcealedSamples;
              unsigned long long  concealmentEvents;
 };</pre>
           <section>
@@ -2714,6 +2715,17 @@ enum RTCStatsType {
                   played out. Examples of samples that have to be concealed are samples from lost
                   packets (reported in <a>packetsLost</a>) or samples from packets that arrive too
                   late to be played out (reported in <a>packetsDiscarded</a>).
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>silentConcealedSamples</code></dfn> of type <span class=
+                "idlMemberType"><a>unsigned long long</a></span>
+              </dt>
+              <dd>
+                <p>
+                  The total number of concealed samples inserted that are "silent". Playing out
+                  silent samples results in silence or comfort noise. This is a subset of
+                  <a>concealedSamples</a>.
                 </p>
               </dd>
               <dt>
