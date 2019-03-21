@@ -2628,8 +2628,8 @@ enum RTCStatsType {
              unsigned long long  totalSamplesReceived;
              unsigned long long  concealedSamples;
              unsigned long long  concealmentEvents;
-             unsigned long long  deceleratedSamples;
-             unsigned long long  acceleratedSamples;
+             unsigned long long  insertedSamplesForDeceleration;
+             unsigned long long  removedSamplesForAcceleration;
 };</pre>
           <section>
             <h2>
@@ -2714,23 +2714,25 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>deceleratedSamples</code></dfn> of type <span class=
+                <dfn><code>insertedSamplesForDeceleration</code></dfn> of type <span class=
                 "idlMemberType"><a>unsigned long long</a></span>
               </dt>
               <dd>
                 <p>
-                  The total number of samples inserted in order to decelerate playout speed. This
-                  can happen to prevent the jitter buffer from becoming empty.
+                  When playout is slowed down, this counter is increased by the difference between
+                  the number of samples received and the number of samples played out. If playout is
+                  slowed down by inserting samples, this will be the number of inserted samples.
                 </p>
               </dd>
               <dt>
-                <dfn><code>acceleratedSamples</code></dfn> of type <span class=
+                <dfn><code>removedSamplesForAcceleration</code></dfn> of type <span class=
                 "idlMemberType"><a>unsigned long long</a></span>
               </dt>
               <dd>
                 <p>
-                  The total number of samples discarded in order to accelerate playout speed. This
-                  can happen to prevent the jitter buffer from becoming full.
+                  When playout is speeded up, this counter is increased by the difference between
+                  the number of samples received and the number of samples played out. If speedup is
+                  achieved by removing samples, this will be the count of samples removed.
                 </p>
               </dd>
             </dl>
