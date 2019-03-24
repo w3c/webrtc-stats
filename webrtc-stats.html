@@ -1290,7 +1290,7 @@ enum RTCStatsType {
                 received packet. If multiple duplicates of a packet are received, all of them are
                 counted.<br>
                 An improved estimate of lost packets can be calculated by adding
-                <a>packetsDuplicated</a> to <a>packetsLost</a>; this will always result in a
+                <a>packetsDuplicated</a> to <a data-link-for="RTCReceivedRtpStreamStats">packetsLost</a>; this will always result in a
                 positive number, but not the same number as RFC 3550 would calculate.
               </dd>
               <dt>
@@ -2710,7 +2710,7 @@ enum RTCStatsType {
                   The total number of samples that are concealed samples. A concealed sample is a
                   sample that was replaced with synthesized samples generated locally before being
                   played out. Examples of samples that have to be concealed are samples from lost
-                  packets (reported in <a>packetsLost</a>) or samples from packets that arrive too
+                  packets (reported in <a data-link-for="RTCReceivedRtpStreamStats">packetsLost</a>) or samples from packets that arrive too
                   late to be played out (reported in <a data-link-for="RTCReceivedRtpStreamStats">packetsDiscarded</a>).
                 </p>
               </dd>
