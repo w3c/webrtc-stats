@@ -1276,7 +1276,7 @@ enum RTCStatsType {
                 <p>
                   The cumulative number of RTP packets that failed to be decrypted according to the
                   procedures in [[!RFC3711]]. These packets are not counted by
-                  <code><a>packetsDiscarded</a></code>.
+                  <code><a data-link-for="RTCReceivedRtpStreamStats">packetsDiscarded</a></code>.
                 </p>
               </dd>
               <dt>
@@ -1285,7 +1285,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 The cumulative number of packets discarded because they are duplicated. Duplicate
-                packets are not counted in <code><a>packetsDiscarded</a></code>.<br>
+                packets are not counted in <code><a data-link-for="RTCReceivedRtpStreamStats">packetsDiscarded</a></code>.<br>
                 Duplicated packets have the same RTP sequence number and content as a previously
                 received packet. If multiple duplicates of a packet are received, all of them are
                 counted.<br>
@@ -2711,7 +2711,7 @@ enum RTCStatsType {
                   sample that was replaced with synthesized samples generated locally before being
                   played out. Examples of samples that have to be concealed are samples from lost
                   packets (reported in <a>packetsLost</a>) or samples from packets that arrive too
-                  late to be played out (reported in <a>packetsDiscarded</a>).
+                  late to be played out (reported in <a data-link-for="RTCReceivedRtpStreamStats">packetsDiscarded</a>).
                 </p>
               </dd>
               <dt>
