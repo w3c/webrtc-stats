@@ -481,9 +481,12 @@ enum RTCStatsType {
               <code><a>RTCOutboundRtpStreamStats</a></code>.
             </p>
             <p>
-              When simulcast is in use, there will be one RtpStreamStats per
+              When simulcast is in use, there will be one
+              RTCOutboundRtpStreamStats per
               SSRC, and all these senders will have a reference to the same
-              "track" object (of type <a>RTCSenderAudioTrackAttachmentStats</a>
+              "sender" object (of type <a>RTCAudioSenderStats</a> or
+              <a>RTCVideoSenderStats</a>) and "track" object (of type
+              <a>RTCSenderAudioTrackAttachmentStats</a>
               or <a>RTCSenderVideoTrackAttachmentStats</a>).
             </p>
           </dd>
