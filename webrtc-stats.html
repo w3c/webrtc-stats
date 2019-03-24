@@ -480,6 +480,12 @@ enum RTCStatsType {
               <code>RTCPeerConnection</code> object. It is accessed by the
               <code><a>RTCOutboundRtpStreamStats</a></code>.
             </p>
+            <p>
+              When simulcast is in use, there will be one RtpStreamStats per
+              SSRC, and all these senders will have a reference to the same
+              "track" object (of type <a>RTCSenderAudioTrackAttachmentStats</a>
+              or <a>RTCSenderVideoTrackAttachmentStats</a>).
+            </p>
           </dd>
           <dt>
             <dfn><code>remote-inbound-rtp</code></dfn>
