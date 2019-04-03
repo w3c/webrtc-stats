@@ -1504,6 +1504,7 @@ enum RTCStatsType {
              unsigned long        framesEncoded;
              unsigned long long   qpSum;
              double               totalEncodeTime;
+             double               totalPacketSendDelay;
              double               averageRtcpInterval;
              RTCQualityLimitationReason                 qualityLimitationReason;
              record&lt;DOMString, double&gt; qualityLimitationDurations;
@@ -1615,6 +1616,18 @@ enum RTCStatsType {
                   time passed between feeding the encoder a frame and the encoder returning encoded
                   data for that frame. This does not include any additional time it may take to
                   packetize the resulting data.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalPacketSendDelay</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  The total number of seconds that packets have spent buffered locally before being
+                  transmitted onto the network. Measurement starts when a packet has been produced
+                  and ends when the packet is sent. <code>totalPacketSendDelay</code> is incremented
+                  for each packet sent by this measurement for that packet.
                 </p>
               </dd>
               <dt>
