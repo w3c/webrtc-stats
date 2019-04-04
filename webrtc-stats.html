@@ -1501,6 +1501,7 @@ enum RTCStatsType {
              DOMString            remoteId;
              DOMHighResTimeStamp  lastPacketSentTimestamp;
              double               targetBitrate;
+             unsigned long long   totalEncodedBytesTarget;
              unsigned long        framesEncoded;
              unsigned long long   qpSum;
              double               totalEncodeTime;
@@ -1571,6 +1572,17 @@ enum RTCStatsType {
                   codec's encoder and does not count the size of the IP or other transport layers
                   like TCP or UDP. It is measured in bits per second and the bitrate is calculated
                   over a 1 second window.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalEncodedBytesTarget</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  This value is increased by the target frame size in bytes every time a frame
+                  has been encoded. The actual frame size may be bigger or smaller than this
+                  number. This value goes up every time <code>framesEncoded</code> goes up.
                 </p>
               </dd>
               <dt>
