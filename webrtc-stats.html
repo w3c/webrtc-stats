@@ -1567,7 +1567,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The total number of packets that were retransmitted for this SSRC.
+                  The total number of packets that were retransmitted for this SSRC. This is a
+                  subset of <code>packetsSent</code>.
                 </p>
               </dd>
               <dt>
@@ -1576,7 +1577,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The total number of bytes that were retransmitted for this SSRC.
+                  The total number of bytes that were retransmitted for this SSRC, only
+                  including payload bytes. This is a subset of <code>bytesSent</code>.
                 </p>
               </dd>
               <dt>
