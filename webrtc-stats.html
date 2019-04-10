@@ -2453,6 +2453,7 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCAudioHandlerStats : RTCMediaHandlerStats {
              double              audioLevel;
              double              totalAudioEnergy;
+             double              audioNoiseEnergy;
              boolean             voiceActivityFlag;
              double              totalSamplesDuration;
 };</pre>
@@ -2528,6 +2529,13 @@ enum RTCStatsType {
                   <code>Math.sqrt(0.0026/0.02) = 0.36</code>, which is the same value that would be
                   obtained by doing an RMS calculation over the contiguous 20ms segment of audio.
                 </p>
+              </dd>
+              <dt>
+                <dfn><code>audioNoiseEnergy</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>Average energy level of received audio classified as noise.</p>
               </dd>
               <dt>
                 <dfn><code>voiceActivityFlag</code></dfn> of type <span class=
