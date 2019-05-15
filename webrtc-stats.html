@@ -432,6 +432,7 @@ enum RTCStatsType {
 "outbound-rtp",
 "remote-inbound-rtp",
 "remote-outbound-rtp",
+"media-source",
 "csrc",
 "peer-connection",
 "data-channel",
@@ -513,6 +514,15 @@ enum RTCStatsType {
               stream that is currently received with this <code>RTCPeerConnection</code> object. It
               is measured at the remote endpoint and reported in an RTCP Sender Report (SR). It is
               accessed by the <code><a>RTCRemoteOutboundRtpStreamStats</a></code>.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>media-source</code></dfn>
+          </dt>
+          <dd>
+            <p>
+              Statistics for the media produced by a local <code>MediaStreamTrack</code> that is
+              currently attached to an <code>RTCRtpSender</code>.
             </p>
           </dd>
           <dt>
@@ -1497,6 +1507,7 @@ enum RTCStatsType {
         <div>
           <pre class="idl">dictionary RTCOutboundRtpStreamStats : RTCSentRtpStreamStats {
              DOMString            trackId;
+             DOMString            mediaSourceId;
              DOMString            senderId;
              DOMString            remoteId;
              DOMHighResTimeStamp  lastPacketSentTimestamp;
@@ -1530,6 +1541,14 @@ enum RTCStatsType {
                 The identifier of the stats object representing the current track attachment to the
                 sender of this stream, an <code><a>RTCSenderAudioTrackAttachmentStats</a></code> or
                 <code><a>RTCSenderVideoTrackAttachmentStats</a></code>.
+              </dd>
+              <dt>
+                <dfn><code>mediaSourceId</code></dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                The identifier of the stats object representing the track currently attached to the
+                sender of this stream, an <code><a>RTCMediaSourceStats</a></code>.
               </dd>
               <dt>
                 <dfn><code>senderId</code></dfn> of type <span class=
@@ -1854,6 +1873,84 @@ enum RTCStatsType {
                   local endpoint. The <code>remoteTimestamp</code>, if present, is derived from the
                   NTP timestamp in an RTCP Sender Report (SR) packet, which reflects the remote
                   endpoint's clock. That clock may not be synchronized with the local clock.
+                </p>
+              </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="mediasourcestats-dict*">
+        <h3>
+          RTCMediaSourceStats dictionary
+        </h3>
+        <p>
+          The <dfn>RTCMediaSourceStats</dfn> dictionary represents a local track that is attached
+          to a sender. It contains information about media sources such as frame rate and
+          resolution pre-encoding. This is in contrast to <code>RTCOutboundRtpStreamStats</code>
+          whose members describe transmission and post-encoding metrics. For example, a track may
+          be captured from a high-resolution camera but be transmitted in low resolution due to
+          CPU and network conditions.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCMediaSourceStats : RTCStats {
+             unsigned long   width;
+             unsigned long   height;
+             unsigned long   frames;
+             unsigned long   framesPerSecond;
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCMediaSourceStats</a> Members
+            </h2>
+            <dl data-link-for="RTCMediaSourceStats" data-dfn-for="RTCMediaSourceStats"
+            class="dictionary-members">
+              <dt>
+                <dfn><code>width</code></dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only applicable to video sources. The width, in pixels, of the
+                  last frame originating from this source that was passed to the
+                  sender for further processing. Before the first frame has been
+                  passed this attribute is missing.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>height</code></dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only applicable to video sources. The height, in pixels, of
+                  the last frame originating from this source that was passed to
+                  the sender for further processing. Before the first frame has
+                  been passed this attribute is missing.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>frames</code></dfn> of type <span class=
+                "idlMemberType">frames</span>
+              </dt>
+              <dd>
+                <p>
+                  Only applicable to video sources. The total number of frames
+                  originating from this source that has been passed to the
+                  sender for further processing since it was attached to the
+                  sender.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>framesPerSecond</code></dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only applicable to video sources. The number of frames
+                  originating from this source that has been passed to the
+                  sender for further processing since it was attached to the
+                  sender, measured during the last second. Before the first
+                  second has passed after attachment this attribute is missing.
                 </p>
               </dd>
             </dl>
@@ -2189,6 +2286,7 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCVideoSenderStats : RTCVideoHandlerStats {
+             DOMString           mediaSourceId;
              unsigned long       framesCaptured;
              unsigned long       framesSent;
              unsigned long       hugeFramesSent;
@@ -2200,6 +2298,16 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCVideoSenderStats" data-dfn-for="RTCVideoSenderStats" class=
             "dictionary-members">
+              <dt>
+                <dfn><code>mediaSourceId</code></dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  The identifier of the stats object representing the track currently attached to
+                  this sender, an <code><a>RTCMediaSourceStats</a></code>.
+                </p>
+              </dd>
               <dt>
                 <dfn><code>framesCaptured</code></dfn> of type <span class=
                 "idlMemberType">unsigned long</span>
@@ -2576,6 +2684,7 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCAudioSenderStats : RTCAudioHandlerStats {
+             DOMString           mediaSourceId;
              double              echoReturnLoss;
              double              echoReturnLossEnhancement;
              unsigned long long  totalSamplesSent;
@@ -2586,6 +2695,16 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCAudioSenderStats" data-dfn-for="RTCAudioSenderStats" class=
             "dictionary-members">
+              <dt>
+                <dfn><code>mediaSourceId</code></dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  The identifier of the stats object representing the track currently attached to
+                  this sender, an <code><a>RTCMediaSourceStats</a></code>.
+                </p>
+              </dd>
               <dt>
                 <dfn><code>echoReturnLoss</code></dfn> of type <span class=
                 "idlMemberType">double</span>
