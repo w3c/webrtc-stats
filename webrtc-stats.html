@@ -521,8 +521,10 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              Statistics for the media produced by a local <code>MediaStreamTrack</code> that is
-              currently attached to an <code>RTCRtpSender</code>.
+              Statistics for the media produced by a <code>MediaStreamTrack</code> that is currently
+              attached to an <code>RTCRtpSender</code>. It is either an
+              <code>RTCAudioSourceStats</code> or <code>RTCVideoSourceStats</code> depending on its
+              <code>kind</code>.
             </p>
           </dd>
           <dt>
@@ -1884,19 +1886,35 @@ enum RTCStatsType {
           RTCMediaSourceStats dictionary
         </h3>
         <p>
-          The <dfn>RTCMediaSourceStats</dfn> dictionary represents a local track that is attached
-          to a sender. It contains information about media sources such as frame rate and
-          resolution pre-encoding. This is in contrast to <code>RTCOutboundRtpStreamStats</code>
-          whose members describe transmission and post-encoding metrics. For example, a track may
-          be captured from a high-resolution camera but be transmitted in low resolution due to
-          CPU and network conditions.
+          The <dfn>RTCMediaSourceStats</dfn> dictionary represents a track that is currently
+          attached to one or more senders. It contains information about media sources such as
+          frame rate and resolution prior to encoding. This is the media passed from the
+          <code>MediaStreamTrack</code> to the <code>RTCRtpSender</code>s. This is in contrast to
+          <code>RTCOutboundRtpStreamStats</code> whose members describe metrics as measured after
+          the encoding step. For example, a track may be captured from a high-resolution camera,
+          its frames downscaled due to track constraints and then further downscaled by the
+          encoders due to CPU and network conditions. This dictionary reflects the video frames
+          or audio samples passed out from the track - after track constraints have been applied
+          but before any encoding or further donwsampling occurs.
+        </p>
+        <p>
+          Media source objects are of either subdictionary <code>RTCAudioSourceStats</code> or
+          <code>RTCVideoSourceStats</code>. The <code>type</code> is the same
+          (<code>"media-source"</code>) but <code>kind</code> is different (<code>"audio"</code>
+          or <code>"video"</code>) depending on the kind of track.
+        </p>
+        <p>
+          The media source stats objects are created when a track is attached to any
+          <code>RTCRtpSender</code> and may subsequently be attached to multiple senders during
+          its life. The life of this object ends when the track is no longer attached to any
+          sender of the same <code>RTCPeerConnection</code>. If a track whose media source
+          object ended is attached again this results in a new media source stats object whose
+          counters (such as number of frames) are reset.
         </p>
         <div>
           <pre class="idl">dictionary RTCMediaSourceStats : RTCStats {
-             unsigned long   width;
-             unsigned long   height;
-             unsigned long   frames;
-             unsigned long   framesPerSecond;
+             DOMString       trackIdentifier;
+             DOMString       kind;
 };</pre>
           <section>
             <h2>
@@ -1905,15 +1923,89 @@ enum RTCStatsType {
             <dl data-link-for="RTCMediaSourceStats" data-dfn-for="RTCMediaSourceStats"
             class="dictionary-members">
               <dt>
+                <dfn><code>trackIdentifier</code></dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  The value of the <code>MediaStreamTrack</code>'s
+                  <code>id</code> attribute.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>kind</code></dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  The value of the <code>MediaStreamTrack</code>'s
+                  <code>kind</code> attribute. This is either
+                  <code>"audio"</code> or <code>"video"</code>. If it is
+                  <code>"audio"</code> then this stats object is of type
+                  <code>RTCAudioSourceStats</code>. If it is
+                  <code>"video"</code> then this stats object is of type
+                  <code>RTCVideoSourceStats</code>.
+                </p>
+              </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="audiosourcestats-dict*">
+        <h3>
+          RTCAudioSourceStats dictionary
+        </h3>
+        <p>
+          The <dfn>RTCAudioSourceStats</dfn> dictionary represents an audio
+          track that is attached to one or more senders. It is an
+          <code><a>RTCMediaStreamSource</a></code> whose <code>kind</code> is
+          <code>"audio"</code>.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCAudioSourceStats : RTCMediaSourceStats {
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCAudioSourceStats</a> Members
+            </h2>
+            <dl data-link-for="RTCAudioSourceStats" data-dfn-for="RTCAudioSourceStats"
+            class="dictionary-members">
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="videosourcestats-dict*">
+        <h3>
+          RTCVideoSourceStats dictionary
+        </h3>
+        <p>
+          The <dfn>RTCVideoSourceStats</dfn> dictionary represents a video
+          track that is attached to one or more senders. It is an
+          <code><a>RTCMediaStreamSource</a></code> whose <code>kind</code> is
+          <code>"video"</code>.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCVideoSourceStats : RTCMediaSourceStats {
+             unsigned long   width;
+             unsigned long   height;
+             unsigned long   frames;
+             unsigned long   framesPerSecond;
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCVideoSourceStats</a> Members
+            </h2>
+            <dl data-link-for="RTCVideoSourceStats" data-dfn-for="RTCVideoSourceStats"
+            class="dictionary-members">
+              <dt>
                 <dfn><code>width</code></dfn> of type <span class=
                 "idlMemberType">unsigned long</span>
               </dt>
               <dd>
                 <p>
-                  Only applicable to video sources. The width, in pixels, of the
-                  last frame originating from this source that was passed to the
-                  sender for further processing. Before the first frame has been
-                  passed this attribute is missing.
+                  The width, in pixels, of the last frame originating from this
+                  source. Before a frame has been produced this attribute is
+                  missing.
                 </p>
               </dd>
               <dt>
@@ -1922,10 +2014,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only applicable to video sources. The height, in pixels, of
-                  the last frame originating from this source that was passed to
-                  the sender for further processing. Before the first frame has
-                  been passed this attribute is missing.
+                  The height, in pixels, of the last frame originating from this
+                  source. Before a frame has been produced this attribute is
+                  missing.
                 </p>
               </dd>
               <dt>
@@ -1934,10 +2025,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only applicable to video sources. The total number of frames
-                  originating from this source that has been passed to the
-                  sender for further processing since it was attached to the
-                  sender.
+                  The total number of frames originating from this source.
                 </p>
               </dd>
               <dt>
@@ -1946,11 +2034,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only applicable to video sources. The number of frames
-                  originating from this source that has been passed to the
-                  sender for further processing since it was attached to the
-                  sender, measured during the last second. Before the first
-                  second has passed after attachment this attribute is missing.
+                  The number of frames originating from this source, measured
+                  during the last second. For the first second of this object's
+                  lifetime this attribute is missing.
                 </p>
               </dd>
             </dl>
