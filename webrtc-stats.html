@@ -1625,9 +1625,10 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The total number of seconds that packets have spent buffered locally before being
-                  transmitted onto the network. Measurement starts when a packet has been produced
-                  and ends when the packet is sent. <code>totalPacketSendDelay</code> is incremented
-                  for each packet sent by this measurement for that packet.
+                  transmitted onto the network. The time is measured from when a packet is emitted
+                  from the RTP packetizer until it is handed over to the OS network socket. This
+                  measurement is added to <code>totalPacketSendDelay</code> when
+                  <code>packetsSent</code> is incremented.
                 </p>
               </dd>
               <dt>
