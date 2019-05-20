@@ -522,7 +522,9 @@ enum RTCStatsType {
           <dd>
             <p>
               Statistics for the media produced by a <code>MediaStreamTrack</code> that is currently
-              attached to an <code>RTCRtpSender</code>. It is either an
+              attached to an <code>RTCRtpSender</code>. This reflects the media that is fed to the
+              encoder; after <code>getUserMedia()</code> constraints have been applied (i.e. not the
+              raw media produced by the camera). It is either an
               <code><a>RTCAudioSourceStats</a></code> or <code><a>RTCVideoSourceStats</a></code>
               depending on its <code>kind</code>.
             </p>
