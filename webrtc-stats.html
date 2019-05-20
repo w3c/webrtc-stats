@@ -432,6 +432,7 @@ enum RTCStatsType {
 "outbound-rtp",
 "remote-inbound-rtp",
 "remote-outbound-rtp",
+"media-source",
 "csrc",
 "peer-connection",
 "data-channel",
@@ -513,6 +514,19 @@ enum RTCStatsType {
               stream that is currently received with this <code>RTCPeerConnection</code> object. It
               is measured at the remote endpoint and reported in an RTCP Sender Report (SR). It is
               accessed by the <code><a>RTCRemoteOutboundRtpStreamStats</a></code>.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>media-source</code></dfn>
+          </dt>
+          <dd>
+            <p>
+              Statistics for the media produced by a <code>MediaStreamTrack</code> that is currently
+              attached to an <code>RTCRtpSender</code>. This reflects the media that is fed to the
+              encoder; after <code>getUserMedia()</code> constraints have been applied (i.e. not the
+              raw media produced by the camera). It is either an
+              <code><a>RTCAudioSourceStats</a></code> or <code><a>RTCVideoSourceStats</a></code>
+              depending on its <code>kind</code>.
             </p>
           </dd>
           <dt>
@@ -1497,6 +1511,7 @@ enum RTCStatsType {
         <div>
           <pre class="idl">dictionary RTCOutboundRtpStreamStats : RTCSentRtpStreamStats {
              DOMString            trackId;
+             DOMString            mediaSourceId;
              DOMString            senderId;
              DOMString            remoteId;
              DOMHighResTimeStamp  lastPacketSentTimestamp;
@@ -1531,6 +1546,14 @@ enum RTCStatsType {
                 The identifier of the stats object representing the current track attachment to the
                 sender of this stream, an <code><a>RTCSenderAudioTrackAttachmentStats</a></code> or
                 <code><a>RTCSenderVideoTrackAttachmentStats</a></code>.
+              </dd>
+              <dt>
+                <dfn><code>mediaSourceId</code></dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                The identifier of the stats object representing the track currently attached to the
+                sender of this stream, an <code><a>RTCMediaSourceStats</a></code>.
               </dd>
               <dt>
                 <dfn><code>senderId</code></dfn> of type <span class=
@@ -1874,6 +1897,168 @@ enum RTCStatsType {
           </section>
         </div>
       </section>
+      <section id="mediasourcestats-dict*">
+        <h3>
+          RTCMediaSourceStats dictionary
+        </h3>
+        <p>
+          The <dfn>RTCMediaSourceStats</dfn> dictionary represents a track that is currently
+          attached to one or more senders. It contains information about media sources such as
+          frame rate and resolution prior to encoding. This is the media passed from the
+          <code>MediaStreamTrack</code> to the <code>RTCRtpSender</code>s. This is in contrast to
+          <code>RTCOutboundRtpStreamStats</code> whose members describe metrics as measured after
+          the encoding step. For example, a track may be captured from a high-resolution camera,
+          its frames downscaled due to track constraints and then further downscaled by the
+          encoders due to CPU and network conditions. This dictionary reflects the video frames
+          or audio samples passed out from the track - after track constraints have been applied
+          but before any encoding or further donwsampling occurs.
+        </p>
+        <p>
+          Media source objects are of either subdictionary <code>RTCAudioSourceStats</code> or
+          <code>RTCVideoSourceStats</code>. The <code>type</code> is the same
+          (<code>"media-source"</code>) but <code>kind</code> is different (<code>"audio"</code>
+          or <code>"video"</code>) depending on the kind of track.
+        </p>
+        <p>
+          The media source stats objects are created when a track is attached to any
+          <code>RTCRtpSender</code> and may subsequently be attached to multiple senders during
+          its life. The life of this object ends when the track is no longer attached to any
+          sender of the same <code>RTCPeerConnection</code>. If a track whose media source
+          object ended is attached again this results in a new media source stats object whose
+          counters (such as number of frames) are reset.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCMediaSourceStats : RTCStats {
+             DOMString       trackIdentifier;
+             DOMString       kind;
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCMediaSourceStats</a> Members
+            </h2>
+            <dl data-link-for="RTCMediaSourceStats" data-dfn-for="RTCMediaSourceStats"
+            class="dictionary-members">
+              <dt>
+                <dfn><code>trackIdentifier</code></dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  The value of the <code>MediaStreamTrack</code>'s
+                  <code>id</code> attribute.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>kind</code></dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  The value of the <code>MediaStreamTrack</code>'s
+                  <code>kind</code> attribute. This is either
+                  <code>"audio"</code> or <code>"video"</code>. If it is
+                  <code>"audio"</code> then this stats object is of type
+                  <code>RTCAudioSourceStats</code>. If it is
+                  <code>"video"</code> then this stats object is of type
+                  <code>RTCVideoSourceStats</code>.
+                </p>
+              </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="audiosourcestats-dict*">
+        <h3>
+          RTCAudioSourceStats dictionary
+        </h3>
+        <p>
+          The <dfn>RTCAudioSourceStats</dfn> dictionary represents an audio
+          track that is attached to one or more senders. It is an
+          <code><a>RTCMediaStreamSource</a></code> whose <code>kind</code> is
+          <code>"audio"</code>.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCAudioSourceStats : RTCMediaSourceStats {
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCAudioSourceStats</a> Members
+            </h2>
+            <dl data-link-for="RTCAudioSourceStats" data-dfn-for="RTCAudioSourceStats"
+            class="dictionary-members">
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="videosourcestats-dict*">
+        <h3>
+          RTCVideoSourceStats dictionary
+        </h3>
+        <p>
+          The <dfn>RTCVideoSourceStats</dfn> dictionary represents a video
+          track that is attached to one or more senders. It is an
+          <code><a>RTCMediaStreamSource</a></code> whose <code>kind</code> is
+          <code>"video"</code>.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCVideoSourceStats : RTCMediaSourceStats {
+             unsigned long   width;
+             unsigned long   height;
+             unsigned long   frames;
+             unsigned long   framesPerSecond;
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCVideoSourceStats</a> Members
+            </h2>
+            <dl data-link-for="RTCVideoSourceStats" data-dfn-for="RTCVideoSourceStats"
+            class="dictionary-members">
+              <dt>
+                <dfn><code>width</code></dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  The width, in pixels, of the last frame originating from this
+                  source. Before a frame has been produced this attribute is
+                  missing.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>height</code></dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  The height, in pixels, of the last frame originating from this
+                  source. Before a frame has been produced this attribute is
+                  missing.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>frames</code></dfn> of type <span class=
+                "idlMemberType">frames</span>
+              </dt>
+              <dd>
+                <p>
+                  The total number of frames originating from this source.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>framesPerSecond</code></dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  The number of frames originating from this source, measured
+                  during the last second. For the first second of this object's
+                  lifetime this attribute is missing.
+                </p>
+              </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
       <section id="contributingsourcestats-dict*">
         <h3>
           <dfn>RTCRtpContributingSourceStats</dfn> dictionary
@@ -2203,6 +2388,7 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCVideoSenderStats : RTCVideoHandlerStats {
+             DOMString           mediaSourceId;
              unsigned long       framesCaptured;
              unsigned long       framesSent;
              unsigned long       hugeFramesSent;
@@ -2214,6 +2400,16 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCVideoSenderStats" data-dfn-for="RTCVideoSenderStats" class=
             "dictionary-members">
+              <dt>
+                <dfn><code>mediaSourceId</code></dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  The identifier of the stats object representing the track currently attached to
+                  this sender, an <code><a>RTCMediaSourceStats</a></code>.
+                </p>
+              </dd>
               <dt>
                 <dfn><code>framesCaptured</code></dfn> of type <span class=
                 "idlMemberType">unsigned long</span>
@@ -2590,6 +2786,7 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCAudioSenderStats : RTCAudioHandlerStats {
+             DOMString           mediaSourceId;
              double              echoReturnLoss;
              double              echoReturnLossEnhancement;
              unsigned long long  totalSamplesSent;
@@ -2600,6 +2797,16 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCAudioSenderStats" data-dfn-for="RTCAudioSenderStats" class=
             "dictionary-members">
+              <dt>
+                <dfn><code>mediaSourceId</code></dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  The identifier of the stats object representing the track currently attached to
+                  this sender, an <code><a>RTCMediaSourceStats</a></code>.
+                </p>
+              </dd>
               <dt>
                 <dfn><code>echoReturnLoss</code></dfn> of type <span class=
                 "idlMemberType">double</span>
