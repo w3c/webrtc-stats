@@ -2263,7 +2263,6 @@ enum RTCStatsType {
         <div>
           <pre class="idl">dictionary RTCMediaHandlerStats : RTCStats {
              DOMString           trackIdentifier;
-             boolean             remoteSource;
              boolean             ended;
              DOMString           kind;
              RTCPriorityType     priority;
@@ -2282,14 +2281,6 @@ enum RTCStatsType {
                 <p>
                   Represents the <code>id</code> property of the track.
                 </p>
-              </dd>
-              <dt>
-                <dfn><code>remoteSource</code></dfn> of type <span class=
-                "idlMemberType">boolean</span>
-              </dt>
-              <dd>
-                Only applicable for 'track' stats. True if the source is remote, for instance if it
-                is sourced from another host via an RTCPeerConnection. False otherwise.
               </dd>
               <dt>
                 <dfn><code>ended</code></dfn> of type <span class=
@@ -4247,6 +4238,25 @@ enum RTCNetworkType {
                 December 2017.
               </p>
             </dd>
+          </dl>
+        </section>
+        <pre class="idl">partial dictionary RTCMediaHandlerStats {
+          boolean             remoteSource;
+};</pre>
+        <section>
+          <h2>Obsolete RTCMediaHandlerStats members</h2>
+          <dl data-dfn-for="RTCMediaHandlerStats">
+            <dt>
+              <dfn><code>remoteSource</code></dfn> of type <span class=
+                "idlMemberType">boolean</span>
+            </dt>
+              <dd>
+                This field got removed in June 2019, as it was redundant and
+                sometimes ambiguous (when a track from one peer connection is
+                fed into another). A <code>type</code> of
+                <code>"receiver"</code> is remote, whereas <code>"sender"</code>
+                and <code>"track"</code> are not.
+              </dd>
           </dl>
         </section>
       </div>
