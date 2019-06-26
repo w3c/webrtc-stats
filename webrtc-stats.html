@@ -1146,6 +1146,7 @@ enum RTCStatsType {
              DOMString            receiverId;
              DOMString            remoteId;
              unsigned long        framesDecoded;
+             unsigned long        keyFramesDecoded;
              unsigned long long   qpSum;
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
              double               averageRtcpInterval;
@@ -1202,6 +1203,18 @@ enum RTCStatsType {
                 <p>
                   Only valid for video. It represents the total number of frames correctly decoded
                   for this SSRC, i.e., frames that would be displayed if no frames are dropped.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>keyFramesDecoded</code></dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. It represents the total number of key frames, such as
+                  key frames in VP8 [[RFC6386]] or IDR-frames in H.264 [[RFC6184]], successfully decoded for this RTP media stream.
+                  This is a subset of <code>framesDecoded</code>. <code>framesDecoded - keyFramesDecoded</code> gives
+                  you the number of delta frames decoded.
                 </p>
               </dd>
               <dt>
@@ -1649,7 +1662,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Only valid for video. It represents the total number of key frames, such as
-                  keyframes in VP8 [[RFC6386]] or IDR-frames in H.264 [[RFC6184]], successfully encoded for this RTP media stream.
+                  key frames in VP8 [[RFC6386]] or IDR-frames in H.264 [[RFC6184]], successfully encoded for this RTP media stream.
                   This is a subset of <code>framesEncoded</code>. <code>framesEncoded - keyFramesEncoded</code> gives
                   you the number of delta frames encoded.
                 </p>
@@ -2524,7 +2537,6 @@ enum RTCStatsType {
              double              jitterBufferDelay;
              unsigned long long  jitterBufferEmittedCount;
              unsigned long       framesReceived;
-             unsigned long       keyFramesReceived;
              unsigned long       framesDecoded;
              unsigned long       framesDropped;
              unsigned long       partialFramesLost;
@@ -2588,21 +2600,6 @@ enum RTCStatsType {
                 <p>
                   Represents the total number of complete frames received for this receiver. This
                   metric is incremented when the complete frame is received.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>keyFramesReceived</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the total number of complete key frames received for this
-                  MediaStreamTrack, such as Infra-frames in VP8 [[RFC6386]] or I-frames in H.264
-                  [[RFC6184]]. This is a subset of <code>framesReceived</code>.
-                  <code>framesReceived - keyFramesReceived</code> gives you the number of delta
-                  frames received. This metric is incremented when the complete key frame is
-                  received. It is not incremented if a partial key frames is received and sent for
-                  decoding, i.e., the frame could not be recovered via retransmission or FEC.
                 </p>
               </dd>
               <dt>
