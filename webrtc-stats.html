@@ -1979,6 +1979,9 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCAudioSourceStats : RTCMediaSourceStats {
+              double              audioLevel;
+              double              totalAudioEnergy;
+              double              totalSamplesDuration;
 };</pre>
           <section>
             <h2>
@@ -1986,6 +1989,79 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCAudioSourceStats" data-dfn-for="RTCAudioSourceStats"
             class="dictionary-members">
+              <dt>
+                <dfn><code>audioLevel</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the audio level of the media source. For audio levels of remotely
+                  sourced tracks, see <code><a>RTCAudioReceiverStats</a></code> instead.
+                </p>
+                <p>
+                  The value is between 0..1 (linear), where 1.0 represents 0 dBov, 0 represents
+                  silence, and 0.5 represents approximately 6 dBSPL change in the sound pressure
+                  level from 0 dBov.
+                </p>
+                <p>
+                  The audioLevel is averaged over some small interval, using the algortihm
+                  described under <a>totalAudioEnergy</a>. The interval used is implementation
+                  dependent.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalAudioEnergy</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the audio energy of the media source. For audio energy of remotely
+                  sourced tracks, see <code><a>RTCAudioReceiverStats</a></code> instead.
+                </p>
+                <p>
+                  This value MUST be computed as follows: for each audio sample produced by the
+                  media source during the lifetime of this stats object, add the sample's value
+                  divided by the highest-intensity encodable value, squared and then multiplied
+                  by the duration of the sample in seconds. In other words, <code>duration *
+                  Math.pow(energy/maxEnergy, 2)</code>.
+                </p>
+                <p>
+                  This can be used to obtain a root mean square (RMS) value that uses the same
+                  units as <code><a>audioLevel</a></code>, as defined in [[RFC6464]]. It can be
+                  converted to these units using the formula
+                  <code>Math.sqrt(totalAudioEnergy/totalSamplesDuration)</code>. This calculation
+                  can also be performed using the differences between the values of two different
+                  <code>getStats()</code> calls, in order to compute the average audio level over
+                  any desired time interval. In other words, do <code>Math.sqrt((energy2 -
+                  energy1)/(duration2 - duration1))</code>.
+                </p>
+                <p>
+                  For example, if a 10ms packet of audio is produced with an RMS of 0.5 (out of
+                  1.0), this should add <code>0.5 * 0.5 * 0.01 = 0.0025</code> to
+                  <code>totalAudioEnergy</code>. If another 10ms packet with an RMS of 0.1 is
+                  received, this should similarly add <code>0.0001</code> to
+                  <code>totalAudioEnergy</code>. Then,
+                  <code>Math.sqrt(totalAudioEnergy/totalSamplesDuration)</code> becomes
+                  <code>Math.sqrt(0.0026/0.02) = 0.36</code>, which is the same value that would be
+                  obtained by doing an RMS calculation over the contiguous 20ms segment of audio.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalSamplesDuration</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the audio duration of the media source. For audio durations of remotely
+                  sourced tracks, see <code><a>RTCAudioReceiverStats</a></code> instead.
+                </p>
+                <p>
+                  Represents the total duration in seconds of all samples that have been
+                  produced by this source for the lifetime of this stats object. Can be used with
+                  <code><a>totalAudioEnergy</a></code> to compute an average audio level over
+                  different intervals.
+                </p>
+              </dd>
             </dl>
           </section>
         </div>
@@ -2661,10 +2737,7 @@ enum RTCStatsType {
         </h3>
         <div>
           <pre class="idl">dictionary RTCAudioHandlerStats : RTCMediaHandlerStats {
-             double              audioLevel;
-             double              totalAudioEnergy;
              boolean             voiceActivityFlag;
-             double              totalSamplesDuration;
 };</pre>
           <section>
             <h2>
@@ -2672,73 +2745,6 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCAudioHandlerStats" data-dfn-for="RTCAudioHandlerStats" class=
             "dictionary-members">
-              <dt>
-                <dfn><code>audioLevel</code></dfn> of type <span class=
-                "idlMemberType">double</span>
-              </dt>
-              <dd>
-                <p>
-                  The value is between 0..1 (linear), where 1.0 represents 0 dBov, 0 represents
-                  silence, and 0.5 represents approximately 6 dBSPL change in the sound pressure
-                  level from 0 dBov.
-                </p>
-                <p>
-                  The "audio level" value defined in [[RFC6464]] (as 0..127, where 0 represents 0
-                  dBov, 126 represents -126 dBov and 127 represents silence) is obtained by the
-                  calculation given in appendix A of [[!RFC6465]]: informally, level =
-                  -round(log10(audioLevel) * 20), with audioLevel 0.0 and values above 127 mapped
-                  to 127.
-                </p>
-                <p>
-                  The <a>audioLevel</a> represents the output audio level of the track; thus, if
-                  the track is sourced from an <a data-cite="!WEBRTC#rtcrtpreceiver-interface">RTCRtpReceiver</a>, does no audio processing, has a
-                  constant level, and has a <a data-cite="!GETUSERMEDIA#dom-mediatracksettings-volume">volume</a> setting of 1.0, the audio level is
-                  expected to be the same as the audio level of the source SSRC, while if the
-                  <a data-cite="!GETUSERMEDIA#dom-mediatracksettings-volume">volume</a> setting is 0.5, the audioLevel is expected to be half that value.
-                </p>
-                <p>
-                  For outgoing audio tracks, the audioLevel is the level of the audio being sent.
-                </p>
-                <p>
-                  The audioLevel is averaged over some small interval, using the algortihm
-                  described under <a>totalAudioEnergy</a>. The interval used is implementation
-                  dependent.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>totalAudioEnergy</code></dfn> of type <span class=
-                "idlMemberType">double</span>
-              </dt>
-              <dd>
-                <p>
-                  This value MUST be computed as follows: for each audio sample sent/received for
-                  this object (and counted by <code><a data-link-for="RTCAudioSenderStats">totalSamplesSent</a></code> or
-                  <code><a data-link-for="RTCAudioReceiverStats">totalSamplesReceived</a></code>), add the sample's value divided by the
-                  highest-intensity encodable value, squared and then multiplied by the duration of
-                  the sample in seconds. In other words, <code>duration *
-                  Math.pow(energy/maxEnergy, 2)</code>.
-                </p>
-                <p>
-                  This can be used to obtain a root mean square (RMS) value that uses the same
-                  units as <code><a>audioLevel</a></code>, as defined in [[RFC6464]]. It can be
-                  converted to these units using the formula
-                  <code>Math.sqrt(totalAudioEnergy/totalSamplesDuration)</code>. This calculation
-                  can also be performed using the differences between the values of two different
-                  <code>getStats()</code> calls, in order to compute the average audio level over
-                  any desired time interval. In other words, do <code>Math.sqrt((energy2 -
-                  energy1)/(duration2 - duration1))</code>.
-                </p>
-                <p>
-                  For example, if a 10ms packet of audio is received with an RMS of 0.5 (out of
-                  1.0), this should add <code>0.5 * 0.5 * 0.01 = 0.0025</code> to
-                  <code>totalAudioEnergy</code>. If another 10ms packet with an RMS of 0.1 is
-                  received, this should similarly add <code>0.0001</code> to
-                  <code>totalAudioEnergy</code>. Then,
-                  <code>Math.sqrt(totalAudioEnergy/totalSamplesDuration)</code> becomes
-                  <code>Math.sqrt(0.0026/0.02) = 0.36</code>, which is the same value that would be
-                  obtained by doing an RMS calculation over the contiguous 20ms segment of audio.
-                </p>
-              </dd>
               <dt>
                 <dfn><code>voiceActivityFlag</code></dfn> of type <span class=
                 "idlMemberType">boolean</span>
@@ -2753,19 +2759,6 @@ enum RTCStatsType {
                   This value indicates the voice activity in the latest RTP packet played out from
                   a given SSRC, and is defined in the
                   <code>RTCRtpSynchronizationSource.voiceActivityFlag</code> of [[WEBRTC].
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>totalSamplesDuration</code></dfn> of type <span class=
-                "idlMemberType">double</span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the total duration in seconds of all samples that have sent or
-                  received (and thus counted by <code><a data-link-for="RTCAudioSenderStats">totalSamplesSent</a></code> or
-                  <code><a data-link-for="RTCAudioReceiverStats">totalSamplesReceived</a></code>). Can be used with
-                  <code><a>totalAudioEnergy</a></code> to compute an average audio level over
-                  different intervals.
                 </p>
               </dd>
             </dl>
@@ -2898,6 +2891,9 @@ enum RTCStatsType {
              unsigned long long  concealmentEvents;
              unsigned long long  insertedSamplesForDeceleration;
              unsigned long long  removedSamplesForAcceleration;
+             double              audioLevel;
+             double              totalAudioEnergy;
+             double              totalSamplesDuration;
 };</pre>
           <section>
             <h2>
@@ -3014,6 +3010,79 @@ enum RTCStatsType {
                   When playout is sped up, this counter is increased by the difference between
                   the number of samples received and the number of samples played out. If speedup is
                   achieved by removing samples, this will be the count of samples removed.
+                </p>
+              </dd>
+              <dt>
+              <dfn><code>audioLevel</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the audio level of the receiving track. For audio levels of tracks
+                  attached locally, see <code><a>RTCAudioSourceStats</a></code> instead.
+                </p>
+                <p>
+                  The value is between 0..1 (linear), where 1.0 represents 0 dBov, 0 represents
+                  silence, and 0.5 represents approximately 6 dBSPL change in the sound pressure
+                  level from 0 dBov.
+                </p>
+                <p>
+                  The audioLevel is averaged over some small interval, using the algortihm
+                  described under <a>totalAudioEnergy</a>. The interval used is implementation
+                  dependent.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalAudioEnergy</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the audio energy of the receiving track. For audio energy of tracks
+                  attached locally, see <code><a>RTCAudioSourceStats</a></code> instead.
+                </p>
+                <p>
+                  This value MUST be computed as follows: for each audio sample that is received
+                  (and thus counted by <code><a>totalSamplesReceived</a></code>), add the sample's value
+                  divided by the highest-intensity encodable value, squared and then multiplied
+                  by the duration of the sample in seconds. In other words, <code>duration *
+                  Math.pow(energy/maxEnergy, 2)</code>.
+                </p>
+                <p>
+                  This can be used to obtain a root mean square (RMS) value that uses the same
+                  units as <code><a>audioLevel</a></code>, as defined in [[RFC6464]]. It can be
+                  converted to these units using the formula
+                  <code>Math.sqrt(totalAudioEnergy/totalSamplesDuration)</code>. This calculation
+                  can also be performed using the differences between the values of two different
+                  <code>getStats()</code> calls, in order to compute the average audio level over
+                  any desired time interval. In other words, do <code>Math.sqrt((energy2 -
+                  energy1)/(duration2 - duration1))</code>.
+                </p>
+                <p>
+                  For example, if a 10ms packet of audio is produced with an RMS of 0.5 (out of
+                  1.0), this should add <code>0.5 * 0.5 * 0.01 = 0.0025</code> to
+                  <code>totalAudioEnergy</code>. If another 10ms packet with an RMS of 0.1 is
+                  received, this should similarly add <code>0.0001</code> to
+                  <code>totalAudioEnergy</code>. Then,
+                  <code>Math.sqrt(totalAudioEnergy/totalSamplesDuration)</code> becomes
+                  <code>Math.sqrt(0.0026/0.02) = 0.36</code>, which is the same value that would be
+                  obtained by doing an RMS calculation over the contiguous 20ms segment of audio.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalSamplesDuration</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the audio duration of the receiving track. For audio durations of tracks
+                  attached locally, see <code><a>RTCAudioSourceStats</a></code> instead.
+                </p>
+                <p>
+                  Represents the total duration in seconds of all samples that have been received
+                  (and thus counted by <code><a>totalSamplesReceived</a></code>). Can be used with
+                  <code><a>totalAudioEnergy</a></code> to compute an average audio level over
+                  different intervals.
                 </p>
               </dd>
             </dl>
@@ -4245,6 +4314,46 @@ enum RTCNetworkType {
               <p>
                 This field was moved to RTCRemoteInboundRtpStreamStats in
                 December 2017.
+              </p>
+            </dd>
+          </dl>
+        </section>
+        <pre class="idl">partial dictionary RTCAudioHandlerStats {
+            double              audioLevel;
+            double              totalAudioEnergy;
+            double              totalSamplesDuration;
+};</pre>
+        <section>
+          <h2>Obsolete RTCAudioHandlerStats members</h2>
+          <dl data-dfn-for="RTCAudioHandlerStats">
+            <dt>
+              <dfn><code>audioLevel</code></dfn> of
+              type <span class="idlMemberType">double</span>
+            </dt>
+            <dd>
+              <p>
+                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats
+                in June 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>totalAudioEnergy</code></dfn> of
+              type <span class="idlMemberType">double</span>
+            </dt>
+            <dd>
+              <p>
+                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats
+                in June 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>totalSamplesDuration</code></dfn> of
+              type <span class="idlMemberType">double</span>
+            </dt>
+            <dd>
+              <p>
+                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats
+                in June 2019.
               </p>
             </dd>
           </dl>
