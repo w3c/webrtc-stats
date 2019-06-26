@@ -4246,6 +4246,42 @@ enum RTCNetworkType {
             </dd>
           </dl>
         </section>
+
+        <pre class="idl">partial dictionary RTCVideoSenderStats {
+          unsigned long keyFramesSent;
+};</pre>
+        <section>
+          <h2>Obsolete RTCVideoSenderStats members</h2>
+          <dl data-dfn-for="RTCVideoSenderStats">
+            <dt>
+              <dfn><code>keyFramesSent</code></dfn> of
+              type <span class="idlMemberType">unsigned long</span>
+            </dt>
+            <dd>
+              <p>
+                This field was replaced by keyFramesEncoded in RTCOutboundRtpStreamStats in June 2019. There were no known implementations supporting the old field at the time of the change.
+              </p>
+            </dd>
+          </dl>
+        </section>
+
+        <pre class="idl">partial dictionary RTCVideoReceiverStats {
+          unsigned long keyFramesReceived;
+};</pre>
+        <section>
+          <h2>Obsolete RTCVideoReceiverStats members</h2>
+          <dl data-dfn-for="RTCVideoReceiverStats">
+            <dt>
+              <dfn><code>keyFramesReceived</code></dfn> of
+              type <span class="idlMemberType">unsigned long</span>
+            </dt>
+            <dd>
+              <p>
+                This field was replaced by keyFramesDecoded in RTCInboundRtpStreamStats in June 2019. There were no known implementations supporting the old field at the time of the change.
+              </p>
+            </dd>
+          </dl>
+        </section>
       </div>
     </section>
     <section>
