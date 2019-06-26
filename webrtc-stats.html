@@ -1148,6 +1148,7 @@ enum RTCStatsType {
              unsigned long        framesDecoded;
              unsigned long        keyFramesDecoded;
              unsigned long long   qpSum;
+             double               totalDecodeTime;
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
              double               averageRtcpInterval;
              unsigned long        fecPacketsReceived;
@@ -1236,6 +1237,18 @@ enum RTCStatsType {
                   Note that the QP value is only an indication of quantizer values used; many
                   formats have ways to vary the quantizer value within the frame.
                 </p>
+              </dd>
+              <dt>
+                <dfn><code>totalDecodeTime</code></dfn> of type
+                <span class="idlMemberType">double</span>
+              </dt>
+              <dd>
+              <p>
+                 Total number of seconds that have been spent decoding the <a>framesDecoded</a> frames
+                 of this stream. The average decode time can be calculated by dividing this
+                 value with <a>framesDecoded</a>. The time it takes to decode one frame is the time
+                 passed between feeding the decoder a frame and the decoder returning decoded
+                 data for that frame.
               </dd>
               <dt>
                 <dfn><code>lastPacketReceivedTimestamp</code></dfn> of type <span class=
