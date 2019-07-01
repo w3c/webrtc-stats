@@ -63,8 +63,7 @@
       <p>
         This specification does not define what objects a conforming implementation should
         generate. Specifications that refer to this specification have the need to specify
-        conformance. They should put in their document text that could like
-        this (EXAMPLE ONLY):
+        conformance. They should put in their document text that could like this (EXAMPLE ONLY):
       </p>
       <ul>
         <li>An implementation MUST support generating statistics for the type
@@ -108,22 +107,26 @@
       <p>
         The terms <dfn>RTCPeerConnection</dfn>, <dfn>RTCDataChannel</dfn>,
         <dfn>RTCDtlsTransport</dfn>, <dfn>RTCDtlsTransportState</dfn>, <dfn>RTCIceTransport</dfn>,
-        <dfn>RTCIceRole</dfn> and <dfn>RTCPriorityType</dfn> are defined in [[!WEBRTC]].
+        <dfn>RTCIceRole</dfn> <dfn>RTCDataChannelState</dfn> <dfn>RTCIceCandidateType</dfn> and
+        <dfn>RTCPriorityType</dfn> are defined in [[!WEBRTC]].
       </p>
       <p>
         The term <dfn>RTP stream</dfn> is defined in [[RFC7656]] section 2.1.10.
       </p>
       <p>
-        The terms <code><dfn data-cite="!WEBRTC#dom-rtcstats">RTCStats</dfn></code>,
-        <code><dfn data-cite="!WEBRTC#dom-rtcstats-timestamp">RTCStats.timestamp</dfn></code>,
-        <code><dfn data-cite="!WEBRTC#dom-rtcstats-type">RTCStats.type</dfn></code>,
-        <code><dfn data-cite="!WEBRTC#dom-rtcstats-id">RTCStats.id</dfn></code>,
-        <code><dfn data-cite="!WEBRTC#dom-rtccertificate">RTCCertificate</dfn></code>, and
+        The terms 
+        <code><dfn data-dfn-for="" data-dfn-type="dfn" id="dom-rtcstats" data-idl="" data-title="RTCStats"><a href="https://www.w3.org/TR/webrtc/#dom-rtcstats">RTCStats</a></dfn></code>,
+        <code><dfn data-dfn-for="rtcstats" data-dfn-type="dfn" data-lt="timestamp" id="dom-rtcstats-timestamp" data-idl="" data-title="RTCStats.timestamp"><a href="https://www.w3.org/TR/webrtc/#dom-rtcstats-timestamp">RTCStats.timestamp</a></dfn></code>,
+        <code><dfn data-dfn-for="rtcstats" data-dfn-type="dfn" data-lt="type" id="dom-rtcstats-type" data-idl="" data-title="RTCStats.type"><a href="https://www.w3.org/TR/webrtc/#dom-rtcstats-type">RTCStats.type</a></dfn></code>,
+        <code><dfn data-dfn-for="rtcstats" data-dfn-type="dfn" data-lt="id" id="dom-rtcstats-id" data-idl="" data-title="RTCStats.id"><a href="https://www.w3.org/TR/webrtc/#dom-rtcstats-id">RTCStats.id</a></dfn></code>,
+        <code><dfn data-cite="!WEBRTC#dom-rtccertificate">RTCCertificate</dfn></code> and
         <code><dfn data-cite="!WEBRTC#event-statsended">statsended</dfn></code> are defined in
         [[!WEBRTC]].
       </p>
       <p>
         The terms <code><dfn data-cite=
+        "!HIGHRES-TIME#sec-domhighrestimestamp">DOMHighResTimeStamp</dfn></code>
+        <code><dfn data-cite=
         "!HIGHRES-TIME#dom-performance-timeOrigin">performance.timeOrigin</dfn></code> and
         <code><dfn data-cite="!HIGHRES-TIME#dom-performance-now">performance.now()</dfn></code> are
         defined in [[!HIGHRES-TIME]].
@@ -210,7 +213,7 @@
           <li>An RTCStats object should correspond to an object defined in the specification it
           supports.
           </li>
-          <li>The object MUST define a new value in the "RTCStastType" enum, and MUST define the
+          <li>The object MUST define a new value in the <a>RTCStatsType</a> enum, and MUST define the
           syntax of the <a>stats object</a> it returns either by reference to an existing
           sub-dictionary of <a>RTCStats</a> or by defining a new sub-dictionary of <a>RTCStats</a>.
           </li>
@@ -288,10 +291,10 @@
         </p>
         <p>
           If a monitored object can only exist in a few instances over the lifetime of a
-          RTCPeerConnection, it may be simplest to consider it "eternal" and never delete it from the
-          set of objects reported on in stats. This type of object will remain visible until the
-          RTCPeerConnection is no longer available; it is also visible in getStats() after pc.close().
-          This is the default when no lifetime is mentioned in its specification.
+          RTCPeerConnection, it may be simplest to consider it "eternal" and never delete it from
+          the set of objects reported on in stats. This type of object will remain visible until
+          the RTCPeerConnection is no longer available; it is also visible in getStats() after
+          pc.close(). This is the default when no lifetime is mentioned in its specification.
         </p>
         <p>
           Objects that might exist in many instances over time should have a defined time at which
@@ -305,9 +308,9 @@
         <p>
           When a <a>monitored object</a> is deleted, a final stats object is produced, carrying the
           values current at the time of deletion. This object will be made available using the
-          <code><a>statsended</a></code> event on the associated RTCPeerConnection. This is important
-          in order to report consistently on short-lived objects and to be able to consistently
-          report totals over the lifetime of a RTCPeerConnection.
+          <code><a>statsended</a></code> event on the associated RTCPeerConnection. This is
+          important in order to report consistently on short-lived objects and to be able to
+          consistently report totals over the lifetime of a RTCPeerConnection.
         </p>
         <p>
           When an object is deleted, we can guarantee that no subsequent getStats() call will
@@ -357,16 +360,20 @@
           defined set of stats object types including proposals for new standard types.
         </p>
         <p class="status-not-ED">
-          This document specifies the interoperable stats object types.  Proposals for new object types may be made in <a href="https://github.com/w3c/webrtc-stats/">the editors draft maintained on GitHub</a>.  New standard types may appear in future revisions of the W3C Recommendation.
+          This document specifies the interoperable stats object types. Proposals for new object
+          types may be made in <a href="https://github.com/w3c/webrtc-stats/">the editors draft
+          maintained on GitHub</a>. New standard types may appear in future revisions of the W3C
+          Recommendation.
         </p>
         <p>
           If a need for a new stats object type or stats value within a stats object is found, an
-          issue should be <a href="https://github.com/w3c/webrtc-stats/issues">raised on Github</a>, and a review process will decide on
-          whether the stat should be added to the editors draft or not.
+          issue should be <a href="https://github.com/w3c/webrtc-stats/issues">raised on
+          Github</a>, and a review process will decide on whether the stat should be added to the
+          editors draft or not.
         </p>
         <p>
-          A pull request for a change to the editors draft may serve as guidance for the discussion,
-          but the eventual merge is dependent on the review process.
+          A pull request for a change to the editors draft may serve as guidance for the
+          discussion, but the eventual merge is dependent on the review process.
         </p>
         <p>
           While the WebRTC WG exist, it will serve as the review body; once it has disbanded, the
@@ -482,15 +489,13 @@ enum RTCStatsType {
               <code><a>RTCOutboundRtpStreamStats</a></code>.
             </p>
             <p>
-              When there are multiple RTP streams connected to the same
-              sender, such as when using simulcast or RTX, there will be one
-              <a>RTCOutboundRtpStreamStats</a> per
-              RTP stream, with distinct values of the "ssrc" attribute,
-              and all these senders will have a reference to the same
-              "sender" object (of type <a>RTCAudioSenderStats</a> or
+              When there are multiple RTP streams connected to the same sender, such as when using
+              simulcast or RTX, there will be one <a>RTCOutboundRtpStreamStats</a> per RTP stream,
+              with distinct values of the "ssrc" attribute, and all these senders will have a
+              reference to the same "sender" object (of type <a>RTCAudioSenderStats</a> or
               <a>RTCVideoSenderStats</a>) and "track" object (of type
-              <a>RTCSenderAudioTrackAttachmentStats</a>
-              or <a>RTCSenderVideoTrackAttachmentStats</a>).
+              <a>RTCSenderAudioTrackAttachmentStats</a> or
+              <a>RTCSenderVideoTrackAttachmentStats</a>).
             </p>
           </dd>
           <dt>
@@ -521,10 +526,10 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              Statistics for the media produced by a <code>MediaStreamTrack</code> that is currently
-              attached to an <code>RTCRtpSender</code>. This reflects the media that is fed to the
-              encoder; after <code>getUserMedia()</code> constraints have been applied (i.e. not the
-              raw media produced by the camera). It is either an
+              Statistics for the media produced by a <code>MediaStreamTrack</code> that is
+              currently attached to an <code>RTCRtpSender</code>. This reflects the media that is
+              fed to the encoder; after <code>getUserMedia()</code> constraints have been applied
+              (i.e. not the raw media produced by the camera). It is either an
               <code><a>RTCAudioSourceStats</a></code> or <code><a>RTCVideoSourceStats</a></code>
               depending on its <code>kind</code>.
             </p>
@@ -686,13 +691,12 @@ enum RTCStatsType {
         </h3>
         <p>
           The dictionaries for RTP statistics are structured as a hierarchy, so that those stats
-          that make sense in many different contexts are represented just once in IDL.</p>
+          that make sense in many different contexts are represented just once in IDL.
+        </p>
         <p>
-          The lifetime of all RTP <a>monitored object</a>s starts when
-          the RTP stream is first used: When the first RTP packet is sent or
-          received on the
-          SSRC it represents, or when the first RTCP packet is sent or received
-          that refers to the SSRC of the RTP stream.
+          The lifetime of all RTP <a>monitored object</a>s starts when the RTP stream is first
+          used: When the first RTP packet is sent or received on the SSRC it represents, or when
+          the first RTCP packet is sent or received that refers to the SSRC of the RTP stream.
         </p>
         <p>
           RTP monitored objects are not deleted.
@@ -764,7 +768,8 @@ enum RTCStatsType {
             <dl data-link-for="RTCRtpStreamStats" data-dfn-for="RTCRtpStreamStats" class=
             "dictionary-members">
               <dt>
-                <dfn><code>ssrc</code></dfn> of type <span class="idlMemberType">unsigned long</span>
+                <dfn><code>ssrc</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -773,15 +778,14 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>kind</code></dfn> of type <span class=
-                "idlMemberType">DOMString</span>
+                <dfn><code>kind</code></dfn> of type <span class="idlMemberType">DOMString</span>
               </dt>
               <dd>
                 <p>
                   Either "<code>audio</code>" or "<code>video</code>". This MUST match the media
-                  type part of the information in the corresponding <code><a data-link-for="RTCCodecStats">codecType</a></code>
-                  member of <code>RTCCodecStats</code>, and MUST match the "kind" attribute of the
-                  related MediaStreamTrack.
+                  type part of the information in the corresponding <code><a data-link-for=
+                  "RTCCodecStats">codecType</a></code> member of <code>RTCCodecStats</code>, and
+                  MUST match the "kind" attribute of the related MediaStreamTrack.
                 </p>
               </dd>
               <dt>
@@ -879,7 +883,8 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>channels</code></dfn> of type <span class="idlMemberType">unsigned long</span>
+                <dfn><code>channels</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -996,8 +1001,7 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>packetsLost</code></dfn> of type <span class=
-                "idlMemberType">long</span>
+                <dfn><code>packetsLost</code></dfn> of type <span class="idlMemberType">long</span>
               </dt>
               <dd>
                 <p>
@@ -1007,8 +1011,7 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>jitter</code></dfn> of type <span class=
-                "idlMemberType">double</span>
+                <dfn><code>jitter</code></dfn> of type <span class="idlMemberType">double</span>
               </dt>
               <dd>
                 <p>
@@ -1062,8 +1065,8 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>burstLossCount</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                <dfn><code>burstLossCount</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -1212,9 +1215,10 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video. It represents the total number of key frames, such as
-                  key frames in VP8 [[RFC6386]] or IDR-frames in H.264 [[RFC6184]], successfully decoded for this RTP media stream.
-                  This is a subset of <code>framesDecoded</code>. <code>framesDecoded - keyFramesDecoded</code> gives
+                  Only valid for video. It represents the total number of key frames, such as key
+                  frames in VP8 [[RFC6386]] or IDR-frames in H.264 [[RFC6184]], successfully
+                  decoded for this RTP media stream. This is a subset of
+                  <code>framesDecoded</code>. <code>framesDecoded - keyFramesDecoded</code> gives
                   you the number of delta frames decoded.
                 </p>
               </dd>
@@ -1224,13 +1228,13 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video. The sum of the QP values of frames decoded
-                  by this receiver. The count of frames is in <a>framesDecoded</a>.
+                  Only valid for video. The sum of the QP values of frames decoded by this
+                  receiver. The count of frames is in <a>framesDecoded</a>.
                 </p>
                 <p>
-                  The definition of QP value depends on the codec; for VP8, the QP value is
-                  the value carried in the frame header as the syntax element "y_ac_qi", and
-                  defined in [[RFC6386]] section 19.2. Its range is 0..127.
+                  The definition of QP value depends on the codec; for VP8, the QP value is the
+                  value carried in the frame header as the syntax element "y_ac_qi", and defined in
+                  [[RFC6386]] section 19.2. Its range is 0..127. 
                   <!-- Need appropriate references for VP9 and H.264 -->
                 </p>
                 <p>
@@ -1239,16 +1243,17 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>totalDecodeTime</code></dfn> of type
-                <span class="idlMemberType">double</span>
+                <dfn><code>totalDecodeTime</code></dfn> of type <span class=
+                "idlMemberType">double</span>
               </dt>
               <dd>
-              <p>
-                 Total number of seconds that have been spent decoding the <a>framesDecoded</a> frames
-                 of this stream. The average decode time can be calculated by dividing this
-                 value with <a>framesDecoded</a>. The time it takes to decode one frame is the time
-                 passed between feeding the decoder a frame and the decoder returning decoded
-                 data for that frame.
+                <p>
+                  Total number of seconds that have been spent decoding the <a>framesDecoded</a>
+                  frames of this stream. The average decode time can be calculated by dividing this
+                  value with <a>framesDecoded</a>. The time it takes to decode one frame is the
+                  time passed between feeding the decoder a frame and the decoder returning decoded
+                  data for that frame.
+                </p>
               </dd>
               <dt>
                 <dfn><code>lastPacketReceivedTimestamp</code></dfn> of type <span class=
@@ -1299,8 +1304,8 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>bytesReceived</code></dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
+                <dfn><code>bytesReceived</code></dfn> of type <span class="idlMemberType">unsigned
+                long long</span>
               </dt>
               <dd>
                 <p>
@@ -1325,13 +1330,15 @@ enum RTCStatsType {
               </dt>
               <dd>
                 The cumulative number of packets discarded because they are duplicated. Duplicate
-                packets are not counted in <code><a data-link-for="RTCReceivedRtpStreamStats">packetsDiscarded</a></code>.<br>
+                packets are not counted in <code><a data-link-for=
+                "RTCReceivedRtpStreamStats">packetsDiscarded</a></code>.<br>
                 Duplicated packets have the same RTP sequence number and content as a previously
                 received packet. If multiple duplicates of a packet are received, all of them are
                 counted.<br>
                 An improved estimate of lost packets can be calculated by adding
-                <a>packetsDuplicated</a> to <a data-link-for="RTCReceivedRtpStreamStats">packetsLost</a>; this will always result in a
-                positive number, but not the same number as RFC 3550 would calculate.
+                <a>packetsDuplicated</a> to <a data-link-for=
+                "RTCReceivedRtpStreamStats">packetsLost</a>; this will always result in a positive
+                number, but not the same number as RFC 3550 would calculate.
               </dd>
               <dt>
                 <dfn><code>perDscpPacketsReceived</code></dfn> of type <span class=
@@ -1347,44 +1354,47 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>firCount</code></dfn> of type <span class="idlMemberType">unsigned long</span>
+                <dfn><code>firCount</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
-                  Only valid for video. Count the total number of Full Intra Request
-                  (FIR) packets sent by this receiver. Calculated
-                  as defined in [[!RFC5104]] section 4.3.1. and does not use the metric indicated
-                  in [[RFC2032]], because it was deprecated by [[RFC4587]].
+                  Only valid for video. Count the total number of Full Intra Request (FIR) packets
+                  sent by this receiver. Calculated as defined in [[!RFC5104]] section 4.3.1. and
+                  does not use the metric indicated in [[RFC2032]], because it was deprecated by
+                  [[RFC4587]].
                 </p>
               </dd>
               <dt>
-                <dfn><code>pliCount</code></dfn> of type <span class="idlMemberType">unsigned long</span>
+                <dfn><code>pliCount</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
-                  Only valid for video. Count the total number of Picture Loss Indication
-                  (PLI) packets sent by this receiver. Calculated
-                  as defined in [[!RFC4585]] section 6.3.1.
+                  Only valid for video. Count the total number of Picture Loss Indication (PLI)
+                  packets sent by this receiver. Calculated as defined in [[!RFC4585]] section
+                  6.3.1.
                 </p>
               </dd>
               <dt>
-                <dfn><code>nackCount</code></dfn> of type <span class="idlMemberType">unsigned long</span>
+                <dfn><code>nackCount</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
-                  Count the total number of Negative ACKnowledgement (NACK) packets
-                  sent by this receiver. Calculated as defined in [[!RFC4585]] section
-                  6.2.1.
+                  Count the total number of Negative ACKnowledgement (NACK) packets sent by this
+                  receiver. Calculated as defined in [[!RFC4585]] section 6.2.1.
                 </p>
               </dd>
               <dt>
-                <dfn><code>sliCount</code></dfn> of type <span class="idlMemberType">unsigned long</span>
+                <dfn><code>sliCount</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
-                  Only valid for video. Count the total number of Slice Loss Indication
-                  (SLI) packets sent by this receiver. Calculated
-                  as defined in [[!RFC4585]] section 6.3.2.
+                  Only valid for video. Count the total number of Slice Loss Indication (SLI)
+                  packets sent by this receiver. Calculated as defined in [[!RFC4585]] section
+                  6.3.2.
                 </p>
               </dd>
             </dl>
@@ -1468,7 +1478,8 @@ enum RTCStatsType {
             <dl data-link-for="RTCSentRtpStreamStats" data-dfn-for="RTCSentRtpStreamStats" class=
             "dictionary-members">
               <dt>
-                <dfn><code>packetsSent</code></dfn> of type <span class="idlMemberType">unsigned long</span>
+                <dfn><code>packetsSent</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -1489,8 +1500,8 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>fecPacketsSent</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                <dfn><code>fecPacketsSent</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -1500,8 +1511,8 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>bytesSent</code></dfn> of type <span class="idlMemberType">unsigned
-                long long</span>
+                <dfn><code>bytesSent</code></dfn> of type <span class="idlMemberType">unsigned long
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -1629,8 +1640,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The total number of bytes that were retransmitted for this SSRC, only
-                  including payload bytes. This is a subset of <code>bytesSent</code>.
+                  The total number of bytes that were retransmitted for this SSRC, only including
+                  payload bytes. This is a subset of <code>bytesSent</code>.
                 </p>
               </dd>
               <dt>
@@ -1653,9 +1664,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  This value is increased by the target frame size in bytes every time a frame
-                  has been encoded. The actual frame size may be bigger or smaller than this
-                  number. This value goes up every time <code>framesEncoded</code> goes up.
+                  This value is increased by the target frame size in bytes every time a frame has
+                  been encoded. The actual frame size may be bigger or smaller than this number.
+                  This value goes up every time <code>framesEncoded</code> goes up.
                 </p>
               </dd>
               <dt>
@@ -1674,9 +1685,10 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video. It represents the total number of key frames, such as
-                  key frames in VP8 [[RFC6386]] or IDR-frames in H.264 [[RFC6184]], successfully encoded for this RTP media stream.
-                  This is a subset of <code>framesEncoded</code>. <code>framesEncoded - keyFramesEncoded</code> gives
+                  Only valid for video. It represents the total number of key frames, such as key
+                  frames in VP8 [[RFC6386]] or IDR-frames in H.264 [[RFC6184]], successfully
+                  encoded for this RTP media stream. This is a subset of
+                  <code>framesEncoded</code>. <code>framesEncoded - keyFramesEncoded</code> gives
                   you the number of delta frames encoded.
                 </p>
               </dd>
@@ -1686,13 +1698,13 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video. The sum of the QP values of frames encoded
-                  by this sender. The count of frames is in <a>framesEncoded</a>.
+                  Only valid for video. The sum of the QP values of frames encoded by this sender.
+                  The count of frames is in <a>framesEncoded</a>.
                 </p>
                 <p>
-                  The definition of QP value depends on the codec; for VP8, the QP value is
-                  the value carried in the frame header as the syntax element "y_ac_qi", and
-                  defined in [[RFC6386]] section 19.2. Its range is 0..127.
+                  The definition of QP value depends on the codec; for VP8, the QP value is the
+                  value carried in the frame header as the syntax element "y_ac_qi", and defined in
+                  [[RFC6386]] section 19.2. Its range is 0..127. 
                   <!-- Need appropriate references for VP9 and H.264 -->
                 </p>
                 <p>
@@ -1775,44 +1787,47 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>nackCount</code></dfn> of type <span class="idlMemberType">unsigned long</span>
+                <dfn><code>nackCount</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
-                  Count the total number of Negative ACKnowledgement (NACK) packets
-                  received by this sender. Calculated as defined in [[!RFC4585]] section
-                  6.2.1.
+                  Count the total number of Negative ACKnowledgement (NACK) packets received by
+                  this sender. Calculated as defined in [[!RFC4585]] section 6.2.1.
                 </p>
               </dd>
               <dt>
-                <dfn><code>firCount</code></dfn> of type <span class="idlMemberType">unsigned long</span>
+                <dfn><code>firCount</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
-                  Only valid for video. Count the total number of Full Intra Request
-                  (FIR) packets received by this sender. Calculated
-                  as defined in [[!RFC5104]] section 4.3.1. and does not use the metric indicated
-                  in [[RFC2032]], because it was deprecated by [[RFC4587]].
+                  Only valid for video. Count the total number of Full Intra Request (FIR) packets
+                  received by this sender. Calculated as defined in [[!RFC5104]] section 4.3.1. and
+                  does not use the metric indicated in [[RFC2032]], because it was deprecated by
+                  [[RFC4587]].
                 </p>
               </dd>
               <dt>
-                <dfn><code>pliCount</code></dfn> of type <span class="idlMemberType">unsigned long</span>
+                <dfn><code>pliCount</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
-                  Only valid for video. Count the total number of Picture Loss Indication
-                  (PLI) packets received by this sender. Calculated
-                  as defined in [[!RFC4585]] section 6.3.1.
+                  Only valid for video. Count the total number of Picture Loss Indication (PLI)
+                  packets received by this sender. Calculated as defined in [[!RFC4585]] section
+                  6.3.1.
                 </p>
               </dd>
               <dt>
-                <dfn><code>sliCount</code></dfn> of type <span class="idlMemberType">unsigned long</span>
+                <dfn><code>sliCount</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
-                  Only valid for video. Count the total number of Slice Loss Indication
-                  (SLI) packets received by this sender. Calculated
-                  as defined in [[!RFC4585]] section 6.3.2.
+                  Only valid for video. Count the total number of Slice Loss Indication (SLI)
+                  packets received by this sender. Calculated as defined in [[!RFC4585]] section
+                  6.3.2.
                 </p>
               </dd>
             </dl>
@@ -1948,23 +1963,23 @@ enum RTCStatsType {
           <code>RTCOutboundRtpStreamStats</code> whose members describe metrics as measured after
           the encoding step. For example, a track may be captured from a high-resolution camera,
           its frames downscaled due to track constraints and then further downscaled by the
-          encoders due to CPU and network conditions. This dictionary reflects the video frames
-          or audio samples passed out from the track - after track constraints have been applied
-          but before any encoding or further donwsampling occurs.
+          encoders due to CPU and network conditions. This dictionary reflects the video frames or
+          audio samples passed out from the track - after track constraints have been applied but
+          before any encoding or further donwsampling occurs.
         </p>
         <p>
           Media source objects are of either subdictionary <code>RTCAudioSourceStats</code> or
           <code>RTCVideoSourceStats</code>. The <code>type</code> is the same
-          (<code>"media-source"</code>) but <code>kind</code> is different (<code>"audio"</code>
-          or <code>"video"</code>) depending on the kind of track.
+          (<code>"media-source"</code>) but <code>kind</code> is different (<code>"audio"</code> or
+          <code>"video"</code>) depending on the kind of track.
         </p>
         <p>
           The media source stats objects are created when a track is attached to any
-          <code>RTCRtpSender</code> and may subsequently be attached to multiple senders during
-          its life. The life of this object ends when the track is no longer attached to any
-          sender of the same <code>RTCPeerConnection</code>. If a track whose media source
-          object ended is attached again this results in a new media source stats object whose
-          counters (such as number of frames) are reset.
+          <code>RTCRtpSender</code> and may subsequently be attached to multiple senders during its
+          life. The life of this object ends when the track is no longer attached to any sender of
+          the same <code>RTCPeerConnection</code>. If a track whose media source object ended is
+          attached again this results in a new media source stats object whose counters (such as
+          number of frames) are reset.
         </p>
         <div>
           <pre class="idl">dictionary RTCMediaSourceStats : RTCStats {
@@ -1975,31 +1990,27 @@ enum RTCStatsType {
             <h2>
               Dictionary <a class="idlType">RTCMediaSourceStats</a> Members
             </h2>
-            <dl data-link-for="RTCMediaSourceStats" data-dfn-for="RTCMediaSourceStats"
-            class="dictionary-members">
+            <dl data-link-for="RTCMediaSourceStats" data-dfn-for="RTCMediaSourceStats" class=
+            "dictionary-members">
               <dt>
                 <dfn><code>trackIdentifier</code></dfn> of type <span class=
                 "idlMemberType">DOMString</span>
               </dt>
               <dd>
                 <p>
-                  The value of the <code>MediaStreamTrack</code>'s
-                  <code>id</code> attribute.
+                  The value of the <code>MediaStreamTrack</code>'s <code>id</code> attribute.
                 </p>
               </dd>
               <dt>
-                <dfn><code>kind</code></dfn> of type <span class=
-                "idlMemberType">DOMString</span>
+                <dfn><code>kind</code></dfn> of type <span class="idlMemberType">DOMString</span>
               </dt>
               <dd>
                 <p>
-                  The value of the <code>MediaStreamTrack</code>'s
-                  <code>kind</code> attribute. This is either
-                  <code>"audio"</code> or <code>"video"</code>. If it is
+                  The value of the <code>MediaStreamTrack</code>'s <code>kind</code> attribute.
+                  This is either <code>"audio"</code> or <code>"video"</code>. If it is
                   <code>"audio"</code> then this stats object is of type
-                  <code>RTCAudioSourceStats</code>. If it is
-                  <code>"video"</code> then this stats object is of type
-                  <code>RTCVideoSourceStats</code>.
+                  <code>RTCAudioSourceStats</code>. If it is <code>"video"</code> then this stats
+                  object is of type <code>RTCVideoSourceStats</code>.
                 </p>
               </dd>
             </dl>
@@ -2011,10 +2022,9 @@ enum RTCStatsType {
           RTCAudioSourceStats dictionary
         </h3>
         <p>
-          The <dfn>RTCAudioSourceStats</dfn> dictionary represents an audio
-          track that is attached to one or more senders. It is an
-          <code><a>RTCMediaStreamSource</a></code> whose <code>kind</code> is
-          <code>"audio"</code>.
+          The <dfn>RTCAudioSourceStats</dfn> dictionary represents an audio track that is attached
+          to one or more senders. It is an <code><a>RTCMediaSourceStats</a></code> whose
+          <code>kind</code> is <code>"audio"</code>.
         </p>
         <div>
           <pre class="idl">dictionary RTCAudioSourceStats : RTCMediaSourceStats {
@@ -2026,8 +2036,8 @@ enum RTCStatsType {
             <h2>
               Dictionary <a class="idlType">RTCAudioSourceStats</a> Members
             </h2>
-            <dl data-link-for="RTCAudioSourceStats" data-dfn-for="RTCAudioSourceStats"
-            class="dictionary-members">
+            <dl data-link-for="RTCAudioSourceStats" data-dfn-for="RTCAudioSourceStats" class=
+            "dictionary-members">
               <dt>
                 <dfn><code>audioLevel</code></dfn> of type <span class=
                 "idlMemberType">double</span>
@@ -2060,8 +2070,8 @@ enum RTCStatsType {
                 <p>
                   This value MUST be computed as follows: for each audio sample produced by the
                   media source during the lifetime of this stats object, add the sample's value
-                  divided by the highest-intensity encodable value, squared and then multiplied
-                  by the duration of the sample in seconds. In other words, <code>duration *
+                  divided by the highest-intensity encodable value, squared and then multiplied by
+                  the duration of the sample in seconds. In other words, <code>duration *
                   Math.pow(energy/maxEnergy, 2)</code>.
                 </p>
                 <p>
@@ -2091,12 +2101,12 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the audio duration of the media source. For audio durations of remotely
-                  sourced tracks, see <code><a>RTCAudioReceiverStats</a></code> instead.
+                  Represents the audio duration of the media source. For audio durations of
+                  remotely sourced tracks, see <code><a>RTCAudioReceiverStats</a></code> instead.
                 </p>
                 <p>
-                  Represents the total duration in seconds of all samples that have been
-                  produced by this source for the lifetime of this stats object. Can be used with
+                  Represents the total duration in seconds of all samples that have been produced
+                  by this source for the lifetime of this stats object. Can be used with
                   <code><a>totalAudioEnergy</a></code> to compute an average audio level over
                   different intervals.
                 </p>
@@ -2110,10 +2120,9 @@ enum RTCStatsType {
           RTCVideoSourceStats dictionary
         </h3>
         <p>
-          The <dfn>RTCVideoSourceStats</dfn> dictionary represents a video
-          track that is attached to one or more senders. It is an
-          <code><a>RTCMediaStreamSource</a></code> whose <code>kind</code> is
-          <code>"video"</code>.
+          The <dfn>RTCVideoSourceStats</dfn> dictionary represents a video track that is attached
+          to one or more senders. It is an <code><a>RTCMediaSourceStats</a></code> whose
+          <code>kind</code> is <code>"video"</code>.
         </p>
         <div>
           <pre class="idl">dictionary RTCVideoSourceStats : RTCMediaSourceStats {
@@ -2126,33 +2135,30 @@ enum RTCStatsType {
             <h2>
               Dictionary <a class="idlType">RTCVideoSourceStats</a> Members
             </h2>
-            <dl data-link-for="RTCVideoSourceStats" data-dfn-for="RTCVideoSourceStats"
-            class="dictionary-members">
+            <dl data-link-for="RTCVideoSourceStats" data-dfn-for="RTCVideoSourceStats" class=
+            "dictionary-members">
               <dt>
-                <dfn><code>width</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                <dfn><code>width</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
-                  The width, in pixels, of the last frame originating from this
-                  source. Before a frame has been produced this attribute is
-                  missing.
+                  The width, in pixels, of the last frame originating from this source. Before a
+                  frame has been produced this attribute is missing.
                 </p>
               </dd>
               <dt>
-                <dfn><code>height</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                <dfn><code>height</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
-                  The height, in pixels, of the last frame originating from this
-                  source. Before a frame has been produced this attribute is
-                  missing.
+                  The height, in pixels, of the last frame originating from this source. Before a
+                  frame has been produced this attribute is missing.
                 </p>
               </dd>
               <dt>
-                <dfn><code>frames</code></dfn> of type <span class=
-                "idlMemberType">frames</span>
+                <dfn><code>frames</code></dfn> of type <span class="idlMemberType">frames</span>
               </dt>
               <dd>
                 <p>
@@ -2165,9 +2171,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The number of frames originating from this source, measured
-                  during the last second. For the first second of this object's
-                  lifetime this attribute is missing.
+                  The number of frames originating from this source, measured during the last
+                  second. For the first second of this object's lifetime this attribute is missing.
                 </p>
               </dd>
             </dl>
@@ -2232,9 +2237,9 @@ enum RTCStatsType {
                   The total number of RTP packets that this contributing source contributed to.
                   This value is incremented each time a packet is counted by
                   <code>RTCInboundRtpStreamStats.<a data-link-for=
-                  "RTCReceivedRtpStreamStats">packetsReceived</a></code>, and the packet's CSRC list
-                  (as defined by [[!RFC3550]] section 5.1) contains the SSRC identifier of this
-                  contributing source, <code><a>contributorSsrc</a></code>.
+                  "RTCReceivedRtpStreamStats">packetsReceived</a></code>, and the packet's CSRC
+                  list (as defined by [[!RFC3550]] section 5.1) contains the SSRC identifier of
+                  this contributing source, <code><a>contributorSsrc</a></code>.
                 </p>
               </dd>
               <dt>
@@ -2307,8 +2312,8 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the number of unique DataChannels returned from a successful
-                  createDataChannel() call on the RTCPeerConnection. If the underlying data transport
-                  is not established, these may be in the "connecting" state.
+                  createDataChannel() call on the RTCPeerConnection. If the underlying data
+                  transport is not established, these may be in the "connecting" state.
                 </p>
               </dd>
               <dt>
@@ -2407,8 +2412,7 @@ enum RTCStatsType {
                 is sourced from another host via an RTCPeerConnection. False otherwise.
               </dd>
               <dt>
-                <dfn><code>ended</code></dfn> of type <span class=
-                "idlMemberType">boolean</span>
+                <dfn><code>ended</code></dfn> of type <span class="idlMemberType">boolean</span>
               </dt>
               <dd>
                 <p>
@@ -2416,8 +2420,7 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>kind</code></dfn> of type <span class=
-                "idlMemberType">DOMString</span>
+                <dfn><code>kind</code></dfn> of type <span class="idlMemberType">DOMString</span>
               </dt>
               <dd>
                 <p>
@@ -2456,7 +2459,8 @@ enum RTCStatsType {
             <dl data-link-for="RTCVideoHandlerStats" data-dfn-for="RTCVideoHandlerStats" class=
             "dictionary-members">
               <dt>
-                <dfn><code>frameWidth</code></dfn> of type <span class="idlMemberType">unsigned long</span>
+                <dfn><code>frameWidth</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -2465,7 +2469,8 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>frameHeight</code></dfn> of type <span class="idlMemberType">unsigned long</span>
+                <dfn><code>frameHeight</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -2525,8 +2530,8 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>framesCaptured</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                <dfn><code>framesCaptured</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -2541,7 +2546,8 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>framesSent</code></dfn> of type <span class="idlMemberType">unsigned long</span>
+                <dfn><code>framesSent</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -2550,8 +2556,8 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>hugeFramesSent</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                <dfn><code>hugeFramesSent</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -2593,8 +2599,9 @@ enum RTCStatsType {
           the same "trackIdentifier" attribute, but different "id" attributes.
         </p>
         <p>
-          If the track is detached from the RTCPeerConnection (via removeTrack or via replaceTrack),
-          it continues to appear, but with the "objectDeleted" member set to <code>true</code>.
+          If the track is detached from the RTCPeerConnection (via removeTrack or via
+          replaceTrack), it continues to appear, but with the "objectDeleted" member set to
+          <code>true</code>.
         </p>
         <div>
           <pre class="idl">dictionary RTCSenderVideoTrackAttachmentStats : RTCVideoSenderStats {
@@ -2682,8 +2689,8 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>framesReceived</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                <dfn><code>framesReceived</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -2692,8 +2699,8 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>framesDecoded</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                <dfn><code>framesDecoded</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -2702,8 +2709,8 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>framesDropped</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                <dfn><code>framesDropped</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -2725,8 +2732,8 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>fullFramesLost</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                <dfn><code>fullFramesLost</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -2860,8 +2867,9 @@ enum RTCStatsType {
           the same "trackIdentifier" attribute, but different "id" attributes.
         </p>
         <p>
-          If the track is detached from the RTCPeerConnection (via removeTrack or via replaceTrack),
-          it continues to appear, but with the "objectDeleted" member set to <code>true</code>.
+          If the track is detached from the RTCPeerConnection (via removeTrack or via
+          replaceTrack), it continues to appear, but with the "objectDeleted" member set to
+          <code>true</code>.
         </p>
         <div>
           <pre class="idl">dictionary RTCSenderAudioTrackAttachmentStats : RTCAudioSenderStats {
@@ -2970,8 +2978,10 @@ enum RTCStatsType {
                   The total number of samples that are concealed samples. A concealed sample is a
                   sample that was replaced with synthesized samples generated locally before being
                   played out. Examples of samples that have to be concealed are samples from lost
-                  packets (reported in <a data-link-for="RTCReceivedRtpStreamStats">packetsLost</a>) or samples from packets that arrive too
-                  late to be played out (reported in <a data-link-for="RTCReceivedRtpStreamStats">packetsDiscarded</a>).
+                  packets (reported in <a data-link-for=
+                  "RTCReceivedRtpStreamStats">packetsLost</a>) or samples from packets that arrive
+                  too late to be played out (reported in <a data-link-for=
+                  "RTCReceivedRtpStreamStats">packetsDiscarded</a>).
                 </p>
               </dd>
               <dt>
@@ -2999,28 +3009,28 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>insertedSamplesForDeceleration</code></dfn> of type <span class=
-                "idlMemberType"><a>unsigned long long</a></span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
                   When playout is slowed down, this counter is increased by the difference between
-                  the number of samples received and the number of samples played out. If playout is
-                  slowed down by inserting samples, this will be the number of inserted samples.
+                  the number of samples received and the number of samples played out. If playout
+                  is slowed down by inserting samples, this will be the number of inserted samples.
                 </p>
               </dd>
               <dt>
                 <dfn><code>removedSamplesForAcceleration</code></dfn> of type <span class=
-                "idlMemberType"><a>unsigned long long</a></span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
-                  When playout is sped up, this counter is increased by the difference between
-                  the number of samples received and the number of samples played out. If speedup is
+                  When playout is sped up, this counter is increased by the difference between the
+                  number of samples received and the number of samples played out. If speedup is
                   achieved by removing samples, this will be the count of samples removed.
                 </p>
               </dd>
               <dt>
-              <dfn><code>audioLevel</code></dfn> of type <span class=
+                <dfn><code>audioLevel</code></dfn> of type <span class=
                 "idlMemberType">double</span>
               </dt>
               <dd>
@@ -3050,10 +3060,10 @@ enum RTCStatsType {
                 </p>
                 <p>
                   This value MUST be computed as follows: for each audio sample that is received
-                  (and thus counted by <code><a>totalSamplesReceived</a></code>), add the sample's value
-                  divided by the highest-intensity encodable value, squared and then multiplied
-                  by the duration of the sample in seconds. In other words, <code>duration *
-                  Math.pow(energy/maxEnergy, 2)</code>.
+                  (and thus counted by <code><a>totalSamplesReceived</a></code>), add the sample's
+                  value divided by the highest-intensity encodable value, squared and then
+                  multiplied by the duration of the sample in seconds. In other words,
+                  <code>duration * Math.pow(energy/maxEnergy, 2)</code>.
                 </p>
                 <p>
                   This can be used to obtain a root mean square (RMS) value that uses the same
@@ -3082,8 +3092,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the audio duration of the receiving track. For audio durations of tracks
-                  attached locally, see <code><a>RTCAudioSourceStats</a></code> instead.
+                  Represents the audio duration of the receiving track. For audio durations of
+                  tracks attached locally, see <code><a>RTCAudioSourceStats</a></code> instead.
                 </p>
                 <p>
                   Represents the total duration in seconds of all samples that have been received
@@ -3119,8 +3129,7 @@ enum RTCStatsType {
             <dl data-link-for="RTCDataChannelStats" data-dfn-for="RTCDataChannelStats" class=
             "dictionary-members">
               <dt>
-                <dfn><code>label</code></dfn> of type <span class=
-                "idlMemberType">DOMString</span>
+                <dfn><code>label</code></dfn> of type <span class="idlMemberType">DOMString</span>
               </dt>
               <dd>
                 The "label" value of the <a>RTCDataChannel</a> object.
@@ -3149,15 +3158,15 @@ enum RTCStatsType {
                 A <a>stats object reference</a> for the transport used to carry this datachannel.
               </dd>
               <dt>
-                <dfn><code>state</code></dfn> of type <span class=
-                "idlMemberType"><a data-cite="!WEBRTC#dom-rtcdatachannelstate">RTCDataChannelState</a></span>
+                <dfn><code>state</code></dfn> of type <span class="idlMemberType"><a data-cite=
+                "!WEBRTC#dom-rtcdatachannelstate">RTCDataChannelState</a></span>
               </dt>
               <dd>
                 The "readyState" value of the <a>RTCDataChannel</a> object.
               </dd>
               <dt>
-                <dfn><code>messagesSent</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                <dfn><code>messagesSent</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -3165,8 +3174,8 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>bytesSent</code></dfn> of type <span class="idlMemberType">unsigned
-                long long</span>
+                <dfn><code>bytesSent</code></dfn> of type <span class="idlMemberType">unsigned long
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -3184,8 +3193,8 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>bytesReceived</code></dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
+                <dfn><code>bytesReceived</code></dfn> of type <span class="idlMemberType">unsigned
+                long long</span>
               </dt>
               <dd>
                 <p>
@@ -3236,7 +3245,8 @@ enum RTCStatsType {
             <dl data-link-for="RTCTransportStats" data-dfn-for="RTCTransportStats" class=
             "dictionary-members">
               <dt>
-                <dfn><code>packetsSent</code></dfn> of type <span class="idlMemberType">unsigned long</span>
+                <dfn><code>packetsSent</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -3253,8 +3263,8 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>bytesSent</code></dfn> of type <span class="idlMemberType">unsigned
-                long long</span>
+                <dfn><code>bytesSent</code></dfn> of type <span class="idlMemberType">unsigned long
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -3263,8 +3273,8 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>bytesReceived</code></dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
+                <dfn><code>bytesReceived</code></dfn> of type <span class="idlMemberType">unsigned
+                long long</span>
               </dt>
               <dd>
                 <p>
@@ -3332,17 +3342,18 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>tlsVersion</code></dfn> of type <span class="idlMemberType">DOMString</span>
+                <dfn><code>tlsVersion</code></dfn> of type <span class=
+                "idlMemberType">DOMString</span>
               </dt>
               <dd>
                 <p>
-                  For components where DTLS is negotiated, the TLS version agreed.
-                  Only present after DTLS negotiation is complete.
+                  For components where DTLS is negotiated, the TLS version agreed. Only present
+                  after DTLS negotiation is complete.
                 </p>
                 <p>
-                  The value comes from ServerHello.supported_versions if present, otherwise
-                  from ServerHello.version. It is represented as four hex digits, representing
-                  the two bytes of the version.
+                  The value comes from ServerHello.supported_versions if present, otherwise from
+                  ServerHello.version. It is represented as four hex digits, representing the two
+                  bytes of the version.
                 </p>
               </dd>
               <dt>
@@ -3446,19 +3457,18 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  It is the address of the candidate, allowing for IPv4 addresses, IPv6
-                  addresses, and fully qualified domain names (FQDNs). See
-                  [[!RFC5245]] section 15.1 for details.
+                  It is the address of the candidate, allowing for IPv4 addresses, IPv6 addresses,
+                  and fully qualified domain names (FQDNs). See [[!RFC5245]] section 15.1 for
+                  details.
                 </p>
                 <p>
                   The user agent should make sure that only remote candidate addresses that the web
                   application has configured on the corresponding RTCPeerConnection are exposed;
-                  This is especially important for peer reflexive remote candidates.
-
-                  By default, the user agent MUST leave the 'address' member as null in the
+                  This is especially important for peer reflexive remote candidates. By default,
+                  the user agent MUST leave the 'address' member as null in the
                   RTCICECandidateStats dictionary of any remote candidate. Once a RTCPeerConnection
-                  instance learns on an address by the web application using <a
-                  href="https://w3c.github.io/webrtc-pc/#dom-rtcpeerconnection-addicecandidate">addIceCandidate</a>,
+                  instance learns on an address by the web application using <a href=
+                  "https://w3c.github.io/webrtc-pc/#dom-rtcpeerconnection-addicecandidate">addIceCandidate</a>,
                   the user agent can expose the 'address' member value in any remote
                   RTCIceCandidateStats dictionary of the corresponding RTCPeerConnection that
                   matches the newly learnt address.
@@ -3489,13 +3499,14 @@ enum RTCStatsType {
               <dd>
                 <p>
                   It is the protocol used by the endpoint to communicate with the TURN server. This
-                  is only present for local candidates. Valid values are
-                  <code>udp</code>, <code>tcp</code>, or <code>tls</code>.
+                  is only present for local candidates. Valid values are <code>udp</code>,
+                  <code>tcp</code>, or <code>tls</code>.
                 </p>
               </dd>
               <dt>
                 <dfn><code>candidateType</code></dfn> of type <span class=
-                "idlMemberType"><a data-cite="!WEBRTC#dom-rtcicecandidatetype">RTCIceCandidateType</a></span>
+                "idlMemberType"><a data-cite=
+                "!WEBRTC#dom-rtcicecandidatetype">RTCIceCandidateType</a></span>
               </dt>
               <dd>
                 <p>
@@ -3503,8 +3514,7 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>priority</code></dfn> of type <span class=
-                "idlMemberType">long</span>
+                <dfn><code>priority</code></dfn> of type <span class="idlMemberType">long</span>
               </dt>
               <dd>
                 <p>
@@ -3512,22 +3522,22 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>url</code></dfn> of type <span class=
-                "idlMemberType">DOMString</span>
+                <dfn><code>url</code></dfn> of type <span class="idlMemberType">DOMString</span>
               </dt>
               <dd>
                 <p>
-                  For local candidates this is the URL of the ICE server from
-                  which the candidate was obtained. It is the same as the
-                  <a href="https://w3c.github.io/webrtc-pc/#rtcpeerconnectioniceevent">url surfaced in the RTCPeerConnectionIceEvent</a>.
+                  For local candidates this is the URL of the ICE server from which the candidate
+                  was obtained. It is the same as the <a href=
+                  "https://w3c.github.io/webrtc-pc/#rtcpeerconnectioniceevent">url surfaced in the
+                  RTCPeerConnectionIceEvent</a>.
                 </p>
                 <p>
                   For remote candidates, this property is not present.
                 </p>
               </dd>
               <dt>
-                <dfn><code>deleted</code></dfn> of type <span class=
-                "idlMemberType">boolean</span>, defaulting to <code>false</code>
+                <dfn><code>deleted</code></dfn> of type <span class="idlMemberType">boolean</span>,
+                defaulting to <code>false</code>
               </dt>
               <dd>
                 <p>
@@ -3699,8 +3709,8 @@ enum RTCNetworkType {
               <dd>
                 <p>
                   It is a unique identifier that is associated to the object that was inspected to
-                  produce the <code>RTCIceCandidateStats</code> for the local candidate
-                  associated with this candidate pair.
+                  produce the <code>RTCIceCandidateStats</code> for the local candidate associated
+                  with this candidate pair.
                 </p>
               </dd>
               <dt>
@@ -3710,8 +3720,8 @@ enum RTCNetworkType {
               <dd>
                 <p>
                   It is a unique identifier that is associated to the object that was inspected to
-                  produce the <code>RTCIceCandidateStats</code> for the remote candidate
-                  associated with this candidate pair.
+                  produce the <code>RTCIceCandidateStats</code> for the remote candidate associated
+                  with this candidate pair.
                 </p>
               </dd>
               <dt>
@@ -3735,7 +3745,8 @@ enum RTCNetworkType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>packetsSent</code></dfn> of type <span class="idlMemberType">unsigned long</span>
+                <dfn><code>packetsSent</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -3752,8 +3763,8 @@ enum RTCNetworkType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>bytesSent</code></dfn> of type <span class="idlMemberType">unsigned
-                long long</span>
+                <dfn><code>bytesSent</code></dfn> of type <span class="idlMemberType">unsigned long
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -3762,8 +3773,8 @@ enum RTCNetworkType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>bytesReceived</code></dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
+                <dfn><code>bytesReceived</code></dfn> of type <span class="idlMemberType">unsigned
+                long long</span>
               </dt>
               <dd>
                 <p>
@@ -3915,8 +3926,8 @@ enum RTCNetworkType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>requestsSent</code></dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
+                <dfn><code>requestsSent</code></dfn> of type <span class="idlMemberType">unsigned
+                long long</span>
               </dt>
               <dd>
                 <p>
@@ -3934,8 +3945,8 @@ enum RTCNetworkType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>responsesSent</code></dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
+                <dfn><code>responsesSent</code></dfn> of type <span class="idlMemberType">unsigned
+                long long</span>
               </dt>
               <dd>
                 <p>
@@ -4146,8 +4157,7 @@ enum RTCNetworkType {
             <dl data-link-for="RTCStunServerConnectionStats" data-dfn-for=
             "RTCStunServerConnectionStats" class="dictionary-members">
               <dt>
-                <dfn><code>url</code></dfn> of type <span class=
-                "idlMemberType">DOMString</span>
+                <dfn><code>url</code></dfn> of type <span class="idlMemberType">DOMString</span>
               </dt>
               <dd>
                 <p>
@@ -4155,8 +4165,7 @@ enum RTCNetworkType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>port</code></dfn> of type <span class=
-                "idlMemberType">long</span>
+                <dfn><code>port</code></dfn> of type <span class="idlMemberType">long</span>
               </dt>
               <dd>
                 <p>
@@ -4169,8 +4178,8 @@ enum RTCNetworkType {
               </dt>
               <dd>
                 <p>
-                  Valid values for transport is one of <code>udp</code> and <code>tcp</code>.
-                  Based on the "transport" defined in [RFC5245] section 15.1.
+                  Valid values for transport is one of <code>udp</code> and <code>tcp</code>. Based
+                  on the "transport" defined in [RFC5245] section 15.1.
                 </p>
               </dd>
               <dt>
@@ -4206,8 +4215,8 @@ enum RTCNetworkType {
               </dt>
               <dd>
                 <p>
-                  The sum of RTTs for all requests that have been sent where a
-                  response has been received.
+                  The sum of RTTs for all requests that have been sent where a response has been
+                  received.
                 </p>
               </dd>
             </dl>
@@ -4230,8 +4239,7 @@ enum RTCNetworkType {
           </h2>
           <dl data-dfn-for="RTCIceCandidateStats">
             <dt>
-              <dfn><code>isRemote</code></dfn> of type <span class=
-              "idlMemberType">boolean</span>
+              <dfn><code>isRemote</code></dfn> of type <span class="idlMemberType">boolean</span>
             </dt>
             <dd>
               <p>
@@ -4311,16 +4319,17 @@ enum RTCNetworkType {
           double fractionLost;
 };</pre>
         <section>
-          <h2>Obsolete RTCInboundRtpStreamStats members</h2>
+          <h2>
+            Obsolete RTCInboundRtpStreamStats members
+          </h2>
           <dl data-dfn-for="RTCInboundRtpStreamStats">
             <dt>
-              <dfn><code>fractionLost</code></dfn> of
-              type <span class="idlMemberType">double</span>
+              <dfn><code>fractionLost</code></dfn> of type <span class=
+              "idlMemberType">double</span>
             </dt>
             <dd>
               <p>
-                This field was moved to RTCRemoteInboundRtpStreamStats in
-                December 2017.
+                This field was moved to RTCRemoteInboundRtpStreamStats in December 2017.
               </p>
             </dd>
           </dl>
@@ -4331,36 +4340,34 @@ enum RTCNetworkType {
             double              totalSamplesDuration;
 };</pre>
         <section>
-          <h2>Obsolete RTCAudioHandlerStats members</h2>
+          <h2>
+            Obsolete RTCAudioHandlerStats members
+          </h2>
           <dl data-dfn-for="RTCAudioHandlerStats">
             <dt>
-              <dfn><code>audioLevel</code></dfn> of
-              type <span class="idlMemberType">double</span>
+              <dfn><code>audioLevel</code></dfn> of type <span class="idlMemberType">double</span>
             </dt>
             <dd>
               <p>
-                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats
-                in June 2019.
+                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in June 2019.
               </p>
             </dd>
             <dt>
-              <dfn><code>totalAudioEnergy</code></dfn> of
-              type <span class="idlMemberType">double</span>
+              <dfn><code>totalAudioEnergy</code></dfn> of type <span class=
+              "idlMemberType">double</span>
             </dt>
             <dd>
               <p>
-                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats
-                in June 2019.
+                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in June 2019.
               </p>
             </dd>
             <dt>
-              <dfn><code>totalSamplesDuration</code></dfn> of
-              type <span class="idlMemberType">double</span>
+              <dfn><code>totalSamplesDuration</code></dfn> of type <span class=
+              "idlMemberType">double</span>
             </dt>
             <dd>
               <p>
-                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats
-                in June 2019.
+                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in June 2019.
               </p>
             </dd>
           </dl>
@@ -4369,33 +4376,40 @@ enum RTCNetworkType {
           unsigned long keyFramesSent;
 };</pre>
         <section>
-          <h2>Obsolete RTCVideoSenderStats members</h2>
+          <h2>
+            Obsolete RTCVideoSenderStats members
+          </h2>
           <dl data-dfn-for="RTCVideoSenderStats">
             <dt>
-              <dfn><code>keyFramesSent</code></dfn> of
-              type <span class="idlMemberType">unsigned long</span>
+              <dfn><code>keyFramesSent</code></dfn> of type <span class="idlMemberType">unsigned
+              long</span>
             </dt>
             <dd>
               <p>
-                This field was replaced by keyFramesEncoded in RTCOutboundRtpStreamStats in June 2019. There were no known implementations supporting the old field at the time of the change.
+                This field was replaced by keyFramesEncoded in RTCOutboundRtpStreamStats in June
+                2019. There were no known implementations supporting the old field at the time of
+                the change.
               </p>
             </dd>
           </dl>
         </section>
-
         <pre class="idl">partial dictionary RTCVideoReceiverStats {
           unsigned long keyFramesReceived;
 };</pre>
         <section>
-          <h2>Obsolete RTCVideoReceiverStats members</h2>
+          <h2>
+            Obsolete RTCVideoReceiverStats members
+          </h2>
           <dl data-dfn-for="RTCVideoReceiverStats">
             <dt>
-              <dfn><code>keyFramesReceived</code></dfn> of
-              type <span class="idlMemberType">unsigned long</span>
+              <dfn><code>keyFramesReceived</code></dfn> of type <span class=
+              "idlMemberType">unsigned long</span>
             </dt>
             <dd>
               <p>
-                This field was replaced by keyFramesDecoded in RTCInboundRtpStreamStats in June 2019. There were no known implementations supporting the old field at the time of the change.
+                This field was replaced by keyFramesDecoded in RTCInboundRtpStreamStats in June
+                2019. There were no known implementations supporting the old field at the time of
+                the change.
               </p>
             </dd>
           </dl>
@@ -4497,8 +4511,12 @@ function processStats() {
         <a data-cite="WEBRTC#isolated-media-streams">isolated media stream</a>:
       </p>
       <ul>
-        <li><a>RTCAudioHandlerStats.audioLevel</a>.</li>
-        <li><a>RTCRtpContributingSourceStats</a> (the whole dictionary).</li>
+        <li>
+          <a>RTCAudioHandlerStats.audioLevel</a>.
+        </li>
+        <li>
+          <a>RTCRtpContributingSourceStats</a> (the whole dictionary).
+        </li>
       </ul>
     </section>
     <section id="change-log*">
