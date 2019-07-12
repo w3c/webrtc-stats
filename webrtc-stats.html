@@ -1682,9 +1682,10 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video. It represents the total number of key frames, such as
-                  key frames in VP8 [[RFC6386]] or IDR-frames in H.264 [[RFC6184]], successfully encoded for this RTP media stream.
-                  This is a subset of <code>framesEncoded</code>. <code>framesEncoded - keyFramesEncoded</code> gives
+                  Only valid for video. It represents the total number of key frames, such as key
+                  frames in VP8 [[RFC6386]] or IDR-frames in H.264 [[RFC6184]], successfully
+                  encoded for this RTP media stream. This is a subset of
+                  <code>framesEncoded</code>. <code>framesEncoded - keyFramesEncoded</code> gives
                   you the number of delta frames encoded.
                 </p>
               </dd>
@@ -1968,11 +1969,11 @@ enum RTCStatsType {
         </p>
         <p>
           The media source stats objects are created when a track is attached to any
-          <code>RTCRtpSender</code> and may subsequently be attached to multiple senders during
-          its life. The life of this object ends when the track is no longer attached to any
-          sender of the same <code>RTCPeerConnection</code>. If a track whose media source
-          object ended is attached again this results in a new media source stats object whose
-          counters (such as number of frames) are reset.
+          <code>RTCRtpSender</code> and may subsequently be attached to multiple senders during its
+          life. The life of this object ends when the track is no longer attached to any sender of
+          the same <code>RTCPeerConnection</code>. If a track whose media source object ended is
+          attached again this results in a new media source stats object whose counters (such as
+          number of frames) are reset.
         </p>
         <div>
           <pre class="idl">dictionary RTCMediaSourceStats : RTCStats {
@@ -2019,10 +2020,9 @@ enum RTCStatsType {
           RTCAudioSourceStats dictionary
         </h3>
         <p>
-          The <dfn>RTCAudioSourceStats</dfn> dictionary represents an audio
-          track that is attached to one or more senders. It is an
-          <code>RTCMediaStreamSource</code> whose <code>kind</code> is
-          <code>"audio"</code>.
+          The <dfn>RTCAudioSourceStats</dfn> dictionary represents an audio track that is attached
+          to one or more senders. It is an <code><a>RTCMediaSourceStats</a></code> whose
+          <code>kind</code> is <code>"audio"</code>.
         </p>
         <div>
           <pre class="idl">dictionary RTCAudioSourceStats : RTCMediaSourceStats {
@@ -2118,10 +2118,9 @@ enum RTCStatsType {
           RTCVideoSourceStats dictionary
         </h3>
         <p>
-          The <dfn>RTCVideoSourceStats</dfn> dictionary represents a video
-          track that is attached to one or more senders. It is an
-          <code>RTCMediaStreamSource</code> whose <code>kind</code> is
-          <code>"video"</code>.
+          The <dfn>RTCVideoSourceStats</dfn> dictionary represents a video track that is attached
+          to one or more senders. It is an <code><a>RTCMediaSourceStats</a></code> whose
+          <code>kind</code> is <code>"video"</code>.
         </p>
         <div>
           <pre class="idl">dictionary RTCVideoSourceStats : RTCMediaSourceStats {
