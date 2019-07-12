@@ -213,7 +213,7 @@
           <li>An RTCStats object should correspond to an object defined in the specification it
           supports.
           </li>
-          <li>The object MUST define a new value in the "RTCStastType" enum, and MUST define the
+          <li>The object MUST define a new value in the <a>RTCStatsType</a> enum, and MUST define the
           syntax of the <a>stats object</a> it returns either by reference to an existing
           sub-dictionary of <a>RTCStats</a> or by defining a new sub-dictionary of <a>RTCStats</a>.
           </li>
@@ -290,11 +290,12 @@
           appears in stats.
         </p>
         <p>
-          If a monitored object can only exist in a few instances over the lifetime of a
-          RTCPeerConnection, it may be simplest to consider it "eternal" and never delete it from the
-          set of objects reported on in stats. This type of object will remain visible until the
-          RTCPeerConnection is no longer available; it is also visible in getStats() after pc.close().
-          This is the default when no lifetime is mentioned in its specification.
+          If a monitored object can only exist in a few instances over the lifetime of an
+          <a>RTCPeerConnection</a>, it may be simplest to consider it "eternal" and never
+          delete it from the set of objects reported on in stats. This type of object will
+          remain visible until the <a>RTCPeerConnection</a> is no longer available; it is
+          also visible in <code>getStats()</code> after <code>pc.close()</code>. This is the
+          default when no lifetime is mentioned in its specification.
         </p>
         <p>
           Objects that might exist in many instances over time should have a defined time at which
@@ -308,9 +309,9 @@
         <p>
           When a <a>monitored object</a> is deleted, a final stats object is produced, carrying the
           values current at the time of deletion. This object will be made available using the
-          <code><a>statsended</a></code> event on the associated RTCPeerConnection. This is important
-          in order to report consistently on short-lived objects and to be able to consistently
-          report totals over the lifetime of a RTCPeerConnection.
+          <code><a>statsended</a></code> event on the associated <a>RTCPeerConnection</a>. This is
+          important in order to report consistently on short-lived objects and to be able to
+          consistently report totals over the lifetime of an <a>RTCPeerConnection</a>.
         </p>
         <p>
           When an object is deleted, we can guarantee that no subsequent getStats() call will
@@ -360,19 +361,23 @@
           defined set of stats object types including proposals for new standard types.
         </p>
         <p class="status-not-ED">
-          This document specifies the interoperable stats object types.  Proposals for new object types may be made in <a href="https://github.com/w3c/webrtc-stats/">the editors draft maintained on GitHub</a>.  New standard types may appear in future revisions of the W3C Recommendation.
+          This document specifies the interoperable stats object types. Proposals for new object
+          types may be made in <a href="https://github.com/w3c/webrtc-stats/">the editors draft
+          maintained on GitHub</a>. New standard types may appear in future revisions of the W3C
+          Recommendation.
         </p>
         <p>
           If a need for a new stats object type or stats value within a stats object is found, an
-          issue should be <a href="https://github.com/w3c/webrtc-stats/issues">raised on Github</a>, and a review process will decide on
-          whether the stat should be added to the editors draft or not.
+          issue should be <a href="https://github.com/w3c/webrtc-stats/issues">raised on
+          Github</a>, and a review process will decide on whether the stat should be added to the
+          editors draft or not.
         </p>
         <p>
-          A pull request for a change to the editors draft may serve as guidance for the discussion,
-          but the eventual merge is dependent on the review process.
+          A pull request for a change to the editors draft may serve as guidance for the
+          discussion, but the eventual merge is dependent on the review process.
         </p>
         <p>
-          While the WebRTC WG exist, it will serve as the review body; once it has disbanded, the
+          While the WebRTC WG exists, it will serve as the review body; once it has disbanded, the
           W3C will have to establish appropriate review.
         </p>
         <p>
@@ -487,13 +492,13 @@ enum RTCStatsType {
             <p>
               When there are multiple RTP streams connected to the same
               sender, such as when using simulcast or RTX, there will be one
-              <a>RTCOutboundRtpStreamStats</a> per
-              RTP stream, with distinct values of the "ssrc" attribute,
-              and all these senders will have a reference to the same
-              "sender" object (of type <a>RTCAudioSenderStats</a> or
+              <a>RTCOutboundRtpStreamStats</a> per RTP stream,
+              with distinct values of the "ssrc" attribute, and all these
+              senders will have a reference to the same "sender" object
+              (of type <a>RTCAudioSenderStats</a> or
               <a>RTCVideoSenderStats</a>) and "track" object (of type
-              <a>RTCSenderAudioTrackAttachmentStats</a>
-              or <a>RTCSenderVideoTrackAttachmentStats</a>).
+              <a>RTCSenderAudioTrackAttachmentStats</a> or
+              <a>RTCSenderVideoTrackAttachmentStats</a>).
             </p>
           </dd>
           <dt>
@@ -524,10 +529,10 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              Statistics for the media produced by a <code>MediaStreamTrack</code> that is currently
-              attached to an <code>RTCRtpSender</code>. This reflects the media that is fed to the
-              encoder; after <code>getUserMedia()</code> constraints have been applied (i.e. not the
-              raw media produced by the camera). It is either an
+              Statistics for the media produced by a <code>MediaStreamTrack</code> that is
+              currently attached to an <code>RTCRtpSender</code>. This reflects the media that is
+              fed to the encoder; after <code>getUserMedia()</code> constraints have been applied
+              (i.e. not the raw media produced by the camera). It is either an
               <code><a>RTCAudioSourceStats</a></code> or <code><a>RTCVideoSourceStats</a></code>
               depending on its <code>kind</code>.
             </p>
@@ -689,7 +694,8 @@ enum RTCStatsType {
         </h3>
         <p>
           The dictionaries for RTP statistics are structured as a hierarchy, so that those stats
-          that make sense in many different contexts are represented just once in IDL.</p>
+          that make sense in many different contexts are represented just once in IDL.
+        </p>
         <p>
           The lifetime of all RTP <a>monitored object</a>s starts when
           the RTP stream is first used: When the first RTP packet is sent or
