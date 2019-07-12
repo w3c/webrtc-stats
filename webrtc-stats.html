@@ -697,11 +697,9 @@ enum RTCStatsType {
           that make sense in many different contexts are represented just once in IDL.
         </p>
         <p>
-          The lifetime of all RTP <a>monitored object</a>s starts when
-          the RTP stream is first used: When the first RTP packet is sent or
-          received on the
-          SSRC it represents, or when the first RTCP packet is sent or received
-          that refers to the SSRC of the RTP stream.
+          The lifetime of all RTP <a>monitored object</a>s starts when the RTP stream is first
+          used: When the first RTP packet is sent or received on the SSRC it represents, or when
+          the first RTCP packet is sent or received that refers to the SSRC of the RTP stream.
         </p>
         <p>
           RTP monitored objects are not deleted.
@@ -773,7 +771,8 @@ enum RTCStatsType {
             <dl data-link-for="RTCRtpStreamStats" data-dfn-for="RTCRtpStreamStats" class=
             "dictionary-members">
               <dt>
-                <dfn><code>ssrc</code></dfn> of type <span class="idlMemberType">unsigned long</span>
+                <dfn><code>ssrc</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
@@ -782,15 +781,14 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>kind</code></dfn> of type <span class=
-                "idlMemberType">DOMString</span>
+                <dfn><code>kind</code></dfn> of type <span class="idlMemberType">DOMString</span>
               </dt>
               <dd>
                 <p>
                   Either "<code>audio</code>" or "<code>video</code>". This MUST match the media
-                  type part of the information in the corresponding <code><a data-link-for="RTCCodecStats">codecType</a></code>
-                  member of <code>RTCCodecStats</code>, and MUST match the "kind" attribute of the
-                  related MediaStreamTrack.
+                  type part of the information in the corresponding <code><a data-link-for=
+                  "RTCCodecStats">codecType</a></code> member of <code>RTCCodecStats</code>, and
+                  MUST match the "kind" attribute of the related MediaStreamTrack.
                 </p>
               </dd>
               <dt>
@@ -888,7 +886,8 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>channels</code></dfn> of type <span class="idlMemberType">unsigned long</span>
+                <dfn><code>channels</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
               </dt>
               <dd>
                 <p>
