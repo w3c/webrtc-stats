@@ -61,6 +61,23 @@ var respecConfig = {
       // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
       // Team Contact.
       wgPatentURI:  "https://www.w3.org/2004/01/pp-impl/47318/status",
+      issueBase: "https://github.com/w3c/webrtc-stats/issues",
+      testSuiteURI: "https://github.com/web-platform-tests/wpt/tree/master/webrtc-stats",
+      otherLinks: [
+        {
+          key: "Participate",
+          data: [
+            {
+              value: "Mailing list",
+              href: "https://lists.w3.org/Archives/Public/public-webrtc/"
+            },
+            {
+              value: "Browse open issues",
+              href: "https://github.com/w3c/webrtc-stats/issues"
+            }
+          ]
+        }
+      ],
       localBiblio:  {
         "XRBLOCK-STATS": {
             title:    "RTCP XR Metrics for WebRTC",
