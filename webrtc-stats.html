@@ -2598,11 +2598,6 @@ enum RTCStatsType {
           two RTCSenderVideoTrackAttachmentStats objects, one for each attachment. They will have
           the same "trackIdentifier" attribute, but different "id" attributes.
         </p>
-        <p>
-          If the track is detached from the RTCPeerConnection (via removeTrack or via
-          replaceTrack), it continues to appear, but with the "objectDeleted" member set to
-          <code>true</code>.
-        </p>
         <div>
           <pre class="idl">dictionary RTCSenderVideoTrackAttachmentStats : RTCVideoSenderStats {
 };</pre>
@@ -2865,11 +2860,6 @@ enum RTCStatsType {
           If an audio track is attached twice (via addTransceiver or replaceTrack), there will be
           two RTCSenderAudioTrackAttachmentStats objects, one for each attachment. They will have
           the same "trackIdentifier" attribute, but different "id" attributes.
-        </p>
-        <p>
-          If the track is detached from the RTCPeerConnection (via removeTrack or via
-          replaceTrack), it continues to appear, but with the "objectDeleted" member set to
-          <code>true</code>.
         </p>
         <div>
           <pre class="idl">dictionary RTCSenderAudioTrackAttachmentStats : RTCAudioSenderStats {
