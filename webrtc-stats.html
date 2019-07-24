@@ -284,7 +284,7 @@
         </h3>
         <p>
           The object descriptions will say what the lifetime of a <a>monitored object</a> from the
-          perspective of stats is. When a monitored object is "deleted", it no longer appears in
+          perspective of stats is. When a monitored object is <dfn>deleted</dfn>, it no longer appears in
           stats; until this happens, it will appear. This may or may not correspond to the actual
           lifetime of an object in an implementation; what matters for this specification is what
           appears in stats.
@@ -298,7 +298,7 @@
         </p>
         <p>
           Objects that might exist in many instances over time should have a defined time at which
-          they are deleted, at which time a <a>statsended</a> event is fired on their behalf. Each
+          they are <a>deleted</a>, at which time a <a>statsended</a> event is fired on their behalf. Each
           event that causes deletions to happen MUST fire only one <a>statsended</a> event, but
           there are cases where one action causes multiple deletion events; for instance, an ICE
           restart will fire only one event containing the stats for all the discarded candidates
@@ -306,15 +306,15 @@
           candidate pair and its candidates are discarded.
         </p>
         <p>
-          When a <a>monitored object</a> is deleted, a final stats object is produced, carrying the
+          When a <a>monitored object</a> is <a>deleted</a>, a final stats object is produced, carrying the
           values current at the time of deletion. This object will be made available using the
           <code><a>statsended</a></code> event on the associated RTCPeerConnection. This is
           important in order to report consistently on short-lived objects and to be able to
           consistently report totals over the lifetime of a RTCPeerConnection.
         </p>
         <p>
-          When an object is deleted, we can guarantee that no subsequent getStats() call will
-          contain a <a>stats object reference</a> that references the deleted object We also
+          When an object is <a>deleted</a>, we can guarantee that no subsequent getStats() call will
+          contain a <a>stats object reference</a> that references the deleted object. We also
           guarantee that the stats id of the deleted object will never be reused for another
           object. This ensures that an application that collects <a>stats object</a>s for deleted
           <a>monitored object</a>s will always be able to uniquely identify the object pointed to
@@ -582,7 +582,7 @@ enum RTCStatsType {
               <code><a>RTCMediaHandlerStats</a></code>.
             </p>
             <p>
-              The monitored "track" object is deleted when the sender it reports on has its "track"
+              The monitored "track" object is <a>deleted</a> when the sender it reports on has its "track"
               value changed to no longer refer to the same track.
             </p>
           </dd>
@@ -624,9 +624,9 @@ enum RTCStatsType {
               is accessed by the <code><a>RTCIceCandidatePairStats</a></code>.
             </p>
             <p>
-              A candidate pair that is not the current pair for a transport is deleted when the
+              A candidate pair that is not the current pair for a transport is <a>deleted</a> when the
               RTCIceTransport does an ICE restart, at the time the state changes to "new". The
-              candidate pair that is the current pair for a transport is deleted after an ICE
+              candidate pair that is the current pair for a transport is <a>deleted</a> after an ICE
               restart when the RTCIceTransport switches to using a candidate pair generated from
               the new candidates; this time doesn't correspond to any other externally observable
               event.
@@ -642,7 +642,7 @@ enum RTCStatsType {
               candidate.
             </p>
             <p>
-              A local candidate is deleted when the RTCIceTransport does an ICE restart, and the
+              A local candidate is <a>deleted</a> when the RTCIceTransport does an ICE restart, and the
               candidate is no longer a member of any non-deleted candidate pair.
             </p>
           </dd>
@@ -656,7 +656,7 @@ enum RTCStatsType {
               candidate.
             </p>
             <p>
-              A remote candidate is deleted when the RTCIceTransport does an ICE restart, and the
+              A remote candidate is <a>deleted</a> when the RTCIceTransport does an ICE restart, and the
               candidate is no longer a member of any non-deleted candidate pair.
             </p>
           </dd>
@@ -699,7 +699,7 @@ enum RTCStatsType {
           the first RTCP packet is sent or received that refers to the SSRC of the RTP stream.
         </p>
         <p>
-          RTP monitored objects are not deleted.
+          RTP monitored objects are not <a>deleted</a>.
         </p>
         <p>
           The hierarchy is as follows:
