@@ -1150,6 +1150,9 @@ enum RTCStatsType {
              DOMString            remoteId;
              unsigned long        framesDecoded;
              unsigned long        keyFramesDecoded;
+             unsigned long        frameWidth;
+             unsigned long        frameHeight;
+             double               framesPerSecond;
              unsigned long long   qpSum;
              double               totalDecodeTime;
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
@@ -1220,6 +1223,38 @@ enum RTCStatsType {
                   decoded for this RTP media stream. This is a subset of
                   <code>framesDecoded</code>. <code>framesDecoded - keyFramesDecoded</code> gives
                   you the number of delta frames decoded.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>frameWidth</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the width of the last processed frame for this track. Before the first
+                  frame is processed this attribute is missing.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>frameHeight</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the height of the last processed frame for this track. Before the
+                  first frame is processed this attribute is missing.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>framesPerSecond</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the nominal FPS value before the degradation preference is applied. It
+                  is the number of complete frames in the last second. For sending tracks it is the
+                  current captured FPS and for the receiving tracks it is the current decoding
+                  framerate.
                 </p>
               </dd>
               <dt>
@@ -1556,9 +1591,15 @@ enum RTCStatsType {
              unsigned long long   retransmittedBytesSent;
              double               targetBitrate;
              unsigned long long   totalEncodedBytesTarget;
+             unsigned long        frameWidth;
+             unsigned long        frameHeight;
+             double               framesPerSecond;
+             unsigned long        framesSent;
+             unsigned long        hugeFramesSent;
              unsigned long        framesEncoded;
              unsigned long        keyFramesEncoded;
              unsigned long long   qpSum;
+             unsigned long long   totalSamplesSent;
              double               totalEncodeTime;
              double               totalPacketSendDelay;
              double               averageRtcpInterval;
@@ -1670,6 +1711,70 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn><code>frameWidth</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the width of the last processed frame for this track. Before the first
+                  frame is processed this attribute is missing.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>frameHeight</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the height of the last processed frame for this track. Before the
+                  first frame is processed this attribute is missing.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>framesPerSecond</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the nominal FPS value before the degradation preference is applied. It
+                  is the number of complete frames in the last second. For sending tracks it is the
+                  current captured FPS and for the receiving tracks it is the current decoding
+                  framerate.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>framesSent</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of frames sent by this RTCRtpSender (or for this
+                  MediaStreamTrack, if <code>type</code> is <code>"track"</code>).
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>hugeFramesSent</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of huge frames sent by this RTCRtpSender (or for this
+                  MediaStreamTrack, if <code>type</code> is <code>"track"</code>). Huge frames, by
+                  definition, are frames that have an encoded size at least 2.5 times the average
+                  size of the frames. The average size of the frames is defined as the target
+                  bitrate per second divided by the target fps at the time the frame was encoded.
+                  These are usually complex to encode frames with a lot of changes in the picture.
+                  This can be used to estimate, e.g slide changes in the streamed presentation.
+                </p>
+                <p>
+                  The multiplier of 2.5 is choosen from analyzing encoded frame sizes for a sample
+                  presentation using webrtc standalone implementation. 2.5 is a reasonably large
+                  multiplier which still caused all slide change events to be identified as a huge
+                  frames. It, however, produced 1.4% of false positive slide change detections
+                  which is deemed reasonable.
+                </p>
+              </dd>
+              <dt>
                 <dfn><code>framesEncoded</code></dfn> of type <span class=
                 "idlMemberType">long</span>
               </dt>
@@ -1710,6 +1815,15 @@ enum RTCStatsType {
                 <p>
                   Note that the QP value is only an indication of quantizer values used; many
                   formats have ways to vary the quantizer value within the frame.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalSamplesSent</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  The total number of samples that have been sent by this sender.
                 </p>
               </dd>
               <dt>
@@ -2448,49 +2562,13 @@ enum RTCStatsType {
         </h3>
         <div>
           <pre class="idl">dictionary RTCVideoHandlerStats : RTCMediaHandlerStats {
-             unsigned long       frameWidth;
-             unsigned long       frameHeight;
-             double              framesPerSecond;
 };</pre>
           <section>
             <h2>
               Dictionary <a class="idlType">RTCVideoHandlerStats</a> Members
             </h2>
             <dl data-link-for="RTCVideoHandlerStats" data-dfn-for="RTCVideoHandlerStats" class=
-            "dictionary-members">
-              <dt>
-                <dfn><code>frameWidth</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the width of the last processed frame for this track. Before the first
-                  frame is processed this attribute is missing.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>frameHeight</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the height of the last processed frame for this track. Before the
-                  first frame is processed this attribute is missing.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>framesPerSecond</code></dfn> of type <span class=
-                "idlMemberType">double</span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the nominal FPS value before the degradation preference is applied. It
-                  is the number of complete frames in the last second. For sending tracks it is the
-                  current captured FPS and for the receiving tracks it is the current decoding
-                  framerate.
-                </p>
-              </dd>
-            </dl>
+            "dictionary-members"></dl>
           </section>
         </div>
       </section>
@@ -2509,9 +2587,6 @@ enum RTCStatsType {
         <div>
           <pre class="idl">dictionary RTCVideoSenderStats : RTCVideoHandlerStats {
              DOMString           mediaSourceId;
-             unsigned long       framesCaptured;
-             unsigned long       framesSent;
-             unsigned long       hugeFramesSent;
 };</pre>
           <section>
             <h2>
@@ -2527,54 +2602,6 @@ enum RTCStatsType {
                 <p>
                   The identifier of the stats object representing the track currently attached to
                   this sender, an <code><a>RTCMediaSourceStats</a></code>.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>framesCaptured</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the total number of frames captured, before encoding, for this
-                  RTCRtpSender (or for this MediaStreamTrack, if <code>type</code> is
-                  <code>"track"</code>). For example, if <code>type</code> is <code>"sender"</code>
-                  and this sender's track represents a camera, then this is the number of frames
-                  produced by the camera for this track while being sent by this sender, combined
-                  with the number of frames produced by all tracks previously attached to this
-                  sender while being sent by this sender. Framerates can vary due to hardware
-                  limitations or environmental factors such as lighting conditions.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>framesSent</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the total number of frames sent by this RTCRtpSender (or for this
-                  MediaStreamTrack, if <code>type</code> is <code>"track"</code>).
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>hugeFramesSent</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the total number of huge frames sent by this RTCRtpSender (or for this
-                  MediaStreamTrack, if <code>type</code> is <code>"track"</code>). Huge frames, by
-                  definition, are frames that have an encoded size at least 2.5 times the average
-                  size of the frames. The average size of the frames is defined as the target
-                  bitrate per second divided by the target fps at the time the frame was encoded.
-                  These are usually complex to encode frames with a lot of changes in the picture.
-                  This can be used to estimate, e.g slide changes in the streamed presentation.
-                </p>
-                <p>
-                  The multiplier of 2.5 is choosen from analyzing encoded frame sizes for a sample
-                  presentation using webrtc standalone implementation. 2.5 is a reasonably large
-                  multiplier which still caused all slide change events to be identified as a huge
-                  frames. It, however, produced 1.4% of false positive slide change detections
-                  which is deemed reasonable.
                 </p>
               </dd>
             </dl>
@@ -2751,7 +2778,7 @@ enum RTCStatsType {
         </h3>
         <div>
           <pre class="idl">dictionary RTCAudioHandlerStats : RTCMediaHandlerStats {
-             boolean             voiceActivityFlag;
+              boolean              voiceActivityFlag;
 };</pre>
           <section>
             <h2>
@@ -2796,7 +2823,6 @@ enum RTCStatsType {
              DOMString           mediaSourceId;
              double              echoReturnLoss;
              double              echoReturnLossEnhancement;
-             unsigned long long  totalSamplesSent;
 };</pre>
           <section>
             <h2>
@@ -2834,15 +2860,6 @@ enum RTCStatsType {
                   Only present while the sender is sending a track sourced from a microphone where
                   echo cancellation is applied. Calculated in decibels, as defined in [[!ECHO]]
                   (2012) section 3.15.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>totalSamplesSent</code></dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
-              </dt>
-              <dd>
-                <p>
-                  The total number of samples that have been sent by this sender.
                 </p>
               </dd>
             </dl>
@@ -4372,8 +4389,74 @@ enum RTCNetworkType {
             </dd>
           </dl>
         </section>
+        <pre class="idl">partial dictionary RTCAudioSenderStats : RTCAudioHandlerStats {
+            unsigned long long  totalSamplesSent;
+};</pre>
+        <section>
+          <h2>
+            Obsolete RTCAudioSenderStats members
+          </h2>
+          <dl data-link-for="RTCAudioSenderStats" data-dfn-for="RTCAudioSenderStats" class=
+          "dictionary-members">
+            <dt>
+              <dfn><code>totalSamplesSent</code></dfn> of type <span class=
+              "idlMemberType">unsigned long long</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCOutboundRtpStreamStats in July, 2019.
+              </p>
+            </dd>
+          </dl>
+        </section>
+        <pre class="idl">partial dictionary RTCVideoHandlerStats : RTCMediaHandlerStats {
+          unsigned long frameWidth;
+          unsigned long frameHeight;
+          double        framesPerSecond;
+};</pre>
+        <section>
+          <h2>
+            Obsolete RTCVideoHandlerStats members
+          </h2>
+          <dl data-link-for="RTCVideoHandlerStats" data-dfn-for="RTCVideoHandlerStats" class=
+          "dictionary-members">
+            <dt>
+              <dfn><code>frameWidth</code></dfn> of type <span class="idlMemberType">unsigned
+              long</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCOutboundRtpStreamStats and
+                RTCInboundRtpStreamStats in July, 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>frameHeight</code></dfn> of type <span class="idlMemberType">unsigned
+              long</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCOutboundRtpStreamStats and
+                RTCInboundRtpStreamStats in July, 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>framesPerSecond</code></dfn> of type <span class=
+              "idlMemberType">double</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCOutboundRtpStreamStats and
+                RTCInboundRtpStreamStats in July, 2019.
+              </p>
+            </dd>
+          </dl>
+        </section>
         <pre class="idl">partial dictionary RTCVideoSenderStats {
           unsigned long keyFramesSent;
+          unsigned long framesCaptured;
+          unsigned long framesSent;
+          unsigned long hugeFramesSent;
 };</pre>
         <section>
           <h2>
@@ -4389,6 +4472,33 @@ enum RTCNetworkType {
                 This field was replaced by keyFramesEncoded in RTCOutboundRtpStreamStats in June
                 2019. There were no known implementations supporting the old field at the time of
                 the change.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>framesCaptured</code></dfn> of type <span class="idlMemberType">unsigned
+              long</span>
+            </dt>
+            <dd>
+              <p>
+                This was replaced by RTCVideoSourceStats.frames in May, 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>framesSent</code></dfn> of type <span class="idlMemberType">unsigned
+              long</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCOutboundRtpStreamStats in July, 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>hugeFramesSent</code></dfn> of type <span class="idlMemberType">unsigned
+              long</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCOutboundRtpStreamStats in July, 2019.
               </p>
             </dd>
           </dl>
