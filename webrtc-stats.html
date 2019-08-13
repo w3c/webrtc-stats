@@ -1168,6 +1168,24 @@ enum RTCStatsType {
              unsigned long        firCount;
              unsigned long        pliCount;
              unsigned long        sliCount;
+             DOMHighResTimeStamp  estimatedPlayoutTimestamp;
+             double               jitterBufferDelay;
+             unsigned long long   jitterBufferEmittedCount;
+             unsigned long long   totalSamplesReceived;
+             unsigned long long   concealedSamples;
+             unsigned long long   silentConcealedSamples;
+             unsigned long long   concealmentEvents;
+             unsigned long long   insertedSamplesForDeceleration;
+             unsigned long long   removedSamplesForAcceleration;
+             double               audioLevel;
+             double               totalAudioEnergy;
+             double               totalSamplesDuration;
+             unsigned long        framesReceived;
+             unsigned long        framesDecoded;
+             unsigned long        framesDropped;
+             unsigned long        partialFramesLost;
+             unsigned long        fullFramesLost;
+
             };</pre>
           <section>
             <h2>
@@ -1441,6 +1459,250 @@ enum RTCStatsType {
                   Only valid for video. Count the total number of Slice Loss Indication (SLI)
                   packets sent by this receiver. Calculated as defined in [[!RFC4585]] section
                   6.3.2.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>estimatedPlayoutTimestamp</code></dfn> of type <span class=
+                "idlMemberType">DOMHighResTimeStamp</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio. This is the estimated playout time of this receiver's track.
+                  The playout time is the NTP timestamp of the last playable sample that has a known
+                  timestamp (from an RTCP SR packet mapping RTP timestamps to NTP timestamps),
+                  extrapolated with the time elapsed since it was ready to be played out. This is
+                  the "current time" of the track in NTP clock time of the sender and can be present
+                  even if there is no audio currently playing.
+                </p>
+                <p>
+                  This can be useful for estimating how much audio and video is out of sync for two
+                  tracks from the same source, <code>audioTrackStats.estimatedPlayoutTimestamp -
+                  videoTrackStats.estimatedPlayoutTimestamp</code>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>jitterBufferDelay</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio. It is the sum of the time, in seconds, each sample takes
+                  from the time it is received and to the time it exits the jitter buffer. This
+                  increases upon samples exiting, having completed their time in the buffer
+                  (incrementing <code>jitterBufferEmittedCount</code>). The average jitter buffer
+                  delay can be calculated by dividing the <code>jitterBufferDelay</code> with the
+                  <code>jitterBufferEmittedCount</code>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>jitterBufferEmittedCount</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio. The total number of samples that have come out of the
+                  jitter buffer (increasing <code>jitterBufferDelay</code>).
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalSamplesReceived</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio. The total number of samples that have been received on this
+                  RTP stream. This includes <a>concealedSamples</a>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>concealedSamples</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio. The total number of samples that are concealed samples. A
+                  concealed sample is a sample that was replaced with synthesized samples generated
+                  locally before being played out. Examples of samples that have to be concealed
+                  are samples from lost packets (reported in <a data-link-for=
+                  "RTCReceivedRtpStreamStats">packetsLost</a>) or samples from packets that arrive
+                  too late to be played out (reported in <a data-link-for=
+                  "RTCReceivedRtpStreamStats">packetsDiscarded</a>).
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>silentConcealedSamples</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio. The total number of concealed samples inserted that are
+                  "silent". Playing out silent samples results in silence or comfort noise. This is
+                  a subset of <a>concealedSamples</a>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>concealmentEvents</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio. The number of concealment events. This counter increases every
+                  time a concealed sample is synthesized after a non-concealed sample. That is, multiple
+                  consecutive concealed samples will increase the <a>concealedSamples</a> count multiple
+                  times but is a single concealment event.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>insertedSamplesForDeceleration</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio. When playout is slowed down, this counter is increased by the
+                  difference between the number of samples received and the number of samples played out.
+                  If playout is slowed down by inserting samples, this will be the number of inserted
+                  samples.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>removedSamplesForAcceleration</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio. When playout is sped up, this counter is increased by the
+                  difference between the number of samples received and the number of samples played
+                  out. If speedup is achieved by removing samples, this will be the count of samples
+                  removed.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>audioLevel</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio. Represents the audio level of the receiving track. For audio
+                  levels of tracks attached locally, see <code><a>RTCAudioSourceStats</a></code>
+                  instead.
+                </p>
+                <p>
+                  The value is between 0..1 (linear), where 1.0 represents 0 dBov, 0 represents
+                  silence, and 0.5 represents approximately 6 dBSPL change in the sound pressure
+                  level from 0 dBov.
+                </p>
+                <p>
+                  The audioLevel is averaged over some small interval, using the algortihm
+                  described under <a>totalAudioEnergy</a>. The interval used is implementation
+                  dependent.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalAudioEnergy</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio. Represents the audio energy of the receiving track. For
+                  audio energy of tracks attached locally, see
+                  <code><a>RTCAudioSourceStats</a></code> instead.
+                </p>
+                <p>
+                  This value MUST be computed as follows: for each audio sample that is received
+                  (and thus counted by <code><a>totalSamplesReceived</a></code>), add the sample's
+                  value divided by the highest-intensity encodable value, squared and then
+                  multiplied by the duration of the sample in seconds. In other words,
+                  <code>duration * Math.pow(energy/maxEnergy, 2)</code>.
+                </p>
+                <p>
+                  This can be used to obtain a root mean square (RMS) value that uses the same
+                  units as <code><a>audioLevel</a></code>, as defined in [[RFC6464]]. It can be
+                  converted to these units using the formula
+                  <code>Math.sqrt(totalAudioEnergy/totalSamplesDuration)</code>. This calculation
+                  can also be performed using the differences between the values of two different
+                  <code>getStats()</code> calls, in order to compute the average audio level over
+                  any desired time interval. In other words, do <code>Math.sqrt((energy2 -
+                  energy1)/(duration2 - duration1))</code>.
+                </p>
+                <p>
+                  For example, if a 10ms packet of audio is produced with an RMS of 0.5 (out of
+                  1.0), this should add <code>0.5 * 0.5 * 0.01 = 0.0025</code> to
+                  <code>totalAudioEnergy</code>. If another 10ms packet with an RMS of 0.1 is
+                  received, this should similarly add <code>0.0001</code> to
+                  <code>totalAudioEnergy</code>. Then,
+                  <code>Math.sqrt(totalAudioEnergy/totalSamplesDuration)</code> becomes
+                  <code>Math.sqrt(0.0026/0.02) = 0.36</code>, which is the same value that would be
+                  obtained by doing an RMS calculation over the contiguous 20ms segment of audio.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalSamplesDuration</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio. Represents the audio duration of the receiving track. For
+                  audio durations of tracks attached locally, see
+                  <code><a>RTCAudioSourceStats</a></code> instead.
+                </p>
+                <p>
+                  Represents the total duration in seconds of all samples that have been received
+                  (and thus counted by <code><a>totalSamplesReceived</a></code>). Can be used with
+                  <code><a>totalAudioEnergy</a></code> to compute an average audio level over
+                  different intervals.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>framesReceived</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. Represents the total number of complete frames received on
+                  this RTP stream. This metric is incremented when the complete frame is received.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>framesDecoded</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. It represents the total number of frames correctly decoded
+                  on this RTP stream, i.e., frames that would be displayed if no frames are dropped.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>framesDropped</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. The total number of frames dropped prior to decode or dropped
+                  because the frame missed its display deadline for this receiver's track. As defined
+                  in Appendix A (g) of [[!RFC7004]].
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>partialFramesLost</code></dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. The cumulative number of partial frames lost, as defined in
+                  Appendix A (j) of [[!RFC7004]]. This metric is incremented when the frame is sent
+                  to the decoder. If the partial frame is received and recovered via retransmission
+                  or FEC before decoding, the framesReceived counter is incremented.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>fullFramesLost</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. The cumulative number of full frames lost, as defined in
+                  Appendix A (i) of [[!RFC7004]].
                 </p>
               </dd>
             </dl>
@@ -2702,14 +2964,6 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCVideoReceiverStats : RTCVideoHandlerStats {
-             DOMHighResTimeStamp estimatedPlayoutTimestamp;
-             double              jitterBufferDelay;
-             unsigned long long  jitterBufferEmittedCount;
-             unsigned long       framesReceived;
-             unsigned long       framesDecoded;
-             unsigned long       framesDropped;
-             unsigned long       partialFramesLost;
-             unsigned long       fullFramesLost;
 };</pre>
           <section>
             <h2>
@@ -2717,103 +2971,6 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCVideoReceiverStats" data-dfn-for="RTCVideoReceiverStats" class=
             "dictionary-members">
-              <dt>
-                <dfn><code>estimatedPlayoutTimestamp</code></dfn> of type <span class=
-                "idlMemberType">DOMHighResTimeStamp</span>
-              </dt>
-              <dd>
-                <p>
-                  This is the estimated playout time of this receiver's track. The playout time is
-                  the NTP timestamp of the last playable video frame that has a known timestamp
-                  (from an RTCP SR packet mapping RTP timestamps to NTP timestamps), extrapolated
-                  with the time elapsed since it was ready to be played out. This is the "current
-                  time" of the track in NTP clock time of the sender and can be present even if
-                  there is no video currently playing.
-                </p>
-                <p>
-                  This can be useful for estimating how much audio and video is out of sync for two
-                  tracks from the same remote source,
-                  <code>audioTrackStats.estimatedPlayoutTimestamp -
-                  videoTrackStats.estimatedPlayoutTimestamp</code>.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>jitterBufferDelay</code></dfn> of type <span class=
-                "idlMemberType">double</span>
-              </dt>
-              <dd>
-                <p>
-                  It is the sum of the time, in seconds, each frame takes from the time it is
-                  received and to the time it exits the jitter buffer. This increases upon frames
-                  exiting, having completed their time in the buffer (incrementing
-                  <code>jitterBufferEmittedCount</code>). The average jitter buffer delay can be
-                  calculated by dividing the <code>jitterBufferDelay</code> with the
-                  <code>jitterBufferEmittedCount</code>.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>jitterBufferEmittedCount</code></dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
-              </dt>
-              <dd>
-                <p>
-                  The total number of frames that have come out of the jitter buffer (increasing
-                  <code>jitterBufferDelay</code>).
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>framesReceived</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the total number of complete frames received for this receiver. This
-                  metric is incremented when the complete frame is received.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>framesDecoded</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
-              </dt>
-              <dd>
-                <p>
-                  Only valid for video. It represents the total number of frames correctly decoded
-                  for this SSRC, i.e., frames that would be displayed if no frames are dropped.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>framesDropped</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
-              </dt>
-              <dd>
-                <p>
-                  The total number of frames dropped predecode or dropped because the frame missed
-                  its display deadline for this receiver's track. As defined in Appendix A (g) of
-                  [[!RFC7004]].
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>partialFramesLost</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
-              </dt>
-              <dd>
-                <p>
-                  The cumulative number of partial frames lost, as defined in Appendix A (j) of
-                  [[!RFC7004]]. This metric is incremented when the frame is sent to the decoder.
-                  If the partial frame is received and recovered via retransmission or FEC before
-                  decoding, the framesReceived counter is incremented.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>fullFramesLost</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
-              </dt>
-              <dd>
-                <p>
-                  The cumulative number of full frames lost, as defined in Appendix A (i) of
-                  [[!RFC7004]].
-                </p>
-              </dd>
             </dl>
           </section>
         </div>
@@ -2919,18 +3076,6 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCAudioReceiverStats : RTCAudioHandlerStats {
-             DOMHighResTimeStamp estimatedPlayoutTimestamp;
-             double              jitterBufferDelay;
-             unsigned long long  jitterBufferEmittedCount;
-             unsigned long long  totalSamplesReceived;
-             unsigned long long  concealedSamples;
-             unsigned long long  silentConcealedSamples;
-             unsigned long long  concealmentEvents;
-             unsigned long long  insertedSamplesForDeceleration;
-             unsigned long long  removedSamplesForAcceleration;
-             double              audioLevel;
-             double              totalAudioEnergy;
-             double              totalSamplesDuration;
 };</pre>
           <section>
             <h2>
@@ -2938,192 +3083,6 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCAudioReceiverStats" data-dfn-for="RTCAudioReceiverStats" class=
             "dictionary-members">
-              <dt>
-                <dfn><code>estimatedPlayoutTimestamp</code></dfn> of type <span class=
-                "idlMemberType">DOMHighResTimeStamp</span>
-              </dt>
-              <dd>
-                <p>
-                  This is the estimated playout time of this receiver's track. The playout time is
-                  the NTP timestamp of the last playable sample that has a known timestamp (from an
-                  RTCP SR packet mapping RTP timestamps to NTP timestamps), extrapolated with the
-                  time elapsed since it was ready to be played out. This is the "current time" of
-                  the track in NTP clock time of the sender and can be present even if there is no
-                  audio currently playing.
-                </p>
-                <p>
-                  This can be useful for estimating how much audio and video is out of sync for two
-                  tracks from the same source, <code>audioTrackStats.estimatedPlayoutTimestamp -
-                  videoTrackStats.estimatedPlayoutTimestamp</code>.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>jitterBufferDelay</code></dfn> of type <span class=
-                "idlMemberType">double</span>
-              </dt>
-              <dd>
-                <p>
-                  It is the sum of the time, in seconds, each sample takes from the time it is
-                  received and to the time it exits the jitter buffer. This increases upon samples
-                  exiting, having completed their time in the buffer (incrementing
-                  <code>jitterBufferEmittedCount</code>). The average jitter buffer delay can be
-                  calculated by dividing the <code>jitterBufferDelay</code> with the
-                  <code>jitterBufferEmittedCount</code>.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>jitterBufferEmittedCount</code></dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
-              </dt>
-              <dd>
-                <p>
-                  The total number of samples that have come out of the jitter buffer (increasing
-                  <code>jitterBufferDelay</code>).
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>totalSamplesReceived</code></dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
-              </dt>
-              <dd>
-                <p>
-                  The total number of samples that have been received by this receiver. This
-                  includes <a>concealedSamples</a>.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>concealedSamples</code></dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
-              </dt>
-              <dd>
-                <p>
-                  The total number of samples that are concealed samples. A concealed sample is a
-                  sample that was replaced with synthesized samples generated locally before being
-                  played out. Examples of samples that have to be concealed are samples from lost
-                  packets (reported in <a data-link-for=
-                  "RTCReceivedRtpStreamStats">packetsLost</a>) or samples from packets that arrive
-                  too late to be played out (reported in <a data-link-for=
-                  "RTCReceivedRtpStreamStats">packetsDiscarded</a>).
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>silentConcealedSamples</code></dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
-              </dt>
-              <dd>
-                <p>
-                  The total number of concealed samples inserted that are "silent". Playing out
-                  silent samples results in silence or comfort noise. This is a subset of
-                  <a>concealedSamples</a>.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>concealmentEvents</code></dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
-              </dt>
-              <dd>
-                <p>
-                  The number of concealment events. This counter increases every time a concealed
-                  sample is synthesized after a non-concealed sample. That is, multiple consecutive
-                  concealed samples will increase the <a>concealedSamples</a> count multiple times
-                  but is a single concealment event.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>insertedSamplesForDeceleration</code></dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
-              </dt>
-              <dd>
-                <p>
-                  When playout is slowed down, this counter is increased by the difference between
-                  the number of samples received and the number of samples played out. If playout
-                  is slowed down by inserting samples, this will be the number of inserted samples.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>removedSamplesForAcceleration</code></dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
-              </dt>
-              <dd>
-                <p>
-                  When playout is sped up, this counter is increased by the difference between the
-                  number of samples received and the number of samples played out. If speedup is
-                  achieved by removing samples, this will be the count of samples removed.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>audioLevel</code></dfn> of type <span class=
-                "idlMemberType">double</span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the audio level of the receiving track. For audio levels of tracks
-                  attached locally, see <code><a>RTCAudioSourceStats</a></code> instead.
-                </p>
-                <p>
-                  The value is between 0..1 (linear), where 1.0 represents 0 dBov, 0 represents
-                  silence, and 0.5 represents approximately 6 dBSPL change in the sound pressure
-                  level from 0 dBov.
-                </p>
-                <p>
-                  The audioLevel is averaged over some small interval, using the algortihm
-                  described under <a>totalAudioEnergy</a>. The interval used is implementation
-                  dependent.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>totalAudioEnergy</code></dfn> of type <span class=
-                "idlMemberType">double</span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the audio energy of the receiving track. For audio energy of tracks
-                  attached locally, see <code><a>RTCAudioSourceStats</a></code> instead.
-                </p>
-                <p>
-                  This value MUST be computed as follows: for each audio sample that is received
-                  (and thus counted by <code><a>totalSamplesReceived</a></code>), add the sample's
-                  value divided by the highest-intensity encodable value, squared and then
-                  multiplied by the duration of the sample in seconds. In other words,
-                  <code>duration * Math.pow(energy/maxEnergy, 2)</code>.
-                </p>
-                <p>
-                  This can be used to obtain a root mean square (RMS) value that uses the same
-                  units as <code><a>audioLevel</a></code>, as defined in [[RFC6464]]. It can be
-                  converted to these units using the formula
-                  <code>Math.sqrt(totalAudioEnergy/totalSamplesDuration)</code>. This calculation
-                  can also be performed using the differences between the values of two different
-                  <code>getStats()</code> calls, in order to compute the average audio level over
-                  any desired time interval. In other words, do <code>Math.sqrt((energy2 -
-                  energy1)/(duration2 - duration1))</code>.
-                </p>
-                <p>
-                  For example, if a 10ms packet of audio is produced with an RMS of 0.5 (out of
-                  1.0), this should add <code>0.5 * 0.5 * 0.01 = 0.0025</code> to
-                  <code>totalAudioEnergy</code>. If another 10ms packet with an RMS of 0.1 is
-                  received, this should similarly add <code>0.0001</code> to
-                  <code>totalAudioEnergy</code>. Then,
-                  <code>Math.sqrt(totalAudioEnergy/totalSamplesDuration)</code> becomes
-                  <code>Math.sqrt(0.0026/0.02) = 0.36</code>, which is the same value that would be
-                  obtained by doing an RMS calculation over the contiguous 20ms segment of audio.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>totalSamplesDuration</code></dfn> of type <span class=
-                "idlMemberType">double</span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the audio duration of the receiving track. For audio durations of
-                  tracks attached locally, see <code><a>RTCAudioSourceStats</a></code> instead.
-                </p>
-                <p>
-                  Represents the total duration in seconds of all samples that have been received
-                  (and thus counted by <code><a>totalSamplesReceived</a></code>). Can be used with
-                  <code><a>totalAudioEnergy</a></code> to compute an average audio level over
-                  different intervals.
-                </p>
-              </dd>
             </dl>
           </section>
         </div>
@@ -4444,6 +4403,136 @@ enum RTCNetworkType {
             </dd>
           </dl>
         </section>
+        <pre class="idl">partial dictionary RTCAudioReceiverStats : RTCAudioHandlerStats {
+            DOMHighResTimeStamp estimatedPlayoutTimestamp;
+            double              jitterBufferDelay;
+            unsigned long long  jitterBufferEmittedCount;
+            unsigned long long  totalSamplesReceived;
+            unsigned long long  concealedSamples;
+            unsigned long long  silentConcealedSamples;
+            unsigned long long  concealmentEvents;
+            unsigned long long  insertedSamplesForDeceleration;
+            unsigned long long  removedSamplesForAcceleration;
+            double              audioLevel;
+            double              totalAudioEnergy;
+            double              totalSamplesDuration;
+};</pre>
+        <section>
+          <h2>
+            Obsolete RTCAudioReceiverStats members
+          </h2>
+          <dl data-link-for="RTCAudioReceiverStats" data-dfn-for="RTCAudioReceiverStats" class=
+          "dictionary-members">
+            <dt>
+              <dfn><code>estimatedPlayoutTimestamp</code></dfn> of type <span class=
+              "idlMemberType">DOMHighResTimeStamp</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>jitterBufferDelay</code></dfn> of type <span class=
+              "idlMemberType">double</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>jitterBufferEmittedCount</code></dfn> of type <span class=
+              "idlMemberType">unsigned long long</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>totalSamplesReceived</code></dfn> of type <span class=
+              "idlMemberType">unsigned long long</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>concealedSamples</code></dfn> of type <span class=
+              "idlMemberType">unsigned long long</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>silentConcealedSamples</code></dfn> of type <span class=
+              "idlMemberType">unsigned long long</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>concealmentEvents</code></dfn> of type <span class=
+              "idlMemberType">unsigned long long</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>insertedSamplesForDeceleration</code></dfn> of type <span class=
+              "idlMemberType">unsigned long long</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>removedSamplesForAcceleration</code></dfn> of type <span class=
+              "idlMemberType">unsigned long long</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>audioLevel</code></dfn> of type <span class=
+              "idlMemberType">double</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>totalAudioEnergy</code></dfn> of type <span class=
+              "idlMemberType">double</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>totalSamplesDuration</code></dfn> of type <span class=
+              "idlMemberType">double</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+          </dl>
+        </section>
         <pre class="idl">partial dictionary RTCVideoHandlerStats : RTCMediaHandlerStats {
           unsigned long frameWidth;
           unsigned long frameHeight;
@@ -4544,6 +4633,14 @@ enum RTCNetworkType {
         </section>
         <pre class="idl">partial dictionary RTCVideoReceiverStats {
           unsigned long keyFramesReceived;
+          DOMHighResTimeStamp estimatedPlayoutTimestamp;
+          double              jitterBufferDelay;
+          unsigned long long  jitterBufferEmittedCount;
+          unsigned long       framesReceived;
+          unsigned long       framesDecoded;
+          unsigned long       framesDropped;
+          unsigned long       partialFramesLost;
+          unsigned long       fullFramesLost;
 };</pre>
         <section>
           <h2>
@@ -4559,6 +4656,78 @@ enum RTCNetworkType {
                 This field was replaced by keyFramesDecoded in RTCInboundRtpStreamStats in June
                 2019. There were no known implementations supporting the old field at the time of
                 the change.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>estimatedPlayoutTimestamp</code></dfn> of type <span class=
+              "idlMemberType">DOMHighResTimeStamp</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>jitterBufferDelay</code></dfn> of type <span class=
+              "idlMemberType">double</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>jitterBufferEmittedCount</code></dfn> of type <span class=
+              "idlMemberType">unsigned long long</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>framesReceived</code></dfn> of type <span class="idlMemberType">unsigned
+              long</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>framesDecoded</code></dfn> of type <span class="idlMemberType">unsigned
+              long</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>framesDropped</code></dfn> of type <span class="idlMemberType">unsigned
+              long</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>partialFramesLost</code></dfn> of type <span class=
+              "idlMemberType">unsigned long</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>fullFramesLost</code></dfn> of type <span class="idlMemberType">unsigned
+              long</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats in August 2019.
               </p>
             </dd>
           </dl>
