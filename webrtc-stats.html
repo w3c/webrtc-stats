@@ -1155,6 +1155,7 @@ enum RTCStatsType {
              double               framesPerSecond;
              unsigned long long   qpSum;
              double               totalDecodeTime;
+             boolean              voiceActivityFlag;
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
              double               averageRtcpInterval;
              unsigned long        fecPacketsReceived;
@@ -1288,6 +1289,22 @@ enum RTCStatsType {
                   value with <a>framesDecoded</a>. The time it takes to decode one frame is the
                   time passed between feeding the decoder a frame and the decoder returning decoded
                   data for that frame.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>voiceActivityFlag</code></dfn> of type <span class=
+                "idlMemberType">boolean</span>
+              </dt>
+              <dd>
+                <p>
+                  Whether the last RTP packet sent or played out by this track contained voice
+                  activity or not based on the presence of the V bit in the extension header, as
+                  defined in [[RFC6464]].
+                </p>
+                <p>
+                  This value indicates the voice activity in the latest RTP packet played out from
+                  a given SSRC, and is defined in the
+                  <code>RTCRtpSynchronizationSource.voiceActivityFlag</code> of [[WEBRTC].
                 </p>
               </dd>
               <dt>
@@ -1600,6 +1617,7 @@ enum RTCStatsType {
              unsigned long        keyFramesEncoded;
              unsigned long long   qpSum;
              unsigned long long   totalSamplesSent;
+             boolean              voiceActivityFlag;
              double               totalEncodeTime;
              double               totalPacketSendDelay;
              double               averageRtcpInterval;
@@ -1824,6 +1842,22 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The total number of samples that have been sent by this sender.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>voiceActivityFlag</code></dfn> of type <span class=
+                "idlMemberType">boolean</span>
+              </dt>
+              <dd>
+                <p>
+                  Whether the last RTP packet sent or played out by this track contained voice
+                  activity or not based on the presence of the V bit in the extension header, as
+                  defined in [[RFC6464]].
+                </p>
+                <p>
+                  This value indicates the voice activity in the latest RTP packet played out from
+                  a given SSRC, and is defined in the
+                  <code>RTCRtpSynchronizationSource.voiceActivityFlag</code> of [[WEBRTC].
                 </p>
               </dd>
               <dt>
@@ -2778,7 +2812,6 @@ enum RTCStatsType {
         </h3>
         <div>
           <pre class="idl">dictionary RTCAudioHandlerStats : RTCMediaHandlerStats {
-              boolean              voiceActivityFlag;
 };</pre>
           <section>
             <h2>
@@ -2786,22 +2819,6 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCAudioHandlerStats" data-dfn-for="RTCAudioHandlerStats" class=
             "dictionary-members">
-              <dt>
-                <dfn><code>voiceActivityFlag</code></dfn> of type <span class=
-                "idlMemberType">boolean</span>
-              </dt>
-              <dd>
-                <p>
-                  Whether the last RTP packet sent or played out by this track contained voice
-                  activity or not based on the presence of the V bit in the extension header, as
-                  defined in [[RFC6464]].
-                </p>
-                <p>
-                  This value indicates the voice activity in the latest RTP packet played out from
-                  a given SSRC, and is defined in the
-                  <code>RTCRtpSynchronizationSource.voiceActivityFlag</code> of [[WEBRTC].
-                </p>
-              </dd>
             </dl>
           </section>
         </div>
@@ -4355,6 +4372,7 @@ enum RTCNetworkType {
             double              audioLevel;
             double              totalAudioEnergy;
             double              totalSamplesDuration;
+            boolean             voiceActivityFlag;
 };</pre>
         <section>
           <h2>
@@ -4366,7 +4384,7 @@ enum RTCNetworkType {
             </dt>
             <dd>
               <p>
-                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in June 2019.
+                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in August, 2019.
               </p>
             </dd>
             <dt>
@@ -4375,7 +4393,7 @@ enum RTCNetworkType {
             </dt>
             <dd>
               <p>
-                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in June 2019.
+                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in August, 2019.
               </p>
             </dd>
             <dt>
@@ -4384,7 +4402,16 @@ enum RTCNetworkType {
             </dt>
             <dd>
               <p>
-                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in June 2019.
+                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in August, 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>voiceActivityFlag</code></dfn> of type <span class=
+              "idlMemberType">boolean</span>
+            </dt>
+            <dd>
+              <p>
+                This field was moved to RTCOutboundRtpStreamStats and RTCInboundRtpStreamStats in August, 2019.
               </p>
             </dd>
           </dl>
@@ -4404,7 +4431,7 @@ enum RTCNetworkType {
             </dt>
             <dd>
               <p>
-                This was moved to RTCOutboundRtpStreamStats in July, 2019.
+                This was moved to RTCOutboundRtpStreamStats in August, 2019.
               </p>
             </dd>
           </dl>
@@ -4427,7 +4454,7 @@ enum RTCNetworkType {
             <dd>
               <p>
                 This was moved to RTCOutboundRtpStreamStats and
-                RTCInboundRtpStreamStats in July, 2019.
+                RTCInboundRtpStreamStats in August, 2019.
               </p>
             </dd>
             <dt>
@@ -4437,7 +4464,7 @@ enum RTCNetworkType {
             <dd>
               <p>
                 This was moved to RTCOutboundRtpStreamStats and
-                RTCInboundRtpStreamStats in July, 2019.
+                RTCInboundRtpStreamStats in August, 2019.
               </p>
             </dd>
             <dt>
@@ -4447,7 +4474,7 @@ enum RTCNetworkType {
             <dd>
               <p>
                 This was moved to RTCOutboundRtpStreamStats and
-                RTCInboundRtpStreamStats in July, 2019.
+                RTCInboundRtpStreamStats in August, 2019.
               </p>
             </dd>
           </dl>
@@ -4489,7 +4516,7 @@ enum RTCNetworkType {
             </dt>
             <dd>
               <p>
-                This was moved to RTCOutboundRtpStreamStats in July, 2019.
+                This was moved to RTCOutboundRtpStreamStats in August, 2019.
               </p>
             </dd>
             <dt>
@@ -4498,7 +4525,7 @@ enum RTCNetworkType {
             </dt>
             <dd>
               <p>
-                This was moved to RTCOutboundRtpStreamStats in July, 2019.
+                This was moved to RTCOutboundRtpStreamStats in August, 2019.
               </p>
             </dd>
           </dl>
