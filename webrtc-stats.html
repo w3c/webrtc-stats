@@ -1467,8 +1467,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for audio. This is the estimated playout time of this receiver's track.
-                  The playout time is the NTP timestamp of the last playable sample that has a known
+                  This is the estimated playout time of this receiver's track. The playout time is
+                  the NTP timestamp of the last playable audio sample or video frame that has a known
                   timestamp (from an RTCP SR packet mapping RTP timestamps to NTP timestamps),
                   extrapolated with the time elapsed since it was ready to be played out. This is
                   the "current time" of the track in NTP clock time of the sender and can be present
@@ -1486,10 +1486,10 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for audio. It is the sum of the time, in seconds, each sample takes
-                  from the time it is received and to the time it exits the jitter buffer. This
-                  increases upon samples exiting, having completed their time in the buffer
-                  (incrementing <code>jitterBufferEmittedCount</code>). The average jitter buffer
+                  It is the sum of the time, in seconds, each audio sample or video frame takes from
+                  the time it is received and to the time it exits the jitter buffer. This increases
+                  upon samples or frames exiting, having completed their time in the buffer (and
+                  incrementing <code>jitterBufferEmittedCount</code>). The average jitter buffer
                   delay can be calculated by dividing the <code>jitterBufferDelay</code> with the
                   <code>jitterBufferEmittedCount</code>.
                 </p>
@@ -1500,7 +1500,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for audio. The total number of samples that have come out of the
+                  The total number of audio samples or video frames that have come out of the
                   jitter buffer (increasing <code>jitterBufferDelay</code>).
                 </p>
               </dd>
