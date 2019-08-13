@@ -2179,6 +2179,8 @@ enum RTCStatsType {
               double              audioLevel;
               double              totalAudioEnergy;
               double              totalSamplesDuration;
+              double              echoReturnLoss;
+              double              echoReturnLossEnhancement;
 };</pre>
           <section>
             <h2>
@@ -2257,6 +2259,28 @@ enum RTCStatsType {
                   by this source for the lifetime of this stats object. Can be used with
                   <code><a>totalAudioEnergy</a></code> to compute an average audio level over
                   different intervals.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>echoReturnLoss</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Only present while the sender is sending a track sourced from a microphone where
+                  echo cancellation is applied. Calculated in decibels, as defined in [[!ECHO]]
+                  (2012) section 3.14.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>echoReturnLossEnhancement</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Only present while the sender is sending a track sourced from a microphone where
+                  echo cancellation is applied. Calculated in decibels, as defined in [[!ECHO]]
+                  (2012) section 3.15.
                 </p>
               </dd>
             </dl>
@@ -2838,8 +2862,6 @@ enum RTCStatsType {
         <div>
           <pre class="idl">dictionary RTCAudioSenderStats : RTCAudioHandlerStats {
              DOMString           mediaSourceId;
-             double              echoReturnLoss;
-             double              echoReturnLossEnhancement;
 };</pre>
           <section>
             <h2>
@@ -2855,28 +2877,6 @@ enum RTCStatsType {
                 <p>
                   The identifier of the stats object representing the track currently attached to
                   this sender, an <code><a>RTCMediaSourceStats</a></code>.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>echoReturnLoss</code></dfn> of type <span class=
-                "idlMemberType">double</span>
-              </dt>
-              <dd>
-                <p>
-                  Only present while the sender is sending a track sourced from a microphone where
-                  echo cancellation is applied. Calculated in decibels, as defined in [[!ECHO]]
-                  (2012) section 3.14.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>echoReturnLossEnhancement</code></dfn> of type <span class=
-                "idlMemberType">double</span>
-              </dt>
-              <dd>
-                <p>
-                  Only present while the sender is sending a track sourced from a microphone where
-                  echo cancellation is applied. Calculated in decibels, as defined in [[!ECHO]]
-                  (2012) section 3.15.
                 </p>
               </dd>
             </dl>
@@ -4384,7 +4384,7 @@ enum RTCNetworkType {
             </dt>
             <dd>
               <p>
-                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in August, 2019.
+                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in June 2019.
               </p>
             </dd>
             <dt>
@@ -4393,7 +4393,7 @@ enum RTCNetworkType {
             </dt>
             <dd>
               <p>
-                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in August, 2019.
+                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in June 2019.
               </p>
             </dd>
             <dt>
@@ -4402,7 +4402,7 @@ enum RTCNetworkType {
             </dt>
             <dd>
               <p>
-                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in August, 2019.
+                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in June 2019.
               </p>
             </dd>
             <dt>
@@ -4411,13 +4411,15 @@ enum RTCNetworkType {
             </dt>
             <dd>
               <p>
-                This field was moved to RTCOutboundRtpStreamStats and RTCInboundRtpStreamStats in August, 2019.
+                This field was moved to RTCOutboundRtpStreamStats and RTCInboundRtpStreamStats in August 2019.
               </p>
             </dd>
           </dl>
         </section>
         <pre class="idl">partial dictionary RTCAudioSenderStats : RTCAudioHandlerStats {
             unsigned long long  totalSamplesSent;
+            double              echoReturnLoss;
+            double              echoReturnLossEnhancement;
 };</pre>
         <section>
           <h2>
@@ -4431,7 +4433,25 @@ enum RTCNetworkType {
             </dt>
             <dd>
               <p>
-                This was moved to RTCOutboundRtpStreamStats in August, 2019.
+                This was moved to RTCOutboundRtpStreamStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>echoReturnLoss</code></dfn> of type <span class=
+              "idlMemberType">double</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCAudioSourceStats in August 2019.
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>echoReturnLossEnhancement</code></dfn> of type <span class=
+              "idlMemberType">double</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCAudioSourceStats in August 2019.
               </p>
             </dd>
           </dl>
@@ -4454,7 +4474,7 @@ enum RTCNetworkType {
             <dd>
               <p>
                 This was moved to RTCOutboundRtpStreamStats and
-                RTCInboundRtpStreamStats in August, 2019.
+                RTCInboundRtpStreamStats in August 2019.
               </p>
             </dd>
             <dt>
@@ -4464,7 +4484,7 @@ enum RTCNetworkType {
             <dd>
               <p>
                 This was moved to RTCOutboundRtpStreamStats and
-                RTCInboundRtpStreamStats in August, 2019.
+                RTCInboundRtpStreamStats in August 2019.
               </p>
             </dd>
             <dt>
@@ -4474,7 +4494,7 @@ enum RTCNetworkType {
             <dd>
               <p>
                 This was moved to RTCOutboundRtpStreamStats and
-                RTCInboundRtpStreamStats in August, 2019.
+                RTCInboundRtpStreamStats in August 2019.
               </p>
             </dd>
           </dl>
@@ -4507,7 +4527,7 @@ enum RTCNetworkType {
             </dt>
             <dd>
               <p>
-                This was replaced by RTCVideoSourceStats.frames in May, 2019.
+                This was replaced by RTCVideoSourceStats.frames in May 2019.
               </p>
             </dd>
             <dt>
@@ -4516,7 +4536,7 @@ enum RTCNetworkType {
             </dt>
             <dd>
               <p>
-                This was moved to RTCOutboundRtpStreamStats in August, 2019.
+                This was moved to RTCOutboundRtpStreamStats in August 2019.
               </p>
             </dd>
             <dt>
@@ -4525,7 +4545,7 @@ enum RTCNetworkType {
             </dt>
             <dd>
               <p>
-                This was moved to RTCOutboundRtpStreamStats in August, 2019.
+                This was moved to RTCOutboundRtpStreamStats in August 2019.
               </p>
             </dd>
           </dl>
