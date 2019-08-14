@@ -575,7 +575,7 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              Contains statistics related to a specific MediaStreamTrack's attachment to an
+              Statistics related to a specific MediaStreamTrack's attachment to an
               RTCRtpSender and the corresponding media-level metrics. It is accessed by either
               <code><a>RTCSenderVideoTrackAttachmentStats</a></code> or
               <code><a>RTCSenderAudioTrackAttachmentStats</a></code>, both inherited from
@@ -591,7 +591,7 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              Contains statistics related to a specific RTCRtpSender and the corresponding
+              Statistics related to a specific RTCRtpSender and the corresponding
               media-level metrics. It is accessed by the <code><a>RTCAudioSenderStats</a></code> or
               the <code><a>RTCVideoSenderStats</a></code> depending on <code>kind</code>.
             </p>
@@ -601,7 +601,7 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              Contains statistics related to a specific receiver and the corresponding media-level
+              Statistics related to a specific receiver and the corresponding media-level
               metrics. It is accessed by the <code><a>RTCAudioReceiverStats</a></code> or the
               <code><a>RTCVideoReceiverStats</a></code> depending on <code>kind</code>.
             </p>
@@ -2047,6 +2047,68 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn><code>frameWidth</code></dfn> of type <span class=
+                "idlMemberType">long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. Represents the width of the last encoded frame. The resolution
+                  of the encoded frame may be lower than the media source (see RTCVideoSourceStats.width).
+                  Before the first frame is encoded this attribute is missing.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>frameHeight</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. Represents the height of the last encoded frame. The resolution
+                  of the encoded frame may be lower than the media source (see RTCVideoSourceStats.height).
+                  Before the first frame is encoded this attribute is missing.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>framesPerSecond</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. The number of encoded frames during the last second. This may be
+                  lower than the media source frame rate (see RTCVideoSourceStats.framesPerSecond).
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>framesSent</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. Represents the total number of frames sent on this RTP stream.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>hugeFramesSent</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. Represents the total number of huge frames sent by this RTP
+                  stream. Huge frames, by definition, are frames that have an encoded size at least
+                  2.5 times the average size of the frames. The average size of the frames is defined
+                  as the target bitrate per second divided by the target FPS at the time the frame was
+                  encoded. These are usually complex to encode frames with a lot of changes in the
+                  picture. This can be used to estimate, e.g slide changes in the streamed presentation.
+                </p>
+                <p>
+                  The multiplier of 2.5 is choosen from analyzing encoded frame sizes for a sample
+                  presentation using WebRTC standalone implementation. 2.5 is a reasonably large
+                  multiplier which still caused all slide change events to be identified as a huge
+                  frames. It, however, produced 1.4% of false positive slide change detections
+                  which is deemed reasonable.
+                </p>
+              </dd>
+              <dt>
                 <dfn><code>framesEncoded</code></dfn> of type <span class=
                 "idlMemberType">long</span>
               </dt>
@@ -2933,11 +2995,6 @@ enum RTCStatsType {
           two RTCSenderVideoTrackAttachmentStats objects, one for each attachment. They will have
           the same "trackIdentifier" attribute, but different "id" attributes.
         </p>
-        <p>
-          If the track is detached from the RTCPeerConnection (via removeTrack or via
-          replaceTrack), it continues to appear, but with the "objectDeleted" member set to
-          <code>true</code>.
-        </p>
         <div>
           <pre class="idl">dictionary RTCSenderVideoTrackAttachmentStats : RTCVideoSenderStats {
 };</pre>
@@ -3044,11 +3101,6 @@ enum RTCStatsType {
           If an audio track is attached twice (via addTransceiver or replaceTrack), there will be
           two RTCSenderAudioTrackAttachmentStats objects, one for each attachment. They will have
           the same "trackIdentifier" attribute, but different "id" attributes.
-        </p>
-        <p>
-          If the track is detached from the RTCPeerConnection (via removeTrack or via
-          replaceTrack), it continues to appear, but with the "objectDeleted" member set to
-          <code>true</code>.
         </p>
         <div>
           <pre class="idl">dictionary RTCSenderAudioTrackAttachmentStats : RTCAudioSenderStats {
@@ -3392,7 +3444,6 @@ enum RTCStatsType {
              long                     priority;
              DOMString                url;
              DOMString                relayProtocol;
-             boolean                  deleted = false;
 };</pre>
           <section>
             <h2>
@@ -3511,22 +3562,6 @@ enum RTCStatsType {
                   was obtained. It is the same as the <a href=
                   "https://w3c.github.io/webrtc-pc/#rtcpeerconnectioniceevent">url surfaced in the
                   RTCPeerConnectionIceEvent</a>.
-                </p>
-                <p>
-                  For remote candidates, this property is not present.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>deleted</code></dfn> of type <span class="idlMemberType">boolean</span>,
-                defaulting to <code>false</code>
-              </dt>
-              <dd>
-                <p>
-                  For local candidates, <code>true</code> indicates that the candidate has been
-                  deleted/freed as described by [[!RFC5245]]. For host candidates, this means that
-                  any network resources (typically a socket) associated with the candidate have
-                  been released. For TURN candidates, this means the TURN allocation is no longer
-                  active.
                 </p>
                 <p>
                   For remote candidates, this property is not present.
