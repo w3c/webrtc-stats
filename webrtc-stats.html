@@ -1181,7 +1181,6 @@ enum RTCStatsType {
              double               totalAudioEnergy;
              double               totalSamplesDuration;
              unsigned long        framesReceived;
-             unsigned long        framesDecoded;
              unsigned long        framesDropped;
              unsigned long        partialFramesLost;
              unsigned long        fullFramesLost;
@@ -1227,7 +1226,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Only valid for video. It represents the total number of frames correctly decoded
-                  for this SSRC, i.e., frames that would be displayed if no frames are dropped.
+                  for this RTP stream, i.e., frames that would be displayed if no frames are dropped.
                 </p>
               </dd>
               <dt>
@@ -1659,16 +1658,6 @@ enum RTCStatsType {
                 <p>
                   Only valid for video. Represents the total number of complete frames received on
                   this RTP stream. This metric is incremented when the complete frame is received.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>framesDecoded</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
-              </dt>
-              <dd>
-                <p>
-                  Only valid for video. It represents the total number of frames correctly decoded
-                  on this RTP stream, i.e., frames that would be displayed if no frames are dropped.
                 </p>
               </dd>
               <dt>
@@ -4335,7 +4324,7 @@ enum RTCNetworkType {
             </dd>
           </dl>
         </section>
-        <pre class="idl">partial dictionary RTCAudioSenderStats : RTCAudioHandlerStats {
+        <pre class="idl">partial dictionary RTCAudioSenderStats {
             unsigned long long  totalSamplesSent;
             double              echoReturnLoss;
             double              echoReturnLossEnhancement;
@@ -4375,7 +4364,7 @@ enum RTCNetworkType {
             </dd>
           </dl>
         </section>
-        <pre class="idl">partial dictionary RTCAudioReceiverStats : RTCAudioHandlerStats {
+        <pre class="idl">partial dictionary RTCAudioReceiverStats {
             DOMHighResTimeStamp estimatedPlayoutTimestamp;
             double              jitterBufferDelay;
             unsigned long long  jitterBufferEmittedCount;
@@ -4505,7 +4494,7 @@ enum RTCNetworkType {
             </dd>
           </dl>
         </section>
-        <pre class="idl">partial dictionary RTCVideoHandlerStats : RTCMediaHandlerStats {
+        <pre class="idl">partial dictionary RTCVideoHandlerStats {
           unsigned long frameWidth;
           unsigned long frameHeight;
           double        framesPerSecond;
