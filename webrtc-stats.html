@@ -825,7 +825,6 @@ enum RTCStatsType {
              unsigned long clockRate;
              unsigned long channels;
              DOMString     sdpFmtpLine;
-             DOMString     implementation;
 };</pre>
           <section>
             <h2>
@@ -899,20 +898,6 @@ enum RTCStatsType {
                 <p>
                   The a=fmtp line in the SDP corresponding to the codec, i.e., after the colon
                   following the PT. This defined by [[!JSEP]] in Section 5.7.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>implementation</code></dfn> of type <span class=
-                "idlMemberType">DOMString</span>
-              </dt>
-              <dd>
-                <p>
-                  Identifies the implementation used. This is useful for diagnosing
-                  interoperability issues.
-                </p>
-                <p class="fingerprint">
-                  If too much information is given here, it increases the fingerprint surface.
-                  Since it is only given for active tracks, the incremental exposure is small.
                 </p>
               </dd>
             </dl>
@@ -1184,6 +1169,7 @@ enum RTCStatsType {
              unsigned long        framesDropped;
              unsigned long        partialFramesLost;
              unsigned long        fullFramesLost;
+             DOMString            decoderImplementation;
             };</pre>
           <section>
             <h2>
@@ -1693,6 +1679,20 @@ enum RTCStatsType {
                   Appendix A (i) of [[!RFC7004]].
                 </p>
               </dd>
+              <dt>
+                <dfn><code>decoderImplementation</code></dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  Identifies the decoder implementation used. This is useful for diagnosing
+                  interoperability issues.
+                </p>
+                <p class="fingerprint">
+                  If too much information is given here, it increases the fingerprint surface.
+                  Since it is only given for active tracks, the incremental exposure is small.
+                </p>
+              </dd>
             </dl>
           </section>
         </div>
@@ -1872,6 +1872,7 @@ enum RTCStatsType {
              unsigned long        firCount;
              unsigned long        pliCount;
              unsigned long        sliCount;
+             DOMString            encoderImplementation;
 };</pre>
           <section>
             <h2>
@@ -2214,6 +2215,20 @@ enum RTCStatsType {
                   Only valid for video. Count the total number of Slice Loss Indication (SLI)
                   packets received by this sender. Calculated as defined in [[!RFC4585]] section
                   6.3.2.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>encoderImplementation</code></dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  Identifies the encoder implementation used. This is useful for diagnosing
+                  interoperability issues.
+                </p>
+                <p class="fingerprint">
+                  If too much information is given here, it increases the fingerprint surface.
+                  Since it is only given for active tracks, the incremental exposure is small.
                 </p>
               </dd>
             </dl>
@@ -4171,6 +4186,28 @@ enum RTCNetworkType {
         Obsolete stats
       </h2>
       <div>
+        <pre class="idl">partial dictionary RTCCodecStats {
+           DOMString implementation;
+        };
+        </pre>
+        <section>
+          <h2>
+            Obsolete RTCCodecStats members
+          </h2>
+          <dl data-dfn-for="RTCCodecStats">
+            <dt>
+              <dfn><code>implementation</code></dfn> of type <span
+              class="idlMemberType">DOMString</span>
+            </dt>
+            <dd>
+              <p>
+                This was moved to RTCInboundRtpStreamStats.decoderImplementation
+                and RTCOutboundRtpStreamStats.encoderImplementation in August
+                2019.
+              </p>
+            </dd>
+          </dl>
+        </section>
         <pre class="idl">partial dictionary RTCIceCandidateStats {
            boolean                  isRemote;
         };
