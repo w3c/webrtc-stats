@@ -3211,6 +3211,7 @@ enum RTCStatsType {
              DOMString             dtlsCipher;
              DOMString             srtpCipher;
              DOMString             tlsGroup;
+             unsigned long         selectedCandidatePairChanges;
 };</pre>
           <section>
             <h2>
@@ -3360,6 +3361,16 @@ enum RTCStatsType {
                   Descriptive name of the group used for the encryption, as defined in the
                   "Description" column of the IANA TLS Supported Groups registry
                   [[!IANA-TLS-GROUPS]].
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>selectedCandidatePairChanges</code></dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  The number of times that the selected candidate pair of this transport has
+                  changed.
                 </p>
               </dd>
             </dl>
