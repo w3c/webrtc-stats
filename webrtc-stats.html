@@ -3370,7 +3370,10 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The number of times that the selected candidate pair of this transport has
-                  changed.
+                  changed. Going from not having a selected candidate pair to having a
+                  selected candidate pair, or the other way around, also increases this
+                  counter. It is initially zero and becomes one when an initial candidate
+                  pair is selected.
                 </p>
               </dd>
             </dl>
