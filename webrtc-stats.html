@@ -1867,6 +1867,7 @@ enum RTCStatsType {
              double               averageRtcpInterval;
              RTCQualityLimitationReason                 qualityLimitationReason;
              record&lt;DOMString, double&gt; qualityLimitationDurations;
+             unsigned long        qualityLimitationResolutionChanges;
              record&lt;USVString, unsigned long&gt; perDscpPacketsSent;
              unsigned long        nackCount;
              unsigned long        firCount;
@@ -2161,6 +2162,20 @@ enum RTCStatsType {
                 <p>
                   The sum of all entries minus <code>qualityLimidationDurations["none"]</code>
                   gives the total time that the stream has been limited.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>qualityLimitationResolutionChanges</code></dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. The number of times that the resolution has changed because
+                  we are quality limited (<a>qualityLimitationReason</a> has a value other than
+                  <code>"none"</code>). The counter is initially zero and increases when the
+                  resolution goes up or down. For example, if a 720p track is sent as 480p for some
+                  time and then recovers to 720p, <code>qualityLimitationResolutionChanges</code>
+                  will have the value 2.
                 </p>
               </dd>
               <dt>
