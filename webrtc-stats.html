@@ -3671,6 +3671,8 @@ enum RTCNetworkType {
              unsigned long long            retransmissionsSent;
              unsigned long long            consentRequestsSent;
              DOMHighResTimeStamp           consentExpiredTimestamp;
+             unsigned long                 packetsDiscardedOnSend;
+             unsigned long long            bytesDiscardedOnSend;
 };</pre>
           <section>
             <h2>
@@ -3981,6 +3983,30 @@ enum RTCNetworkType {
                   as defined in [[!RFC7675]] section 5.1. If a valid STUN binding response has not
                   been made (<code>responsesReceived</code> is zero) or the latest one has not
                   expired this value must be undefined.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>packetsDiscardedOnSend</code></dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of  packets for this candidate pair that have been discarded due to socket
+                  errors, i.e. a socket error occured when handing the packets to the socket. This
+                  might happen due to various reasons, including full buffer or no available
+                  memory.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>bytesDiscardedOnSend</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of bytes for this candidate pair that have been discarded due to socket
+                  errors, i.e. a socket error occured when handing the packets containing the bytes
+                  to the socket. This might happen due to various reasons, including full buffer or
+                  no available memory. Calculated as defined in [[!RFC3550]] section 6.4.1.
                 </p>
               </dd>
             </dl>
