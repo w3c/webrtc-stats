@@ -111,6 +111,16 @@ var respecConfig = {
             status:   "Internet Draft",
             publisher:  "IETF"
         },
+        "AV1": {
+          "title": "AV1 Bitstream and Decoding Process Specification",
+          "href": "https://aomediacodec.github.io/av1-spec/av1-spec.pdf",
+          "authors": [
+            "Peter de Rivaz",
+            "Jack Haughton"
+          ],
+          "status": "January 9, 2019",
+          "publisher": "Alliance for Open Media"
+        },
         "JSEP": {
             "authors":["Justin Uberti","Cullen Jennings","Eric Rescorla"],
             "href": "http://datatracker.ietf.org/doc/draft-ietf-rtcweb-jsep/",

@@ -452,7 +452,8 @@ enum RTCStatsType {
 "local-candidate",
 "remote-candidate",
 "certificate",
-"stunserverconnection"
+"stunserverconnection",
+"encoding-parameters"
 };
         </pre>
         <p>
@@ -678,6 +679,15 @@ enum RTCStatsType {
               <code><a>RTCStunServerConnectionStats</a></code>.
             </p>
           </dd>
+          <dt>
+            <dfn><code>encoding-parameters</code></dfn>
+          </dt>
+          <dd>
+            <p>
+              Information about RTP encodings of media. It is accessed by the
+              <code><a>RTCEncodingParameterStats</a></code>.
+            </p>
+          </dd>
         </dl>
       </section>
     </section>
@@ -818,7 +828,7 @@ enum RTCStatsType {
         </h3>
         <div>
           <pre class="idl">dictionary RTCCodecStats : RTCStats {
-             unsigned long payloadType;
+             octet payloadType;
              RTCCodecType  codecType;
              DOMString     transportId;
              DOMString     mimeType;
@@ -833,8 +843,7 @@ enum RTCStatsType {
             <dl data-link-for="RTCCodecStats" data-dfn-for="RTCCodecStats" class=
             "dictionary-members">
               <dt>
-                <dfn><code>payloadType</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
+                <dfn><code>payloadType</code></dfn> of type <span class="idlMemberType">octet</span>
               </dt>
               <dd>
                 <p>
@@ -4205,6 +4214,331 @@ enum RTCNetworkType {
                   received.
                 </p>
               </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="encoding-parameters-dict*">
+        <h3>
+          <dfn>RTCEncodingParameterStats</dfn> dictionary
+        </h3>
+        <div>
+          <pre class="idl">dictionary RTCEncodingParameterStats : RTCStats {
+             DOMString rid;
+             octet payloadType;
+             boolean active;
+             unsigned long ptime;
+             unsigned long maxBitrate;
+             double maxFramerate;
+             double scaleResolutionDownBy;
+             sequence&lt;DOMString&gt; scalabilityModes;
+  };</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCEncodingParameterStats</a> Members
+            </h2>
+            <dl data-link-for="RTCEncodingParameterStats" data-dfn-for=
+            "RTCEncodingParameterStats" class="dictionary-members">
+              <dt>
+                <dfn><code>rid</code></dfn> of type <span class="idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  Restriction Identifier(rid) of the encoding.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>payloadType</code></dfn> of type <span class="idlMemberType">octet</span>
+              </dt>
+              <dd>
+                <p>
+                  Payload type as used in RTP encoding.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>active</code></dfn> of type <span class=
+                "idlMemberType">boolean</span>
+              </dt>
+              <dd>
+                <p>
+                  Indicates that this encoding is actively being sent or not sent.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>ptime</code></dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Indicates the preferred duration of media represented by a packet in milliseconds for this encoding. 
+                  Typically, this is only relevant for audio encoding.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>maxBitrate</code></dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Indicates the maximum bitrate that can be used by this encoding.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>maxFramerate</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Indicates the maximum framerate that can be used by this encoding.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>scaleResolutionDownBy</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  The video's resolution will be scaled down in each dimension by the given value.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>scalabilityModes</code></dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>Scalability mode identifiers and characteristics are indicated in the table below, which is based
+                on the pre-defined scalability modes in [[AV1]] Section 6.7.5.</p>
+               <table style="border-width:0; width:60%" border="1">
+                 <tbody>
+                   <tr>
+                     <th>Scalability Mode</th>
+                     <th>Spatial Layers</th>
+                     <th>Resolution Ratio</th>
+                     <th>Temporal Layers</th>
+                     <th>Inter-layer dependency</th>
+                   </tr>
+                 </tbody>
+                 <tbody>
+                   <tr>
+                     <td>L1T2</td>
+                     <td>1</td>
+                     <td></td>
+                     <td>2</td>
+                     <td></td>
+                   </tr>
+                   <tr>
+                     <td>L1T3</td>
+                     <td>1</td>
+                     <td></td>
+                     <td>3</td>
+                     <td></td>
+                   </tr>
+                   <tr>
+                     <td>L2T1</td>
+                     <td>2</td>
+                     <td>2:1</td>
+                     <td>1</td>
+                     <td>Yes</td>
+                   </tr>
+                   <tr>
+                     <td>L2T2</td>
+                     <td>2</td>
+                     <td>2:1</td>
+                     <td>2</td>
+                     <td>Yes</td>
+                   </tr>
+                   <tr>
+                     <td>L2T3</td>
+                     <td>2</td>
+                     <td>2:1</td>
+                     <td>3</td>
+                     <td>Yes</td>
+                   </tr>
+                   <tr>
+                     <td>L3T1</td>
+                     <td>3</td>
+                     <td>2:1</td>
+                     <td>1</td>
+                     <td>Yes</td>
+                   </tr>
+                   <tr>
+                     <td>L3T2</td>
+                     <td>3</td>
+                     <td>2:1</td>
+                     <td>2</td>
+                     <td>Yes</td>
+                   </tr>
+                   <tr>
+                     <td>L3T3</td>
+                     <td>3</td>
+                     <td>2:1</td>
+                     <td>3</td>
+                     <td>Yes</td>
+                   </tr>
+                   <tr>
+                     <td>L2T1h</td>
+                     <td>2</td>
+                     <td>1.5:1</td>
+                     <td>1</td>
+                     <td>Yes</td>
+                   </tr>
+                   <tr>
+                     <td>L2T2h</td>
+                     <td>2</td>
+                     <td>1.5:1</td>
+                     <td>2</td>
+                     <td>Yes</td>
+                   </tr>
+                   <tr>
+                     <td>L2T3h</td>
+                     <td>2</td>
+                     <td>1.5:1</td>
+                     <td>3</td>
+                     <td>Yes</td>
+                   </tr>
+                   <tr>
+                     <td>S2T1</td>
+                     <td>2</td>
+                     <td>2:1</td>
+                     <td>1</td>
+                     <td>No</td>
+                   </tr>
+                   <tr>
+                     <td>S2T2</td>
+                     <td>2</td>
+                     <td>2:1</td>
+                     <td>2</td>
+                     <td>No</td>
+                   </tr>
+                   <tr>
+                     <td>S2T3</td>
+                     <td>2</td>
+                     <td>2:1</td>
+                     <td>3</td>
+                     <td>No</td>
+                   </tr>
+                   <tr>
+                     <td>S2T1h</td>
+                     <td>2</td>
+                     <td>1.5:1</td>
+                     <td>1</td>
+                     <td>No</td>
+                   </tr>
+                   <tr>
+                     <td>S2T2h</td>
+                     <td>2</td>
+                     <td>1.5:1</td>
+                     <td>2</td>
+                     <td>No</td>
+                   </tr>
+                   <tr>
+                     <td>S2T3h</td>
+                     <td>2</td>
+                     <td>1.5:1</td>
+                     <td>3</td>
+                     <td>No</td>
+                   </tr>
+                   <tr>
+                     <td>S3T1</td>
+                     <td>3</td>
+                     <td>2:1</td>
+                     <td>1</td>
+                     <td>No</td>
+                   </tr>
+                   <tr>
+                     <td>S3T2</td>
+                     <td>3</td>
+                     <td>2:1</td>
+                     <td>2</td>
+                     <td>No</td>
+                   </tr>
+                   <tr>
+                     <td>S3T3</td>
+                     <td>3</td>
+                     <td>2:1</td>
+                     <td>3</td>
+                     <td>No</td>
+                   </tr>
+                   <tr>
+                     <td>S3T1h</td>
+                     <td>3</td>
+                     <td>1.5:1</td>
+                     <td>1</td>
+                     <td>No</td>
+                   </tr>
+                   <tr>
+                     <td>S3T2h</td>
+                     <td>3</td>
+                     <td>1.5:1</td>
+                     <td>2</td>
+                     <td>No</td>
+                   </tr>
+                   <tr>
+                     <td>S3T3h</td>
+                     <td>3</td>
+                     <td>1.5:1</td>
+                     <td>3</td>
+                     <td>No</td>
+                   </tr>
+                   <tr>
+                     <td>L3T2_KEY</td>
+                     <td>3</td>
+                     <td>2:1</td>
+                     <td>2</td>
+                     <td>Yes</td>
+                   </tr>
+                   <tr>
+                     <td>L3T3_KEY</td>
+                     <td>3</td>
+                     <td>2:1</td>
+                     <td>3</td>
+                     <td>Yes</td>
+                   </tr>
+                   <tr>
+                     <td>L4T5_KEY</td>
+                     <td>4</td>
+                     <td>2:1</td>
+                     <td>5</td>
+                     <td>Yes</td>
+                   </tr>
+                   <tr>
+                     <td>L4T7_KEY</td>
+                     <td>4</td>
+                     <td>2:1</td>
+                     <td>7</td>
+                     <td>Yes</td>
+                   </tr>
+                   <tr>
+                     <td>L3T2_KEY_SHIFT</td>
+                     <td>3</td>
+                     <td>2:1</td>
+                     <td>2</td>
+                     <td>Yes</td>
+                   </tr>
+                   <tr>
+                     <td>L3T3_KEY_SHIFT</td>
+                     <td>3</td>
+                     <td>2:1</td>
+                     <td>3</td>
+                     <td>Yes</td>
+                   </tr>
+                   <tr>
+                     <td>L4T5_KEY_SHIFT</td>
+                     <td>4</td>
+                     <td>2:1</td>
+                     <td>5</td>
+                     <td>Yes</td>
+                   </tr>
+                   <tr>
+                     <td>L4T7_KEY_SHIFT</td>
+                     <td>4</td>
+                     <td>2:1</td>
+                     <td>7</td>
+                     <td>Yes</td>
+                   </tr>
+                  </tbody>
+                </table>
+                </dd>
             </dl>
           </section>
         </div>
