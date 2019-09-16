@@ -1157,6 +1157,8 @@ enum RTCStatsType {
              double               jitterBufferDelay;
              unsigned long long   jitterBufferEmittedCount;
              unsigned long long   totalSamplesReceived;
+             unsigned long long   samplesDecodedWithSilk;
+             unsigned long long   samplesDecodedWithCelt;
              unsigned long long   concealedSamples;
              unsigned long long   silentConcealedSamples;
              unsigned long long   concealmentEvents;
@@ -1496,6 +1498,26 @@ enum RTCStatsType {
                 <p>
                   Only valid for audio. The total number of samples that have been received on this
                   RTP stream. This includes <a>concealedSamples</a>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>samplesDecodedWithSilk</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio and when the audio codec is Opus. The total number of 
+                  samples decoded by the SILK portion of the Opus codec.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>samplesDecodedWithCelt</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio and when the audio codec is Opus. The total number of 
+                  samples decoded by the CELT portion of the Opus codec.
                 </p>
               </dd>
               <dt>
@@ -1861,6 +1883,8 @@ enum RTCStatsType {
              unsigned long        keyFramesEncoded;
              unsigned long long   qpSum;
              unsigned long long   totalSamplesSent;
+             unsigned long long   samplesEncodedWithSilk;
+             unsigned long long   samplesEncodedWithCelt;
              boolean              voiceActivityFlag;
              double               totalEncodeTime;
              double               totalPacketSendDelay;
@@ -2087,6 +2111,26 @@ enum RTCStatsType {
                 <p>
                   Only valid for audio. The total number of samples that have been sent over this
                   RTP stream.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>samplesEncodedWithSilk</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio and when the audio codec is Opus. The total number of 
+                  samples encoded by the SILK portion of the Opus codec.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>samplesEncodedWithCelt</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio and when the audio codec is Opus. The total number of 
+                  samples encoded by the CELT portion of the Opus codec.
                 </p>
               </dd>
               <dt>
