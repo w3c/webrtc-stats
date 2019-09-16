@@ -1859,6 +1859,7 @@ enum RTCStatsType {
              unsigned long        hugeFramesSent;
              unsigned long        framesEncoded;
              unsigned long        keyFramesEncoded;
+             unsigned long        framesDiscardedOnSend;
              unsigned long long   qpSum;
              unsigned long long   totalSamplesSent;
              boolean              voiceActivityFlag;
@@ -2057,6 +2058,18 @@ enum RTCStatsType {
                   encoded for this RTP media stream. This is a subset of
                   <code>framesEncoded</code>. <code>framesEncoded - keyFramesEncoded</code> gives
                   you the number of delta frames encoded.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>framesDiscardedOnSend</code></dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of video frames that have been discarded for this SSRC due to socket
+                  errors, i.e. a socket error occured when handing the packets to the socket. This
+                  might happen due to various reasons, including full buffer or no available
+                  memory. 
                 </p>
               </dd>
               <dt>
