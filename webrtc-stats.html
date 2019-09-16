@@ -694,6 +694,12 @@ enum RTCStatsType {
           that make sense in many different contexts are represented just once in IDL.
         </p>
         <p>
+          The metrics exposed here correspond to local measurements and those reported by RTCP packets. 
+          Compound RTCP packets contain multiple RTCP report blocks, such as Sender Report (SR) and 
+          Receiver Report (RR). Wheras, a non-compound RTCP packets may contain just a single 
+          RTCP SR or RR block.
+        </p>
+        <p>
           The lifetime of all RTP <a>monitored object</a>s starts when the RTP stream is first
           used: When the first RTP packet is sent or received on the SSRC it represents, or when
           the first RTCP packet is sent or received that refers to the SSRC of the RTP stream.
@@ -712,7 +718,7 @@ enum RTCStatsType {
             <p>
               <a>RTCReceivedRtpStreamStats</a>: Stats measured at the receiving end of an RTP
               stream, known either because they're measured locally or transmitted via an RTCP
-              Receiver Report (RR) or Extended Report (XR).
+              Receiver Report (RR) or Extended Report (XR) block.
             </p>
             <ul>
               <li>
@@ -725,7 +731,7 @@ enum RTCStatsType {
                 <p>
                   <a>RTCRemoteInboundRtpStreamStats</a>: Stats relevant to the remote receiving end
                   of an RTP stream - usually computed by combining local data with data received
-                  via an RTCP RR or XR.
+                  via an RTCP RR or XR block.
                 </p>
               </li>
             </ul>
@@ -1322,7 +1328,7 @@ enum RTCStatsType {
                 <p>
                   The average RTCP interval between two consecutive compound RTCP packets. This is
                   calculated by the sending endpoint when sending compound RTCP reports. Compound
-                  packets must contain at least a RTCP RR or SR packet and an SDES packet with the
+                  packets must contain at least a RTCP RR or SR block and an SDES packet with the 
                   CNAME item.
                 </p>
               </dd>
@@ -2135,7 +2141,7 @@ enum RTCStatsType {
                 <p>
                   The average RTCP interval between two consecutive compound RTCP packets. This is
                   calculated by the sending endpoint when sending compound RTCP reports. Compound
-                  packets must contain at least a RTCP RR or SR packet and an SDES packet with the
+                  packets must contain at least a RTCP RR or SR block and an SDES packet with the
                   CNAME item.
                 </p>
               </dd>
