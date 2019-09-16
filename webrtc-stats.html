@@ -1714,6 +1714,7 @@ enum RTCStatsType {
              double               totalRoundTripTime;
              double               fractionLost;
              unsigned long long   reportsReceived;
+             unsigned long long   roundTripTimeMeasurements;
 };</pre>
           <section>
             <h2>
@@ -1753,7 +1754,8 @@ enum RTCStatsType {
                   since the beginning of the session. The individual round trip time is calculated 
                   based on the RTCP timestamps in the RTCP Receiver Report (RR) [[!RFC3550]], hence
                   undefined roundtrip are not added. The average round trip time can be computed 
-                  from <code>totalRoundTripTime</code> by  dividing it by <code>reportsReceived</code>.
+                  from <code>totalRoundTripTime</code> by  dividing it by 
+                  <code>roundTripTimeMeasurements</code>.
                 </p>
               </dd>
               <dt>
@@ -1772,8 +1774,17 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
+                  Represents the total number of RTCP RR blocks received for this SSRC.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>roundTripTimeMeasurements</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
                   Represents the total number of RTCP RR blocks received for this SSRC that contain 
-                  a valid round trip time.
+                  a valid round trip time. This counter will increment if the roundTripTime is undefined.
                 </p>
               </dd>
             </dl>
@@ -2395,8 +2406,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the total number of RTCP SR blocks sent for this SSRC that contain 
-                  a valid remoteTimestamp.
+                  Represents the total number of RTCP SR blocks sent for this SSRC.
                 </p>
               </dd>
             </dl>
