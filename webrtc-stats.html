@@ -4238,6 +4238,7 @@ enum RTCNetworkType {
           </dl>
         </section>
         <pre class="idl">partial dictionary RTCIceCandidateStats {
+           boolean                  deleted = false;
            boolean                  isRemote;
         };
         </pre>
@@ -4246,6 +4247,14 @@ enum RTCNetworkType {
             Obsolete RTCIceCandidateStats members
           </h2>
           <dl data-dfn-for="RTCIceCandidateStats">
+            <dt>
+              <dfn><code>deleted</code></dfn> of type <span class="idlMemberType">boolean</span>
+            </dt>
+            <dd>
+              <p>
+                This field is obsoleted by the <a>statsended</a> event.
+              </p>
+            </dd>
             <dt>
               <dfn><code>isRemote</code></dfn> of type <span class="idlMemberType">boolean</span>
             </dt>
