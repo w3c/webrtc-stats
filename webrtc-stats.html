@@ -971,6 +971,9 @@ enum RTCStatsType {
              double             burstDiscardRate;
              double             gapLossRate;
              double             gapDiscardRate;
+             unsigned long      framesDropped;
+             unsigned long      partialFramesLost;
+             unsigned long      fullFramesLost;
 };</pre>
           <section>
             <h2>
@@ -1121,6 +1124,42 @@ enum RTCStatsType {
                   [[!RFC7004]], however, the actual value is reported without multiplying by 32768.
                 </p>
               </dd>
+              <dt>
+                <dfn><code>framesDropped</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. The total number of frames dropped prior to decode or dropped
+                  because the frame missed its display deadline for this receiver's track. The measurement
+                  begins when the receiver is created and is a cumulative metric as defined in 
+                  Appendix A (g) of [[!RFC7004]].
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>partialFramesLost</code></dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. The cumulative number of partial frames lost. The measurement
+                  begins when the receiver is created and is a cumulative metric as defined in
+                  Appendix A (j) of [[!RFC7004]]. This metric is incremented when the frame is sent
+                  to the decoder. If the partial frame is received and recovered via retransmission
+                  or FEC before decoding, the framesReceived counter is incremented.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>fullFramesLost</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. The cumulative number of full frames lost. The measurement
+                  begins when the receiver is created and is a cumulative metric as defined in
+                  Appendix A (i) of [[!RFC7004]].
+                </p>
+              </dd>
             </dl>
           </section>
         </div>
@@ -1172,9 +1211,6 @@ enum RTCStatsType {
              double               totalAudioEnergy;
              double               totalSamplesDuration;
              unsigned long        framesReceived;
-             unsigned long        framesDropped;
-             unsigned long        partialFramesLost;
-             unsigned long        fullFramesLost;
              DOMString            decoderImplementation;
             };</pre>
           <section>
@@ -1650,39 +1686,6 @@ enum RTCStatsType {
                 <p>
                   Only valid for video. Represents the total number of complete frames received on
                   this RTP stream. This metric is incremented when the complete frame is received.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>framesDropped</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
-              </dt>
-              <dd>
-                <p>
-                  Only valid for video. The total number of frames dropped prior to decode or dropped
-                  because the frame missed its display deadline for this receiver's track. As defined
-                  in Appendix A (g) of [[!RFC7004]].
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>partialFramesLost</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
-              </dt>
-              <dd>
-                <p>
-                  Only valid for video. The cumulative number of partial frames lost, as defined in
-                  Appendix A (j) of [[!RFC7004]]. This metric is incremented when the frame is sent
-                  to the decoder. If the partial frame is received and recovered via retransmission
-                  or FEC before decoding, the framesReceived counter is incremented.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>fullFramesLost</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
-              </dt>
-              <dd>
-                <p>
-                  Only valid for video. The cumulative number of full frames lost, as defined in
-                  Appendix A (i) of [[!RFC7004]].
                 </p>
               </dd>
               <dt>
