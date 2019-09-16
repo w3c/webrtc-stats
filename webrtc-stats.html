@@ -452,7 +452,7 @@ enum RTCStatsType {
 "local-candidate",
 "remote-candidate",
 "certificate",
-"stunserverconnection"
+"ice-server"
 };
         </pre>
         <p>
@@ -670,12 +670,12 @@ enum RTCStatsType {
             </p>
           </dd>
           <dt>
-            <dfn><code>stunserverconnection</code></dfn>
+            <dfn><code>ice-server</code></dfn>
           </dt>
           <dd>
             <p>
-              Information about the connection to a STUN or TURN server. It is accessed by the
-              <code><a>RTCStunServerConnectionStats</a></code>.
+              Information about the connection to an ICE server (e.g. STUN or TURN). It is accessed by the
+              <code><a>RTCIceServerStats</a></code>.
             </p>
           </dd>
         </dl>
@@ -4170,12 +4170,12 @@ enum RTCNetworkType {
           </section>
         </div>
       </section>
-      <section id="stunserverconnection-dict*">
+      <section id="ice-server-dict*">
         <h3>
-          <dfn>RTCStunServerConnectionStats</dfn> dictionary
+          <dfn>RTCIceServerStats</dfn> dictionary
         </h3>
         <div>
-          <pre class="idl">dictionary RTCStunServerConnectionStats : RTCStats {
+          <pre class="idl">dictionary RTCIceServerStats : RTCStats {
              DOMString url;
              long port;
              DOMString protocol;
@@ -4186,16 +4186,16 @@ enum RTCNetworkType {
   };</pre>
           <section>
             <h2>
-              Dictionary <a class="idlType">RTCStunServerConnectionStats</a> Members
+              Dictionary <a class="idlType">RTCIceServerStats</a> Members
             </h2>
-            <dl data-link-for="RTCStunServerConnectionStats" data-dfn-for=
-            "RTCStunServerConnectionStats" class="dictionary-members">
+            <dl data-link-for="RTCIceServerStats" data-dfn-for=
+            "RTCIceServerStats" class="dictionary-members">
               <dt>
                 <dfn><code>url</code></dfn> of type <span class="idlMemberType">DOMString</span>
               </dt>
               <dd>
                 <p>
-                  The URL of the TURN or STUN server.
+                  The URL of the ICE server (e.g. TURN or STUN server).
                 </p>
               </dd>
               <dt>
