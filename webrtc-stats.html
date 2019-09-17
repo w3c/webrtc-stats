@@ -452,7 +452,7 @@ enum RTCStatsType {
 "local-candidate",
 "remote-candidate",
 "certificate",
-"stunserverconnection"
+"ice-server"
 };
         </pre>
         <p>
@@ -670,12 +670,12 @@ enum RTCStatsType {
             </p>
           </dd>
           <dt>
-            <dfn><code>stunserverconnection</code></dfn>
+            <dfn><code>ice-server</code></dfn>
           </dt>
           <dd>
             <p>
-              Information about the connection to a STUN or TURN server. It is accessed by the
-              <code><a>RTCStunServerConnectionStats</a></code>.
+              Information about the connection to an ICE server (e.g. STUN or TURN). It is accessed by the
+              <code><a>RTCIceServerStats</a></code>.
             </p>
           </dd>
         </dl>
@@ -692,6 +692,12 @@ enum RTCStatsType {
         <p>
           The dictionaries for RTP statistics are structured as a hierarchy, so that those stats
           that make sense in many different contexts are represented just once in IDL.
+        </p>
+        <p>
+          The metrics exposed here correspond to local measurements and those reported by RTCP packets. 
+          Compound RTCP packets contain multiple RTCP report blocks, such as Sender Report (SR) and 
+          Receiver Report (RR). Wheras, a non-compound RTCP packets may contain just a single 
+          RTCP SR or RR block.
         </p>
         <p>
           The lifetime of all RTP <a>monitored object</a>s starts when the RTP stream is first
@@ -712,7 +718,7 @@ enum RTCStatsType {
             <p>
               <a>RTCReceivedRtpStreamStats</a>: Stats measured at the receiving end of an RTP
               stream, known either because they're measured locally or transmitted via an RTCP
-              Receiver Report (RR) or Extended Report (XR).
+              Receiver Report (RR) or Extended Report (XR) block.
             </p>
             <ul>
               <li>
@@ -725,7 +731,7 @@ enum RTCStatsType {
                 <p>
                   <a>RTCRemoteInboundRtpStreamStats</a>: Stats relevant to the remote receiving end
                   of an RTP stream - usually computed by combining local data with data received
-                  via an RTCP RR or XR.
+                  via an RTCP RR or XR block.
                 </p>
               </li>
             </ul>
@@ -965,6 +971,10 @@ enum RTCStatsType {
              double               burstDiscardRate;
              double               gapLossRate;
              double               gapDiscardRate;
+             unsigned long        framesDropped;
+             unsigned long        partialFramesLost;
+             unsigned long        fullFramesLost;
+
 };</pre>
           <section>
             <h2>
@@ -1115,6 +1125,42 @@ enum RTCStatsType {
                   [[!RFC7004]], however, the actual value is reported without multiplying by 32768.
                 </p>
               </dd>
+              <dt>
+                <dfn><code>framesDropped</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. The total number of frames dropped prior to decode or dropped
+                  because the frame missed its display deadline for this receiver's track. The measurement
+                  begins when the receiver is created and is a cumulative metric as defined in 
+                  Appendix A (g) of [[!RFC7004]].
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>partialFramesLost</code></dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. The cumulative number of partial frames lost. The measurement
+                  begins when the receiver is created and is a cumulative metric as defined in
+                  Appendix A (j) of [[!RFC7004]]. This metric is incremented when the frame is sent
+                  to the decoder. If the partial frame is received and recovered via retransmission
+                  or FEC before decoding, the framesReceived counter is incremented.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>fullFramesLost</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. The cumulative number of full frames lost. The measurement
+                  begins when the receiver is created and is a cumulative metric as defined in
+                  Appendix A (i) of [[!RFC7004]].
+                </p>
+              </dd>
             </dl>
           </section>
         </div>
@@ -1166,9 +1212,6 @@ enum RTCStatsType {
              double               totalAudioEnergy;
              double               totalSamplesDuration;
              unsigned long        framesReceived;
-             unsigned long        framesDropped;
-             unsigned long        partialFramesLost;
-             unsigned long        fullFramesLost;
              DOMString            decoderImplementation;
             };</pre>
           <section>
@@ -1322,7 +1365,7 @@ enum RTCStatsType {
                 <p>
                   The average RTCP interval between two consecutive compound RTCP packets. This is
                   calculated by the sending endpoint when sending compound RTCP reports. Compound
-                  packets must contain at least a RTCP RR or SR packet and an SDES packet with the
+                  packets must contain at least a RTCP RR or SR block and an SDES packet with the 
                   CNAME item.
                 </p>
               </dd>
@@ -1647,39 +1690,6 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>framesDropped</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
-              </dt>
-              <dd>
-                <p>
-                  Only valid for video. The total number of frames dropped prior to decode or dropped
-                  because the frame missed its display deadline for this receiver's track. As defined
-                  in Appendix A (g) of [[!RFC7004]].
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>partialFramesLost</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
-              </dt>
-              <dd>
-                <p>
-                  Only valid for video. The cumulative number of partial frames lost, as defined in
-                  Appendix A (j) of [[!RFC7004]]. This metric is incremented when the frame is sent
-                  to the decoder. If the partial frame is received and recovered via retransmission
-                  or FEC before decoding, the framesReceived counter is incremented.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>fullFramesLost</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
-              </dt>
-              <dd>
-                <p>
-                  Only valid for video. The cumulative number of full frames lost, as defined in
-                  Appendix A (i) of [[!RFC7004]].
-                </p>
-              </dd>
-              <dt>
                 <dfn><code>decoderImplementation</code></dfn> of type <span class=
                 "idlMemberType">DOMString</span>
               </dt>
@@ -1761,11 +1771,8 @@ enum RTCStatsType {
         </h3>
         <div>
           <pre class="idl">dictionary RTCSentRtpStreamStats : RTCRtpStreamStats {
-             unsigned long long packetsSent;
-             unsigned long long packetsDiscardedOnSend;
-             unsigned long long fecPacketsSent;
+             unsigned long      packetsSent;
              unsigned long long bytesSent;
-             unsigned long long bytesDiscardedOnSend;
 };</pre>
           <section>
             <h2>
@@ -1784,29 +1791,6 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>packetsDiscardedOnSend</code></dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
-              </dt>
-              <dd>
-                <p>
-                  Total number of RTP packets for this SSRC that have been discarded due to socket
-                  errors, i.e. a socket error occured when handing the packets to the socket. This
-                  might happen due to various reasons, including full buffer or no available
-                  memory.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>fecPacketsSent</code></dfn> of type <span class="idlMemberType">unsigned
-                long long</span>
-              </dt>
-              <dd>
-                <p>
-                  Total number of RTP FEC packets sent for this SSRC. This counter can also be
-                  incremented when sending FEC packets in-band with media packets (e.g., with
-                  Opus).
-                </p>
-              </dd>
-              <dt>
                 <dfn><code>bytesSent</code></dfn> of type <span class="idlMemberType">unsigned long
                 long</span>
               </dt>
@@ -1814,18 +1798,6 @@ enum RTCStatsType {
                 <p>
                   Total number of bytes sent for this SSRC. Calculated as defined in [[!RFC3550]]
                   section 6.4.1.
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>bytesDiscardedOnSend</code></dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
-              </dt>
-              <dd>
-                <p>
-                  Total number of bytes for this SSRC that have been discarded due to socket
-                  errors, i.e. a socket error occured when handing the packets containing the bytes
-                  to the socket. This might happen due to various reasons, including full buffer or
-                  no available memory. Calculated as defined in [[!RFC3550]] section 6.4.1.
                 </p>
               </dd>
             </dl>
@@ -1848,6 +1820,9 @@ enum RTCStatsType {
              DOMString            senderId;
              DOMString            remoteId;
              DOMHighResTimeStamp  lastPacketSentTimestamp;
+             unsigned long        packetsDiscardedOnSend;
+             unsigned long long   bytesDiscardedOnSend;
+             unsigned long        fecPacketsSent;
              unsigned long long   retransmittedPacketsSent;
              unsigned long long   retransmittedBytesSent;
              double               targetBitrate;
@@ -1859,6 +1834,7 @@ enum RTCStatsType {
              unsigned long        hugeFramesSent;
              unsigned long        framesEncoded;
              unsigned long        keyFramesEncoded;
+             unsigned long        framesDiscardedOnSend;
              unsigned long long   qpSum;
              unsigned long long   totalSamplesSent;
              boolean              voiceActivityFlag;
@@ -1927,6 +1903,41 @@ enum RTCStatsType {
                   Represents the timestamp at which the last packet was sent for this SSRC. This
                   differs from <code>timestamp</code>, which represents the time at which the
                   statistics were generated by the local endpoint.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>packetsDiscardedOnSend</code></dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of RTP packets for this SSRC that have been discarded due to socket
+                  errors, i.e. a socket error occured when handing the packets to the socket. This
+                  might happen due to various reasons, including full buffer or no available
+                  memory.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>bytesDiscardedOnSend</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of bytes for this SSRC that have been discarded due to socket
+                  errors, i.e. a socket error occured when handing the packets containing the bytes
+                  to the socket. This might happen due to various reasons, including full buffer or
+                  no available memory. Calculated as defined in [[!RFC3550]] section 6.4.1.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>fecPacketsSent</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of RTP FEC packets sent for this SSRC. This counter can also be
+                  incremented when sending FEC packets in-band with media packets (e.g., with
+                  Opus).
                 </p>
               </dd>
               <dt>
@@ -2060,6 +2071,18 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn><code>framesDiscardedOnSend</code></dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of video frames that have been discarded for this SSRC due to socket
+                  errors, i.e. a socket error occured when handing the packets to the socket. This
+                  might happen due to various reasons, including full buffer or no available
+                  memory. 
+                </p>
+              </dd>
+              <dt>
                 <dfn><code>qpSum</code></dfn> of type <span class="idlMemberType">unsigned long
                 long</span>
               </dt>
@@ -2135,7 +2158,7 @@ enum RTCStatsType {
                 <p>
                   The average RTCP interval between two consecutive compound RTCP packets. This is
                   calculated by the sending endpoint when sending compound RTCP reports. Compound
-                  packets must contain at least a RTCP RR or SR packet and an SDES packet with the
+                  packets must contain at least a RTCP RR or SR block and an SDES packet with the
                   CNAME item.
                 </p>
               </dd>
@@ -3671,6 +3694,8 @@ enum RTCNetworkType {
              unsigned long long            retransmissionsSent;
              unsigned long long            consentRequestsSent;
              DOMHighResTimeStamp           consentExpiredTimestamp;
+             unsigned long                 packetsDiscardedOnSend;
+             unsigned long long            bytesDiscardedOnSend;
 };</pre>
           <section>
             <h2>
@@ -3983,6 +4008,30 @@ enum RTCNetworkType {
                   expired this value must be undefined.
                 </p>
               </dd>
+              <dt>
+                <dfn><code>packetsDiscardedOnSend</code></dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of  packets for this candidate pair that have been discarded due to socket
+                  errors, i.e. a socket error occured when handing the packets to the socket. This
+                  might happen due to various reasons, including full buffer or no available
+                  memory.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>bytesDiscardedOnSend</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of bytes for this candidate pair that have been discarded due to socket
+                  errors, i.e. a socket error occured when handing the packets containing the bytes
+                  to the socket. This might happen due to various reasons, including full buffer or
+                  no available memory. Calculated as defined in [[!RFC3550]] section 6.4.1.
+                </p>
+              </dd>
             </dl>
           </section>
         </div>
@@ -4122,12 +4171,12 @@ enum RTCNetworkType {
           </section>
         </div>
       </section>
-      <section id="stunserverconnection-dict*">
+      <section id="ice-server-dict*">
         <h3>
-          <dfn>RTCStunServerConnectionStats</dfn> dictionary
+          <dfn>RTCIceServerStats</dfn> dictionary
         </h3>
         <div>
-          <pre class="idl">dictionary RTCStunServerConnectionStats : RTCStats {
+          <pre class="idl">dictionary RTCIceServerStats : RTCStats {
              DOMString url;
              long port;
              DOMString protocol;
@@ -4138,16 +4187,16 @@ enum RTCNetworkType {
   };</pre>
           <section>
             <h2>
-              Dictionary <a class="idlType">RTCStunServerConnectionStats</a> Members
+              Dictionary <a class="idlType">RTCIceServerStats</a> Members
             </h2>
-            <dl data-link-for="RTCStunServerConnectionStats" data-dfn-for=
-            "RTCStunServerConnectionStats" class="dictionary-members">
+            <dl data-link-for="RTCIceServerStats" data-dfn-for=
+            "RTCIceServerStats" class="dictionary-members">
               <dt>
                 <dfn><code>url</code></dfn> of type <span class="idlMemberType">DOMString</span>
               </dt>
               <dd>
                 <p>
-                  The URL of the TURN or STUN server.
+                  The URL of the ICE server (e.g. TURN or STUN server).
                 </p>
               </dd>
               <dt>
