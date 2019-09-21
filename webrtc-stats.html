@@ -448,6 +448,7 @@ enum RTCStatsType {
 "sender",
 "receiver",
 "transport",
+"sctp-transport",
 "candidate-pair",
 "local-candidate",
 "remote-candidate",
@@ -613,6 +614,16 @@ enum RTCStatsType {
             <p>
               Transport statistics related to the <code>RTCPeerConnection</code> object. It is
               accessed by the <code><a>RTCTransportStats</a></code>.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>sctp-transport</code></dfn>
+          </dt>
+          <dd>
+            <p>
+              SCTP transport statistics related to an
+              <code>RTCSctpTransport</code> object. It is accessed by the
+              <code><a>RTCSctpTransportStats</a></code> dictionary.
             </p>
           </dd>
           <dt>
@@ -3460,6 +3471,40 @@ enum RTCStatsType {
                 </p>
               </dd>
             </dl>
+          </section>
+        </div>
+      </section>
+      <section id="sctptransportstats-dict*">
+        <h3>
+          <dfn>RTCSctpTransportStats</dfn> dictionary
+        </h3>
+        <p>
+          An <code>RTCSctpTransportStats</code> object represents the stats
+          corresponding to an <code><a>RTCSctpTransport</a></code> described in
+          [[!WEBRTC]].
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCSctpTransportStats : RTCStats {
+    double smoothedRoundTripTime;
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCSctpTransportStats</a> Members
+            </h2>
+            <dl data-link-for="RTCSctpTransportStats" data-dfn-for="RTCSctpTransportStats" class=
+            "dictionary-members">
+              <dt>
+                <dfn><code>smoothedRoundTripTime</code></dfn> of type
+                <span class="idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  The latest smoothed round-trip time value, corresponding to
+                  spinfo_srtt defined in [[RFC6458]] but converted to seconds.
+                  If there has been no round-trip time measurements yet, this
+                  value is undefined.
+                </p>
+              </dd>
           </section>
         </div>
       </section>
