@@ -3286,6 +3286,7 @@ enum RTCStatsType {
              unsigned long long    bytesReceived;
              DOMString             rtcpTransportStatsId;
              RTCIceRole            iceRole;
+             DOMString             iceUfrag;
              RTCDtlsTransportState dtlsState;
              DOMString             selectedCandidatePairId;
              DOMString             localCertificateId;
@@ -3359,6 +3360,17 @@ enum RTCStatsType {
                 <p>
                   Set to the current value of the "role" attribute of the underlying
                   RTCDtlsTransport's "transport".
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>iceUfrag</code></dfn> of type <span class=
+                "idlMemberType"><a>DOMString</a></span>
+              </dt>
+              <dd>
+                <p>
+                  Set to the current ufrag value of the underlying transport.
+                  This can be used to identify which ICE generation associated
+                  ICE candidates belong to.
                 </p>
               </dd>
               <dt>
