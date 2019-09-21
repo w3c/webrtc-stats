@@ -566,7 +566,8 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              Contains statistics related to a specific MediaStream. It is accessed by the
+              This is now obsolete. Contains statistics related to a specific
+              MediaStream. It is accessed by the obsolete dictionary
               <code><a>RTCMediaStreamStats</a></code>.
             </p>
           </dd>
@@ -2847,43 +2848,6 @@ enum RTCStatsType {
           </section>
         </div>
       </section>
-      <section id="msstats-dict*">
-        <h3>
-          <dfn>RTCMediaStreamStats</dfn> dictionary
-        </h3>
-        <div>
-          <pre class="idl">dictionary RTCMediaStreamStats : RTCStats {
-             DOMString           streamIdentifier;
-             sequence&lt;DOMString&gt; trackIds;
-};</pre>
-          <section>
-            <h2>
-              Dictionary <a class="idlType">RTCMediaStreamStats</a> Members
-            </h2>
-            <dl data-link-for="RTCMediaStreamStats" data-dfn-for="RTCMediaStreamStats" class=
-            "dictionary-members">
-              <dt>
-                <dfn><code>streamIdentifier</code></dfn> of type <span class=
-                "idlMemberType">DOMString</span>
-              </dt>
-              <dd>
-                <p>
-                  <code>stream.id</code> property
-                </p>
-              </dd>
-              <dt>
-                <dfn><code>trackIds</code></dfn> of type <span class=
-                "idlMemberType">sequence&lt;DOMString&gt;</span>
-              </dt>
-              <dd>
-                <p>
-                  This is the id of the stats object, not the <code>track.id</code>.
-                </p>
-              </dd>
-            </dl>
-          </section>
-        </div>
-      </section>
       <section id="mststats-dict*">
         <h3>
           <dfn>RTCMediaHandlerStats</dfn> dictionary
@@ -4308,6 +4272,43 @@ enum RTCNetworkType {
       <h2>
         Obsolete stats
       </h2>
+      <div>
+        <pre class="idl">dictionary RTCMediaStreamStats : RTCStats {
+  DOMString streamIdentifier;
+  sequence&lt;DOMString&gt; trackIds;
+};</pre>
+        <section>
+          <h2>
+            Obsolete RTCMediaStreamStats members
+          </h2>
+          <p>
+            This entire dictionary was made obsolete in September, 2019 due to
+            sender, receiver and transceiver stats objects being a better fit to
+            describe the modern RTCPeerConnection model (Unified Plan).
+          </p>
+          <dl data-link-for="RTCMediaStreamStats" data-dfn-for="RTCMediaStreamStats" class=
+          "dictionary-members">
+            <dt>
+              <dfn><code>streamIdentifier</code></dfn> of type <span class=
+              "idlMemberType">DOMString</span>
+            </dt>
+            <dd>
+              <p>
+                <code>stream.id</code> property
+              </p>
+            </dd>
+            <dt>
+              <dfn><code>trackIds</code></dfn> of type <span class=
+              "idlMemberType">sequence&lt;DOMString&gt;</span>
+            </dt>
+            <dd>
+              <p>
+                This is the id of the stats object, not the <code>track.id</code>.
+              </p>
+            </dd>
+          </dl>
+        </section>
+      </div>
       <div>
         <pre class="idl">partial dictionary RTCCodecStats {
            DOMString implementation;
