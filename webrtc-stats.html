@@ -118,10 +118,9 @@
         <code><dfn data-dfn-for="" data-dfn-type="dfn" id="dom-rtcstats" data-idl="" data-title="RTCStats"><a href="https://www.w3.org/TR/webrtc/#dom-rtcstats">RTCStats</a></dfn></code>,
         <code><dfn data-dfn-for="rtcstats" data-dfn-type="dfn" data-lt="timestamp" id="dom-rtcstats-timestamp" data-idl="" data-title="RTCStats.timestamp"><a href="https://www.w3.org/TR/webrtc/#dom-rtcstats-timestamp">RTCStats.timestamp</a></dfn></code>,
         <code><dfn data-dfn-for="rtcstats" data-dfn-type="dfn" data-lt="type" id="dom-rtcstats-type" data-idl="" data-title="RTCStats.type"><a href="https://www.w3.org/TR/webrtc/#dom-rtcstats-type">RTCStats.type</a></dfn></code>,
-        <code><dfn data-dfn-for="rtcstats" data-dfn-type="dfn" data-lt="id" id="dom-rtcstats-id" data-idl="" data-title="RTCStats.id"><a href="https://www.w3.org/TR/webrtc/#dom-rtcstats-id">RTCStats.id</a></dfn></code>,
-        <code><dfn data-cite="!WEBRTC#dom-rtccertificate">RTCCertificate</dfn></code> and
-        <code><dfn data-cite="!WEBRTC#event-statsended">statsended</dfn></code> are defined in
-        [[!WEBRTC]].
+        <code><dfn data-dfn-for="rtcstats" data-dfn-type="dfn" data-lt="id" id="dom-rtcstats-id" data-idl="" data-title="RTCStats.id"><a href="https://www.w3.org/TR/webrtc/#dom-rtcstats-id">RTCStats.id</a></dfn></code>
+        and <code><dfn data-cite="!WEBRTC#dom-rtccertificate">RTCCertificate</dfn></code>
+        are defined in [[!WEBRTC]].
       </p>
       <p>
         The terms <code><dfn data-cite=
@@ -298,21 +297,7 @@
         </p>
         <p>
           Objects that might exist in many instances over time should have a defined time at which
-          they are <a>deleted</a>, at which time a <a>statsended</a> event is fired on their behalf. Each
-          event that causes deletions to happen MUST fire only one <a>statsended</a> event, but
-          there are cases where one action causes multiple deletion events; for instance, an ICE
-          restart will fire only one event containing the stats for all the discarded candidates
-          and pairs, but will also cause a later event to be fired when the currently-in-use
-          candidate pair and its candidates are discarded.
-        </p>
-        <p>
-          When a <a>monitored object</a> is <a>deleted</a>, a final stats object is produced, carrying the
-          values current at the time of deletion. This object will be made available using the
-          <code><a>statsended</a></code> event on the associated RTCPeerConnection. This is
-          important in order to report consistently on short-lived objects and to be able to
-          consistently report totals over the lifetime of a RTCPeerConnection.
-        </p>
-        <p>
+          they are <a>deleted</a>, at which time they stop appearing in subsequent calls to getStats().
           When an object is <a>deleted</a>, we can guarantee that no subsequent getStats() call will
           contain a <a>stats object reference</a> that references the deleted object. We also
           guarantee that the stats id of the deleted object will never be reused for another
@@ -341,9 +326,8 @@
           object.
         </p>
         <p>
-          When the <a>statsended</a> event is fired, subsequent getStats() calls MUST NOT return
-          stats for the <a>monitored object</a> that was reported on in the <a>statsended</a>
-          event.
+          When a stats object is <a>deleted</a>, subsequent getStats() calls MUST NOT return stats
+          for that <a>monitored object</a>.
         </p>
       </section>
     </section><!-- VS: getStats() remains in base spec! -->
@@ -4346,7 +4330,10 @@ enum RTCNetworkType {
             </dt>
             <dd>
               <p>
-                This field is obsoleted by the <a>statsended</a> event.
+                This field was obsoleted by the <a>statsended</a> event, which
+                has now also been obsolete. <code>deleted</code> is no longer
+                applicable beacause if tthe ice candidate is deleted it no
+                longer appears in getStats().
               </p>
             </dd>
             <dt>
