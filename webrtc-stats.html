@@ -576,10 +576,12 @@ enum RTCStatsType {
           <dd>
             <p>
               Statistics related to a specific MediaStreamTrack's attachment to an
-              RTCRtpSender and the corresponding media-level metrics. It is accessed by either
-              <code><a>RTCSenderVideoTrackAttachmentStats</a></code> or
-              <code><a>RTCSenderAudioTrackAttachmentStats</a></code>, both inherited from
-              <code><a>RTCMediaHandlerStats</a></code>.
+              RTCRtpSender and the corresponding media-level metrics. It is accessed by
+              <code><a>RTCSenderVideoTrackAttachmentStats</a></code>,
+              <code><a>RTCSenderAudioTrackAttachmentStats</a></code>,
+              <code><a>RTCReceiverVideoTrackAttachmentStats</a></code> or
+              <code><a>RTCReceiverAudioTrackAttachmentStats</a></code>, all
+              inherited from <code><a>RTCMediaHandlerStats</a></code>.
             </p>
             <p>
               The monitored "track" object is <a>deleted</a> when the sender it reports on has its "track"
@@ -4365,6 +4367,40 @@ enum RTCNetworkType {
       <h2>
         Obsolete stats
       </h2>
+      <div>
+        <pre class="idl">dictionary RTCReceiverVideoTrackAttachmentStats : RTCVideoReceiverStats {
+};</pre>
+        <section>
+          <p>
+            The <code>RTCReceiverVideoTrackAttachmentStats</code> is a copy of
+            <code>RTCVideoReceiverStats</code>. It adds no new information, it
+            only exists for backwards-compatibility reasons as an obsolete
+            dictionary.
+          </p>
+          <h2>
+            Obsolete <a class="idlType">RTCReceiverVideoTrackAttachmentStats</a> members
+          </h2>
+          <dl data-link-for="RTCReceiverVideoTrackAttachmentStats" data-dfn-for=
+          "RTCReceiverVideoTrackAttachmentStats" class="dictionary-members"></dl>
+        </section>
+      </div>
+      <div>
+        <pre class="idl">dictionary RTCReceiverAudioTrackAttachmentStats : RTCAudioReceiverStats {
+};</pre>
+        <section>
+          <p>
+            The <code>RTCReceiverAudioTrackAttachmentStats</code> is a copy of
+            <code>RTCAudioReceiverStats</code>. It adds no new information, it
+            only exists for backwards-compatibility reasons as an obsolete
+            dictionary.
+          </p>
+          <h2>
+            Obsolete <a class="idlType">RTCReceiverAudioTrackAttachmentStats</a> members
+          </h2>
+          <dl data-link-for="RTCReceiverAudioTrackAttachmentStats" data-dfn-for=
+          "RTCReceiverAudioTrackAttachmentStats" class="dictionary-members"></dl>
+        </section>
+      </div>
       <div>
         <pre class="idl">partial dictionary RTCCodecStats {
            DOMString implementation;
