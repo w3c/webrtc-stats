@@ -958,22 +958,23 @@ enum RTCStatsType {
         </h3>
         <div>
           <pre class="idl">dictionary RTCReceivedRtpStreamStats : RTCRtpStreamStats {
-             unsigned long      packetsReceived;
-             long               packetsLost;
-             double             jitter;
-             unsigned long      packetsDiscarded;
-             unsigned long      packetsRepaired;
-             unsigned long      burstPacketsLost;
-             unsigned long      burstPacketsDiscarded;
-             unsigned long      burstLossCount;
-             unsigned long      burstDiscardCount;
-             double             burstLossRate;
-             double             burstDiscardRate;
-             double             gapLossRate;
-             double             gapDiscardRate;
-             unsigned long      framesDropped;
-             unsigned long      partialFramesLost;
-             unsigned long      fullFramesLost;
+             unsigned long long   packetsReceived;
+             long long            packetsLost;
+             double               jitter;
+             unsigned long long   packetsDiscarded;
+             unsigned long long   packetsRepaired;
+             unsigned long long   burstPacketsLost;
+             unsigned long long   burstPacketsDiscarded;
+             unsigned long        burstLossCount;
+             unsigned long        burstDiscardCount;
+             double               burstLossRate;
+             double               burstDiscardRate;
+             double               gapLossRate;
+             double               gapDiscardRate;
+             unsigned long        framesDropped;
+             unsigned long        partialFramesLost;
+             unsigned long        fullFramesLost;
+
 };</pre>
           <section>
             <h2>
@@ -983,7 +984,7 @@ enum RTCStatsType {
             class="dictionary-members">
               <dt>
                 <dfn><code>packetsReceived</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
@@ -995,7 +996,7 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>packetsLost</code></dfn> of type <span class="idlMemberType">long</span>
+                <dfn><code>packetsLost</code></dfn> of type <span class="idlMemberType">long long</span>
               </dt>
               <dd>
                 <p>
@@ -1015,7 +1016,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>packetsDiscarded</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
@@ -1027,7 +1028,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>packetsRepaired</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
@@ -1040,7 +1041,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>burstPacketsLost</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
@@ -1050,7 +1051,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>burstPacketsDiscarded</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
@@ -1188,12 +1189,12 @@ enum RTCStatsType {
              boolean              voiceActivityFlag;
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
              double               averageRtcpInterval;
-             unsigned long        fecPacketsReceived;
-             unsigned long        fecPacketsDiscarded;
+             unsigned long long   fecPacketsReceived;
+             unsigned long long   fecPacketsDiscarded;
              unsigned long long   bytesReceived;
-             unsigned long        packetsFailedDecryption;
-             unsigned long        packetsDuplicated;
-             record&lt;USVString, unsigned long&gt; perDscpPacketsReceived;
+             unsigned long long   packetsFailedDecryption;
+             unsigned long long   packetsDuplicated;
+             record&lt;USVString, unsigned long long&gt; perDscpPacketsReceived;
              unsigned long        nackCount;
              unsigned long        firCount;
              unsigned long        pliCount;
@@ -1372,7 +1373,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>fecPacketsReceived</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
@@ -1383,7 +1384,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>fecPacketsDiscarded</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
@@ -1407,7 +1408,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>packetsFailedDecryption</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
@@ -1418,7 +1419,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>packetsDuplicated</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 The cumulative number of packets discarded because they are duplicated. Duplicate
@@ -1434,7 +1435,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>perDscpPacketsReceived</code></dfn> of type <span class=
-                "idlMemberType">record&lt;USVString, unsigned long&gt;</span>
+                "idlMemberType">record&lt;USVString, unsigned long long&gt;</span>
               </dt>
               <dd>
                 <p>
@@ -1839,7 +1840,7 @@ enum RTCStatsType {
             "dictionary-members">
               <dt>
                 <dfn><code>packetsSent</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
+                long long</span>
               </dt>
               <dd>
                 <p>
@@ -1904,7 +1905,7 @@ enum RTCStatsType {
              RTCQualityLimitationReason                 qualityLimitationReason;
              record&lt;DOMString, double&gt; qualityLimitationDurations;
              unsigned long        qualityLimitationResolutionChanges;
-             record&lt;USVString, unsigned long&gt; perDscpPacketsSent;
+             record&lt;USVString, unsigned long long&gt; perDscpPacketsSent;
              unsigned long        nackCount;
              unsigned long        firCount;
              unsigned long        pliCount;
@@ -2294,7 +2295,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>perDscpPacketsSent</code></dfn> of type <span class=
-                "idlMemberType">record&lt;USVString, unsigned long&gt;</span>
+                "idlMemberType">record&lt;USVString, unsigned long long&gt;</span>
               </dt>
               <dd>
                 <p>
@@ -3336,8 +3337,8 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCTransportStats : RTCStats {
-             unsigned long         packetsSent;
-             unsigned long         packetsReceived;
+             unsigned long long    packetsSent;
+             unsigned long long    packetsReceived;
              unsigned long long    bytesSent;
              unsigned long long    bytesReceived;
              DOMString             rtcpTransportStatsId;
@@ -3360,7 +3361,7 @@ enum RTCStatsType {
             "dictionary-members">
               <dt>
                 <dfn><code>packetsSent</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
+                long long</span>
               </dt>
               <dd>
                 <p>
@@ -3369,7 +3370,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>packetsReceived</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
@@ -3773,8 +3774,8 @@ enum RTCNetworkType {
              DOMString                     remoteCandidateId;
              RTCStatsIceCandidatePairState state;
              boolean                       nominated;
-             unsigned long                 packetsSent;
-             unsigned long                 packetsReceived;
+             unsigned long long            packetsSent;
+             unsigned long long            packetsReceived;
              unsigned long long            bytesSent;
              unsigned long long            bytesReceived;
              DOMHighResTimeStamp           lastPacketSentTimestamp;
@@ -3858,7 +3859,7 @@ enum RTCNetworkType {
               </dd>
               <dt>
                 <dfn><code>packetsSent</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
+                long long</span>
               </dt>
               <dd>
                 <p>
@@ -3867,7 +3868,7 @@ enum RTCNetworkType {
               </dd>
               <dt>
                 <dfn><code>packetsReceived</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
