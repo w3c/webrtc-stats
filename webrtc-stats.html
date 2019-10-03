@@ -576,10 +576,12 @@ enum RTCStatsType {
           <dd>
             <p>
               Statistics related to a specific MediaStreamTrack's attachment to an
-              RTCRtpSender and the corresponding media-level metrics. It is accessed by either
-              <code><a>RTCSenderVideoTrackAttachmentStats</a></code> or
-              <code><a>RTCSenderAudioTrackAttachmentStats</a></code>, both inherited from
-              <code><a>RTCMediaHandlerStats</a></code>.
+              RTCRtpSender and the corresponding media-level metrics. It is accessed by
+              <code><a>RTCSenderVideoTrackAttachmentStats</a></code>,
+              <code><a>RTCSenderAudioTrackAttachmentStats</a></code>,
+              <code><a>RTCReceiverVideoTrackAttachmentStats</a></code> or
+              <code><a>RTCReceiverAudioTrackAttachmentStats</a></code>, all
+              inherited from <code><a>RTCMediaHandlerStats</a></code>.
             </p>
             <p>
               The monitored "track" object is <a>deleted</a> when the sender it reports on has its "track"
@@ -958,22 +960,23 @@ enum RTCStatsType {
         </h3>
         <div>
           <pre class="idl">dictionary RTCReceivedRtpStreamStats : RTCRtpStreamStats {
-             unsigned long      packetsReceived;
-             long               packetsLost;
-             double             jitter;
-             unsigned long      packetsDiscarded;
-             unsigned long      packetsRepaired;
-             unsigned long      burstPacketsLost;
-             unsigned long      burstPacketsDiscarded;
-             unsigned long      burstLossCount;
-             unsigned long      burstDiscardCount;
-             double             burstLossRate;
-             double             burstDiscardRate;
-             double             gapLossRate;
-             double             gapDiscardRate;
-             unsigned long      framesDropped;
-             unsigned long      partialFramesLost;
-             unsigned long      fullFramesLost;
+             unsigned long long   packetsReceived;
+             long long            packetsLost;
+             double               jitter;
+             unsigned long long   packetsDiscarded;
+             unsigned long long   packetsRepaired;
+             unsigned long long   burstPacketsLost;
+             unsigned long long   burstPacketsDiscarded;
+             unsigned long        burstLossCount;
+             unsigned long        burstDiscardCount;
+             double               burstLossRate;
+             double               burstDiscardRate;
+             double               gapLossRate;
+             double               gapDiscardRate;
+             unsigned long        framesDropped;
+             unsigned long        partialFramesLost;
+             unsigned long        fullFramesLost;
+
 };</pre>
           <section>
             <h2>
@@ -983,7 +986,7 @@ enum RTCStatsType {
             class="dictionary-members">
               <dt>
                 <dfn><code>packetsReceived</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
@@ -995,7 +998,7 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>packetsLost</code></dfn> of type <span class="idlMemberType">long</span>
+                <dfn><code>packetsLost</code></dfn> of type <span class="idlMemberType">long long</span>
               </dt>
               <dd>
                 <p>
@@ -1015,7 +1018,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>packetsDiscarded</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
@@ -1027,7 +1030,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>packetsRepaired</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
@@ -1040,7 +1043,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>burstPacketsLost</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
@@ -1050,7 +1053,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>burstPacketsDiscarded</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
@@ -1189,12 +1192,12 @@ enum RTCStatsType {
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
              double               averageRtcpInterval;
              unsigned long long   headerBytesReceived;
-             unsigned long        fecPacketsReceived;
-             unsigned long        fecPacketsDiscarded;
+             unsigned long long   fecPacketsReceived;
+             unsigned long long   fecPacketsDiscarded;
              unsigned long long   bytesReceived;
-             unsigned long        packetsFailedDecryption;
-             unsigned long        packetsDuplicated;
-             record&lt;USVString, unsigned long&gt; perDscpPacketsReceived;
+             unsigned long long   packetsFailedDecryption;
+             unsigned long long   packetsDuplicated;
+             record&lt;USVString, unsigned long long&gt; perDscpPacketsReceived;
              unsigned long        nackCount;
              unsigned long        firCount;
              unsigned long        pliCount;
@@ -1203,6 +1206,8 @@ enum RTCStatsType {
              double               jitterBufferDelay;
              unsigned long long   jitterBufferEmittedCount;
              unsigned long long   totalSamplesReceived;
+             unsigned long long   samplesDecodedWithSilk;
+             unsigned long long   samplesDecodedWithCelt;
              unsigned long long   concealedSamples;
              unsigned long long   silentConcealedSamples;
              unsigned long long   concealmentEvents;
@@ -1383,7 +1388,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>fecPacketsReceived</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
@@ -1394,7 +1399,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>fecPacketsDiscarded</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
@@ -1418,7 +1423,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>packetsFailedDecryption</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
@@ -1429,7 +1434,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>packetsDuplicated</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 The cumulative number of packets discarded because they are duplicated. Duplicate
@@ -1445,7 +1450,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>perDscpPacketsReceived</code></dfn> of type <span class=
-                "idlMemberType">record&lt;USVString, unsigned long&gt;</span>
+                "idlMemberType">record&lt;USVString, unsigned long long&gt;</span>
               </dt>
               <dd>
                 <p>
@@ -1551,6 +1556,26 @@ enum RTCStatsType {
                 <p>
                   Only valid for audio. The total number of samples that have been received on this
                   RTP stream. This includes <a>concealedSamples</a>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>samplesDecodedWithSilk</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio and when the audio codec is Opus. The total number of 
+                  samples decoded by the SILK portion of the Opus codec.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>samplesDecodedWithCelt</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio and when the audio codec is Opus. The total number of 
+                  samples decoded by the CELT portion of the Opus codec.
                 </p>
               </dd>
               <dt>
@@ -1830,7 +1855,7 @@ enum RTCStatsType {
             "dictionary-members">
               <dt>
                 <dfn><code>packetsSent</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
+                long long</span>
               </dt>
               <dd>
                 <p>
@@ -1867,6 +1892,7 @@ enum RTCStatsType {
              DOMString            mediaSourceId;
              DOMString            senderId;
              DOMString            remoteId;
+             DOMString            rid;
              DOMHighResTimeStamp  lastPacketSentTimestamp;
              unsigned long long   headerBytesSent;
              unsigned long        packetsDiscardedOnSend;
@@ -1886,6 +1912,8 @@ enum RTCStatsType {
              unsigned long        framesDiscardedOnSend;
              unsigned long long   qpSum;
              unsigned long long   totalSamplesSent;
+             unsigned long long   samplesEncodedWithSilk;
+             unsigned long long   samplesEncodedWithCelt;
              boolean              voiceActivityFlag;
              double               totalEncodeTime;
              double               totalPacketSendDelay;
@@ -1893,7 +1921,7 @@ enum RTCStatsType {
              RTCQualityLimitationReason                 qualityLimitationReason;
              record&lt;DOMString, double&gt; qualityLimitationDurations;
              unsigned long        qualityLimitationResolutionChanges;
-             record&lt;USVString, unsigned long&gt; perDscpPacketsSent;
+             record&lt;USVString, unsigned long long&gt; perDscpPacketsSent;
              unsigned long        nackCount;
              unsigned long        firCount;
              unsigned long        pliCount;
@@ -1941,6 +1969,17 @@ enum RTCStatsType {
                 <p>
                   The <code>remoteId</code> is used for looking up the remote
                   <code><a>RTCRemoteInboundRtpStreamStats</a></code> object for the same SSRC.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>rid</code></dfn> of type <span class="idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  Exposes the <a href="https://w3c.github.io/webrtc-pc/#dom-rtcrtpcodingparameters-rid">rid</a>
+                  encoding parameter of this RTP stream if it has been set, otherwise it is
+                  undefined. If set this value will be present regardless if the RID RTP header
+                  extension has been negotiated.
                 </p>
               </dd>
               <dt>
@@ -2174,6 +2213,26 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn><code>samplesEncodedWithSilk</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio and when the audio codec is Opus. The total number of 
+                  samples encoded by the SILK portion of the Opus codec.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>samplesEncodedWithCelt</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for audio and when the audio codec is Opus. The total number of 
+                  samples encoded by the CELT portion of the Opus codec.
+                </p>
+              </dd>
+              <dt>
                 <dfn><code>voiceActivityFlag</code></dfn> of type <span class=
                 "idlMemberType">boolean</span>
               </dt>
@@ -2264,7 +2323,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>perDscpPacketsSent</code></dfn> of type <span class=
-                "idlMemberType">record&lt;USVString, unsigned long&gt;</span>
+                "idlMemberType">record&lt;USVString, unsigned long long&gt;</span>
               </dt>
               <dd>
                 <p>
@@ -3306,8 +3365,8 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCTransportStats : RTCStats {
-             unsigned long         packetsSent;
-             unsigned long         packetsReceived;
+             unsigned long long    packetsSent;
+             unsigned long long    packetsReceived;
              unsigned long long    bytesSent;
              unsigned long long    bytesReceived;
              DOMString             rtcpTransportStatsId;
@@ -3330,7 +3389,7 @@ enum RTCStatsType {
             "dictionary-members">
               <dt>
                 <dfn><code>packetsSent</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
+                long long</span>
               </dt>
               <dd>
                 <p>
@@ -3339,7 +3398,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>packetsReceived</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
@@ -3743,8 +3802,8 @@ enum RTCNetworkType {
              DOMString                     remoteCandidateId;
              RTCStatsIceCandidatePairState state;
              boolean                       nominated;
-             unsigned long                 packetsSent;
-             unsigned long                 packetsReceived;
+             unsigned long long            packetsSent;
+             unsigned long long            packetsReceived;
              unsigned long long            bytesSent;
              unsigned long long            bytesReceived;
              DOMHighResTimeStamp           lastPacketSentTimestamp;
@@ -3828,7 +3887,7 @@ enum RTCNetworkType {
               </dd>
               <dt>
                 <dfn><code>packetsSent</code></dfn> of type <span class="idlMemberType">unsigned
-                long</span>
+                long long</span>
               </dt>
               <dd>
                 <p>
@@ -3837,7 +3896,7 @@ enum RTCNetworkType {
               </dd>
               <dt>
                 <dfn><code>packetsReceived</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
@@ -4334,6 +4393,40 @@ enum RTCNetworkType {
       <h2>
         Obsolete stats
       </h2>
+      <div>
+        <pre class="idl">dictionary RTCReceiverVideoTrackAttachmentStats : RTCVideoReceiverStats {
+};</pre>
+        <section>
+          <p>
+            The <code>RTCReceiverVideoTrackAttachmentStats</code> is a copy of
+            <code>RTCVideoReceiverStats</code>. It adds no new information, it
+            only exists for backwards-compatibility reasons as an obsolete
+            dictionary.
+          </p>
+          <h2>
+            Obsolete <a class="idlType">RTCReceiverVideoTrackAttachmentStats</a> members
+          </h2>
+          <dl data-link-for="RTCReceiverVideoTrackAttachmentStats" data-dfn-for=
+          "RTCReceiverVideoTrackAttachmentStats" class="dictionary-members"></dl>
+        </section>
+      </div>
+      <div>
+        <pre class="idl">dictionary RTCReceiverAudioTrackAttachmentStats : RTCAudioReceiverStats {
+};</pre>
+        <section>
+          <p>
+            The <code>RTCReceiverAudioTrackAttachmentStats</code> is a copy of
+            <code>RTCAudioReceiverStats</code>. It adds no new information, it
+            only exists for backwards-compatibility reasons as an obsolete
+            dictionary.
+          </p>
+          <h2>
+            Obsolete <a class="idlType">RTCReceiverAudioTrackAttachmentStats</a> members
+          </h2>
+          <dl data-link-for="RTCReceiverAudioTrackAttachmentStats" data-dfn-for=
+          "RTCReceiverAudioTrackAttachmentStats" class="dictionary-members"></dl>
+        </section>
+      </div>
       <div>
         <pre class="idl">partial dictionary RTCCodecStats {
            DOMString implementation;
