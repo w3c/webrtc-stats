@@ -1371,11 +1371,14 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>headerBytesReceived</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
-                  Total number of RTP header and padding bytes received for this SSRC.
+                  Total number of RTP header and padding bytes received for this SSRC. This does
+                  not include the size of transport layer headers such as IP or UDP.
+                  <code>headerBytesReceived + bytesReceived</code> equals the number of bytes
+                  received as payload over the transport.
                 </p>
               </dd>
               <dt>
@@ -1953,11 +1956,14 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn><code>headerBytesSent</code></dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
-                  Total number of RTP header and padding bytes sent for this SSRC.
+                  Total number of RTP header and padding bytes sent for this SSRC. This does not
+                  include the size of transport layer headers such as IP or UDP.
+                  <code>headerBytesSent + bytesSent</code> equals the number of bytes sent as
+                  payload over the transport.
                 </p>
               </dd>
               <dt>
