@@ -1188,6 +1188,7 @@ enum RTCStatsType {
              double               framesPerSecond;
              unsigned long long   qpSum;
              double               totalDecodeTime;
+             unsigned long long   totalInterFrameDelaySquared;
              boolean              voiceActivityFlag;
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
              double               averageRtcpInterval;
@@ -1336,6 +1337,17 @@ enum RTCStatsType {
                   value with <a>framesDecoded</a>. The time it takes to decode one frame is the
                   time passed between feeding the decoder a frame and the decoder returning decoded
                   data for that frame.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalInterFrameDelaySquared</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Sum of the squared interframe delay in ms between consecutive frames. The
+                  interframe variance can be calculated from this value and <a>framesDecoded</a>
+                  at two timestamps <code>t0</code> and <code>t1</code>.
                 </p>
               </dd>
               <dt>
