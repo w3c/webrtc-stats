@@ -1348,10 +1348,12 @@ enum RTCStatsType {
                   Sum of the squared interframe delay in seconds between consecutive decoded frames,
                   recorded just after a frame has been decoded. The interframe variance can be
                   approximately calculated from <a>totalInterFrameDelaySquared</a>,
-                  <a>framesDecoded</a>, and <a>timestamp</a> by reading out these values at two
-                  timestamps <code>t0</code> and <code>t1</code>. This will be an approximation
-                  because <code>t0</code> and <code>t1</code> are timestamps of when the statistics
-                  are collected, which is only an approximation of when the last frame was decoded.
+                  <a>framesDecoded</a>, and
+                  <a href="https://www.w3.org/TR/webrtc/#dom-rtcstats-timestamp">RTCStats.timestamp</a>
+                  by reading out these values at two timestamps <code>t0</code> and <code>t1</code>.
+                  This will be an approximation because <code>t0</code> and <code>t1</code> are
+                  timestamps of when the statistics are collected, which is only an approximation of
+                  when the last frame was decoded.
                 </p>
               </dd>
               <dt>
