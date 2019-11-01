@@ -1188,7 +1188,8 @@ enum RTCStatsType {
              double               framesPerSecond;
              unsigned long long   qpSum;
              double               totalDecodeTime;
-             double               totalInterFrameDelaySquared;
+             double               totalInterFrameDelay;
+             double               totalSquaredInterFrameDelay;
              boolean              voiceActivityFlag;
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
              double               averageRtcpInterval;
@@ -1340,20 +1341,28 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>totalInterFrameDelaySquared</code></dfn> of type <span class=
+                <dfn><code>totalInterFrameDelay</code></dfn> of type <span class=
                 "idlMemberType">double</span>
               </dt>
               <dd>
                 <p>
-                  Sum of the squared interframe delay in seconds between consecutive decoded frames,
-                  recorded just after a frame has been decoded. The interframe variance can be
-                  approximately calculated from <a>totalInterFrameDelaySquared</a>,
-                  <a>framesDecoded</a>, and
-                  <a href="https://www.w3.org/TR/webrtc/#dom-rtcstats-timestamp">RTCStats.timestamp</a>
-                  by reading out these values at two timestamps <code>t0</code> and <code>t1</code>.
-                  This will be an approximation because <code>t0</code> and <code>t1</code> are
-                  timestamps of when the statistics are collected, which is only an approximation of
-                  when the last frame was decoded.
+                  Sum of the interframe delays in seconds between consecutively decoded frames,
+                  recorded just after a frame has been decoded. The interframe delay variance be
+                  calculated from <a>totalInterFrameDelay</a>, <a>totalSquaredInterFrameDelay</a>,
+                  and <a>framesDecoded</a> according to the formula:
+                  (<a>totalSquaredInterFrameDelay</a> + <a>totalInterFrameDelay</a>^2/
+                  <a>framesDecoded</a>)/<a>framesDecoded</a>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalSquaredInterFrameDelay</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Sum of the squared interframe delays in seconds between consecutively decoded frames,
+                  recorded just after a frame has been decoded. See <a>totalInterFrameDelay</a> for
+                  details on how to calculate the interframe delay variance.
                 </p>
               </dd>
               <dt>
