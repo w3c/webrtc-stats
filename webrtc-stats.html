@@ -1188,6 +1188,8 @@ enum RTCStatsType {
              double               framesPerSecond;
              unsigned long long   qpSum;
              double               totalDecodeTime;
+             double               totalInterFrameDelay;
+             double               totalSquaredInterFrameDelay;
              boolean              voiceActivityFlag;
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
              double               averageRtcpInterval;
@@ -1336,6 +1338,31 @@ enum RTCStatsType {
                   value with <a>framesDecoded</a>. The time it takes to decode one frame is the
                   time passed between feeding the decoder a frame and the decoder returning decoded
                   data for that frame.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalInterFrameDelay</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Sum of the interframe delays in seconds between consecutively decoded frames,
+                  recorded just after a frame has been decoded. The interframe delay variance be
+                  calculated from <a>totalInterFrameDelay</a>, <a>totalSquaredInterFrameDelay</a>,
+                  and <a>framesDecoded</a> according to the formula:
+                  (<a>totalSquaredInterFrameDelay</a> + <a>totalInterFrameDelay</a>^2/
+                  <a>framesDecoded</a>)/<a>framesDecoded</a>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalSquaredInterFrameDelay</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Sum of the squared interframe delays in seconds between consecutively decoded frames,
+                  recorded just after a frame has been decoded. See <a>totalInterFrameDelay</a> for
+                  details on how to calculate the interframe delay variance.
                 </p>
               </dd>
               <dt>
