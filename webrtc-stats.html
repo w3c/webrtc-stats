@@ -1185,6 +1185,7 @@ enum RTCStatsType {
              unsigned long        keyFramesDecoded;
              unsigned long        frameWidth;
              unsigned long        frameHeight;
+             unsigned long        frameBitDepth;
              double               framesPerSecond;
              unsigned long long   qpSum;
              double               totalDecodeTime;
@@ -1296,6 +1297,17 @@ enum RTCStatsType {
                 <p>
                   Only valid for video. Represents the height of the last decoded frame. Before
                   the first frame is decoded this attribute is missing.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>frameBitDepth</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. Represents bit depth per channel of the raw video frame.
+                  Typical values are 8, 10, or 12 bits.
+                  Before the first frame is decoded this attribute is missing.
                 </p>
               </dd>
               <dt>
@@ -1931,6 +1943,7 @@ enum RTCStatsType {
              unsigned long long   totalEncodedBytesTarget;
              unsigned long        frameWidth;
              unsigned long        frameHeight;
+             unsigned long        frameBitDepth;
              double               framesPerSecond;
              unsigned long        framesSent;
              unsigned long        hugeFramesSent;
@@ -2131,6 +2144,17 @@ enum RTCStatsType {
                 <p>
                   Only valid for video. Represents the height of the last encoded frame. The resolution
                   of the encoded frame may be lower than the media source (see RTCVideoSourceStats.height).
+                  Before the first frame is encoded this attribute is missing.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>frameBitDepth</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. Represents bit depth per channel of the raw video frame.
+                  Typical values are 8, 10, or 12 bits.
                   Before the first frame is encoded this attribute is missing.
                 </p>
               </dd>
