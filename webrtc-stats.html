@@ -1943,6 +1943,7 @@ enum RTCStatsType {
              unsigned long long   totalEncodedBytesTarget;
              unsigned long        frameWidth;
              unsigned long        frameHeight;
+             unsigned long        frameBitDepth;
              double               framesPerSecond;
              unsigned long        framesSent;
              unsigned long        hugeFramesSent;
@@ -2143,6 +2144,17 @@ enum RTCStatsType {
                 <p>
                   Only valid for video. Represents the height of the last encoded frame. The resolution
                   of the encoded frame may be lower than the media source (see RTCVideoSourceStats.height).
+                  Before the first frame is encoded this attribute is missing.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>frameBitDepth</code></dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only valid for video. Represents the bit depth per pixel of the last encoded frame.
+                  Typical values are 24, 30, or 36 bits.
                   Before the first frame is encoded this attribute is missing.
                 </p>
               </dd>
