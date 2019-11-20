@@ -429,6 +429,7 @@ enum RTCStatsType {
 "data-channel",
 "stream",
 "track",
+"transceiver",
 "sender",
 "receiver",
 "transport",
@@ -570,6 +571,15 @@ enum RTCStatsType {
             <p>
               The monitored "track" object is <a>deleted</a> when the sender it reports on has its "track"
               value changed to no longer refer to the same track.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>transceiver</code></dfn>
+          </dt>
+          <dd>
+            <p>
+              Statistics related to a specific RTCRtpTransceiver. It is accessed
+              by the <code><a>RTCRtpTransceiverStats</a></code> dictionary.
             </p>
           </dd>
           <dt>
@@ -2974,6 +2984,76 @@ enum RTCStatsType {
               <dd>
                 <p>
                   This is the id of the stats object, not the <code>track.id</code>.
+                </p>
+              </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="transceiver-dict*">
+        <h3>
+          <dfn>RTCRtpTransceiverStats</dfn> dictionary
+        </h3>
+        <p>
+          An RTCRtpTransceiverStats stats object represents an RTCRtpTransceiver
+          of an RTCPeerConnection.
+        </p>
+        <p>
+          It appears as soon as the monitored RTCRtpTransceiver object is
+          created, such as by invoking addTransceiver, addTrack or
+          setRemoteDescription. RTCRtpTransceiverStats objects can only be
+          deleted if the corresponding RTCRtpTransceiver is removed - this can
+          only happen if a remote description is rolled back.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCRtpTransceiverStats {
+    DOMString senderId;
+    DOMString receiverId;
+    DOMString mid;
+};</pre>
+          <section>
+            <h2>
+              Dictionary <a class="idlType">RTCRtpTransceiverStats</a> Members
+            </h2>
+            <dl data-link-for="RTCRtpTransceiverStats" data-dfn-for="RTCRtpTransceiverStats" class=
+            "dictionary-members">
+              <dt>
+                <dfn><code>senderId</code></dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  The identifier of the stats object representing the
+                  RTCRtpSender <a href=
+                  "https://w3c.github.io/webrtc-pc/#dom-rtcrtptransceiver-sender">
+                  associated with the RTCRtpTransceiver</a> represented
+                  by this stats object.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>receiverId</code></dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  The identifier of the stats object representing the
+                  RTCRtpReceiver <a href=
+                  "https://w3c.github.io/webrtc-pc/#dom-rtcrtptransceiver-receiver">
+                  associated with the RTCRtpTransceiver</a>
+                  represented by this stats object.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>mid</code></dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  If the RTCRtpTransceiver that this stats object represents has
+                  a <code><a href=
+                  "https://w3c.github.io/webrtc-pc/#dom-rtptransceiver-mid">
+                  mid</a></code> value that is not null, this is that value,
+                  otherwise this value is undefined.
                 </p>
               </dd>
             </dl>
