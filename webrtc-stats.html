@@ -4530,598 +4530,592 @@ enum RTCNetworkType {
       <h2>
         Obsolete stats
       </h2>
-      <div>
-        <pre class="idl">dictionary RTCReceiverVideoTrackAttachmentStats : RTCVideoReceiverStats {
-};</pre>
-        <section>
-          <p>
-            The <code>RTCReceiverVideoTrackAttachmentStats</code> is a copy of
-            <code>RTCVideoReceiverStats</code>. It adds no new information, it
-            only exists for backwards-compatibility reasons as an obsolete
-            dictionary.
-          </p>
-          <h2>
-            Obsolete <a class="idlType">RTCReceiverVideoTrackAttachmentStats</a> members
-          </h2>
-          <dl data-link-for="RTCReceiverVideoTrackAttachmentStats" data-dfn-for=
-          "RTCReceiverVideoTrackAttachmentStats" class="dictionary-members"></dl>
-        </section>
-      </div>
-      <div>
-        <pre class="idl">dictionary RTCReceiverAudioTrackAttachmentStats : RTCAudioReceiverStats {
-};</pre>
-        <section>
-          <p>
-            The <code>RTCReceiverAudioTrackAttachmentStats</code> is a copy of
-            <code>RTCAudioReceiverStats</code>. It adds no new information, it
-            only exists for backwards-compatibility reasons as an obsolete
-            dictionary.
-          </p>
-          <h2>
-            Obsolete <a class="idlType">RTCReceiverAudioTrackAttachmentStats</a> members
-          </h2>
-          <dl data-link-for="RTCReceiverAudioTrackAttachmentStats" data-dfn-for=
-          "RTCReceiverAudioTrackAttachmentStats" class="dictionary-members"></dl>
-        </section>
-      </div>
-      <div>
-        <pre class="idl">partial dictionary RTCCodecStats {
-           DOMString implementation;
-        };
-        </pre>
-        <section>
-          <h2>
-            Obsolete RTCCodecStats members
-          </h2>
-          <dl data-dfn-for="RTCCodecStats">
-            <dt>
-              <dfn><code>implementation</code></dfn> of type <span
-              class="idlMemberType">DOMString</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats.decoderImplementation
-                and RTCOutboundRtpStreamStats.encoderImplementation in August
-                2019.
-              </p>
-            </dd>
-          </dl>
-        </section>
-        <pre class="idl">partial dictionary RTCIceCandidateStats {
-           boolean                  deleted = false;
-           boolean                  isRemote;
-        };
-        </pre>
-        <section>
-          <h2>
-            Obsolete RTCIceCandidateStats members
-          </h2>
-          <dl data-dfn-for="RTCIceCandidateStats">
-            <dt>
-              <dfn><code>deleted</code></dfn> of type <span class="idlMemberType">boolean</span>
-            </dt>
-            <dd>
-              <p>
-                This field was obsoleted by the <a>statsended</a> event, which
-                has now also been obsolete. <code>deleted</code> is no longer
-                applicable beacause if the ice candidate is deleted it no
-                longer appears in getStats().
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>isRemote</code></dfn> of type <span class="idlMemberType">boolean</span>
-            </dt>
-            <dd>
-              <p>
-                <code>false</code> indicates that this represents a local candidate;
-                <code>true</code> indicates that this represents a remote candidate.
-              </p>
-            </dd>
-          </dl>
-        </section>
-        <pre class="idl">partial dictionary RTCIceCandidatePairStats {
-          double totalRtt;
-          double currentRtt;
-          unsigned long long priority;
-          };
+      <section>
+        <h3>
+          Obsolete RTCReceiverVideoTrackAttachmentStats dictionary
+        </h3>
+        <p>
+          The <code>RTCReceiverVideoTrackAttachmentStats</code> is a copy of
+          <code>RTCVideoReceiverStats</code>. It adds no new information, it
+          only exists for backwards-compatibility reasons as an obsolete
+          dictionary.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCReceiverVideoTrackAttachmentStats : RTCVideoReceiverStats {};</pre>
+        </div>
+      </section>
+      <section>
+        <h3>
+          Obsolete RTCReceiverAudioTrackAttachmentStats dictionary
+        </h3>
+        <p>
+          The <code>RTCReceiverAudioTrackAttachmentStats</code> is a copy of
+          <code>RTCAudioReceiverStats</code>. It adds no new information, it
+          only exists for backwards-compatibility reasons as an obsolete
+          dictionary.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCReceiverAudioTrackAttachmentStats : RTCAudioReceiverStats {};</pre>
+        </div>
+      </section>
+      <section>
+        <h3>
+          Obsolete RTCCodecStats members
+        </h3>
+        <div>
+          <pre class="idl">partial dictionary RTCCodecStats {
+    DOMString implementation;
+};
           </pre>
-        <section>
-          <h2>
-            Obsolete RTCIceCandidatePairStats members
-          </h2>
-          <dl data-dfn-for="RTCIceCandidatePairStats">
-            <dt>
-              <dfn><code>totalRtt</code></dfn>
-            </dt>
-            <dd>
-              <p>
-                This field got renamed to "totalRoundTripTime" in Dec 2016.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>currentRtt</code></dfn>
-            </dt>
-            <dd>
-              <p>
-                This field got renamed to "currentRoundTripTime" in Dec 2016.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>priority</code></dfn>
-            </dt>
-            <dd>
-              <p>
-                This field got removed in Feb 2018, as it cannot be represented in 53 bits. It can
-                be recalculated if needed as defined in [[RFC5245]] section 5.7.2.
-              </p>
-            </dd>
-          </dl>
-        </section>
+        </div>
+        <dl data-dfn-for="RTCCodecStats">
+          <dt>
+            <dfn><code>implementation</code></dfn> of type <span
+            class="idlMemberType">DOMString</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats.decoderImplementation
+              and RTCOutboundRtpStreamStats.encoderImplementation in August
+              2019.
+            </p>
+          </dd>
+        </dl>
+      </section>
+      <section>
+        <h3>
+          Obsolete RTCIceCandidateStats members
+        </h3>
+        <pre class="idl">partial dictionary RTCIceCandidateStats {
+    boolean deleted = false;
+    boolean isRemote;
+};
+        </pre>
+        <dl data-dfn-for="RTCIceCandidateStats">
+          <dt>
+            <dfn><code>deleted</code></dfn> of type <span class="idlMemberType">boolean</span>
+          </dt>
+          <dd>
+            <p>
+              This field was obsoleted by the <code>statsended</code> event in
+              [[!WEBRTC]], which has now also been obsolete.
+              <code>deleted</code> is no longer applicable beacause if the ice
+              candidate is deleted it no longer appears in getStats().
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>isRemote</code></dfn> of type <span class="idlMemberType">boolean</span>
+          </dt>
+          <dd>
+            <p>
+              <code>false</code> indicates that this represents a local candidate;
+              <code>true</code> indicates that this represents a remote candidate.
+            </p>
+          </dd>
+        </dl>
+      </section>
+      <section>
+        <h3>
+          Obsolete RTCIceCandidatePairStats members
+        </h3>
+        <pre class="idl">partial dictionary RTCIceCandidatePairStats {
+    double totalRtt;
+    double currentRtt;
+    unsigned long long priority;
+};
+        </pre>
+        <dl data-dfn-for="RTCIceCandidatePairStats">
+          <dt>
+            <dfn><code>totalRtt</code></dfn>
+          </dt>
+          <dd>
+            <p>
+              This field got renamed to "totalRoundTripTime" in Dec 2016.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>currentRtt</code></dfn>
+          </dt>
+          <dd>
+            <p>
+              This field got renamed to "currentRoundTripTime" in Dec 2016.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>priority</code></dfn>
+          </dt>
+          <dd>
+            <p>
+              This field got removed in Feb 2018, as it cannot be represented in 53 bits. It can
+              be recalculated if needed as defined in [[RFC5245]] section 5.7.2.
+            </p>
+          </dd>
+        </dl>
+      </section>
+      <section>
+        <h3>
+          Obsolete RTCRtpStreamStats members
+        </h3>
         <pre class="idl">partial dictionary RTCRtpStreamStats {
-             DOMString           mediaType;
-             double              averageRTCPInterval;
+    DOMString mediaType;
+    double averageRTCPInterval;
 };</pre>
-        <section>
-          <h2>
-            Obsolete RTCRtpStreamStats members
-          </h2>
-          <dl data-dfn-for="RTCRtpStreamStats">
-            <dt>
-              <dfn><code>mediaType</code></dfn> of type <span class=
-              "idlMemberType">DOMString</span>
-            </dt>
-            <dd>
-              <p>
-                This field got renamed to "kind" in Feb 2018.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>averageRTCPInterval</code></dfn>
-            </dt>
-            <dd>
-              <p>
-                This field got renamed to "averageRtcpInterval" in Jan 2018.
-              </p>
-            </dd>
-          </dl>
-        </section>
+        <dl data-dfn-for="RTCRtpStreamStats">
+          <dt>
+            <dfn><code>mediaType</code></dfn> of type <span class=
+            "idlMemberType">DOMString</span>
+          </dt>
+          <dd>
+            <p>
+              This field got renamed to "kind" in Feb 2018.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>averageRTCPInterval</code></dfn>
+          </dt>
+          <dd>
+            <p>
+              This field got renamed to "averageRtcpInterval" in Jan 2018.
+            </p>
+          </dd>
+        </dl>
+      </section>
+      <section>
+        <h3>
+          Obsolete RTCInboundRtpStreamStats members
+        </h3>
         <pre class="idl">partial dictionary RTCInboundRtpStreamStats {
-          double fractionLost;
+    double fractionLost;
 };</pre>
-        <section>
-          <h2>
-            Obsolete RTCInboundRtpStreamStats members
-          </h2>
-          <dl data-dfn-for="RTCInboundRtpStreamStats">
-            <dt>
-              <dfn><code>fractionLost</code></dfn> of type <span class=
-              "idlMemberType">double</span>
-            </dt>
-            <dd>
-              <p>
-                This field was moved to RTCRemoteInboundRtpStreamStats in December 2017.
-              </p>
-            </dd>
-          </dl>
-        </section>
+        <dl data-dfn-for="RTCInboundRtpStreamStats">
+          <dt>
+            <dfn><code>fractionLost</code></dfn> of type <span class=
+            "idlMemberType">double</span>
+          </dt>
+          <dd>
+            <p>
+              This field was moved to RTCRemoteInboundRtpStreamStats in December 2017.
+            </p>
+          </dd>
+        </dl>
+      </section>
+      <section>
+        <h3>
+          Obsolete RTCAudioHandlerStats members
+        </h3>
         <pre class="idl">partial dictionary RTCAudioHandlerStats {
-            double              audioLevel;
-            double              totalAudioEnergy;
-            double              totalSamplesDuration;
-            boolean             voiceActivityFlag;
+    double audioLevel;
+    double totalAudioEnergy;
+    double totalSamplesDuration;
+    boolean voiceActivityFlag;
 };</pre>
-        <section>
-          <h2>
-            Obsolete RTCAudioHandlerStats members
-          </h2>
-          <dl data-dfn-for="RTCAudioHandlerStats">
-            <dt>
-              <dfn><code>audioLevel</code></dfn> of type <span class="idlMemberType">double</span>
-            </dt>
-            <dd>
-              <p>
-                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in June 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>totalAudioEnergy</code></dfn> of type <span class=
-              "idlMemberType">double</span>
-            </dt>
-            <dd>
-              <p>
-                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in June 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>totalSamplesDuration</code></dfn> of type <span class=
-              "idlMemberType">double</span>
-            </dt>
-            <dd>
-              <p>
-                This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in June 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>voiceActivityFlag</code></dfn> of type <span class=
-              "idlMemberType">boolean</span>
-            </dt>
-            <dd>
-              <p>
-                This field was moved to RTCOutboundRtpStreamStats and RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-          </dl>
-        </section>
+        <dl data-dfn-for="RTCAudioHandlerStats">
+          <dt>
+            <dfn><code>audioLevel</code></dfn> of type <span class="idlMemberType">double</span>
+          </dt>
+          <dd>
+            <p>
+              This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in June 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>totalAudioEnergy</code></dfn> of type <span class=
+            "idlMemberType">double</span>
+          </dt>
+          <dd>
+            <p>
+              This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in June 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>totalSamplesDuration</code></dfn> of type <span class=
+            "idlMemberType">double</span>
+          </dt>
+          <dd>
+            <p>
+              This field was moved to RTCAudioReceiverStats and RTCAudioSourceStats in June 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>voiceActivityFlag</code></dfn> of type <span class=
+            "idlMemberType">boolean</span>
+          </dt>
+          <dd>
+            <p>
+              This field was moved to RTCOutboundRtpStreamStats and RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+        </dl>
+      </section>
+      <section>
+        <h3>
+          Obsolete RTCAudioSenderStats members
+        </h3>
         <pre class="idl">partial dictionary RTCAudioSenderStats {
-            unsigned long long  totalSamplesSent;
-            double              echoReturnLoss;
-            double              echoReturnLossEnhancement;
+    unsigned long long totalSamplesSent;
+    double echoReturnLoss;
+    double echoReturnLossEnhancement;
 };</pre>
-        <section>
-          <h2>
-            Obsolete RTCAudioSenderStats members
-          </h2>
-          <dl data-link-for="RTCAudioSenderStats" data-dfn-for="RTCAudioSenderStats" class=
-          "dictionary-members">
-            <dt>
-              <dfn><code>totalSamplesSent</code></dfn> of type <span class=
-              "idlMemberType">unsigned long long</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCOutboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>echoReturnLoss</code></dfn> of type <span class=
-              "idlMemberType">double</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCAudioSourceStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>echoReturnLossEnhancement</code></dfn> of type <span class=
-              "idlMemberType">double</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCAudioSourceStats in August 2019.
-              </p>
-            </dd>
-          </dl>
-        </section>
+        <dl data-link-for="RTCAudioSenderStats" data-dfn-for="RTCAudioSenderStats" class=
+        "dictionary-members">
+          <dt>
+            <dfn><code>totalSamplesSent</code></dfn> of type <span class=
+            "idlMemberType">unsigned long long</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCOutboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>echoReturnLoss</code></dfn> of type <span class=
+            "idlMemberType">double</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCAudioSourceStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>echoReturnLossEnhancement</code></dfn> of type <span class=
+            "idlMemberType">double</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCAudioSourceStats in August 2019.
+            </p>
+          </dd>
+        </dl>
+      </section>
+      <section>
+        <h3>
+          Obsolete RTCAudioReceiverStats members
+        </h3>
         <pre class="idl">partial dictionary RTCAudioReceiverStats {
-            DOMHighResTimeStamp estimatedPlayoutTimestamp;
-            double              jitterBufferDelay;
-            unsigned long long  jitterBufferEmittedCount;
-            unsigned long long  totalSamplesReceived;
-            unsigned long long  concealedSamples;
-            unsigned long long  silentConcealedSamples;
-            unsigned long long  concealmentEvents;
-            unsigned long long  insertedSamplesForDeceleration;
-            unsigned long long  removedSamplesForAcceleration;
-            double              audioLevel;
-            double              totalAudioEnergy;
-            double              totalSamplesDuration;
+    DOMHighResTimeStamp estimatedPlayoutTimestamp;
+    double jitterBufferDelay;
+    unsigned long long jitterBufferEmittedCount;
+    unsigned long long totalSamplesReceived;
+    unsigned long long concealedSamples;
+    unsigned long long silentConcealedSamples;
+    unsigned long long concealmentEvents;
+    unsigned long long insertedSamplesForDeceleration;
+    unsigned long long removedSamplesForAcceleration;
+    double audioLevel;
+    double totalAudioEnergy;
+    double totalSamplesDuration;
 };</pre>
-        <section>
-          <h2>
-            Obsolete RTCAudioReceiverStats members
-          </h2>
-          <dl data-link-for="RTCAudioReceiverStats" data-dfn-for="RTCAudioReceiverStats" class=
-          "dictionary-members">
-            <dt>
-              <dfn><code>estimatedPlayoutTimestamp</code></dfn> of type <span class=
-              "idlMemberType">DOMHighResTimeStamp</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>jitterBufferDelay</code></dfn> of type <span class=
-              "idlMemberType">double</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>jitterBufferEmittedCount</code></dfn> of type <span class=
-              "idlMemberType">unsigned long long</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>totalSamplesReceived</code></dfn> of type <span class=
-              "idlMemberType">unsigned long long</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>concealedSamples</code></dfn> of type <span class=
-              "idlMemberType">unsigned long long</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>silentConcealedSamples</code></dfn> of type <span class=
-              "idlMemberType">unsigned long long</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>concealmentEvents</code></dfn> of type <span class=
-              "idlMemberType">unsigned long long</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>insertedSamplesForDeceleration</code></dfn> of type <span class=
-              "idlMemberType">unsigned long long</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>removedSamplesForAcceleration</code></dfn> of type <span class=
-              "idlMemberType">unsigned long long</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>audioLevel</code></dfn> of type <span class=
-              "idlMemberType">double</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>totalAudioEnergy</code></dfn> of type <span class=
-              "idlMemberType">double</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>totalSamplesDuration</code></dfn> of type <span class=
-              "idlMemberType">double</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-          </dl>
-        </section>
+        <dl data-link-for="RTCAudioReceiverStats" data-dfn-for="RTCAudioReceiverStats" class=
+        "dictionary-members">
+          <dt>
+            <dfn><code>estimatedPlayoutTimestamp</code></dfn> of type <span class=
+            "idlMemberType">DOMHighResTimeStamp</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>jitterBufferDelay</code></dfn> of type <span class=
+            "idlMemberType">double</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>jitterBufferEmittedCount</code></dfn> of type <span class=
+            "idlMemberType">unsigned long long</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>totalSamplesReceived</code></dfn> of type <span class=
+            "idlMemberType">unsigned long long</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>concealedSamples</code></dfn> of type <span class=
+            "idlMemberType">unsigned long long</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>silentConcealedSamples</code></dfn> of type <span class=
+            "idlMemberType">unsigned long long</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>concealmentEvents</code></dfn> of type <span class=
+            "idlMemberType">unsigned long long</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>insertedSamplesForDeceleration</code></dfn> of type <span class=
+            "idlMemberType">unsigned long long</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>removedSamplesForAcceleration</code></dfn> of type <span class=
+            "idlMemberType">unsigned long long</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>audioLevel</code></dfn> of type <span class=
+            "idlMemberType">double</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>totalAudioEnergy</code></dfn> of type <span class=
+            "idlMemberType">double</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>totalSamplesDuration</code></dfn> of type <span class=
+            "idlMemberType">double</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+        </dl>
+      </section>
+      <section>
+        <h3>
+          Obsolete RTCVideoHandlerStats members
+        </h3>
         <pre class="idl">partial dictionary RTCVideoHandlerStats {
-          unsigned long frameWidth;
-          unsigned long frameHeight;
-          double        framesPerSecond;
+    unsigned long frameWidth;
+    unsigned long frameHeight;
+    double framesPerSecond;
 };</pre>
-        <section>
-          <h2>
-            Obsolete RTCVideoHandlerStats members
-          </h2>
-          <dl data-link-for="RTCVideoHandlerStats" data-dfn-for="RTCVideoHandlerStats" class=
-          "dictionary-members">
-            <dt>
-              <dfn><code>frameWidth</code></dfn> of type <span class="idlMemberType">unsigned
-              long</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCOutboundRtpStreamStats and
-                RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>frameHeight</code></dfn> of type <span class="idlMemberType">unsigned
-              long</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCOutboundRtpStreamStats and
-                RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>framesPerSecond</code></dfn> of type <span class=
-              "idlMemberType">double</span>
-            </dt>
-            <dd>
-              <p>
-                For the sending case, this was replaced by RTCVideoSourceStats.framesPerSecond
-                in May 2019 representing the frame rate of the track. For the receiving case,
-                this was moved to RTCInboundRtpStreamStats in August 2019 representing the
-                decoding frame rate. In August 2019, framesPerSecond was also added to
-                RTCOutboundRtpStreamStats, representing the encoding frame rate (which may be
-                lower than the source frame rate).
-              </p>
-            </dd>
-          </dl>
-        </section>
+        <dl data-link-for="RTCVideoHandlerStats" data-dfn-for="RTCVideoHandlerStats" class=
+        "dictionary-members">
+          <dt>
+            <dfn><code>frameWidth</code></dfn> of type <span class="idlMemberType">unsigned
+            long</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCOutboundRtpStreamStats and
+              RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>frameHeight</code></dfn> of type <span class="idlMemberType">unsigned
+            long</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCOutboundRtpStreamStats and
+              RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>framesPerSecond</code></dfn> of type <span class=
+            "idlMemberType">double</span>
+          </dt>
+          <dd>
+            <p>
+              For the sending case, this was replaced by RTCVideoSourceStats.framesPerSecond
+              in May 2019 representing the frame rate of the track. For the receiving case,
+              this was moved to RTCInboundRtpStreamStats in August 2019 representing the
+              decoding frame rate. In August 2019, framesPerSecond was also added to
+              RTCOutboundRtpStreamStats, representing the encoding frame rate (which may be
+              lower than the source frame rate).
+            </p>
+          </dd>
+        </dl>
+      </section>
+      <section>
+        <h3>
+          Obsolete RTCVideoSenderStats members
+        </h3>
         <pre class="idl">partial dictionary RTCVideoSenderStats {
-          unsigned long keyFramesSent;
-          unsigned long framesCaptured;
-          unsigned long framesSent;
-          unsigned long hugeFramesSent;
+    unsigned long keyFramesSent;
+    unsigned long framesCaptured;
+    unsigned long framesSent;
+    unsigned long hugeFramesSent;
 };</pre>
-        <section>
-          <h2>
-            Obsolete RTCVideoSenderStats members
-          </h2>
-          <dl data-dfn-for="RTCVideoSenderStats">
-            <dt>
-              <dfn><code>keyFramesSent</code></dfn> of type <span class="idlMemberType">unsigned
-              long</span>
-            </dt>
-            <dd>
-              <p>
-                This field was replaced by keyFramesEncoded in RTCOutboundRtpStreamStats in June
-                2019. There were no known implementations supporting the old field at the time of
-                the change.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>framesCaptured</code></dfn> of type <span class="idlMemberType">unsigned
-              long</span>
-            </dt>
-            <dd>
-              <p>
-                This was replaced by RTCVideoSourceStats.frames in May 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>framesSent</code></dfn> of type <span class="idlMemberType">unsigned
-              long</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCOutboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>hugeFramesSent</code></dfn> of type <span class="idlMemberType">unsigned
-              long</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCOutboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-          </dl>
-        </section>
+        <dl data-dfn-for="RTCVideoSenderStats">
+          <dt>
+            <dfn><code>keyFramesSent</code></dfn> of type <span class="idlMemberType">unsigned
+            long</span>
+          </dt>
+          <dd>
+            <p>
+              This field was replaced by keyFramesEncoded in RTCOutboundRtpStreamStats in June
+              2019. There were no known implementations supporting the old field at the time of
+              the change.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>framesCaptured</code></dfn> of type <span class="idlMemberType">unsigned
+            long</span>
+          </dt>
+          <dd>
+            <p>
+              This was replaced by RTCVideoSourceStats.frames in May 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>framesSent</code></dfn> of type <span class="idlMemberType">unsigned
+            long</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCOutboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>hugeFramesSent</code></dfn> of type <span class="idlMemberType">unsigned
+            long</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCOutboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+        </dl>
+      </section>
+      <section>
+        <h3>
+          Obsolete RTCVideoReceiverStats members
+        </h3>
         <pre class="idl">partial dictionary RTCVideoReceiverStats {
-          unsigned long keyFramesReceived;
-          DOMHighResTimeStamp estimatedPlayoutTimestamp;
-          double              jitterBufferDelay;
-          unsigned long long  jitterBufferEmittedCount;
-          unsigned long       framesReceived;
-          unsigned long       framesDecoded;
-          unsigned long       framesDropped;
-          unsigned long       partialFramesLost;
-          unsigned long       fullFramesLost;
+    unsigned long keyFramesReceived;
+    DOMHighResTimeStamp estimatedPlayoutTimestamp;
+    double jitterBufferDelay;
+    unsigned long long jitterBufferEmittedCount;
+    unsigned long framesReceived;
+    unsigned long framesDecoded;
+    unsigned long framesDropped;
+    unsigned long partialFramesLost;
+    unsigned long fullFramesLost;
 };</pre>
-        <section>
-          <h2>
-            Obsolete RTCVideoReceiverStats members
-          </h2>
-          <dl data-dfn-for="RTCVideoReceiverStats">
-            <dt>
-              <dfn><code>keyFramesReceived</code></dfn> of type <span class=
-              "idlMemberType">unsigned long</span>
-            </dt>
-            <dd>
-              <p>
-                This field was replaced by keyFramesDecoded in RTCInboundRtpStreamStats in June
-                2019. There were no known implementations supporting the old field at the time of
-                the change.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>estimatedPlayoutTimestamp</code></dfn> of type <span class=
-              "idlMemberType">DOMHighResTimeStamp</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>jitterBufferDelay</code></dfn> of type <span class=
-              "idlMemberType">double</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>jitterBufferEmittedCount</code></dfn> of type <span class=
-              "idlMemberType">unsigned long long</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>framesReceived</code></dfn> of type <span class="idlMemberType">unsigned
-              long</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>framesDecoded</code></dfn> of type <span class="idlMemberType">unsigned
-              long</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>framesDropped</code></dfn> of type <span class="idlMemberType">unsigned
-              long</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>partialFramesLost</code></dfn> of type <span class=
-              "idlMemberType">unsigned long</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-            <dt>
-              <dfn><code>fullFramesLost</code></dfn> of type <span class="idlMemberType">unsigned
-              long</span>
-            </dt>
-            <dd>
-              <p>
-                This was moved to RTCInboundRtpStreamStats in August 2019.
-              </p>
-            </dd>
-          </dl>
-        </section>
-      </div>
+        <dl data-dfn-for="RTCVideoReceiverStats">
+          <dt>
+            <dfn><code>keyFramesReceived</code></dfn> of type <span class=
+            "idlMemberType">unsigned long</span>
+          </dt>
+          <dd>
+            <p>
+              This field was replaced by keyFramesDecoded in RTCInboundRtpStreamStats in June
+              2019. There were no known implementations supporting the old field at the time of
+              the change.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>estimatedPlayoutTimestamp</code></dfn> of type <span class=
+            "idlMemberType">DOMHighResTimeStamp</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>jitterBufferDelay</code></dfn> of type <span class=
+            "idlMemberType">double</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>jitterBufferEmittedCount</code></dfn> of type <span class=
+            "idlMemberType">unsigned long long</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>framesReceived</code></dfn> of type <span class="idlMemberType">unsigned
+            long</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>framesDecoded</code></dfn> of type <span class="idlMemberType">unsigned
+            long</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>framesDropped</code></dfn> of type <span class="idlMemberType">unsigned
+            long</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>partialFramesLost</code></dfn> of type <span class=
+            "idlMemberType">unsigned long</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn><code>fullFramesLost</code></dfn> of type <span class="idlMemberType">unsigned
+            long</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to RTCInboundRtpStreamStats in August 2019.
+            </p>
+          </dd>
+        </dl>
+      </section>
     </section>
     <section>
       <h2>
