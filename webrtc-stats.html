@@ -4483,7 +4483,7 @@ enum RTCNetworkType {
           <pre class="idl">dictionary RTCIceServerStats : RTCStats {
              DOMString url;
              long port;
-             DOMString protocol;
+             DOMString relayProtocol;
              RTCNetworkType networkType;
              unsigned long totalRequestsSent;
              unsigned long totalResponsesReceived;
@@ -4512,13 +4512,14 @@ enum RTCNetworkType {
                 </p>
               </dd>
               <dt>
-                <dfn><code>protocol</code></dfn> of type <span class=
+                <dfn><code>relayProtocol</code></dfn> of type <span class=
                 "idlMemberType">DOMString</span>
               </dt>
               <dd>
                 <p>
-                  Valid values for transport is one of <code>udp</code> and <code>tcp</code>. Based
-                  on the "transport" defined in [RFC5245] section 15.1.
+                  It is the protocol used by the endpoint to communicate with the ICE server.
+                  Valid values are <code>udp</code>, <code>tcp</code>, or <code>tls</code>.
+                  This is the same value that is used for the relay protocol of local ICE candidates.
                 </p>
               </dd>
               <dt>
