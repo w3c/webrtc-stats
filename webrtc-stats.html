@@ -1367,7 +1367,7 @@ enum RTCStatsType {
                   recorded just after a frame has been decoded. The interframe delay variance be
                   calculated from <a>totalInterFrameDelay</a>, <a>totalSquaredInterFrameDelay</a>,
                   and <a>framesDecoded</a> according to the formula:
-                  (<a>totalSquaredInterFrameDelay</a> + <a>totalInterFrameDelay</a>^2/
+                  (<a>totalSquaredInterFrameDelay</a> - <a>totalInterFrameDelay</a>^2/
                   <a>framesDecoded</a>)/<a>framesDecoded</a>.
                 </p>
               </dd>
