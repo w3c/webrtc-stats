@@ -557,6 +557,11 @@ enum RTCStatsType {
               The monitored "track" object is <a>deleted</a> when the sender it reports on has its "track"
               value changed to no longer refer to the same track.
             </p>
+            <p class="note">
+              All "track" stats have been made obsolete. The relevant metrics
+              have been moved to "media-source", "sender", "outbound-rtp",
+              "receiver" and "inbound-rtp" stats.
+            </p>
           </dd>
           <dt>
             <dfn><code>transceiver</code></dfn>
@@ -3270,35 +3275,6 @@ enum RTCStatsType {
           </section>
         </div>
       </section>
-      <section id="lvststats-dict*">
-        <h3>
-          <dfn>RTCSenderVideoTrackAttachmentStats</dfn> dictionary
-        </h3>
-        <p>
-          An RTCSenderVideoTrackAttachmentStats object represents the stats about one attachment of
-          a video MediaStreamTrack to the RTCPeerConnection object for which one calls getStats.
-        </p>
-        <p>
-          It appears in the stats as soon as it is attached (via addTrack, via addTransceiver, via
-          replaceTrack on an RTCRtpSender object).
-        </p>
-        <p>
-          If a video track is attached twice (via addTransceiver or replaceTrack), there will be
-          two RTCSenderVideoTrackAttachmentStats objects, one for each attachment. They will have
-          the same "trackIdentifier" attribute, but different "id" attributes.
-        </p>
-        <div>
-          <pre class="idl">dictionary RTCSenderVideoTrackAttachmentStats : RTCVideoSenderStats {
-};</pre>
-          <section>
-            <h2>
-              Dictionary <a class="idlType">RTCSenderVideoTrackAttachmentStats</a> Members
-            </h2>
-            <dl data-link-for="RTCSenderVideoTrackAttachmentStats" data-dfn-for=
-            "RTCSenderVideoTrackAttachmentStats" class="dictionary-members"></dl>
-          </section>
-        </div>
-      </section>
       <section id="rvststats-dict*">
         <h3>
           <dfn>RTCVideoReceiverStats</dfn> dictionary
@@ -3374,35 +3350,6 @@ enum RTCStatsType {
                 </p>
               </dd>
             </dl>
-          </section>
-        </div>
-      </section>
-      <section id="laststats-dict*">
-        <h3>
-          <dfn>RTCSenderAudioTrackAttachmentStats</dfn> dictionary
-        </h3>
-        <p>
-          An RTCSenderAudioTrackAttachmentStats object represents the stats about one attachment of
-          an audio MediaStreamTrack to the RTCPeerConnection object for which one calls getStats.
-        </p>
-        <p>
-          It appears in the stats as soon as it is attached (via addTrack, via addTransceiver, via
-          replaceTrack on an RTCRtpSender object).
-        </p>
-        <p>
-          If an audio track is attached twice (via addTransceiver or replaceTrack), there will be
-          two RTCSenderAudioTrackAttachmentStats objects, one for each attachment. They will have
-          the same "trackIdentifier" attribute, but different "id" attributes.
-        </p>
-        <div>
-          <pre class="idl">dictionary RTCSenderAudioTrackAttachmentStats : RTCAudioSenderStats {
-};</pre>
-          <section>
-            <h2>
-              Dictionary <a class="idlType">RTCSenderAudioTrackAttachmentStats</a> Members
-            </h2>
-            <dl data-link-for="RTCSenderAudioTrackAttachmentStats" data-dfn-for=
-            "RTCSenderAudioTrackAttachmentStats" class="dictionary-members"></dl>
           </section>
         </div>
       </section>
@@ -4519,6 +4466,60 @@ enum RTCStatsType {
           </dl>
         </section>
       </div>
+      <section id="lvststats-dict*">
+        <h3>
+          Obsolete <dfn>RTCSenderVideoTrackAttachmentStats</dfn> dictionary
+        </h3>
+        <p>
+          An RTCSenderVideoTrackAttachmentStats object represents the stats about one attachment of
+          a video MediaStreamTrack to the RTCPeerConnection object for which one calls getStats.
+        </p>
+        <p>
+          It appears in the stats as soon as it is attached (via addTrack, via addTransceiver, via
+          replaceTrack on an RTCRtpSender object).
+        </p>
+        <p>
+          If a video track is attached twice (via addTransceiver or replaceTrack), there will be
+          two RTCSenderVideoTrackAttachmentStats objects, one for each attachment. They will have
+          the same "trackIdentifier" attribute, but different "id" attributes.
+        </p>
+        <p>
+          This dictionary was made obsolete after its members were moved to "media-source",
+          "sender" and "outbound-rtp" (to enable simulcast stats) and the "onstatsended" event was
+          removed, making the "track" stats redundant.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCSenderVideoTrackAttachmentStats : RTCVideoSenderStats {
+};</pre>
+        </div>
+      </section>
+      <section id="laststats-dict*">
+        <h3>
+          Obsolete <dfn>RTCSenderAudioTrackAttachmentStats</dfn> dictionary
+        </h3>
+        <p>
+          An RTCSenderAudioTrackAttachmentStats object represents the stats about one attachment of
+          an audio MediaStreamTrack to the RTCPeerConnection object for which one calls getStats.
+        </p>
+        <p>
+          It appears in the stats as soon as it is attached (via addTrack, via addTransceiver, via
+          replaceTrack on an RTCRtpSender object).
+        </p>
+        <p>
+          If an audio track is attached twice (via addTransceiver or replaceTrack), there will be
+          two RTCSenderAudioTrackAttachmentStats objects, one for each attachment. They will have
+          the same "trackIdentifier" attribute, but different "id" attributes.
+        </p>
+        <p>
+          This dictionary was made obsolete after its members were moved to "media-source",
+          "sender" and "outbound-rtp" (to enable simulcast stats) and the "onstatsended" event was
+          removed, making the "track" stats redundant.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCSenderAudioTrackAttachmentStats : RTCAudioSenderStats {
+};</pre>
+        </div>
+      </section>  
       <section>
         <h3>
           Obsolete RTCReceiverVideoTrackAttachmentStats dictionary
