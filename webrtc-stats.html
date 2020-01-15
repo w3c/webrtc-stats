@@ -2405,11 +2405,11 @@ enum RTCStatsType {
                   framerate, or "none" if not limited.
                 </p>
                 <p>
-                  If there are multiple limitation reasons at the same time, the
-                  implementation SHOULD report the most limiting factor. If the
-                  implementation is not able to determine this, the reasons
-                  SHOULD be reported in the following order of priority:
-                  "bandwidth", "cpu", "other".
+                  The implementation reports the most limiting factor. If the
+                  implementation is not able to determine the most limiting
+                  factor because multiple may exist, the reasons MUST be
+                  reported in the following order of priority: "bandwidth",
+                  "cpu", "other".
                 </p>
                 <p class="note">
                   The consumption of CPU and bandwidth resources is
