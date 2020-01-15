@@ -2404,6 +2404,21 @@ enum RTCStatsType {
                   Only valid for video. The current reason for limiting the resolution and/or
                   framerate, or "none" if not limited.
                 </p>
+                <p>
+                  The implementation reports the most limiting factor. If the
+                  implementation is not able to determine the most limiting
+                  factor because multiple may exist, the reasons MUST be
+                  reported in the following order of priority: "bandwidth",
+                  "cpu", "other".
+                </p>
+                <p class="note">
+                  The consumption of CPU and bandwidth resources is
+                  interdependent and difficult to estimate, making it hard to
+                  determine what the "most limiting factor" is. The priority
+                  order promoted here is based on the heuristic that "bandwidth"
+                  is generally more varying and thus a more likely and more
+                  useful signal than "cpu".
+                </p>
               </dd>
               <dt>
                 <dfn><code>qualityLimitationDurations</code></dfn> of type <span class=
