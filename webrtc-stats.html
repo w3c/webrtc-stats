@@ -3887,6 +3887,9 @@ enum RTCStatsType {
              DOMHighResTimeStamp           consentExpiredTimestamp;
              unsigned long                 packetsDiscardedOnSend;
              unsigned long long            bytesDiscardedOnSend;
+             unsigned long long            requestBytesSent;
+             unsigned long long            consentRequestBytesSent;
+             unsigned long long            responseBytesSent;
 };</pre>
           <section>
             <h2>
@@ -4221,6 +4224,33 @@ enum RTCStatsType {
                   errors, i.e. a socket error occured when handing the packets containing the bytes
                   to the socket. This might happen due to various reasons, including full buffer or
                   no available memory. Calculated as defined in [[!RFC3550]] section 6.4.1.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>requestBytesSent</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of bytes sent for connectivity checks.
+                </p>
+              </dd>
+              <dt>
+              <dfn><code>consentRequestBytesSent</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of bytes sent for consent requests.
+                </p>
+              </dd>
+              <dt>
+              <dfn><code>responseBytesSent</code></dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of bytes sent for connectivity check responses.
                 </p>
               </dd>
             </dl>
