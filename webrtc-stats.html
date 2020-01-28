@@ -1200,6 +1200,7 @@ enum RTCStatsType {
              unsigned long        pliCount;
              unsigned long        sliCount;
              DOMHighResTimeStamp  estimatedPlayoutTimestamp;
+             double               estimatedEndToEndDelay;
              double               jitterBufferDelay;
              unsigned long long   jitterBufferEmittedCount;
              unsigned long long   totalSamplesReceived;
@@ -1549,12 +1550,84 @@ enum RTCStatsType {
                   timestamp (from an RTCP SR packet mapping RTP timestamps to NTP timestamps),
                   extrapolated with the time elapsed since it was ready to be played out. This is
                   the "current time" of the track in NTP clock time of the sender and can be present
-                  even if there is no audio currently playing.
+                  even if there is no audio or video currently playing.
                 </p>
                 <p>
                   This can be useful for estimating how much audio and video is out of sync for two
                   tracks from the same source, <code>audioTrackStats.estimatedPlayoutTimestamp -
                   videoTrackStats.estimatedPlayoutTimestamp</code>.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>estimatedEndToEndDelay</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  This is the estimated delay, in seconds, between the time of
+                  capture on the sending side and the time of playout on the
+                  receiving side. It is obtained by converting
+                  <code>estimatedPlayoutTimestamp</code> (the capture time of
+                  media currently being played out, in sender NTP clock time) to
+                  receiver NTP clock time, using an estimation of the delta
+                  between the sender NTP clock and the receiver NTP clock. The
+                  difference between the current time, in receiver NTP clock,
+                  and the estimated capture time, in receiver NTP clock, is the
+                  <code>estimatedEndToEndDelay</code>. This value is present
+                  whenever <code>estimatedPlayoutTimestamp</code> is present,
+                  meaning it can be present even if there is currently no audio
+                  or video playing.
+                </p>
+                <p>
+                  Upon receiving an RTCP SR packet, run the following steps:
+                </p>
+                <ol>
+                  <li>
+                    Let <var>reportSentInSenderNtp</var> be the NTP timestamp
+                    that the report was sent, according to the sender's
+                    wallclock, as defined in section 6.4.1. of [[!RFC3550]].
+                  </li>
+                  <li>
+                    Let <var>roundTripTime</var> be the estimated round-trip
+                    time, as defined in section 6.4.1. of [[!RFC3550]].
+                  </li>
+                  <li>
+                    Let <var>reportReceivedInReceiverNtp</var> be the NTP
+                    timestamp that the report was received, according to the
+                    receiving endpoint's wallclock.
+                  </li>
+                  <li>
+                    Let <var>estimatedNtpDelta</var> be
+                    <var>reportReceivedInReceiverNtp</var> -
+                    <var>reportSentInSenderNtp</var> -
+                    (<var>roundTripTime</var> / 2).
+                  </li>
+                </ol>
+                <p>
+                  Then end-to-end delay is computed as follows:
+                </p>
+                <ol>
+                  <li>
+                    Let <var>nowInReceiverNtp</var> be the current NTP time,
+                    according to the receiving endpoint's wallclock.
+                  </li>
+                  <li>
+                    Let <var>estimatedPlayoutTimestamp</var> be calculated
+                    according to the definition of
+                    <code>estimatedPlayoutTimestamp</code>.
+                  </li>
+                  <li>
+                    Let <code>estimatedEndToEndDelay</code> be
+                    <var>nowInReceiverNtp</var> -
+                    (<var>estimatedPlayoutTimestamp</var> +
+                    <var>estimatedNtpDelta</var>).
+                  </li>
+                </ol>
+                <p>
+                  In the above calculations, the implementation MAY use smoothed
+                  values for <var>roundTripTime</var> and
+                  <var>estimatedNtpDelta</var> based on multiple RTCP SR samples
+                  over a sliding window.
                 </p>
               </dd>
               <dt>
