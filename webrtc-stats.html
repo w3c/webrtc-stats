@@ -3310,7 +3310,7 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCDataChannelStats : RTCStats {
              DOMString           label;
              DOMString           protocol;
-             long                dataChannelIdentifier;
+             unsigned short      dataChannelIdentifier;
              DOMString           transportId;
              RTCDataChannelState state;
              unsigned long       messagesSent;
@@ -3339,7 +3339,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn>dataChannelIdentifier</dfn> of type <span class=
-                "idlMemberType">long</span>
+                "idlMemberType">unsigned short</span>
               </dt>
               <dd>
                 <p>
