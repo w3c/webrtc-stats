@@ -196,18 +196,6 @@ pre.idl {
     line-height:    120%;
 }
 
-pre.idl::before {
-    content:    "WebIDL";
-    display:    block;
-    width:      150px;
-    background: #90b8de;
-    color:  #fff;
-    font-family:    initial;
-    padding:    3px;
-    font-weight:    bold;
-    margin: -1em 0 1em -1em;
-}
-
 .idlType {
     color:  #ff4500;
     font-weight:    bold;
