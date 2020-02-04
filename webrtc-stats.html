@@ -4350,14 +4350,14 @@ enum RTCStatsType {
         Obsolete stats
       </h2>
       <div>
-        <pre class="idl">dictionary RTCMediaStreamStats : RTCStats {
-  DOMString streamIdentifier;
-  sequence&lt;DOMString&gt; trackIds;
-};</pre>
         <section>
           <h2>
             Obsolete {{RTCMediaStreamStats}} members
           </h2>
+          <pre class="idl">dictionary RTCMediaStreamStats : RTCStats {
+  DOMString streamIdentifier;
+  sequence&lt;DOMString&gt; trackIds;
+};</pre>
           <p>
             This entire dictionary was made obsolete in September, 2019 due to
             sender, receiver and transceiver stats objects being a better fit to
@@ -4385,7 +4385,6 @@ enum RTCStatsType {
             </dd>
           </dl>
         </section>
-      </div>
       <section id="lvststats-dict*">
         <h3>
           Obsolete <dfn>RTCSenderVideoTrackAttachmentStats</dfn> dictionary
@@ -5024,6 +5023,8 @@ enum RTCStatsType {
           </dd>
         </dl>
       </section>
+            </div>
+
     </section>
     <section>
       <h2>
