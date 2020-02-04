@@ -64,11 +64,11 @@
       </p>
       <ul>
         <li>An implementation MUST support generating statistics for the type
-        {{RTCInboundRtpStreamStats}}, with attributes {{RTCReceivedRtpStreamStats/packetsReceived}}, {{RTCInboundRtpStreamStats/bytesReceived}}, {{RTCReceivedRtpStreamStats/packetsLost}}, and
+        {{RTCInboundRtpStreamStats}}, with members {{RTCReceivedRtpStreamStats/packetsReceived}}, {{RTCInboundRtpStreamStats/bytesReceived}}, {{RTCReceivedRtpStreamStats/packetsLost}}, and
         {{RTCReceivedRtpStreamStats/jitter}}.
         </li>
         <li>It MUST support generating statistics for the type {{RTCOutboundRtpStreamStats}}, with
-        attributes {{RTCSentRtpStreamStats/packetsSent}}, {{RTCSentRtpStreamStats/bytesSent}}.
+        members {{RTCSentRtpStreamStats/packetsSent}}, {{RTCSentRtpStreamStats/bytesSent}}.
         </li>
         <li>For all subclasses of {{RTCRtpStreamStats}}, it MUST include {{RTCRtpStreamStats/ssrc}} and {{RTCRtpStreamStats/kind}}. When stats
         exist for both sides of a connection, in the form of an {{RTCStatsType/"inbound-rtp"}} / {{RTCStatsType/"remote-outbound-rtp"}}
@@ -138,8 +138,8 @@
             are represented by a {{DOMString}} containing <var>id</var> value of the referenced stats object.
           </p>
           <p>
-            All stats object references have type {{DOMString}} and attribute names ending in <code>Id</code>, or
-            they have type <code>sequence&lt;{{DOMString}}&gt;</code> and attribute names ending in <code>Ids</code>.
+            All stats object references have type {{DOMString}} and member names ending in <code>Id</code>, or
+            they have type <code>sequence&lt;{{DOMString}}&gt;</code> and member names ending in <code>Ids</code>.
           </p>
         </dd>
         <dt>
@@ -1267,7 +1267,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Only [=dictionary member/present=] for video. Represents the width of the last decoded frame. Before the
-                  first frame is decoded this attribute is missing.
+                  first frame is decoded this member is [=dictionary member/not present=].
                 </p>
               </dd>
               <dt>
@@ -1277,7 +1277,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Only [=dictionary member/present=] for video. Represents the height of the last decoded frame. Before
-                  the first frame is decoded this attribute is missing.
+                  the first frame is decoded this member is [=dictionary member/not present=].
                 </p>
               </dd>
               <dt>
@@ -1288,7 +1288,7 @@ enum RTCStatsType {
                 <p>
                   Only [=dictionary member/present=] for video. Represents the bit depth per pixel of the last decoded frame.
                   Typical values are 24, 30, or 36 bits.
-                  Before the first frame is decoded this attribute is missing.
+                  Before the first frame is decoded this member is [=dictionary member/not present=].
                 </p>
               </dd>
               <dt>
@@ -2126,7 +2126,7 @@ enum RTCStatsType {
                 <p>
                   Only [=dictionary member/present=] for video. Represents the width of the last encoded frame. The resolution
                   of the encoded frame may be lower than the media source (see {{RTCVideoSourceStats.width}}).
-                  Before the first frame is encoded this attribute is missing.
+                  Before the first frame is encoded this member is [=dictionary member/not present=].
                 </p>
               </dd>
               <dt>
@@ -2137,7 +2137,7 @@ enum RTCStatsType {
                 <p>
                   Only [=dictionary member/present=] for video. Represents the height of the last encoded frame. The resolution
                   of the encoded frame may be lower than the media source (see {{RTCVideoSourceStats.height}}).
-                  Before the first frame is encoded this attribute is missing.
+                  Before the first frame is encoded this member is [=dictionary member/not present=].
                 </p>
               </dd>
               <dt>
@@ -2148,7 +2148,7 @@ enum RTCStatsType {
                 <p>
                   Only [=dictionary member/present=] for video. Represents the bit depth per pixel of the last encoded frame.
                   Typical values are 24, 30, or 36 bits.
-                  Before the first frame is encoded this attribute is missing.
+                  Before the first frame is encoded this member is [=dictionary member/not present=].
                 </p>
               </dd>
               <dt>
@@ -2812,7 +2812,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The width, in pixels, of the last frame originating from this source. Before a
-                  frame has been produced this attribute is missing.
+                  frame has been produced this member is [=dictionary member/not present=].
                 </p>
               </dd>
               <dt>
@@ -2822,7 +2822,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The height, in pixels, of the last frame originating from this source. Before a
-                  frame has been produced this attribute is missing.
+                  frame has been produced this member is [=dictionary member/not present=].
                 </p>
               </dd>
               <dt>
@@ -2832,7 +2832,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The bit depth per pixel of the last frame originating from this source. Before a
-                  frame has been produced this attribute is missing.
+                  frame has been produced this member is [=dictionary member/not present=].
                 </p>
               </dd>
 
@@ -2851,7 +2851,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The number of frames originating from this source, measured during the last
-                  second. For the first second of this object's lifetime this attribute is missing.
+                  second. For the first second of this object's lifetime this member is [=dictionary member/not present=].
                 </p>
               </dd>
             </dl>
@@ -4403,7 +4403,7 @@ enum RTCStatsType {
         <p>
           If a video track is attached twice (via addTransceiver or replaceTrack), there will be
           two RTCSenderVideoTrackAttachmentStats objects, one for each attachment. They will have
-          the same "trackIdentifier" attribute, but different "id" attributes.
+          the same "trackIdentifier" member, but different "id" members.
         </p>
         <p>
           This dictionary was made obsolete after its members were moved to "media-source",
@@ -4430,7 +4430,7 @@ enum RTCStatsType {
         <p>
           If an audio track is attached twice (via addTransceiver or replaceTrack), there will be
           two RTCSenderAudioTrackAttachmentStats objects, one for each attachment. They will have
-          the same "trackIdentifier" attribute, but different "id" attributes.
+          the same "trackIdentifier" member, but different "id" members.
         </p>
         <p>
           This dictionary was made obsolete after its members were moved to "media-source",
