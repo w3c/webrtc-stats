@@ -88,20 +88,17 @@
         defined in [[!GETUSERMEDIA]].
       </p>
       <p>
-        The terms {{RTCPeerConnection}}, {{RTCDataChannel}},
+        The terms <dfn class=fixme data-idl>RTCPeerConnection</dfn>, {{RTCDataChannel}},
         {{RTCDtlsTransport}}, {{RTCDtlsTransportState}}, {{RTCIceTransport}},
-        {{RTCIceRole}}, {{RTCSctpTransport}}, {{RTCDataChannelState}},
-        {{RTCIceCandidateType}} are defined in [[!WEBRTC]].
+        {{RTCIceRole}}, {{RTCSctpTransport}}, <dfn class=fixme data-idl>RTCDataChannelState</dfn>,
+        {{RTCIceCandidateType}},  {{RTCStats}}, {{RTCCertificate}} are defined in [[!WEBRTC]].
       </p>
-      <p>{{RTCPriorityType}} is defined in [[WEBRTC-DSCP]].</p>
+      <p><dfn class=fixme data-idl>RTCPriorityType</dfn> is defined in [[WEBRTC-DSCP]].</p>
       <p>
-        The term <dfn>RTP stream</dfn> is defined in [[RFC7656]] section 2.1.10.
+        The term <dfn><a href="https://tools.ietf.org/html/rfc7656#section-2.1.10">RTP stream</a></dfn> is defined in [[RFC7656]].
       </p>
-      <p>
-        The terms {{RTCStats}}
-        and {{RTCCertificate}}
-        are defined in [[!WEBRTC]].
-      </p>
+      <p>The terms <dfn data-lt="SSRC"><a href="https://tools.ietf.org/html/rfc3550#section-3">Synchronization Source</a></dfn> (SSRC), <dfn data-lt="Sender Report|SR|RTCP SR"><a href="https://tools.ietf.org/html/rfc3550#section-6.4.1">RTCP Sender Report</a></dfn>, <dfn data-lt="Receiver Report|RR|RTCP RR"><a href="https://tools.ietf.org/html/rfc3550#section-6.4.2">RTCP Receiver Report</a></dfn> are defined in [[RFC3550]].</p>
+      <p>The term <dfn data-lt="Extended Report|XR"><a href="https://tools.ietf.org/html/rfc3611">RTCP Extended Report</a></dfn> is defined in [[RFC3611]].</p>
     </section>
     <section class="informative">
       <h2>
@@ -423,7 +420,7 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              Statistics for a codec that is currently being used by RTP streams being sent or
+              Statistics for a codec that is currently being used by <a>RTP stream</a>s being sent or
               received by this {{RTCPeerConnection}} object. It is accessed by the
               {{RTCCodecStats}}.
             </p>
@@ -433,7 +430,7 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              Statistics for an inbound RTP stream that is currently received with this
+              Statistics for an inbound <a>RTP stream</a> that is currently received with this
               {{RTCPeerConnection}} object. It is accessed by the
               {{RTCInboundRtpStreamStats}}.
             </p>
@@ -443,13 +440,13 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              Statistics for an outbound RTP stream that is currently sent with this
+              Statistics for an outbound <a>RTP stream</a> that is currently sent with this
               {{RTCPeerConnection}} object. It is accessed by the
               {{RTCOutboundRtpStreamStats}}.
             </p>
             <p>
-              When there are multiple RTP streams connected to the same sender, such as when using
-              simulcast or RTX, there will be one {{RTCOutboundRtpStreamStats}} per RTP stream,
+              When there are multiple <a>RTP stream</a>s connected to the same sender, such as when using
+              simulcast or RTX, there will be one {{RTCOutboundRtpStreamStats}} per <a>RTP stream</a>,
               with distinct values of the {{RTCRtpStreamStats/ssrc}} member, and all these senders will have a
               reference to the same {{RTCStatsType/"sender"}} object (of type {{RTCAudioSenderStats}} or
               {{RTCVideoSenderStats}}) and {{RTCStatsType/"track"}} object (of type
@@ -462,10 +459,10 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              Statistics for the remote endpoint's inbound RTP stream corresponding to an outbound
+              Statistics for the remote endpoint's inbound <a>RTP stream</a> corresponding to an outbound
               stream that is currently sent with this {{RTCPeerConnection}} object. It is
-              measured at the remote endpoint and reported in an RTCP Receiver Report (RR) or RTCP
-              Extended Report (XR). It is accessed by the
+              measured at the remote endpoint and reported in an <a>RTCP Receiver Report</a> (RR) or <a>RTCP
+              Extended Report</a> (XR). It is accessed by the
               {{RTCRemoteInboundRtpStreamStats}}.
             </p>
           </dd>
@@ -474,9 +471,9 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              Statistics for the remote endpoint's outbound RTP stream corresponding to an inbound
+              Statistics for the remote endpoint's outbound <a>RTP stream</a> corresponding to an inbound
               stream that is currently received with this {{RTCPeerConnection}} object. It
-              is measured at the remote endpoint and reported in an RTCP Sender Report (SR). It is
+              is measured at the remote endpoint and reported in an <a>RTCP Sender Report</a> (SR). It is
               accessed by the {{RTCRemoteOutboundRtpStreamStats}}.
             </p>
           </dd>
@@ -681,14 +678,14 @@ enum RTCStatsType {
         </p>
         <p>
           The metrics exposed here correspond to local measurements and those reported by RTCP packets. 
-          Compound RTCP packets contain multiple RTCP report blocks, such as Sender Report (SR) and 
-          Receiver Report (RR). Wheras, a non-compound RTCP packets may contain just a single 
+          Compound RTCP packets contain multiple RTCP report blocks, such as <a>Sender Report</a> (SR) and 
+          <a>Receiver Report</a> (RR) whereas a non-compound RTCP packets may contain just a single 
           RTCP SR or RR block.
         </p>
         <p>
-          The lifetime of all RTP [= monitored object =]s starts when the RTP stream is first
-          used: When the first RTP packet is sent or received on the SSRC it represents, or when
-          the first RTCP packet is sent or received that refers to the SSRC of the RTP stream.
+          The lifetime of all RTP [= monitored object =]s starts when the <a>RTP stream</a> is first
+          used: When the first RTP packet is sent or received on the <a>SSRC</a> it represents, or when
+          the first RTCP packet is sent or received that refers to the <a>SSRC</a> of the <a>RTP stream</a>.
         </p>
         <p>
           RTP monitored objects are not [= deleted =].
@@ -697,36 +694,36 @@ enum RTCStatsType {
           The hierarchy is as follows:
         </p>
         <p>
-          {{RTCRtpStreamStats}}: Stats that apply to any end of any RTP stream
+          {{RTCRtpStreamStats}}: Stats that apply to any end of any <a>RTP stream</a>
         </p>
         <ul>
           <li>
             <p>
               {{RTCReceivedRtpStreamStats}}: Stats measured at the receiving end of an RTP
               stream, known either because they're measured locally or transmitted via an RTCP
-              Receiver Report (RR) or Extended Report (XR) block.
+              <a>Receiver Report</a> (RR) or <a>Extended Report</a> (XR) block.
             </p>
             <ul>
               <li>
                 <p>
                   {{RTCInboundRtpStreamStats}}: Stats that can only be measured at the local
-                  receiving end of an RTP stream.
+                  receiving end of an <a>RTP stream</a>.
                 </p>
               </li>
               <li>
                 <p>
                   {{RTCRemoteInboundRtpStreamStats}}: Stats relevant to the remote receiving end
-                  of an RTP stream - usually computed by combining local data with data received
-                  via an RTCP RR or XR block.
+                  of an <a>RTP stream</a> - usually computed by combining local data with data received
+                  via an RTCP <a>RR</a> or <a>XR</a> block.
                 </p>
               </li>
             </ul>
           </li>
           <li>
             <p>
-              {{RTCSentRtpStreamStats}}: Stats measured at the sending end of an RTP stream,
+              {{RTCSentRtpStreamStats}}: Stats measured at the sending end of an <a>RTP stream</a>,
               known either because they're measured locally or because they're received via RTCP,
-              usually in an RTCP Sender Report (SR).
+              usually in an <a>RTCP Sender Report</a> (SR).
             </p>
             <ul>
               <li>
@@ -735,7 +732,7 @@ enum RTCStatsType {
               <li>
                 <p>
                   {{RTCRemoteOutboundRtpStreamStats}}: Stats relevant to the remote sending end
-                  of an RTP stream, usually computed based on an RTCP SR.
+                  of an <a>RTP stream</a>, usually computed based on an <a>RTCP SR</a>.
                 </p>
               </li>
             </ul>
@@ -786,7 +783,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   It is a unique identifier that is associated to the object that was inspected to
-                  produce the {{RTCTransportStats}} associated with this RTP stream.
+                  produce the {{RTCTransportStats}} associated with this <a>RTP stream</a>.
                 </p>
               </dd>
               <dt>
@@ -796,7 +793,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   It is a unique identifier that is associated to the object that was inspected to
-                  produce the {{RTCCodecStats}} associated with this RTP stream.
+                  produce the {{RTCCodecStats}} associated with this <a>RTP stream</a>.
                 </p>
               </dd>
             </dl>
@@ -973,10 +970,10 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Total number of RTP packets received for this SSRC. At the receiving endpoint,
+                  Total number of RTP packets received for this <a>SSRC</a>. At the receiving endpoint,
                   this is calculated as defined in [[!RFC3550]] section 6.4.1. At the sending
                   endpoint the {{packetsReceived}} can be calculated by subtracting the packets lost
-                  from the expected Highest Sequence Number reported in the RTCP Sender Report as
+                  from the expected Highest Sequence Number reported in the <a>RTCP Sender Report</a> as
                   discussed in Appendix A.3. in [[!RFC3550]].
                 </p>
               </dd>
@@ -985,7 +982,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Total number of RTP packets lost for this SSRC. Calculated as defined in
+                  Total number of RTP packets lost for this <a>SSRC</a>. Calculated as defined in
                   [[!RFC3550]] section 6.4.1. Note that because of how this is estimated, it can be
                   negative if more packets are received than sent.
                 </p>
@@ -995,7 +992,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Packet Jitter measured in seconds for this SSRC. Calculated as defined in section
+                  Packet Jitter measured in seconds for this <a>SSRC</a>. Calculated as defined in section
                   6.4.1. of [[!RFC3550]].
                 </p>
               </dd>
@@ -1237,7 +1234,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The {{remoteId}} is used for looking up the remote
-                  {{RTCRemoteOutboundRtpStreamStats}} object for the same SSRC.
+                  {{RTCRemoteOutboundRtpStreamStats}} object for the same <a>SSRC</a>.
                 </p>
               </dd>
               <dt>
@@ -1246,7 +1243,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Only valid for video. It represents the total number of frames correctly decoded
-                  for this RTP stream, i.e., frames that would be displayed if no frames are dropped.
+                  for this <a>RTP stream</a>, i.e., frames that would be displayed if no frames are dropped.
                 </p>
               </dd>
               <dt>
@@ -1379,7 +1376,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the timestamp at which the last packet was received for this SSRC.
+                  Represents the timestamp at which the last packet was received for this <a>SSRC</a>.
                   This differs from {{RTCStats/timestamp}}, which represents the time at which the
                   statistics were generated by the local endpoint.
                 </p>
@@ -1392,7 +1389,7 @@ enum RTCStatsType {
                 <p>
                   The average RTCP interval between two consecutive compound RTCP packets. This is
                   calculated by the sending endpoint when sending compound RTCP reports. Compound
-                  packets must contain at least a RTCP RR or SR block and an SDES packet with the 
+                  packets must contain at least a RTCP <a>RR</a> or <a>SR</a> block and an SDES packet with the 
                   CNAME item.
                 </p>
               </dd>
@@ -1402,7 +1399,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Total number of RTP header and padding bytes received for this SSRC. This does
+                  Total number of RTP header and padding bytes received for this <a>SSRC</a>. This does
                   not include the size of transport layer headers such as IP or UDP.
                   <code>headerBytesReceived + bytesReceived</code> equals the number of bytes
                   received as payload over the transport.
@@ -1414,7 +1411,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Total number of RTP FEC packets received for this SSRC. This counter can also be
+                  Total number of RTP FEC packets received for this <a>SSRC</a>. This counter can also be
                   incremented when receiving FEC packets in-band with media packets (e.g., with
                   Opus).
                 </p>
@@ -1425,7 +1422,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Total number of RTP FEC packets received for this SSRC where the error correction
+                  Total number of RTP FEC packets received for this <a>SSRC</a> where the error correction
                   payload was discarded by the application. This may happen 1. if all the source
                   packets protected by the FEC packet were received or already recovered by a
                   separate FEC packet, or 2. if the FEC packet arrived late, i.e., outside the
@@ -1439,7 +1436,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Total number of bytes received for this SSRC. Calculated as defined in
+                  Total number of bytes received for this <a>SSRC</a>. Calculated as defined in
                   [[!RFC3550]] section 6.4.1.
                 </p>
               </dd>
@@ -1474,7 +1471,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Total number of packets received for this SSRC, per Differentiated Services code
+                  Total number of packets received for this <a>SSRC</a>, per Differentiated Services code
                   point (DSCP) [[RFC2474]]. DSCPs are identified as decimal integers in string
                   form. Note that due to network remapping and bleaching, these numbers are not
                   expected to match the numbers seen on sending. Not all OSes make this information
@@ -1533,7 +1530,7 @@ enum RTCStatsType {
                 <p>
                   This is the estimated playout time of this receiver's track. The playout time is
                   the NTP timestamp of the last playable audio sample or video frame that has a known
-                  timestamp (from an RTCP SR packet mapping RTP timestamps to NTP timestamps),
+                  timestamp (from an <a>RTCP SR</a> packet mapping RTP timestamps to NTP timestamps),
                   extrapolated with the time elapsed since it was ready to be played out. This is
                   the "current time" of the track in NTP clock time of the sender and can be present
                   even if there is no audio currently playing.
@@ -1587,7 +1584,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Only valid for audio. The total number of samples that have been received on this
-                  RTP stream. This includes {{concealedSamples}}.
+                  <a>RTP stream</a>. This includes {{concealedSamples}}.
                 </p>
                 <p>
                   Note: If multiple audio channels are used, metrics based on
@@ -1803,7 +1800,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Only valid for video. Represents the total number of complete frames received on
-                  this RTP stream. This metric is incremented when the complete frame is received.
+                  this <a>RTP stream</a>. This metric is incremented when the complete frame is received.
                 </p>
               </dd>
               <dt>
@@ -1830,9 +1827,9 @@ enum RTCStatsType {
         </h3>
         <p>
           The <dfn>RTCRemoteInboundRtpStreamStats</dfn> dictionary represents the remote endpoint's
-          measurement metrics for a particular incoming RTP stream (corresponding to an outgoing
-          RTP stream at the sending endpoint). The timestamp reported in the statistics object is
-          the time at which the corresponding RTCP RR was received.
+          measurement metrics for a particular incoming <a>RTP stream</a> (corresponding to an outgoing
+          <a>RTP stream</a> at the sending endpoint). The timestamp reported in the statistics object is
+          the time at which the corresponding <a>RTCP RR</a> was received.
         </p>
         <div>
           <pre class="idl">dictionary RTCRemoteInboundRtpStreamStats : RTCReceivedRtpStreamStats {
@@ -1856,7 +1853,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The {{localId}} is used for looking up the local
-                  {{RTCOutboundRtpStreamStats}} object for the same SSRC.
+                  {{RTCOutboundRtpStreamStats}} object for the same <a>SSRC</a>.
                 </p>
               </dd>
               <dt>
@@ -1865,9 +1862,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Estimated round trip time for this SSRC based on the RTCP timestamps in the RTCP
+                  Estimated round trip time for this <a>SSRC</a> based on the RTCP timestamps in the RTCP
                   Receiver Report (RR) and measured in seconds. Calculated as defined in section
-                  6.4.1. of [[!RFC3550]]. If no RTCP Receiver Report is received with a DLSR value
+                  6.4.1. of [[!RFC3550]]. If no <a>RTCP Receiver Report</a> is received with a DLSR value
                   other than 0, the round trip time is left undefined.
                 </p>
               </dd>
@@ -1879,7 +1876,7 @@ enum RTCStatsType {
                 <p>
                   Represents the cumulative sum of all round trip time measurements in seconds 
                   since the beginning of the session. The individual round trip time is calculated 
-                  based on the RTCP timestamps in the RTCP Receiver Report (RR) [[!RFC3550]], hence
+                  based on the RTCP timestamps in the <a>RTCP Receiver Report</a> (RR) [[!RFC3550]], hence
                   undefined roundtrip are not added. The average round trip time can be computed 
                   from {{totalRoundTripTime}} by dividing it by 
                   {{roundTripTimeMeasurements}}.
@@ -1891,7 +1888,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The fraction packet loss reported for this SSRC. Calculated as defined in
+                  The fraction packet loss reported for this <a>SSRC</a>. Calculated as defined in
                   [[!RFC3550]] section 6.4.1 and Appendix A.3.
                 </p>
               </dd>
@@ -1901,7 +1898,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the total number of RTCP RR blocks received for this SSRC.
+                  Represents the total number of <a>RTCP RR</a> blocks received for this <a>SSRC</a>.
                 </p>
               </dd>
               <dt>
@@ -1910,7 +1907,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the total number of RTCP RR blocks received for this SSRC that contain 
+                  Represents the total number of <a>RTCP RR</a> blocks received for this <a>SSRC</a> that contain 
                   a valid round trip time. This counter will increment if the {{roundTripTime}} is undefined.
                 </p>
               </dd>
@@ -1939,7 +1936,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Total number of RTP packets sent for this SSRC. Calculated as defined in
+                  Total number of RTP packets sent for this <a>SSRC</a>. Calculated as defined in
                   [[!RFC3550]] section 6.4.1.
                 </p>
               </dd>
@@ -1949,7 +1946,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Total number of bytes sent for this SSRC. Calculated as defined in [[!RFC3550]]
+                  Total number of bytes sent for this <a>SSRC</a>. Calculated as defined in [[!RFC3550]]
                   section 6.4.1.
                 </p>
               </dd>
@@ -1963,7 +1960,7 @@ enum RTCStatsType {
         </h3>
         <p>
           The <dfn>RTCOutboundRtpStreamStats</dfn> dictionary represents the measurement metrics
-          for the outgoing RTP stream. The timestamp reported in the statistics object is the time
+          for the outgoing <a>RTP stream</a>. The timestamp reported in the statistics object is the time
           at which the data was sampled.
         </p>
         <div>
@@ -2049,7 +2046,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The {{remoteId}} is used for looking up the remote
-                  {{RTCRemoteInboundRtpStreamStats}} object for the same SSRC.
+                  {{RTCRemoteInboundRtpStreamStats}} object for the same <a>SSRC</a>.
                 </p>
               </dd>
               <dt>
@@ -2058,7 +2055,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Exposes the {{RTCRtpCodingParameters/rid}}
-                  encoding parameter of this RTP stream if it has been set, otherwise it is
+                  encoding parameter of this <a>RTP stream</a> if it has been set, otherwise it is
                   undefined. If set this value will be present regardless if the RID RTP header
                   extension has been negotiated.
                 </p>
@@ -2069,7 +2066,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the timestamp at which the last packet was sent for this SSRC. This
+                  Represents the timestamp at which the last packet was sent for this <a>SSRC</a>. This
                   differs from {{RTCStats/timestamp}}, which represents the time at which the
                   statistics were generated by the local endpoint.
                 </p>
@@ -2080,7 +2077,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Total number of RTP header and padding bytes sent for this SSRC. This does not
+                  Total number of RTP header and padding bytes sent for this <a>SSRC</a>. This does not
                   include the size of transport layer headers such as IP or UDP.
                   <code>headerBytesSent + bytesSent</code> equals the number of bytes sent as
                   payload over the transport.
@@ -2092,7 +2089,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Total number of RTP packets for this SSRC that have been discarded due to socket
+                  Total number of RTP packets for this <a>SSRC</a> that have been discarded due to socket
                   errors, i.e. a socket error occured when handing the packets to the socket. This
                   might happen due to various reasons, including full buffer or no available
                   memory.
@@ -2104,7 +2101,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Total number of bytes for this SSRC that have been discarded due to socket
+                  Total number of bytes for this <a>SSRC</a> that have been discarded due to socket
                   errors, i.e. a socket error occured when handing the packets containing the bytes
                   to the socket. This might happen due to various reasons, including full buffer or
                   no available memory. Calculated as defined in [[!RFC3550]] section 6.4.1.
@@ -2116,7 +2113,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Total number of RTP FEC packets sent for this SSRC. This counter can also be
+                  Total number of RTP FEC packets sent for this <a>SSRC</a>. This counter can also be
                   incremented when sending FEC packets in-band with media packets (e.g., with
                   Opus).
                 </p>
@@ -2127,7 +2124,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The total number of packets that were retransmitted for this SSRC. This is a
+                  The total number of packets that were retransmitted for this <a>SSRC</a>. This is a
                   subset of {{RTCSentRtpStreamStats/packetsSent}}.
                 </p>
               </dd>
@@ -2137,7 +2134,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The total number of bytes that were retransmitted for this SSRC, only including
+                  The total number of bytes that were retransmitted for this <a>SSRC</a>, only including
                   payload bytes. This is a subset of {{RTCSentRtpStreamStats/bytesSent}}.
                 </p>
               </dd>
@@ -2147,7 +2144,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  It is the current target bitrate configured for this particular SSRC and is the
+                  It is the current target bitrate configured for this particular <a>SSRC</a> and is the
                   Transport Independent Application Specific (TIAS) bitrate [[!RFC3890]].
                   Typically, the target bitrate is a configuration parameter provided to the
                   codec's encoder and does not count the size of the IP or other transport layers
@@ -2215,7 +2212,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only valid for video. Represents the total number of frames sent on this RTP stream.
+                  Only valid for video. Represents the total number of frames sent on this <a>RTP stream</a>.
                 </p>
               </dd>
               <dt>
@@ -2268,7 +2265,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Total number of video frames that have been discarded for this SSRC due to socket
+                  Total number of video frames that have been discarded for this <a>SSRC</a> due to socket
                   errors, i.e. a socket error occured when handing the packets to the socket. This
                   might happen due to various reasons, including full buffer or no available
                   memory. 
@@ -2301,7 +2298,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Only valid for audio. The total number of samples that have been sent over this
-                  RTP stream.
+                  <a>RTP stream</a>.
                 </p>
                 <p>
                   Note: If multiple audio channels are used, metrics based on
@@ -2376,7 +2373,7 @@ enum RTCStatsType {
                 <p>
                   The average RTCP interval between two consecutive compound RTCP packets. This is
                   calculated by the sending endpoint when sending compound RTCP reports. Compound
-                  packets must contain at least a RTCP RR or SR block and an SDES packet with the
+                  packets must contain at least a RTCP <a>RR</a> or <a>SR</a> block and an SDES packet with the
                   CNAME item.
                 </p>
               </dd>
@@ -2440,7 +2437,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Total number of packets sent for this SSRC, per DSCP. DSCPs are identified as
+                  Total number of packets sent for this <a>SSRC</a>, per DSCP. DSCPs are identified as
                   decimal integers in string form.
                 </p>
               </dd>
@@ -2579,9 +2576,9 @@ enum RTCStatsType {
         </h3>
         <p>
           The <dfn>RTCRemoteOutboundRtpStreamStats</dfn> dictionary represents the remote
-          endpoint's measurement metrics for its outgoing RTP stream (corresponding to an outgoing
-          RTP stream at the sending endpoint). The timestamp reported in the statistics object is
-          the time at which the corresponding RTCP SR was received.
+          endpoint's measurement metrics for its outgoing <a>RTP stream</a> (corresponding to an outgoing
+          <a>RTP stream</a> at the sending endpoint). The timestamp reported in the statistics object is
+          the time at which the corresponding <a>RTCP SR</a> was received.
         </p>
         <div>
           <pre class="idl">dictionary RTCRemoteOutboundRtpStreamStats : RTCSentRtpStreamStats {
@@ -2602,7 +2599,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The {{localId}} is used for looking up the local
-                  {{RTCInboundRtpStreamStats}} object for the same SSRC.
+                  {{RTCInboundRtpStreamStats}} object for the same <a>SSRC</a>.
                 </p>
               </dd>
               <dt>
@@ -2616,7 +2613,7 @@ enum RTCStatsType {
                   sent by the remote endpoint. This differs from {{RTCStats/timestamp}}, which
                   represents the time at which the statistics were generated or received by the
                   local endpoint. The {{remoteTimestamp}}, if present, is derived from the
-                  NTP timestamp in an RTCP Sender Report (SR) block, which reflects the remote
+                  NTP timestamp in an <a>RTCP Sender Report</a> (SR) block, which reflects the remote
                   endpoint's clock. That clock may not be synchronized with the local clock.
                 </p>
               </dd>
@@ -2626,7 +2623,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the total number of RTCP SR blocks sent for this SSRC.
+                  Represents the total number of <a>RTCP SR</a> blocks sent for this <a>SSRC</a>.
                 </p>
               </dd>
             </dl>
@@ -2933,7 +2930,7 @@ enum RTCStatsType {
         </h3>
         <p>
           The {{RTCRtpContributingSourceStats}} dictionary represents the measurement
-          metrics for a contributing source (CSRC) that is contributing to an incoming RTP stream.
+          metrics for a contributing source (CSRC) that is contributing to an incoming <a>RTP stream</a>.
           Each contributing source produces a stream of RTP packets, which are combined by a mixer
           into a single stream of RTP packets that is ultimately received by the WebRTC endpoint.
           Information about the sources that contributed to this combined stream may be provided in
@@ -2961,7 +2958,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The SSRC identifier of the contributing source represented by this stats object,
+                  The <a>SSRC</a> identifier of the contributing source represented by this stats object,
                   as defined by [[!RFC3550]]. It is a 32-bit unsigned integer that appears in the
                   CSRC list of any packets the relevant source contributed to.
                 </p>
@@ -2973,7 +2970,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The ID of the {{RTCInboundRtpStreamStats}} object representing
-                  the inbound RTP stream that this contributing source is contributing to.
+                  the inbound <a>RTP stream</a> that this contributing source is contributing to.
                 </p>
               </dd>
               <dt>
@@ -2985,7 +2982,7 @@ enum RTCStatsType {
                   The total number of RTP packets that this contributing source contributed to.
                   This value is incremented each time a packet is counted by
                   {{RTCInboundRtpStreamStats}}.{{RTCReceivedRtpStreamStats/packetsReceived}}, and the packet's CSRC
-                  list (as defined by [[!RFC3550]] section 5.1) contains the SSRC identifier of
+                  list (as defined by [[!RFC3550]] section 5.1) contains the <a>SSRC</a> identifier of
                   this contributing source, {{contributorSsrc}}.
                 </p>
               </dd>
@@ -4044,7 +4041,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   It is calculated by the underlying congestion control by combining the available
-                  bitrate for all the outgoing RTP streams using this candidate pair. The bitrate
+                  bitrate for all the outgoing <a>RTP stream</a>s using this candidate pair. The bitrate
                   measurement does not count the size of the IP or other transport layers like TCP
                   or UDP. It is similar to the TIAS defined in [[!RFC3890]], i.e., it is measured
                   in bits per second and the bitrate is calculated over a 1 second window.
@@ -4065,7 +4062,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   It is calculated by the underlying congestion control by combining the available
-                  bitrate for all the incoming RTP streams using this candidate pair. The bitrate
+                  bitrate for all the incoming <a>RTP stream</a>s using this candidate pair. The bitrate
                   measurement does not count the size of the IP or other transport layers like TCP
                   or UDP. It is similar to the TIAS defined in [[!RFC3890]], i.e., it is measured
                   in bits per second and the bitrate is calculated over a 1 second window.
