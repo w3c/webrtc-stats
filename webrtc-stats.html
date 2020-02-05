@@ -99,6 +99,7 @@
       </p>
       <p>The terms <dfn data-lt="SSRC"><a href="https://tools.ietf.org/html/rfc3550#section-3">Synchronization Source</a></dfn> (SSRC), <dfn data-lt="Sender Report|SR|RTCP SR"><a href="https://tools.ietf.org/html/rfc3550#section-6.4.1">RTCP Sender Report</a></dfn>, <dfn data-lt="Receiver Report|RR|RTCP RR"><a href="https://tools.ietf.org/html/rfc3550#section-6.4.2">RTCP Receiver Report</a></dfn> are defined in [[RFC3550]].</p>
       <p>The term <dfn data-lt="Extended Report|XR"><a href="https://tools.ietf.org/html/rfc3611">RTCP Extended Report</a></dfn> is defined in [[RFC3611]].</p>
+      <p>An <dfn>audio sample</dfn> refers to having a sample in any channel of an audio track - if multiple audio channels are used, metrics based on samples do not increment at a higher rate, simultaneously having samples in multiple channels counts as a single sample.</p>
     </section>
     <section class="informative">
       <h2>
@@ -1529,7 +1530,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   This is the estimated playout time of this receiver's track. The playout time is
-                  the NTP timestamp of the last playable audio sample or video frame that has a known
+                  the NTP timestamp of the last playable <a>audio sample</a> or video frame that has a known
                   timestamp (from an <a>RTCP SR</a> packet mapping RTP timestamps to NTP timestamps),
                   extrapolated with the time elapsed since it was ready to be played out. This is
                   the "current time" of the track in NTP clock time of the sender and can be present
@@ -1547,19 +1548,14 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  It is the sum of the time, in seconds, each audio sample or video frame takes from
+                  It is the sum of the time, in seconds, each <a>audio sample</a> or video frame takes from
                   the time it is received and to the time it exits the jitter buffer. This increases
                   upon samples or frames exiting, having completed their time in the buffer (and
                   incrementing {{jitterBufferEmittedCount}}). The average jitter buffer
                   delay can be calculated by dividing the {{jitterBufferDelay}} with the
                   {{jitterBufferEmittedCount}}.
                 </p>
-                <p>
-                  Note: If multiple audio channels are used, metrics based on
-                  samples do not increment at a higher rate. "A sample" refers
-                  to having a sample in either channel - simultaneously having
-                  samples in multiple channels counts as a single sample.
-                </p>
+                
               </dd>
               <dt>
                 <dfn>jitterBufferEmittedCount</dfn> of type <span class=
@@ -1567,15 +1563,10 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The total number of audio samples or video frames that have come out of the
+                  The total number of <a>audio sample</a>s or video frames that have come out of the
                   jitter buffer (increasing {{jitterBufferDelay}}).
                 </p>
-                <p>
-                  Note: If multiple audio channels are used, metrics based on
-                  samples do not increment at a higher rate. "A sample" refers
-                  to having a sample in either channel - simultaneously having
-                  samples in multiple channels counts as a single sample.
-                </p>
+                
               </dd>
               <dt>
                 <dfn>totalSamplesReceived</dfn> of type <span class=
@@ -1586,12 +1577,7 @@ enum RTCStatsType {
                   Only valid for audio. The total number of samples that have been received on this
                   <a>RTP stream</a>. This includes {{concealedSamples}}.
                 </p>
-                <p>
-                  Note: If multiple audio channels are used, metrics based on
-                  samples do not increment at a higher rate. "A sample" refers
-                  to having a sample in either channel - simultaneously having
-                  samples in multiple channels counts as a single sample.
-                </p>
+                
               </dd>
               <dt>
                 <dfn>samplesDecodedWithSilk</dfn> of type <span class=
@@ -1625,12 +1611,7 @@ enum RTCStatsType {
                   are samples from lost packets (reported in {{RTCReceivedRtpStreamStats/packetsLost}}) or samples from packets that arrive
                   too late to be played out (reported in {{RTCReceivedRtpStreamStats/packetsDiscarded}}).
                 </p>
-                <p>
-                  Note: If multiple audio channels are used, metrics based on
-                  samples do not increment at a higher rate. "A sample" refers
-                  to having a sample in either channel - simultaneously having
-                  samples in multiple channels counts as a single sample.
-                </p>
+                
               </dd>
               <dt>
                 <dfn>silentConcealedSamples</dfn> of type <span class=
@@ -1642,12 +1623,7 @@ enum RTCStatsType {
                   "silent". Playing out silent samples results in silence or comfort noise. This is
                   a subset of {{concealedSamples}}.
                 </p>
-                <p>
-                  Note: If multiple audio channels are used, metrics based on
-                  samples do not increment at a higher rate. "A sample" refers
-                  to having a sample in either channel - simultaneously having
-                  samples in multiple channels counts as a single sample.
-                </p>
+                
               </dd>
               <dt>
                 <dfn>concealmentEvents</dfn> of type <span class=
@@ -1660,12 +1636,7 @@ enum RTCStatsType {
                   consecutive concealed samples will increase the {{concealedSamples}} count multiple
                   times but is a single concealment event.
                 </p>
-                <p>
-                  Note: If multiple audio channels are used, metrics based on
-                  samples do not increment at a higher rate. "A sample" refers
-                  to having a sample in either channel - simultaneously having
-                  samples in multiple channels counts as a single sample.
-                </p>
+                
               </dd>
               <dt>
                 <dfn>insertedSamplesForDeceleration</dfn> of type <span class=
@@ -1678,12 +1649,7 @@ enum RTCStatsType {
                   If playout is slowed down by inserting samples, this will be the number of inserted
                   samples.
                 </p>
-                <p>
-                  Note: If multiple audio channels are used, metrics based on
-                  samples do not increment at a higher rate. "A sample" refers
-                  to having a sample in either channel - simultaneously having
-                  samples in multiple channels counts as a single sample.
-                </p>
+                
               </dd>
               <dt>
                 <dfn>removedSamplesForAcceleration</dfn> of type <span class=
@@ -1696,12 +1662,7 @@ enum RTCStatsType {
                   out. If speedup is achieved by removing samples, this will be the count of samples
                   removed.
                 </p>
-                <p>
-                  Note: If multiple audio channels are used, metrics based on
-                  samples do not increment at a higher rate. "A sample" refers
-                  to having a sample in either channel - simultaneously having
-                  samples in multiple channels counts as a single sample.
-                </p>
+                
               </dd>
               <dt>
                 <dfn>audioLevel</dfn> of type <span class=
@@ -1735,7 +1696,7 @@ enum RTCStatsType {
                   {{RTCAudioSourceStats}} instead.
                 </p>
                 <p>
-                  This value MUST be computed as follows: for each audio sample that is received
+                  This value MUST be computed as follows: for each <a>audio sample</a> that is received
                   (and thus counted by {{totalSamplesReceived}}), add the sample's
                   value divided by the highest-intensity encodable value, squared and then
                   multiplied by the duration of the sample in seconds. In other words,
@@ -1762,11 +1723,8 @@ enum RTCStatsType {
                   obtained by doing an RMS calculation over the contiguous 20ms segment of audio.
                 </p>
                 <p>
-                  Note: If multiple audio channels are used, metrics based on
-                  samples do not increment at a higher rate. "A sample" refers
-                  to having a sample in either channel - simultaneously having
-                  samples in multiple channels counts as a single sample. The
-                  "audio energy of a sample" refers to the highest energy of any
+                  If multiple audio channels are used, the
+                  audio energy of a sample refers to the <strong>highest energy</strong> of any
                   channel.
                 </p>
               </dd>
@@ -1786,12 +1744,7 @@ enum RTCStatsType {
                   {{totalAudioEnergy}} to compute an average audio level over
                   different intervals.
                 </p>
-                <p>
-                  Note: If multiple audio channels are used, metrics based on
-                  samples do not increment at a higher rate. "A sample" refers
-                  to having a sample in either channel - simultaneously having
-                  samples in multiple channels counts as a single sample.
-                </p>
+                
               </dd>
               <dt>
                 <dfn>framesReceived</dfn> of type <span class="idlMemberType">unsigned
@@ -2300,12 +2253,7 @@ enum RTCStatsType {
                   Only valid for audio. The total number of samples that have been sent over this
                   <a>RTP stream</a>.
                 </p>
-                <p>
-                  Note: If multiple audio channels are used, metrics based on
-                  samples do not increment at a higher rate. "A sample" refers
-                  to having a sample in either channel - simultaneously having
-                  samples in multiple channels counts as a single sample.
-                </p>
+                
               </dd>
               <dt>
                 <dfn>samplesEncodedWithSilk</dfn> of type <span class=
@@ -2643,7 +2591,7 @@ enum RTCStatsType {
           the encoding step. For example, a track may be captured from a high-resolution camera,
           its frames downscaled due to track constraints and then further downscaled by the
           encoders due to CPU and network conditions. This dictionary reflects the video frames or
-          audio samples passed out from the track - after track constraints have been applied but
+          <a>audio sample</a>s passed out from the track - after track constraints have been applied but
           before any encoding or further donwsampling occurs.
         </p>
         <p>
@@ -2749,7 +2697,7 @@ enum RTCStatsType {
                   sourced tracks, see {{RTCAudioReceiverStats}} instead.
                 </p>
                 <p>
-                  This value MUST be computed as follows: for each audio sample produced by the
+                  This value MUST be computed as follows: for each <a>audio sample</a> produced by the
                   media source during the lifetime of this stats object, add the sample's value
                   divided by the highest-intensity encodable value, squared and then multiplied by
                   the duration of the sample in seconds. In other words, <code>duration *
@@ -2776,11 +2724,8 @@ enum RTCStatsType {
                   obtained by doing an RMS calculation over the contiguous 20ms segment of audio.
                 </p>
                 <p>
-                  Note: If multiple audio channels are used, metrics based on
-                  samples do not increment at a higher rate. "A sample" refers
-                  to having a sample in either channel - simultaneously having
-                  samples in multiple channels counts as a single sample. The
-                  "audio energy of a sample" refers to the highest energy of any
+                  If multiple audio channels are used, the
+                  audio energy of a sample refers to the <strong>highest energy</strong> of any
                   channel.
                 </p>
               </dd>
@@ -2799,12 +2744,7 @@ enum RTCStatsType {
                   {{totalAudioEnergy}} to compute an average audio level over
                   different intervals.
                 </p>
-                <p>
-                  Note: If multiple audio channels are used, metrics based on
-                  samples do not increment at a higher rate. "A sample" refers
-                  to having a sample in either channel - simultaneously having
-                  samples in multiple channels counts as a single sample.
-                </p>
+                
               </dd>
               <dt>
                 <dfn>echoReturnLoss</dfn> of type <span class=
@@ -2817,12 +2757,8 @@ enum RTCStatsType {
                   (2012) section 3.14.
                 </p>
                 <p>
-                  Note: If multiple audio channels are used, metrics based on
-                  samples do not increment at a higher rate. "A sample" refers
-                  to having a sample in either channel - simultaneously having
-                  samples in multiple channels counts as a single sample. When
-                  calculating echo return loss, the channel of the least audio
-                  energy is considered for any sample.
+                  If multiple audio channels are used, the channel of the <strong>least audio
+                  energy</strong> is considered for any sample.
                 </p>
               </dd>
               <dt>
@@ -2836,12 +2772,8 @@ enum RTCStatsType {
                   (2012) section 3.15.
                 </p>
                 <p>
-                  Note: If multiple audio channels are used, metrics based on
-                  samples do not increment at a higher rate. "A sample" refers
-                  to having a sample in either channel - simultaneously having
-                  samples in multiple channels counts as a single sample. When
-                  calculating echo return loss enhancement, the channel of the
-                  least audio energy is considered for any sample.
+                  If multiple audio channels are used, the channel of the
+                  <strong>least audio energy</strong> is considered for any sample.
                 </p>
               </dd>
             </dl>
