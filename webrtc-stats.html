@@ -2795,7 +2795,7 @@ enum RTCStatsType {
              unsigned long   height;
              unsigned long   bitDepth;
              unsigned long   frames;
-             unsigned long   framesPerSecond;
+             double          framesPerSecond;
 };</pre>
           <section>
             <h2>
@@ -2844,7 +2844,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn>framesPerSecond</dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
+                "idlMemberType">double</span>
               </dt>
               <dd>
                 <p>
@@ -3031,7 +3031,7 @@ enum RTCStatsType {
           only happen if a remote description is rolled back.
         </p>
         <div>
-          <pre class="idl">dictionary RTCRtpTransceiverStats {
+          <pre class="idl">dictionary RTCRtpTransceiverStats : RTCStats {
     DOMString senderId;
     DOMString receiverId;
     DOMString mid;
@@ -3310,7 +3310,7 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCDataChannelStats : RTCStats {
              DOMString           label;
              DOMString           protocol;
-             long                dataChannelIdentifier;
+             unsigned short      dataChannelIdentifier;
              DOMString           transportId;
              RTCDataChannelState state;
              unsigned long       messagesSent;
@@ -3339,7 +3339,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn>dataChannelIdentifier</dfn> of type <span class=
-                "idlMemberType">long</span>
+                "idlMemberType">unsigned short</span>
               </dt>
               <dd>
                 <p>
@@ -4345,19 +4345,19 @@ enum RTCStatsType {
         </div>
       </section>
     </section>
-    <section>
+    <section class=informative>
       <h2>
         Obsolete stats
       </h2>
       <div>
-        <pre class="idl">dictionary RTCMediaStreamStats : RTCStats {
-  DOMString streamIdentifier;
-  sequence&lt;DOMString&gt; trackIds;
-};</pre>
         <section>
           <h2>
             Obsolete {{RTCMediaStreamStats}} members
           </h2>
+          <pre class="idl">dictionary RTCMediaStreamStats : RTCStats {
+  DOMString streamIdentifier;
+  sequence&lt;DOMString&gt; trackIds;
+};</pre>
           <p>
             This entire dictionary was made obsolete in September, 2019 due to
             sender, receiver and transceiver stats objects being a better fit to
@@ -4385,7 +4385,6 @@ enum RTCStatsType {
             </dd>
           </dl>
         </section>
-      </div>
       <section id="lvststats-dict*">
         <h3>
           Obsolete <dfn>RTCSenderVideoTrackAttachmentStats</dfn> dictionary
@@ -5024,6 +5023,8 @@ enum RTCStatsType {
           </dd>
         </dl>
       </section>
+            </div>
+
     </section>
     <section>
       <h2>
