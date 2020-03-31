@@ -1118,7 +1118,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. The total number of frames dropped prior to decode or dropped
+                  Only [= map/exist =]s for video. The total number of frames dropped prior to decode or dropped
                   because the frame missed its display deadline for this receiver's track. The measurement
                   begins when the receiver is created and is a cumulative metric as defined in 
                   Appendix A (g) of [[!RFC7004]].
@@ -1130,7 +1130,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. The cumulative number of partial frames lost. The measurement
+                  Only [= map/exist =]s for video. The cumulative number of partial frames lost. The measurement
                   begins when the receiver is created and is a cumulative metric as defined in
                   Appendix A (j) of [[!RFC7004]]. This metric is incremented when the frame is sent
                   to the decoder. If the partial frame is received and recovered via retransmission
@@ -1143,7 +1143,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. The cumulative number of full frames lost. The measurement
+                  Only [= map/exist =]s for video. The cumulative number of full frames lost. The measurement
                   begins when the receiver is created and is a cumulative metric as defined in
                   Appendix A (i) of [[!RFC7004]].
                 </p>
@@ -1247,7 +1247,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. It represents the total number of frames correctly decoded
+                  Only [= map/exist =]s for video. It represents the total number of frames correctly decoded
                   for this <a>RTP stream</a>, i.e., frames that would be displayed if no frames are dropped.
                 </p>
               </dd>
@@ -1257,7 +1257,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. It represents the total number of key frames, such as key
+                  Only [= map/exist =]s for video. It represents the total number of key frames, such as key
                   frames in VP8 [[RFC6386]] or IDR-frames in H.264 [[RFC6184]], successfully
                   decoded for this RTP media stream. This is a subset of
                   {{framesDecoded}}. <code>framesDecoded - keyFramesDecoded</code> gives
@@ -1270,8 +1270,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. Represents the width of the last decoded frame. Before the
-                  first frame is decoded this member is [=dictionary member/not present=].
+                  Only [= map/exist =]s for video. Represents the width of the last decoded frame. Before the
+                  first frame is decoded this member does not [= map/exist =].
                 </p>
               </dd>
               <dt>
@@ -1280,8 +1280,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. Represents the height of the last decoded frame. Before
-                  the first frame is decoded this member is [=dictionary member/not present=].
+                  Only [= map/exist =]s for video. Represents the height of the last decoded frame. Before
+                  the first frame is decoded this member does not [= map/exist =].
                 </p>
               </dd>
               <dt>
@@ -1290,9 +1290,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. Represents the bit depth per pixel of the last decoded frame.
+                  Only [= map/exist =]s for video. Represents the bit depth per pixel of the last decoded frame.
                   Typical values are 24, 30, or 36 bits.
-                  Before the first frame is decoded this member is [=dictionary member/not present=].
+                  Before the first frame is decoded this member does not [= map/exist =].
                 </p>
               </dd>
               <dt>
@@ -1301,7 +1301,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. The number of decoded frames in the last second.
+                  Only [= map/exist =]s for video. The number of decoded frames in the last second.
                 </p>
               </dd>
               <dt>
@@ -1310,7 +1310,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. The sum of the QP values of frames decoded by this
+                  Only [= map/exist =]s for video. The sum of the QP values of frames decoded by this
                   receiver. The count of frames is in {{framesDecoded}}.
 
                 </p>
@@ -1369,7 +1369,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for audio. Whether the last RTP packet whose frame was delivered to the
+                  Only [= map/exist =]s for audio. Whether the last RTP packet whose frame was delivered to the
                   {{RTCRtpReceiver}}'s {{MediaStreamTrack}} for playout contained voice activity or not based
 
                   on the presence of the V bit in the extension header, as defined in [[RFC6464]]. This
@@ -1491,7 +1491,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. Count the total number of Full Intra Request (FIR) packets
+                  Only [= map/exist =]s for video. Count the total number of Full Intra Request (FIR) packets
                   sent by this receiver. Calculated as defined in [[!RFC5104]] section 4.3.1. and
                   does not use the metric indicated in [[RFC2032]], because it was deprecated by
                   [[RFC4587]].
@@ -1503,7 +1503,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. Count the total number of Picture Loss Indication (PLI)
+                  Only [= map/exist =]s for video. Count the total number of Picture Loss Indication (PLI)
                   packets sent by this receiver. Calculated as defined in [[!RFC4585]] section
                   6.3.1.
                 </p>
@@ -1524,7 +1524,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. Count the total number of Slice Loss Indication (SLI)
+                  Only [= map/exist =]s for video. Count the total number of Slice Loss Indication (SLI)
                   packets sent by this receiver. Calculated as defined in [[!RFC4585]] section
                   6.3.2.
                 </p>
@@ -1580,7 +1580,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for audio. The total number of samples that have been received on this
+                  Only [= map/exist =]s for audio. The total number of samples that have been received on this
                   RTP stream. This includes {{concealedSamples}}.
                 </p>
                 
@@ -1591,7 +1591,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for audio and when the audio codec is Opus. The total number of 
+                  Only [= map/exist =]s for audio and when the audio codec is Opus. The total number of 
                   samples decoded by the SILK portion of the Opus codec.
                 </p>
               </dd>
@@ -1601,7 +1601,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for audio and when the audio codec is Opus. The total number of 
+                  Only [= map/exist =]s for audio and when the audio codec is Opus. The total number of 
                   samples decoded by the CELT portion of the Opus codec.
                 </p>
               </dd>
@@ -1611,7 +1611,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for audio. The total number of samples that are concealed samples. A
+                  Only [= map/exist =]s for audio. The total number of samples that are concealed samples. A
                   concealed sample is a sample that was replaced with synthesized samples generated
                   locally before being played out. Examples of samples that have to be concealed
                   are samples from lost packets (reported in {{RTCReceivedRtpStreamStats/packetsLost}}) or samples from packets that arrive
@@ -1625,7 +1625,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for audio. The total number of concealed samples inserted that are
+                  Only [= map/exist =]s for audio. The total number of concealed samples inserted that are
                   "silent". Playing out silent samples results in silence or comfort noise. This is
                   a subset of {{concealedSamples}}.
                 </p>
@@ -1637,7 +1637,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for audio. The number of concealment events. This counter increases every
+                  Only [= map/exist =]s for audio. The number of concealment events. This counter increases every
                   time a concealed sample is synthesized after a non-concealed sample. That is, multiple
                   consecutive concealed samples will increase the {{concealedSamples}} count multiple
                   times but is a single concealment event.
@@ -1650,7 +1650,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for audio. When playout is slowed down, this counter is increased by the
+                  Only [= map/exist =]s for audio. When playout is slowed down, this counter is increased by the
                   difference between the number of samples received and the number of samples played out.
                   If playout is slowed down by inserting samples, this will be the number of inserted
                   samples.
@@ -1663,7 +1663,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for audio. When playout is sped up, this counter is increased by the
+                  Only [= map/exist =]s for audio. When playout is sped up, this counter is increased by the
                   difference between the number of samples received and the number of samples played
                   out. If speedup is achieved by removing samples, this will be the count of samples
                   removed.
@@ -1676,7 +1676,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for audio. Represents the audio level of the receiving track. For audio
+                  Only [= map/exist =]s for audio. Represents the audio level of the receiving track. For audio
                   levels of tracks attached locally, see {{RTCAudioSourceStats}}
                   instead.
                 </p>
@@ -1697,7 +1697,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for audio. Represents the audio energy of the receiving track. For
+                  Only [= map/exist =]s for audio. Represents the audio energy of the receiving track. For
                   audio energy of tracks attached locally, see
                   {{RTCAudioSourceStats}} instead.
                 </p>
@@ -1740,7 +1740,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for audio. Represents the audio duration of the receiving track. For
+                  Only [= map/exist =]s for audio. Represents the audio duration of the receiving track. For
                   audio durations of tracks attached locally, see
                   {{RTCAudioSourceStats}} instead.
                 </p>
@@ -1758,7 +1758,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. Represents the total number of complete frames received on
+                  Only [= map/exist =]s for video. Represents the total number of complete frames received on
                   this <a>RTP stream</a>. This metric is incremented when the complete frame is received.
                 </p>
               </dd>
@@ -2147,9 +2147,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. Represents the width of the last encoded frame. The resolution
+                  Only [= map/exist =]s for video. Represents the width of the last encoded frame. The resolution
                   of the encoded frame may be lower than the media source (see {{RTCVideoSourceStats.width}}).
-                  Before the first frame is encoded this member is [=dictionary member/not present=].
+                  Before the first frame is encoded this member does not [= map/exist =].
                 </p>
               </dd>
               <dt>
@@ -2158,9 +2158,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. Represents the height of the last encoded frame. The resolution
+                  Only [= map/exist =]s for video. Represents the height of the last encoded frame. The resolution
                   of the encoded frame may be lower than the media source (see {{RTCVideoSourceStats.height}}).
-                  Before the first frame is encoded this member is [=dictionary member/not present=].
+                  Before the first frame is encoded this member does not [= map/exist =].
                 </p>
               </dd>
               <dt>
@@ -2169,9 +2169,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. Represents the bit depth per pixel of the last encoded frame.
+                  Only [= map/exist =]s for video. Represents the bit depth per pixel of the last encoded frame.
                   Typical values are 24, 30, or 36 bits.
-                  Before the first frame is encoded this member is [=dictionary member/not present=].
+                  Before the first frame is encoded this member does not [= map/exist =].
                 </p>
               </dd>
               <dt>
@@ -2180,7 +2180,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. The number of encoded frames during the last second. This may be
+                  Only [= map/exist =]s for video. The number of encoded frames during the last second. This may be
                   lower than the media source frame rate (see {{RTCVideoSourceStats.framesPerSecond}}).
                 </p>
               </dd>
@@ -2190,7 +2190,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. Represents the total number of frames sent on this <a>RTP stream</a>.
+                  Only [= map/exist =]s for video. Represents the total number of frames sent on this <a>RTP stream</a>.
                 </p>
               </dd>
               <dt>
@@ -2199,7 +2199,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. Represents the total number of huge frames sent by this RTP
+                  Only [= map/exist =]s for video. Represents the total number of huge frames sent by this RTP
                   stream. Huge frames, by definition, are frames that have an encoded size at least
                   2.5 times the average size of the frames. The average size of the frames is defined
                   as the target bitrate per second divided by the target FPS at the time the frame was
@@ -2220,7 +2220,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. It represents the total number of frames successfully
+                  Only [= map/exist =]s for video. It represents the total number of frames successfully
                   encoded for this RTP media stream.
                 </p>
               </dd>
@@ -2230,7 +2230,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. It represents the total number of key frames, such as key
+                  Only [= map/exist =]s for video. It represents the total number of key frames, such as key
                   frames in VP8 [[RFC6386]] or IDR-frames in H.264 [[RFC6184]], successfully
                   encoded for this RTP media stream. This is a subset of
                   {{framesEncoded}}. <code>framesEncoded - keyFramesEncoded</code> gives
@@ -2255,7 +2255,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. The sum of the QP values of frames encoded by this sender.
+                  Only [= map/exist =]s for video. The sum of the QP values of frames encoded by this sender.
                   The count of frames is in {{framesEncoded}}.
                 </p>
                 <p>
@@ -2275,7 +2275,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for audio. The total number of samples that have been sent over this
+                  Only [= map/exist =]s for audio. The total number of samples that have been sent over this
                   <a>RTP stream</a>.
                 </p>
                 
@@ -2286,7 +2286,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for audio and when the audio codec is Opus. The total number of 
+                  Only [= map/exist =]s for audio and when the audio codec is Opus. The total number of 
                   samples encoded by the SILK portion of the Opus codec.
                 </p>
               </dd>
@@ -2296,7 +2296,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for audio and when the audio codec is Opus. The total number of 
+                  Only [= map/exist =]s for audio and when the audio codec is Opus. The total number of 
                   samples encoded by the CELT portion of the Opus codec.
                 </p>
               </dd>
@@ -2306,7 +2306,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for audio. Whether the last RTP packet sent contained voice activity
+                  Only [= map/exist =]s for audio. Whether the last RTP packet sent contained voice activity
                   or not based on the presence of the V bit in the extension header, as defined in
                   [[RFC6464]].
                 </p>
@@ -2356,7 +2356,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. The current reason for limiting the resolution and/or
+                  Only [= map/exist =]s for video. The current reason for limiting the resolution and/or
                   framerate, or {{RTCQualityLimitationReason/"none"}} if not limited.
                 </p>
                 <p>
@@ -2381,7 +2381,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. A record of the total time, in seconds, that this stream
+                  Only [= map/exist =]s for video. A record of the total time, in seconds, that this stream
                   has spent in each quality limitation state. The record includes a mapping for all
                   {{RTCQualityLimitationReason}} types, including {{RTCQualityLimitationReason/"none"}}.
                 </p>
@@ -2396,7 +2396,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. The number of times that the resolution has changed because
+                  Only [= map/exist =]s for video. The number of times that the resolution has changed because
                   we are quality limited ({{qualityLimitationReason}} has a value other than
                   {{RTCQualityLimitationReason/"none"}}). The counter is initially zero and increases when the
                   resolution goes up or down. For example, if a 720p track is sent as 480p for some
@@ -2430,7 +2430,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. Count the total number of Full Intra Request (FIR) packets
+                  Only [= map/exist =]s for video. Count the total number of Full Intra Request (FIR) packets
                   received by this sender. Calculated as defined in [[!RFC5104]] section 4.3.1. and
                   does not use the metric indicated in [[RFC2032]], because it was deprecated by
                   [[RFC4587]].
@@ -2442,7 +2442,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. Count the total number of Picture Loss Indication (PLI)
+                  Only [= map/exist =]s for video. Count the total number of Picture Loss Indication (PLI)
                   packets received by this sender. Calculated as defined in [[!RFC4585]] section
                   6.3.1.
                 </p>
@@ -2453,7 +2453,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] for video. Count the total number of Slice Loss Indication (SLI)
+                  Only [= map/exist =]s for video. Count the total number of Slice Loss Indication (SLI)
                   packets received by this sender. Calculated as defined in [[!RFC4585]] section
                   6.3.2.
                 </p>
@@ -2777,7 +2777,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] when the {{MediaStreamTrack}} is sourced from a microphone where
+                  Only [= map/exist =]s when the {{MediaStreamTrack}} is sourced from a microphone where
                   echo cancellation is applied. Calculated in decibels, as defined in [[!ECHO]]
                   (2012) section 3.14.
                 </p>
@@ -2792,7 +2792,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [=dictionary member/present=] when the {{MediaStreamTrack}} is sourced from a microphone where
+                  Only [= map/exist =]s when the {{MediaStreamTrack}} is sourced from a microphone where
                   echo cancellation is applied. Calculated in decibels, as defined in [[!ECHO]]
                   (2012) section 3.15.
                 </p>
@@ -2835,7 +2835,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The width, in pixels, of the last frame originating from this source. Before a
-                  frame has been produced this member is [=dictionary member/not present=].
+                  frame has been produced this member does not [= map/exist =].
                 </p>
               </dd>
               <dt>
@@ -2845,7 +2845,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The height, in pixels, of the last frame originating from this source. Before a
-                  frame has been produced this member is [=dictionary member/not present=].
+                  frame has been produced this member does not [= map/exist =].
                 </p>
               </dd>
               <dt>
@@ -2855,7 +2855,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The bit depth per pixel of the last frame originating from this source. Before a
-                  frame has been produced this member is [=dictionary member/not present=].
+                  frame has been produced this member does not [= map/exist =].
                 </p>
               </dd>
 
@@ -2874,7 +2874,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The number of frames originating from this source, measured during the last
-                  second. For the first second of this object's lifetime this member is [=dictionary member/not present=].
+                  second. For the first second of this object's lifetime this member does not [= map/exist =].
                 </p>
               </dd>
             </dl>
@@ -3568,7 +3568,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  For components where DTLS is negotiated, the TLS version agreed. Only [=dictionary member/present=]
+                  For components where DTLS is negotiated, the TLS version agreed. Only [= map/exist =]s
                   after DTLS negotiation is complete.
                 </p>
                 <p>
