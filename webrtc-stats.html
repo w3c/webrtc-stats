@@ -3638,7 +3638,11 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCSctpTransportStats : RTCStats {
-    double smoothedRoundTripTime;
+            double smoothedRoundTripTime;
+            unsigned long congestionWindow;
+            unsigned long receiverWindow;
+            unsigned long mtu;
+            unsigned long unackData;
 };</pre>
           <section>
             <h2>
@@ -3656,6 +3660,46 @@ enum RTCStatsType {
                   spinfo_srtt defined in [[RFC6458]] but converted to seconds.
                   If there has been no round-trip time measurements yet, this
                   value is undefined.
+                </p>
+              </dd>
+              <dt>
+                <dfn>congestionWindow</dfn> of type
+                <span class="idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  The latest congestion window, corresponding to
+                  spinfo_cwnd defined in [[RFC6458]].
+                </p>
+              </dd>
+              <dt>
+                <dfn>receiverWindow</dfn> of type
+                <span class="idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  The latest receiver window, corresponding to
+                  sstat_rwnd defined in [[RFC6458]].
+                </p>
+              </dd>
+              <dt>
+                <dfn>mtu</dfn> of type
+                <span class="idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  The latest maximum transmission unit, corresponding to
+                  spinfo_mtu defined in [[RFC6458]].
+                </p>
+              </dd>
+              <dt>
+                <dfn>unackData</dfn> of type
+                <span class="idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  The number of unacknowledged DATA chunks, corresponding to
+                  sstat_unackdata defined in [[RFC6458]].
                 </p>
               </dd>
             </dl>
