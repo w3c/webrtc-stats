@@ -1190,7 +1190,7 @@ enum RTCStatsType {
              unsigned long        firCount;
              unsigned long        pliCount;
              unsigned long        sliCount;
-             double               playoutDelay;
+             double               totalPlayoutDelay;
              DOMHighResTimeStamp  estimatedPlayoutTimestamp;
              double               jitterBufferDelay;
              unsigned long long   jitterBufferEmittedCount;
@@ -1531,22 +1531,26 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn>playoutDelay</dfn> of type <span class=
+                <dfn>totalPlayoutDelay</dfn> of type <span class=
                 "idlMemberType">double</span>
               </dt>
               <dd>
                 <p>
                   It is the sum of the time, in seconds, each <a>audio sample</a> or video frame takes from
-                  the time it is received and to the time it is played out. Given the complexities involved,
-                  the time of arrival or reception timestamp is measured as close to the network layer as 
-                  possible and the playout timestamp is measured as close to rendering as possible.
+                  the time the first RTP packet is received (reception timestamp) and to the time 
+                  the corresponding sample or frame is delivered to the MediaStreamTrack for playout (playout timestamp). 
+                  Given the complexities involved, the time of arrival or the reception timestamp is measured 
+                  as close to the network layer as possible and the playout timestamp is measured as close to
+                  the rendering as possible.
                   In the case of audio, several samples are received in the same RTP packet, all samples
                   will share the same reception timestamp and different playout timestamps. 
-                  Whereas, in the case of video the frame are received over several RTP packets, in this
+                  In the case of video, the frame are received over several RTP packets, in this
                   case the earliest timestamp containing the frame is counted as the reception timestamp,
                   and the reception timestamp corresponds to when the complete frame is played out.
+                  This metric is not incremented for frames that are not decoded, 
+                  i.e., {{framesDropped}}, {{partialFramesLost}},
                   The average playoutDelay delay can be calculated by dividing the {{playoutDelay}} with the
-                  sum of {{framesDropped}}, {{partialFramesLost}},{{framesReceived}}.
+                  {{framesDecoded}}.
                 </p>
                 
               </dd>
