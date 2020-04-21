@@ -2639,6 +2639,7 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCMediaSourceStats : RTCStats {
              DOMString       trackIdentifier;
              DOMString       kind;
+             boolean         relayedSource;
 };</pre>
           <section>
             <h2>
@@ -2666,6 +2667,14 @@ enum RTCStatsType {
                   {{RTCAudioSourceStats}}. If it is <code class=gum>"video"</code> then this stats
                   object is of type {{RTCVideoSourceStats}}.
                 </p>
+              </dd>
+              <dt>
+                <dfn>relayedSource</dfn> of type <span class="idlMemberType">boolean</span>
+              </dt>
+              <dd>
+                <code>true</code> if the source is remote, for instance if it is
+                sourced from another host via an {{RTCPeerConnection}}.
+                <code>false</code> otherwise.
               </dd>
             </dl>
           </section>
@@ -3115,7 +3124,6 @@ enum RTCStatsType {
         <div>
           <pre class="idl">dictionary RTCMediaHandlerStats : RTCStats {
              DOMString           trackIdentifier;
-             boolean             remoteSource;
              boolean             ended;
              DOMString           kind;
 };</pre>
@@ -3133,14 +3141,6 @@ enum RTCStatsType {
                 <p>
                   Represents the <code class=gum>id</code> property of the track.
                 </p>
-              </dd>
-              <dt>
-                <dfn>remoteSource</dfn> of type <span class=
-                "idlMemberType">boolean</span>
-              </dt>
-              <dd>
-                Only applicable for {{RTCStatsType/"track"}} stats. <code>true</code> if the source is remote, for instance if it
-                is sourced from another host via an {{RTCPeerConnection}}. <code>false</code> otherwise.
               </dd>
               <dt>
                 <dfn>ended</dfn> of type <span class="idlMemberType">boolean</span>
@@ -4714,6 +4714,7 @@ enum RTCStatsType {
         </h3>
         <pre class="idl">partial dictionary RTCMediaHandlerStats {
     RTCPriorityType     priority;
+    boolean             remoteSource;
 };
         </pre>
         <dl data-dfn-for="RTCMediaHandlerStats">
@@ -4729,6 +4730,25 @@ enum RTCStatsType {
               [[WEBRTC]] due to lack of implementation
               and moved to [[WEBRTC-PRIORITY]], with some changes to
               its definition.
+            </p>
+          </dd>
+          <dt>
+            <dfn>remoteSource</dfn> of type <span class=
+            "idlMemberType">boolean</span>
+          </dt>
+          <dd>
+            <p>
+              Only applicable for {{RTCStatsType/"track"}} stats.
+              <code>true</code> if the track attachment is on an
+              {{RTCRtpSender}}, <code>false</code> if the track attachment is on
+              an {{RTCRtpReceiver}}.
+            </p>
+            <p>
+              This was originally defined as
+              {{RTCMediaSourceStats/relayedSource}} but implementations had
+              implemented it according to this current definition. With "track"
+              stats made obsolete, and this information being available
+              elsewhere, this metric was made obsolete in April, 2020.
             </p>
           </dd>
         </dl>
