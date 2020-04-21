@@ -3490,7 +3490,8 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the total number of payload bytes sent on this
-                  {{RTCPeerConnection}}, i.e., not including headers or padding.
+                  {{RTCIceTransport}}, i.e., not including headers, padding
+                  or ICE connectivity checks.
                 </p>
               </dd>
               <dt>
@@ -3499,8 +3500,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the total number of bytes received on this
-                  {{RTCPeerConnection}}, i.e., not including headers or padding.
+                  Represents the total number of payload bytes received on this
+                  {{RTCIceTransport}}, i.e., not including headers, padding
+                  or ICE connectivity checks.
                 </p>
               </dd>
               <dt>
@@ -3948,7 +3950,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the total number of payload bytes sent on this candidate pair, i.e.,
-                  not including headers or padding.
+                  not including headers, padding or ICE connectivity checks.
                 </p>
               </dd>
               <dt>
@@ -3958,7 +3960,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the total number of payload bytes received on this candidate pair,
-                  i.e., not including headers or padding.
+                  i.e., not including headers, padding or ICE connectivity checks.
                 </p>
               </dd>
               <dt>
