@@ -1550,7 +1550,7 @@ enum RTCStatsType {
                   This metric is not incremented for frames that are not decoded, 
                   i.e., {{framesDropped}}, {{partialFramesLost}},
                   The average playoutDelay delay can be calculated by dividing the {{playoutDelay}} with the
-                  {{framesDecoded}}.
+                  {{totalSamplesReceived}} for audio or {{framesDecoded}} for video.
                 </p>
                 
               </dd>
