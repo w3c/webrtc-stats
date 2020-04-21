@@ -2127,7 +2127,9 @@ enum RTCStatsType {
                   settings, but the resulting payload bytes sent per second,
                   excluding retransmissions, SHOULD closely correlate to the
                   target. See also {{RTCSentRtpStreamStats/bytesSent}} and
-                  {{RTCOutboundRtpStreamStats/retransmittedBytesSent}}.
+                  {{RTCOutboundRtpStreamStats/retransmittedBytesSent}}. The
+                  {{targetBitrate}} is defined in the same way as the Transport
+                  Independent Application Specific (TIAS) bitrate [[!RFC3890]].
                 </p>
               </dd>
               <dt>
