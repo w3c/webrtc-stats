@@ -159,11 +159,11 @@
         reproduced here for ease of reference.
       </p>
       <pre class="idl">
-        dictionary RTCStats {
-    DOMHighResTimeStamp timestamp;
-    RTCStatsType        type;
-    DOMString           id;
-        };
+dictionary RTCStats {
+    required DOMHighResTimeStamp timestamp;
+    required RTCStatsType        type;
+    required DOMString           id;
+};
       </pre>
       <p>
         Timestamps are expressed with {{DOMHighResTimeStamp}} [[HIGHRES-TIME]], and are defined as
@@ -750,7 +750,7 @@ enum RTCStatsType {
         </h3>
         <div>
           <pre class="idl">dictionary RTCRtpStreamStats : RTCStats {
-             unsigned long       ssrc;
+             required unsigned long       ssrc;
              DOMString           kind;
              DOMString           transportId;
              DOMString           codecId;
@@ -809,12 +809,18 @@ enum RTCStatsType {
         <h3>
           <dfn>RTCCodecStats</dfn> dictionary
         </h3>
+        <p>
+          This object is created when a codec type is registered for
+          an RTP transport. It may be referenced by multiple RTP streams
+          in media sections using that transport, but similar codecs in
+          different transports have different RTCCodecStats objects.
+        </p>
         <div>
           <pre class="idl">dictionary RTCCodecStats : RTCStats {
-             unsigned long payloadType;
+             required unsigned long payloadType;
              RTCCodecType  codecType;
-             DOMString     transportId;
-             DOMString     mimeType;
+             required DOMString     transportId;
+             required DOMString     mimeType;
              unsigned long clockRate;
              unsigned long channels;
              DOMString     sdpFmtpLine;
@@ -842,7 +848,8 @@ enum RTCStatsType {
                 <p>
                   {{RTCCodecType/"encode"}} or {{RTCCodecType/"decode"}}, depending on whether this object
                   represents a media format that the implementation is prepared to encode or
-                  decode.
+                  decode. If the dictionary member is not present, it means
+                  that this media format can be both encoded and decoded.
                 </p>
               </dd>
               <dt>
@@ -1163,8 +1170,8 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCInboundRtpStreamStats : RTCReceivedRtpStreamStats {
-             DOMString            trackId;
-             DOMString            receiverId;
+             required DOMString   trackId;
+             required DOMString   receiverId;
              DOMString            remoteId;
              unsigned long        framesDecoded;
              unsigned long        keyFramesDecoded;
@@ -2637,8 +2644,8 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCMediaSourceStats : RTCStats {
-             DOMString       trackIdentifier;
-             DOMString       kind;
+             required DOMString       trackIdentifier;
+             required DOMString       kind;
              boolean         relayedSource;
 };</pre>
           <section>
@@ -2909,8 +2916,8 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCRtpContributingSourceStats : RTCStats {
-             unsigned long contributorSsrc;
-             DOMString     inboundRtpStreamId;
+             required unsigned long contributorSsrc;
+             required DOMString     inboundRtpStreamId;
              unsigned long packetsContributedTo;
              double        audioLevel;
 };</pre>
@@ -3068,8 +3075,8 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCRtpTransceiverStats : RTCStats {
-    DOMString senderId;
-    DOMString receiverId;
+    required DOMString senderId;
+    required DOMString receiverId;
     DOMString mid;
 };</pre>
           <section>
@@ -3110,7 +3117,7 @@ enum RTCStatsType {
                 <p>
                   If the {{RTCRtpTransceiver}} that this stats object represents has
                   a {{RTCRtpTransceiver/mid}} value that is not null, this is that value,
-                  otherwise this value is undefined.
+                  otherwise this member is not present.
                 </p>
               </dd>
             </dl>
@@ -3125,7 +3132,7 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCMediaHandlerStats : RTCStats {
              DOMString           trackIdentifier;
              boolean             ended;
-             DOMString           kind;
+             required DOMString  kind;
 };</pre>
           <section>
             <h2>
@@ -3327,8 +3334,8 @@ enum RTCStatsType {
              DOMString           label;
              DOMString           protocol;
              unsigned short      dataChannelIdentifier;
-             DOMString           transportId;
-             RTCDataChannelState state;
+             required DOMString  transportId;
+             required RTCDataChannelState state;
              unsigned long       messagesSent;
              unsigned long long  bytesSent;
              unsigned long       messagesReceived;
@@ -3441,7 +3448,7 @@ enum RTCStatsType {
              DOMString             rtcpTransportStatsId;
              RTCIceRole            iceRole;
              DOMString             iceLocalUsernameFragment;
-             RTCDtlsTransportState dtlsState;
+             required RTCDtlsTransportState dtlsState;
              RTCIceTransportState  iceState;
              DOMString             selectedCandidatePairId;
              DOMString             localCertificateId;
@@ -3732,11 +3739,11 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCIceCandidateStats : RTCStats {
-             DOMString                transportId;
+             required DOMString       transportId;
              DOMString?               address;
              long                     port;
              DOMString                protocol;
-             RTCIceCandidateType      candidateType;
+             required RTCIceCandidateType candidateType;
              long                     priority;
              DOMString                url;
              DOMString                relayProtocol;
@@ -3848,10 +3855,10 @@ enum RTCStatsType {
         </h3>
         <div>
           <pre class="idl">dictionary RTCIceCandidatePairStats : RTCStats {
-             DOMString                     transportId;
-             DOMString                     localCandidateId;
-             DOMString                     remoteCandidateId;
-             RTCStatsIceCandidatePairState state;
+             required DOMString            transportId;
+             required DOMString            localCandidateId;
+             required DOMString            remoteCandidateId;
+             required RTCStatsIceCandidatePairState state;
              boolean                       nominated;
              unsigned long long            packetsSent;
              unsigned long long            packetsReceived;
@@ -4327,9 +4334,9 @@ enum RTCStatsType {
         </h3>
         <div>
           <pre class="idl">dictionary RTCCertificateStats : RTCStats {
-             DOMString fingerprint;
-             DOMString fingerprintAlgorithm;
-             DOMString base64Certificate;
+             required DOMString fingerprint;
+             required DOMString fingerprintAlgorithm;
+             required DOMString base64Certificate;
              DOMString issuerCertificateId;
 };</pre>
           <section>
@@ -4388,7 +4395,7 @@ enum RTCStatsType {
         </h3>
         <div>
           <pre class="idl">dictionary RTCIceServerStats : RTCStats {
-             DOMString url;
+             required DOMString url;
              long port;
              DOMString protocol;
              unsigned long totalRequestsSent;
