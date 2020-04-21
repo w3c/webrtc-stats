@@ -97,6 +97,9 @@
       <p>
         The term <dfn><a href="https://tools.ietf.org/html/rfc7656#section-2.1.10">RTP stream</a></dfn> is defined in [[RFC7656]].
       </p>
+      <p>
+        The term Scalable Video Coding (<dfn>SVC</dfn>) is defined in [[RFC6190]].
+      </p>
       <p>The terms <dfn data-lt="SSRC"><a href="https://tools.ietf.org/html/rfc3550#section-3">Synchronization Source</a></dfn> (SSRC), <dfn data-lt="Sender Report|SR|RTCP SR"><a href="https://tools.ietf.org/html/rfc3550#section-6.4.1">RTCP Sender Report</a></dfn>, <dfn data-lt="Receiver Report|RR|RTCP RR"><a href="https://tools.ietf.org/html/rfc3550#section-6.4.2">RTCP Receiver Report</a></dfn> are defined in [[RFC3550]].</p>
       <p>The term <dfn data-lt="Extended Report|XR"><a href="https://tools.ietf.org/html/rfc3611">RTCP Extended Report</a></dfn> is defined in [[RFC3611]].</p>
       <p>An <dfn>audio sample</dfn> refers to having a sample in any channel of an audio track - if multiple audio channels are used, metrics based on samples do not increment at a higher rate, simultaneously having samples in multiple channels counts as a single sample.</p>
@@ -392,6 +395,7 @@ enum RTCStatsType {
 "codec",
 "inbound-rtp",
 "outbound-rtp",
+"svc-layer",
 "remote-inbound-rtp",
 "remote-outbound-rtp",
 "media-source",
@@ -457,6 +461,16 @@ enum RTCStatsType {
               {{RTCSentRtpStreamStats/bytesSent}}, {{RTCOutboundRtpStreamStats/retransmittedPacketsSent}}
               and {{RTCOutboundRtpStreamStats/retransmittedBytesSent}} counters of the relevant
               {{RTCOutboundRtpStreamStats}} objects.
+            </p>
+          </dd>
+          <dt>
+            <dfn>svc-layer</dfn>
+          </dt>
+          <dd>
+            <p>
+              Statistics for an <a>SVC</a> layer that is currently sent for an
+              outbound <a>RTP stream</a>. It is accessed by the
+              {{RTCScalableVideoCodecLayerStats}}.
             </p>
           </dd>
           <dt>
@@ -2470,6 +2484,96 @@ enum RTCStatsType {
                 <p class="fingerprint">
                   If too much information is given here, it increases the fingerprint surface.
                   Since it is only given for active tracks, the incremental exposure is small.
+                </p>
+              </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
+      <section id="scalablevideocodeclayer-dict*">
+        <h3>
+          {{RTCScalableVideoCodecLayerStats}} dictionary
+        </h3>
+        <p>
+          The <dfn>RTCScalableVideoCodecLayerStats</dfn> dictionary represents
+          the metrics of an <a>SVC</a> layer of an outgoing <a>RTP stream</a>
+          that is currently using a scalable video codec. The timestamp reported
+          in the statistics object is the time at which the data was sampled.
+        </p>
+        <p>
+          When the <a>RTP stream</a> is reconfigured and the <a>SVC</a> layer is
+          no longer being sent, the {{RTCScalableVideoCodecLayerStats}} stats
+          object is [= deleted =].
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCScalableVideoCodecLayerStats : RTCStats {
+             DOMString outboundRtpId;
+             unsigned long width;
+             unsigned long height;
+             unsigned long framesSent;
+             unsigned long long bytesSent;
+             unsigned long long retransmittedBytesSent;
+};</pre>
+          <section>
+            <h2>
+              Dictionary {{RTCScalableVideoCodecLayerStats}} Members
+            </h2>
+            <dl data-link-for="RTCScalableVideoCodecLayerStats" data-dfn-for="RTCScalableVideoCodecLayerStats"
+            class="dictionary-members">
+              <dt>
+                <dfn>outboundRtpId</dfn> of type <span class="idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  The identifier of the {{RTCOutboundRtpStreamStats}} object
+                  representing the <a>RTP stream</a> of which this <a>SVC</a>
+                  layer belongs to.
+                </p>
+              </dd>
+              <dt>
+                <dfn>width</dfn> of type <span class="idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  The width, in pixels, of the last frame that was sent for this
+                  <a>SVC</a> layer.
+                </p>
+              </dd>
+              <dt>
+                <dfn>height</dfn> of type <span class="idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  The height, in pixels, of the last frame that was sent for
+                  this <a>SVC</a> layer.
+                </p>
+              </dd>
+              <dt>
+                <dfn>framesSent</dfn> of type <span class="idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  The total number of frames that have been sent for this
+                  <a>SVC</a> layer, not counting retransmissions.
+                </p>
+              </dd>
+              <dt>
+                <dfn>bytesSent</dfn> of type <span class="idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  The total number of RTP payload bytes sent for this <a>SVC</a>
+                  layer. This includes retransmissions.
+                </p>
+              </dd>
+              <dt>
+                <dfn>retransmittedBytesSent</dfn> of type <span class="idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  The total number of RTP payload bytes sent for this <a>SVC</a>
+                  layer that were retransmitted. This is a subset of
+                  {{RTCScalableVideoCodecLayerStats/bytesSent}}.
                 </p>
               </dd>
             </dl>
