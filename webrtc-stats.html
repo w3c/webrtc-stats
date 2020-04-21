@@ -3441,6 +3441,7 @@ enum RTCStatsType {
              DOMString             rtcpTransportStatsId;
              RTCIceRole            iceRole;
              RTCDtlsTransportState dtlsState;
+             RTCIceTransportState  iceState;
              DOMString             selectedCandidatePairId;
              DOMString             localCertificateId;
              DOMString             remoteCertificateId;
@@ -3525,6 +3526,15 @@ enum RTCStatsType {
                 <p>
                   Set to the current value of the {{RTCDtlsTransport/state}} attribute of the underlying
                   {{RTCDtlsTransport}}.
+                </p>
+              </dd>
+              <dt>
+                <dfn>iceState</dfn> of type <span class="idlMemberType">{{RTCIceTransportState}}</span>
+              </dt>
+              <dd>
+                <p>
+                  Set to the current value of the {{RTCIceTransport/state}}
+                  attribute of the underlying {{RTCIceTransport}}.
                 </p>
               </dd>
               <dt>
