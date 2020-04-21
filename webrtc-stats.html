@@ -1554,9 +1554,11 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
+                  The purpose of the jitter buffer is to recombine RTP packets into frames (in the case of video)
+                  and have smooth playout.  
                   It is the sum of the time, in seconds, each <a>audio sample</a> or video frame takes from
-                  the time it is received and to the time it exits the jitter buffer. This increases
-                  upon samples or frames exiting, having completed their time in the buffer (and
+                  the time it is received by the jitter buffer and to the time it exits the jitter buffer. 
+                  This increases upon samples or frames exiting, having completed their time in the buffer (and
                   incrementing {{jitterBufferEmittedCount}}). The average jitter buffer
                   delay can be calculated by dividing the {{jitterBufferDelay}} with the
                   {{jitterBufferEmittedCount}}.
