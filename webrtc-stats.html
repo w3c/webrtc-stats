@@ -3440,6 +3440,7 @@ enum RTCStatsType {
              unsigned long long    bytesReceived;
              DOMString             rtcpTransportStatsId;
              RTCIceRole            iceRole;
+             DOMString             iceLocalUsernameFragment;
              RTCDtlsTransportState dtlsState;
              RTCIceTransportState  iceState;
              DOMString             selectedCandidatePairId;
@@ -3516,6 +3517,18 @@ enum RTCStatsType {
                 <p>
                   Set to the current value of the {{RTCIceTransport/role}} attribute of the underlying
                   {{RTCDtlsTransport}}.{{RTCDtlsTransport/iceTransport}}.
+                </p>
+              </dd>
+              <dt>
+                <dfn>iceLocalUsernameFragment</dfn> of type <span
+                  class="idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  Set to the current value of the local username fragment
+                  used in message validation procedures [[RFC5245]]
+                  for this {{RTCIceTransport}}. It may be
+                  updated on setLocalDescription() and on ICE restart.
                 </p>
               </dd>
               <dt>
