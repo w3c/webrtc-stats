@@ -93,7 +93,7 @@
         {{RTCIceRole}}, {{RTCSctpTransport}}, <dfn class=fixme data-idl>RTCDataChannelState</dfn>,
         {{RTCIceCandidateType}},  {{RTCStats}}, {{RTCCertificate}} are defined in [[!WEBRTC]].
       </p>
-      <p><dfn class=fixme data-idl>RTCPriorityType</dfn> is defined in [[WEBRTC-DSCP]].</p>
+      <p><dfn class=fixme data-idl>RTCPriorityType</dfn> is defined in [[WEBRTC-PRIORITY]].</p>
       <p>
         The term <dfn><a href="https://tools.ietf.org/html/rfc7656#section-2.1.10">RTP stream</a></dfn> is defined in [[RFC7656]].
       </p>
@@ -3116,7 +3116,6 @@ enum RTCStatsType {
              boolean             remoteSource;
              boolean             ended;
              DOMString           kind;
-             RTCPriorityType     priority;
 };</pre>
           <section>
             <h2>
@@ -3156,16 +3155,6 @@ enum RTCStatsType {
                 <p>
                   Either "<code class=gum>audio</code>" or "<code class=gum>video</code>". This reflects the <code class=gum>kind</code>
                   attribute of the {{MediaStreamTrack}}, see [[!GETUSERMEDIA]].
-                </p>
-              </dd>
-              <dt>
-                <dfn>priority</dfn> of type <span class=
-                "idlMemberType">{{RTCPriorityType}}</span>
-              </dt>
-              <dd>
-                <p>
-                  Indicates the priority set for the track. It is specified in
-                  [[!RTCWEB-TRANSPORT]], Section 4.
                 </p>
               </dd>
             </dl>
@@ -4703,6 +4692,31 @@ enum RTCStatsType {
           <dd>
             <p>
               This field was moved to {{RTCRemoteInboundRtpStreamStats}} in December 2017.
+            </p>
+          </dd>
+        </dl>
+      </section>
+      <section>
+        <h3>
+          Obsolete {{RTCMediaHandlerStats}} members
+        </h3>
+        <pre class="idl">partial dictionary RTCMediaHandlerStats {
+    RTCPriorityType     priority;
+};
+        </pre>
+        <dl data-dfn-for="RTCMediaHandlerStats">
+          <dt>
+            <dfn>priority</dfn> of type <span class=
+                  "idlMemberType">{{RTCPriorityType}}</span>
+          </dt>
+          <dd>
+            <p>
+              Indicates the priority that has been set for the track.
+              It is defined in
+              [[RTCWEB-TRANSPORT]], Section 4, but was removed from
+              [[WEBRTC]] due to lack of implementation
+              and moved to [[WEBRTC-PRIORITY]], with some changes to
+              its definition.
             </p>
           </dd>
         </dl>
