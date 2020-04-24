@@ -1170,7 +1170,7 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCInboundRtpStreamStats : RTCReceivedRtpStreamStats {
-             DOMString            receiverId;
+             required DOMString   receiverId;
              DOMString            remoteId;
              unsigned long        framesDecoded;
              unsigned long        keyFramesDecoded;
