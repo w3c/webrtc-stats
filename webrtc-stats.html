@@ -1170,7 +1170,6 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCInboundRtpStreamStats : RTCReceivedRtpStreamStats {
-             required DOMString   trackId;
              required DOMString   receiverId;
              DOMString            remoteId;
              unsigned long        framesDecoded;
@@ -1220,15 +1219,6 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCInboundRtpStreamStats" data-dfn-for="RTCInboundRtpStreamStats"
             class="dictionary-members">
-              <dt>
-                <dfn>trackId</dfn> of type <span class=
-                "idlMemberType">DOMString</span>
-              </dt>
-              <dd>
-                The identifier of the stats object representing the receiving track, an
-                {{RTCReceiverAudioTrackAttachmentStats}} or
-                {{RTCReceiverVideoTrackAttachmentStats}}.
-              </dd>
               <dt>
                 <dfn>receiverId</dfn> of type <span class=
                 "idlMemberType">DOMString</span>
@@ -1932,7 +1922,6 @@ enum RTCStatsType {
         <div>
           <pre class="idl">dictionary RTCOutboundRtpStreamStats : RTCSentRtpStreamStats {
              unsigned long        rtxSsrc;
-             DOMString            trackId;
              DOMString            mediaSourceId;
              DOMString            senderId;
              DOMString            remoteId;
@@ -1991,15 +1980,6 @@ enum RTCStatsType {
                   {{RTCSentRtpStreamStats/bytesSent}} and
                   {{RTCOutboundRtpStreamStats/retransmittedBytesSent}} stats of this object.
                 </p>
-              </dd>
-              <dt>
-                <dfn>trackId</dfn> of type <span class=
-                "idlMemberType">DOMString</span>
-              </dt>
-              <dd>
-                The identifier of the stats object representing the current track attachment to the
-                sender of this stream, an {{RTCSenderAudioTrackAttachmentStats}} or
-                {{RTCSenderVideoTrackAttachmentStats}}.
               </dd>
               <dt>
                 <dfn>mediaSourceId</dfn> of type <span class=
@@ -4714,9 +4694,26 @@ enum RTCStatsType {
           Obsolete {{RTCInboundRtpStreamStats}} members
         </h3>
         <pre class="idl">partial dictionary RTCInboundRtpStreamStats {
+    DOMString trackId;
     double fractionLost;
 };</pre>
         <dl data-dfn-for="RTCInboundRtpStreamStats">
+          <dt>
+            <dfn>trackId</dfn> of type <span class=
+            "idlMemberType">DOMString</span>
+          </dt>
+          <dd>
+            <p>
+              The identifier of the stats object representing the receiving
+              track, an {{RTCReceiverAudioTrackAttachmentStats}} or
+              {{RTCReceiverVideoTrackAttachmentStats}}.
+            </p>
+            <p>
+              This field was made obsolete in April 2020 as a follow-up to
+              "track" stats having been made obsolete.
+            </p>
+          </dd>
+          <dd>
           <dt>
             <dfn>fractionLost</dfn> of type <span class=
             "idlMemberType">double</span>
@@ -4724,6 +4721,33 @@ enum RTCStatsType {
           <dd>
             <p>
               This field was moved to {{RTCRemoteInboundRtpStreamStats}} in December 2017.
+            </p>
+          </dd>
+        </dl>
+      </section>
+
+      <section>
+        <h3>
+          Obsolete {{RTCOutboundRtpStreamStats}} members
+        </h3>
+        <pre class="idl">partial dictionary RTCOutboundRtpStreamStats {
+    DOMString trackId;
+};</pre>
+        <dl data-dfn-for="RTCOutboundRtpStreamStats">
+          <dt>
+            <dfn>trackId</dfn> of type <span class=
+            "idlMemberType">DOMString</span>
+          </dt>
+          <dd>
+            <p>
+              The identifier of the stats object representing the current track
+              attachment to the sender of this stream, an
+              {{RTCSenderAudioTrackAttachmentStats}} or
+              {{RTCSenderVideoTrackAttachmentStats}}.
+            </p>
+            <p>
+              This field was made obsolete in April 2020 as a follow-up to
+              "track" stats having been made obsolete.
             </p>
           </dd>
         </dl>
