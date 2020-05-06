@@ -4377,7 +4377,7 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCIceServerStats : RTCStats {
              required DOMString url;
              long port;
-             DOMString protocol;
+             DOMString relayProtocol;
              unsigned long totalRequestsSent;
              unsigned long totalResponsesReceived;
              double totalRoundTripTime;
@@ -4405,13 +4405,15 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn>protocol</dfn> of type <span class=
+                <dfn><code>relayProtocol</code></dfn> of type <span class=
                 "idlMemberType">DOMString</span>
               </dt>
               <dd>
                 <p>
-                  Valid values for transport is one of <code>"udp"</code> and <code>"tcp"</code>. Based
-                  on the <code class=ice>"transport"</code> defined in [RFC5245] section 15.1.
+                  It is the protocol used by the endpoint to communicate with the ICE server.
+                  Valid values are <code>udp</code>, <code>tcp</code>, or <code>tls</code> as 
+                  defined in <code><dfn data-cite="!WEBRTC#dom-rtcicecandidatestats-relayprotocol"> RTCIceCandidateStats</dfn></code>.
+                  This is the same value that is used for the relay protocol of local ICE candidates.
                 </p>
               </dd>
               <dt>
