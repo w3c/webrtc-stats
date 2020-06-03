@@ -1551,9 +1551,18 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  It is the sum of the time, in seconds, each <a>audio sample</a> or video frame takes from
-                  the time it is received and to the time it exits the jitter buffer. This increases
-                  upon samples or frames exiting, having completed their time in the buffer (and
+                  The purpose of the jitter buffer is to recombine RTP packets into frames (in the case of video)
+                  and have smooth playout. The model described here assumes that the samples or frames are 
+                  still compressed and have not yet been decoded.
+                  It is the sum of the time, in seconds, each <a>audio sample</a> or a video frame takes from
+                  the time the first packet is received by the jitter buffer (ingest timestamp) to the 
+                  time it exits the jitter buffer (emit timestamp). 
+                  In the case of audio, several samples belong to the same RTP packet, hence they will have the same 
+                  ingest timestamp but different jitter buffer emit timestamps. 
+                  In the case of video, the frame maybe is received over several RTP packets, hence the ingest timestamp
+                  is the earliest packet of the frame that entered the jitter buffer and the emit timestamp is 
+                  when the whole frame exits the jitter buffer.
+                  This metric increases upon samples or frames exiting, having completed their time in the buffer (and
                   incrementing {{jitterBufferEmittedCount}}). The average jitter buffer
                   delay can be calculated by dividing the {{jitterBufferDelay}} with the
                   {{jitterBufferEmittedCount}}.
