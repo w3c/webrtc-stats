@@ -1539,17 +1539,22 @@ enum RTCStatsType {
                   It is the sum of the time, in seconds, each <a>audio sample</a> or video frame takes from
                   the time the first RTP packet is received (reception timestamp) and to the time 
                   the corresponding sample or frame is delivered to the MediaStreamTrack for playout (playout timestamp). 
+                  Typically ready for playout here means after the decoding audio sample or video frame.
+                </p>
+                <p>
                   Given the complexities involved, the time of arrival or the reception timestamp is measured 
                   as close to the network layer as possible and the playout timestamp is measured as close to
                   the rendering as possible.
+                </p>
+                <p>
                   In the case of audio, several samples are received in the same RTP packet, all samples
                   will share the same reception timestamp and different playout timestamps. 
                   In the case of video, the frame are received over several RTP packets, in this
                   case the earliest timestamp containing the frame is counted as the reception timestamp,
-                  and the reception timestamp corresponds to when the complete frame is played out.
+                  and the playout timestamp corresponds to when the complete frame is ready to be played out.
                   This metric is not incremented for frames that are not decoded, 
                   i.e., {{framesDropped}}, {{partialFramesLost}},
-                  The average playoutDelay delay can be calculated by dividing the {{playoutDelay}} with the
+                  The average playout delay can be calculated by dividing the {{playoutDelay}} with the
                   {{totalSamplesReceived}} for audio or {{framesDecoded}} for video.
                 </p>
                 
