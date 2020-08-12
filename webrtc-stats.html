@@ -1842,7 +1842,7 @@ enum RTCStatsType {
                   Represents the cumulative sum of all round trip time measurements in seconds 
                   since the beginning of the session. The individual round trip time is calculated 
                   based on the RTCP timestamps in the <a>RTCP Receiver Report</a> (RR) [[!RFC3550]], hence
-                  undefined roundtrip are not added. The average round trip time can be computed 
+                  undefined roundtrip times are not added. The average round trip time can be computed 
                   from {{totalRoundTripTime}} by dividing it by 
                   {{roundTripTimeMeasurements}}.
                 </p>
@@ -1873,7 +1873,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the total number of <a>RTCP RR</a> blocks received for this <a>SSRC</a> that contain 
-                  a valid round trip time. This counter will increment if the {{roundTripTime}} is undefined.
+                  a valid round trip time. This counter will not increment if the {{roundTripTime}} is undefined.
                 </p>
               </dd>
             </dl>
