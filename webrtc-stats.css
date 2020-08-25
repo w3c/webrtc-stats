@@ -405,3 +405,10 @@ table.exceptions table {
     border-collapse:    collapse;
     width:  100%;
 }
+#summary table {
+    border-spacing: 0;
+    border-collapse:    collapse;
+}
+#summary table td, #summary table th {
+    border: thin solid black;
+}

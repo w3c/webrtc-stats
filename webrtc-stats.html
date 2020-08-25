@@ -16,6 +16,8 @@
     // keep this comment
     //]]>
     </script>
+    <!-- TODO Redundant since webidl2.js is already loaded in ReSpec, but not sure how to access it -->
+    <script src="https://w3c.github.io/webidl2.js/dist/webidl2.js"></script>
   </head>
   <body>
     <section id="abstract">
@@ -5330,6 +5332,94 @@ function processStats() {
           {{RTCRtpContributingSourceStats}} (the whole dictionary).
         </li>
       </ul>
+    </section>
+    <section class="appendix" id=summary>
+      <h2>Summary of WebRTC stats fields per type</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>{{RTCStatsType}}</th><th>Dictionary</th><th>Fields</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th class="row">{{RTCStatsType/"codec"}}</th>
+            <td>{{RTCCodecStats}}</td>
+          </tr>
+          <tr>
+            <th class="row">{{RTCStatsType/"inbound-rtp"}}</th>
+            <td>{{RTCInboundRtpStreamStats}}</td>
+          </tr>
+          <tr>
+            <th class="row">{{RTCStatsType/"outbound-rtp"}}</th>
+            <td>{{RTCOutboundRtpStreamStats}}</td>
+          </tr>
+          <tr>
+            <th class="row">{{RTCStatsType/"remote-inbound-rtp"}}</th>
+            <td>{{RTCRemoteInboundRtpStreamStats}}</td>
+          </tr>
+          <tr>
+            <th class="row">{{RTCStatsType/"remote-outbound-rtp"}}</th>
+            <td>{{RTCRemoteOutboundRtpStreamStats}}</td>
+          </tr>
+          <tr>
+            <th class="row">{{RTCStatsType/"media-source"}}</th>
+            <td>{{RTCAudioSourceStats}} {{RTCVideoSourceStats}}</td>
+          </tr>
+          <tr>
+            <th class="row">{{RTCStatsType/"csrc"}}</th>
+            <td>{{RTCRtpContributingSourceStats}}</td>
+          </tr>
+          <tr>
+            <th class="row">{{RTCStatsType/"peer-connection"}}</th>
+            <td>{{RTCPeerConnectionStats}}</td>
+          </tr>
+          <tr>
+            <th class="row">{{RTCStatsType/"data-channel"}}</th>
+            <td>{{RTCDataChannelStats}}</td>
+          </tr>
+          <tr>
+            <th class="row">{{RTCStatsType/"transceiver"}}</th>
+            <td>{{RTCRtpTransceiverStats}}</td>
+          </tr>
+          <tr>
+            <th class="row">{{RTCStatsType/"sender"}}</th>
+            <td>{{RTCAudioSenderStats}} {{RTCVideoSenderStats}}</td>
+          </tr>
+          <tr>
+            <th class="row">{{RTCStatsType/"receiver"}}</th>
+            <td>{{RTCAudioReceiverStats}} {{RTCVideoReceiverStats}}</td>
+          </tr>
+          <tr>
+            <th class="row">{{RTCStatsType/"transport"}}</th>
+            <td>{{RTCTransportStats}}</td>
+          </tr>
+          <tr>
+            <th class="row">{{RTCStatsType/"sctp-transport"}}</th>
+            <td>{{RTCSctpTransportStats}}</td>
+          </tr>
+          <tr>
+            <th class="row">{{RTCStatsType/"candidate-pair"}}</th>
+            <td>{{RTCIceCandidatePairStats}}</td>
+          </tr>
+          <tr>
+            <th class="row">{{RTCStatsType/"local-candidate"}}</th>
+            <td>{{RTCIceCandidateStats}}</td>
+          </tr>
+          <tr>
+            <th class="row">{{RTCStatsType/"remote-candidate"}}</th>
+            <td>{{RTCIceCandidateStats}}</td>
+          </tr>
+          <tr>
+            <th class="row">{{RTCStatsType/"certificate"}}</th>
+            <td>{{RTCCertificateStats}}</td>
+          </tr>
+          <tr>
+            <th class="row">{{RTCStatsType/"ice-server"}}</th>
+            <td>{{RTCIceServerStats}}</td>
+          </tr>
+        </tbody>
+      </table>
     </section>
       <section class="appendix">
         <h2>
