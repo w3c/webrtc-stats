@@ -1195,6 +1195,7 @@ enum RTCStatsType {
              double               jitterBufferDelay;
              unsigned long long   jitterBufferEmittedCount;
              unsigned long long   totalSamplesReceived;
+             unsigned long long   totalSamplesDecoded;
              unsigned long long   samplesDecodedWithSilk;
              unsigned long long   samplesDecodedWithCelt;
              unsigned long long   concealedSamples;
@@ -1612,6 +1613,17 @@ enum RTCStatsType {
                 <p>
                   Only [= map/exist =]s for audio. The total number of samples that have been received on this
                   RTP stream. This includes {{concealedSamples}}.
+                </p>
+                
+              </dd>
+              <dt>
+                <dfn>totalSamplesDecoded</dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only [= map/exist =]s for audio. The total number of samples that have been decoded on this
+                  RTP stream. 
                 </p>
                 
               </dd>
