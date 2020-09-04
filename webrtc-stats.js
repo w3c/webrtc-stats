@@ -108,7 +108,67 @@ var respecConfig = {
             "date": "16 January 2017"
         }
       },
-      afterEnd: function markFingerprinting () {
+  postProcess: [
+    function generateStatsHierarchy(config, doc) {
+      const statsIdl = [...document.querySelectorAll("pre.idl")].map(n => n.textContent.slice(6)).join("\n");
+      const parsedIdl = WebIDL2.parse(statsIdl);
+      const tbody = doc.querySelector("#summary tbody");
+      [... tbody.querySelectorAll("tr")].forEach(tr => {
+        const dictionaries = [...tr.querySelectorAll("td a")].map(n => Object.assign({}, {href: n.getAttribute("href"), name: n.textContent, level: 0}));
+        // add fields, and recursively look up parent dictionaries
+        while(dictionaries.find(d => !d.members)) {
+          dict = dictionaries.find(d => !d.members);
+          if (!dict.href) {
+            dict.href = "#dom-" + dict.name.toLowerCase();
+          }
+          const idlDict = parsedIdl.find(t => t.type === "dictionary" && t.name === dict.name)
+          if (!idlDict) {
+            console.error("can't find " + dict.name);
+            break;
+          }
+          if (idlDict.inheritance && !dictionaries.find(d => d.name === idlDict.inheritance)) {
+            dictionaries.push({name:idlDict.inheritance, level: dict.level + 1})
+          }
+          dict.members = idlDict.members.map(m => m.name);
+        }
+        const newTr = document.createElement("tr");
+        const th = tr.querySelector("th");
+        const allDict = dictionaries.sort((a, b) => b.level - a.level).filter(d => d.members.length);
+        th.setAttribute("rowspan", allDict.length);
+        newTr.appendChild(th);
+        tr.remove();
+        let curTr = newTr, i = 0;
+        do {
+          const dict = allDict[i];
+          const dictTd = document.createElement("td");
+          const link = document.createElement("a");
+          const code = document.createElement("code");
+          link.href = dict.href;
+          code.textContent = dict.name;
+          link.appendChild(code);
+          dictTd.appendChild(link);
+          const fieldTd = document.createElement("td");
+          dict.members.forEach(m => {
+            const link = document.createElement("a");
+            link.href = dict.href + "-" + m.toLowerCase();
+            const code = document.createElement("code");
+            code.textContent = m;
+            link.appendChild(code);
+            fieldTd.appendChild(link);
+            fieldTd.appendChild(document.createElement("br"));
+          });
+          curTr.appendChild(dictTd);
+          curTr.appendChild(fieldTd);
+          i++;
+          tbody.appendChild(curTr);
+          curTr = doc.createElement("tr");
+        } while(i < allDict.length);
+        tbody.appendChild(curTr);
+
+      });
+    },
+
+    function markFingerprinting () {
         var self = this;
         Array.prototype.forEach.call(
             document.querySelectorAll(".fingerprint"),
@@ -129,6 +189,6 @@ var respecConfig = {
             }
           });
 
-      }
-
-    };
+    }
+  ]
+};
