@@ -763,8 +763,14 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The 32-bit unsigned integer value per [[RFC3550]] used to identify the source of
-                  the stream of RTP packets that this stats object concerns.
+                  The synchronization source (ssrc) identifier is an unsigned integer value per [[RFC3550]]
+                  used to identify the stream of RTP packets that this stats object is describing. 
+                </p>
+                <p>
+                  For outbound and inbound local, ssrc describes the stats for the track that were 
+                  sent and received, respectively by those endpoints. 
+                  For the remote inbound and remote outbound, ssrc describes the stats for the track
+                  that were received by and sent to the remote endpoint.
                 </p>
               </dd>
               <dt>
