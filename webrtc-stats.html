@@ -3370,7 +3370,6 @@ enum RTCStatsType {
              DOMString           label;
              DOMString           protocol;
              unsigned short      dataChannelIdentifier;
-             required DOMString  transportId;
              required RTCDataChannelState state;
              unsigned long       messagesSent;
              unsigned long long  bytesSent;
@@ -3695,8 +3694,13 @@ enum RTCStatsType {
           corresponding to an {{RTCSctpTransport}} described in
           [[!WEBRTC]].
         </p>
+        <p>
+          There is only one {{RTCSctpTransportStats}} object, since the PeerConnection
+          can only have one SCTP transport.
+        </p>
         <div>
           <pre class="idl">dictionary RTCSctpTransportStats : RTCStats {
+            DOMString transportId;
             double smoothedRoundTripTime;
             unsigned long congestionWindow;
             unsigned long receiverWindow;
@@ -3708,7 +3712,16 @@ enum RTCStatsType {
               Dictionary {{RTCSctpTransportStats}} Members
             </h2>
             <dl data-link-for="RTCSctpTransportStats" data-dfn-for="RTCSctpTransportStats" class=
-            "dictionary-members">
+                "dictionary-members">
+              <dt>
+                <dfn>transportId</dfn> of type DOMString
+              </dt>
+              <dd>
+                <p>
+                  The identifier of the object that was inspected to produce the {{RTCTransportStats}}
+                  for the DTLSTransport and ICETransport supporting the SCTP transport.
+                </p>
+              </dd>
               <dt>
                 <dfn>smoothedRoundTripTime</dfn> of type
                 <span class="idlMemberType">double</span>
