@@ -164,7 +164,6 @@ var respecConfig = {
           tbody.appendChild(curTr);
           curTr = doc.createElement("tr");
         } while(i < allDict.length);
-        tbody.appendChild(curTr);
 
       });
     },
