@@ -145,7 +145,8 @@ var respecConfig = {
           const link = document.createElement("a");
           const code = document.createElement("code");
           link.href = dict.href;
-          link.id = dict.id;
+          if (dict.id)
+            link.id = dict.id;
           code.textContent = dict.name;
           link.appendChild(code);
           dictTd.appendChild(link);
