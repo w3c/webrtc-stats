@@ -115,7 +115,7 @@ var respecConfig = {
       const parsedIdl = WebIDL2.parse(statsIdl);
       const tbody = doc.querySelector("#summary tbody");
       [... tbody.querySelectorAll("tr")].forEach(tr => {
-        const dictionaries = [...tr.querySelectorAll("td a")].map(n => Object.assign({}, {href: n.getAttribute("href"), name: n.textContent, level: 0}));
+        const dictionaries = [...tr.querySelectorAll("td a")].map(n => Object.assign({}, {href: n.getAttribute("href"), id: n.id, name: n.textContent, level: 0}));
         // add fields, and recursively look up parent dictionaries
         while(dictionaries.find(d => !d.members)) {
           dict = dictionaries.find(d => !d.members);
@@ -145,6 +145,8 @@ var respecConfig = {
           const link = document.createElement("a");
           const code = document.createElement("code");
           link.href = dict.href;
+          if (dict.id)
+            link.id = dict.id;
           code.textContent = dict.name;
           link.appendChild(code);
           dictTd.appendChild(link);
@@ -167,7 +169,6 @@ var respecConfig = {
 
       });
     },
-
     function markFingerprinting () {
         var self = this;
         Array.prototype.forEach.call(
