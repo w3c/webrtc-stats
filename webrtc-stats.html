@@ -989,8 +989,8 @@ enum RTCStatsType {
                   endpoint the {{packetsReceived}} is estimated by subtracting the Cumulative Number of Packets Lost
                   from the Extended Highest Sequence Number Received, both reported in the <a>RTCP Receiver
                   Report</a>, and then subtracting the initial Extended Sequence Number that was sent to this SSRC in a
-                  <a>RTCP Sender Report</a>, to mirror what is discussed in Appendix A.3 in [[!RFC3550]], but for the
-                  sender side.
+                  <a>RTCP Sender Report</a> and then adding one, to mirror what is discussed in Appendix A.3 in [[!RFC3550]], but for the
+                  sender side. If no <a>RTCP Receiver Report</a> has been received yet, then return 0.
                 </p>
               </dd>
               <dt>
