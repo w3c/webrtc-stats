@@ -52,7 +52,7 @@ var respecConfig = {
       // name (without the @w3c.org) of the public mailing to which comments are due
       wgPublicList: "public-webrtc",
 
-  xref: ["html", "webrtc", "mediacapture-streams", "webidl", "dom", "hr-time", "infra"],
+  xref: ["html", "webrtc", "mediacapture-streams", "webidl", "dom", "hr-time", "infra", "webrtc-extensions"],
       github: "https://github.com/w3c/webrtc-stats",
   testSuiteURI: "https://github.com/web-platform-tests/wpt/tree/master/webrtc-stats",
     implementationReportURI: "https://wpt.fyi/webrtc-stats",
