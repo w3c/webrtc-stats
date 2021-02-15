@@ -101,12 +101,7 @@ var respecConfig = {
             publisher:  "IETF"
         },
         "JSEP": {
-            "authors":["Justin Uberti","Cullen Jennings","Eric Rescorla"],
-            "href": "http://datatracker.ietf.org/doc/draft-ietf-rtcweb-jsep/",
-            "publisher": "IETF",
-            "status": "Active Internet-Draft",
-            "title": "Javascript Session Establishment Protocol",
-            "date": "16 January 2017"
+		"aliasOf": "RFC8829"
         }
       },
   postProcess: [
