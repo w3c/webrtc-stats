@@ -3,7 +3,7 @@ name: Validate and Auto Publish
 on:
   push:
     branches:
-      - master
+      - main
   pull_request: {}
 
 jobs:
@@ -12,12 +12,13 @@ jobs:
     runs-on: ubuntu-latest # only linux supported at present
     steps:
       - uses: actions/checkout@v2
-      - uses: w3c/respec-w3c-auto-publish@v1 # use the action
+      - uses: w3c/spec-prod@v1 # use the action
         with:
-          ECHIDNA_TOKEN: ${{ secrets.ECHIDNA_TOKEN }}
-          ECHIDNA_MANIFEST_URL: "https://w3c.github.io/webrtc-stats/W3CTRMANIFEST"
+          W3C_ECHIDNA_TOKEN: ${{ secrets.ECHIDNA_TOKEN }}
+          W3C_MANIFEST_URL: "https://w3c.github.io/webrtc-stats/W3CTRMANIFEST"
           # Please use the URL that's appropriate for your working group!
-          WG_DECISION_URL: "https://lists.w3.org/Archives/Public/public-webrtc/2016Mar/0031.html"
+          W3C_WG_DECISION_URL: "https://lists.w3.org/Archives/Public/public-webrtc/2016Mar/0031.html"
           CC: "dom@w3.org"
-          INPUT_FILE: webrtc-stats.html
-          CHECK_LINKS: false
+          SOURCE: webrtc-stats.html
+          TOOLCHAIN: respec
+          VALIDATE_LINKS: false
