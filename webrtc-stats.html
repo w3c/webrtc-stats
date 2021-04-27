@@ -2655,8 +2655,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Estimated round trip time for this <a>SSRC</a> based on an <a>RTCP Sender Report</a> (SR)
-                  that contains an <a>DLRR</a> report block as defined in [[!RFC3611]]. The Calculation of
+                  Estimated round trip time for this <a>SSRC</a> based on the latest <a>RTCP Sender Report</a> (SR)
+                  that contains a <a>DLRR</a> report block as defined in [[!RFC3611]]. The Calculation of
                   the round trip time is defined in section 4.5. of [[!RFC3611]]. If no SR contains the DLRR
                   report block, or if the <a>delay since last RR</a> value in DLRR report blocks are all 0s,
                   the round trip time is left undefined.
