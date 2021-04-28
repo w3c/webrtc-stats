@@ -2605,6 +2605,9 @@ enum RTCStatsType {
              DOMString           localId;
              DOMHighResTimeStamp remoteTimestamp;
              unsigned long long  reportsSent;
+             double              roundTripTime;
+             double              totalRoundTripTime;
+             unsigned long long  roundTripTimeMeasurements;
 };</pre>
           <section>
             <h2>
@@ -2644,6 +2647,44 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the total number of <a>RTCP SR</a> blocks sent for this <a>SSRC</a>.
+                </p>
+              </dd>
+              <dt>
+                <dfn>roundTripTime</dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Estimated round trip time for this <a>SSRC</a> based on the latest <a>RTCP Sender Report</a> (SR)
+                  that contains a DLRR report block as defined in [[!RFC3611]]. The Calculation of
+                  the round trip time is defined in section 4.5. of [[!RFC3611]]. If the latest SR does not contain
+                  the DLRR report block, or if the last RR timestamp in the DLRR report block is zero, or if the
+                  delay since last RR value in the DLRR report block is zero, the round trip time is left
+                  undefined.
+                </p>
+              </dd>
+              <dt>
+                <dfn>totalRoundTripTime</dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the cumulative sum of all round trip time measurements in seconds since the
+                  beginning of the session. The individual round trip time is calculated  based on the
+                  DLRR report block in the <a>RTCP Sender Report</a> (SR) [[!RFC3611]], hence
+                  undefined roundtrip times are not added. The average round trip time can be computed 
+                  from {{totalRoundTripTime}} by dividing it by {{roundTripTimeMeasurements}}.
+                </p>
+              </dd>
+              <dt>
+                <dfn>roundTripTimeMeasurements</dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Represents the total number of <a>RTCP Sender Report</a> (SR) blocks received for this
+                  <a>SSRC</a> that can derive a valid round trip time according to [[!RFC3611]]. This
+                  counter will not increment if the {{roundTripTime}} is undefined.
                 </p>
               </dd>
             </dl>
