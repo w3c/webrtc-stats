@@ -664,7 +664,7 @@ enum RTCStatsType {
           <code>"inactive"</code> or if the encoding's
           {{RTCRtpEncodingParameters/active}} parameter is set to
           <code>false</code>. If an SSRC is recycled after a deletion event has
-          happened, this is considered a new RTP monitored object and the new 
+          happened, this is considered a new RTP monitored object and the new
           RTP stream stats will have reset counters and a new ID.
         </p>
         <p>
@@ -3166,6 +3166,7 @@ enum RTCStatsType {
              long                     priority;
              DOMString                url;
              RTCIceServerTransportProtocol relayProtocol;
+             DOMString                tcpType;
 };</pre>
           <section>
             <h2>
@@ -3261,6 +3262,14 @@ enum RTCStatsType {
                 <p>
                   It is the protocol used by the endpoint to communicate with the TURN server. This
                   is only present for local relay candidates and defined in [[WEBRTC]].
+                </p>
+              </dd>
+              <dt>
+                <dfn>tcpType</dfn> of type <span class="idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  As defined in [[WEBRTC]].
                 </p>
               </dd>
             </dl>
