@@ -817,6 +817,13 @@ enum RTCStatsType {
           in media sections using that transport, but similar codecs in
           different transports have different RTCCodecStats objects.
         </p>
+        <p class="note">
+          User agents are expected to coalesce information into a single
+          <code>"codec"</code> entry per payload type per transport, unless
+          {{RTCCodecStats/sdpFmtpLine}} differs per direction, in which case two
+          entries, one with {{RTCCodecStats/codecType}} set to
+          <code>"encode"</code> and the other <code>"decode"</code> are needed.
+        </p>
         <div>
           <pre class="idl">dictionary RTCCodecStats : RTCStats {
              required unsigned long payloadType;
