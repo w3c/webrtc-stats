@@ -964,7 +964,6 @@ enum RTCStatsType {
              unsigned long long   packetsReceived;
              long long            packetsLost;
              double               jitter;
-             unsigned long long   packetsDiscarded;
              unsigned long long   packetsRepaired;
              unsigned long long   burstPacketsLost;
              unsigned long long   burstPacketsDiscarded;
@@ -1017,18 +1016,6 @@ enum RTCStatsType {
                 <p>
                   Packet Jitter measured in seconds for this <a>SSRC</a>. Calculated as defined in section
                   6.4.1. of [[!RFC3550]].
-                </p>
-              </dd>
-              <dt>
-                <dfn>packetsDiscarded</dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
-              </dt>
-              <dd>
-                <p>
-                  The cumulative number of RTP packets discarded by the jitter buffer due to late
-                  or early-arrival, i.e., these packets are not played out. RTP packets discarded
-                  due to packet duplication are not reported in this metric [[XRBLOCK-STATS]].
-                  Calculated as defined in [[!RFC7002]] section 3.2 and Appendix A.a.
                 </p>
               </dd>
               <dt>
@@ -1197,6 +1184,7 @@ enum RTCStatsType {
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
              double               averageRtcpInterval;
              unsigned long long   headerBytesReceived;
+             unsigned long long   packetsDiscarded;
              unsigned long long   fecPacketsReceived;
              unsigned long long   fecPacketsDiscarded;
              unsigned long long   bytesReceived;
@@ -1423,6 +1411,18 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn>packetsDiscarded</dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  The cumulative number of RTP packets discarded by the jitter buffer due to late
+                  or early-arrival, i.e., these packets are not played out. RTP packets discarded
+                  due to packet duplication are not reported in this metric [[XRBLOCK-STATS]].
+                  Calculated as defined in [[!RFC7002]] section 3.2 and Appendix A.a.
+                </p>
+              </dd>
+              <dt>
                 <dfn>fecPacketsReceived</dfn> of type <span class=
                 "idlMemberType">unsigned long long</span>
               </dt>
@@ -1465,7 +1465,7 @@ enum RTCStatsType {
                 <p>
                   The cumulative number of RTP packets that failed to be decrypted according to the
                   procedures in [[!RFC3711]]. These packets are not counted by
-                  {{RTCReceivedRtpStreamStats/packetsDiscarded}}.
+                  {{RTCInboundRtpStreamStats/packetsDiscarded}}.
                 </p>
               </dd>
               <dt>
@@ -1474,7 +1474,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 The cumulative number of packets discarded because they are duplicated. Duplicate
-                packets are not counted in {{RTCReceivedRtpStreamStats/packetsDiscarded}}.<br>
+                packets are not counted in {{RTCInboundRtpStreamStats/packetsDiscarded}}.<br>
                 Duplicated packets have the same RTP sequence number and content as a previously
                 received packet. If multiple duplicates of a packet are received, all of them are
                 counted.<br>
@@ -1677,7 +1677,7 @@ enum RTCStatsType {
                   concealed sample is a sample that was replaced with synthesized samples generated
                   locally before being played out. Examples of samples that have to be concealed
                   are samples from lost packets (reported in {{RTCReceivedRtpStreamStats/packetsLost}}) or samples from packets that arrive
-                  too late to be played out (reported in {{RTCReceivedRtpStreamStats/packetsDiscarded}}).
+                  too late to be played out (reported in {{RTCInboundRtpStreamStats/packetsDiscarded}}).
                 </p>
                 
               </dd>
