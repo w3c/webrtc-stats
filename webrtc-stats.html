@@ -1986,7 +1986,6 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCOutboundRtpStreamStats : RTCSentRtpStreamStats {
-             unsigned long        rtxSsrc;
              DOMString            mediaSourceId;
              DOMString            senderId;
              DOMString            remoteId;
@@ -2033,19 +2032,6 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCOutboundRtpStreamStats" data-dfn-for="RTCOutboundRtpStreamStats"
             class="dictionary-members">
-              <dt>
-                <dfn>rtxSsrc</dfn> of type <span class="idlMemberType">unsigned long</span>
-              </dt>
-              <dd>
-                <p>
-                  If RTX is negotiated as a separate stream, this is the <a>SSRC</a> of the
-                  RTX stream that is associated with this stream's {{RTCRtpStreamStats/ssrc}}.
-                  If RTX is not negotiated, this value is not present. Whether or not RTX is
-                  negotiated, retransmissions are accounted for in the
-                  {{RTCSentRtpStreamStats/bytesSent}} and
-                  {{RTCOutboundRtpStreamStats/retransmittedBytesSent}} stats of this object.
-                </p>
-              </dd>
               <dt>
                 <dfn>mediaSourceId</dfn> of type <span class=
                 "idlMemberType">DOMString</span>
@@ -2152,7 +2138,7 @@ enum RTCStatsType {
                   The total number of packets that were retransmitted for this <a>SSRC</a>. This is a
                   subset of {{RTCSentRtpStreamStats/packetsSent}}. If RTX is not negotiated, retransmitted
                   packets are sent over this {{RTCRtpStreamStats/ssrc}}. If RTX was negotiated,
-                  retransmitted packets are sent over a separate {{RTCOutboundRtpStreamStats/rtxSsrc}}.
+                  retransmitted packets are sent over a separate ssrc but is still accounted for here.
                 </p>
               </dd>
               <dt>
@@ -2164,8 +2150,8 @@ enum RTCStatsType {
                   The total number of bytes that were retransmitted for this <a>SSRC</a>, only including
                   payload bytes. This is a subset of {{RTCSentRtpStreamStats/bytesSent}}. If RTX is not
                   negotiated, retransmitted bytes are sent over this {{RTCRtpStreamStats/ssrc}}. If RTX
-                  was negotiated, retransmitted bytes are sent over a separate
-                  {{RTCOutboundRtpStreamStats/rtxSsrc}}.
+                  was negotiated, retransmitted bytes are sent over a separate ssrc but is still
+                  accounted for here.
                 </p>
               </dd>
               <dt>
