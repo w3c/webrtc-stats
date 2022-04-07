@@ -1990,7 +1990,6 @@ enum RTCStatsType {
              DOMString            mediaSourceId;
              DOMString            senderId;
              DOMString            remoteId;
-             DOMString            rid;
              DOMHighResTimeStamp  lastPacketSentTimestamp;
              unsigned long long   headerBytesSent;
              unsigned long        packetsDiscardedOnSend;
@@ -2072,17 +2071,6 @@ enum RTCStatsType {
                 <p>
                   The {{remoteId}} is used for looking up the remote
                   {{RTCRemoteInboundRtpStreamStats}} object for the same <a>SSRC</a>.
-                </p>
-              </dd>
-              <dt>
-                <dfn>rid</dfn> of type <span class="idlMemberType">DOMString</span>
-              </dt>
-              <dd>
-                <p>
-                  Exposes the {{RTCRtpCodingParameters/rid}}
-                  encoding parameter of this <a>RTP stream</a> if it has been set, otherwise it is
-                  undefined. If set this value will be present regardless if the RID RTP header
-                  extension has been negotiated.
                 </p>
               </dd>
               <dt>
