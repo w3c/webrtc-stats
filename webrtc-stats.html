@@ -988,6 +988,7 @@ enum RTCStatsType {
              unsigned long        nackCount;
              unsigned long        firCount;
              unsigned long        pliCount;
+             DOMHighResTimeStamp  estimatedPlayoutTimestamp;
              double               jitterBufferDelay;
              unsigned long long   jitterBufferEmittedCount;
              unsigned long long   totalSamplesReceived;
@@ -1227,6 +1228,25 @@ enum RTCStatsType {
                 <p>
                   Count the total number of Negative ACKnowledgement (NACK) packets sent by this
                   receiver. Calculated as defined in [[!RFC4585]] section 6.2.1.
+                </p>
+              </dd>
+              <dt>
+                <dfn>estimatedPlayoutTimestamp</dfn> of type <span class=
+                "idlMemberType">DOMHighResTimeStamp</span>
+              </dt>
+              <dd>
+                <p>
+                  This is the estimated playout time of this receiver's track. The playout time is
+                  the NTP timestamp of the last playable <a>audio sample</a> or video frame that has a known
+                  timestamp (from an <a>RTCP SR</a> packet mapping RTP timestamps to NTP timestamps),
+                  extrapolated with the time elapsed since it was ready to be played out. This is
+                  the "current time" of the track in NTP clock time of the sender and can be present
+                  even if there is no audio currently playing.
+                </p>
+                <p>
+                  This can be useful for estimating how much audio and video is out of sync for two
+                  tracks from the same source, <var>audioTrackStats</var>.{{estimatedPlayoutTimestamp}} -
+                  <var>videoTrackStats</var>.{{estimatedPlayoutTimestamp}}.
                 </p>
               </dd>
               <dt>
@@ -3985,6 +4005,7 @@ enum RTCStatsType {
           Obsolete {{RTCAudioReceiverStats}} members
         </h3>
         <pre class="idl">partial dictionary RTCAudioReceiverStats {
+    DOMHighResTimeStamp estimatedPlayoutTimestamp;
     double jitterBufferDelay;
     unsigned long long jitterBufferEmittedCount;
     unsigned long long totalSamplesReceived;
@@ -3999,6 +4020,15 @@ enum RTCStatsType {
 };</pre>
         <dl data-link-for="RTCAudioReceiverStats" data-dfn-for="RTCAudioReceiverStats" class=
         "dictionary-members">
+          <dt>
+            <dfn>estimatedPlayoutTimestamp</dfn> of type <span class=
+            "idlMemberType">DOMHighResTimeStamp</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
+            </p>
+          </dd>
           <dt>
             <dfn>jitterBufferDelay</dfn> of type <span class=
             "idlMemberType">double</span>
@@ -4203,6 +4233,7 @@ enum RTCStatsType {
           Obsolete {{RTCVideoReceiverStats}} members
         </h3>
         <pre class="idl">partial dictionary RTCVideoReceiverStats {
+    DOMHighResTimeStamp estimatedPlayoutTimestamp;
     unsigned long keyFramesReceived;
     double jitterBufferDelay;
     unsigned long long jitterBufferEmittedCount;
@@ -4211,6 +4242,15 @@ enum RTCStatsType {
     unsigned long framesDropped;
 };</pre>
         <dl data-dfn-for="RTCVideoReceiverStats">
+          <dt>
+            <dfn>estimatedPlayoutTimestamp</dfn> of type <span class=
+            "idlMemberType">DOMHighResTimeStamp</span>
+          </dt>
+          <dd>
+            <p>
+              This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
+            </p>
+          </dd>
           <dt>
             <dfn>keyFramesReceived</dfn> of type <span class=
             "idlMemberType">unsigned long</span>
