@@ -80,10 +80,6 @@
         Terminology
       </h2>
       <p>
-        The terms <dfn>MediaStream</dfn>, <dfn>MediaStreamTrack</dfn>, and <dfn>Consumer</dfn> are
-        defined in [[!GETUSERMEDIA]].
-      </p>
-      <p>
         The terms {{RTCPeerConnection}}, {{RTCDataChannel}},
         {{RTCDtlsTransport}}, {{RTCDtlsTransportState}}, {{RTCIceTransport}},
         {{RTCIceRole}}, {{RTCSctpTransport}}, {{RTCDataChannelState}},
@@ -3453,13 +3449,6 @@ enum RTCStatsType {
                 <p>
                   The {{RTCDataChannel/id}} attribute of the {{RTCDataChannel}} object.
                 </p>
-              </dd>
-              <dt>
-                <dfn>transportId</dfn> of type <span class=
-                "idlMemberType">DOMString</span>
-              </dt>
-              <dd>
-                A [= stats object reference =] for the transport used to carry this datachannel.
               </dd>
               <dt>
                 <dfn>state</dfn> of type {{RTCDataChannelState}}
