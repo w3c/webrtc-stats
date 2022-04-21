@@ -3529,6 +3529,7 @@ enum RTCStatsType {
              DOMString             remoteCertificateId;
              DOMString             tlsVersion;
              DOMString             dtlsCipher;
+             RTCDtlsRole           dtlsRole;
              DOMString             srtpCipher;
              DOMString             tlsGroup;
              unsigned long         selectedCandidatePairChanges;
@@ -3686,6 +3687,16 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn>dtlsRole</dfn> of type <span class=
+                "idlMemberType">RTCDtlsRole</span>
+              </dt>
+              <dd>
+                <p>
+                  {{RTCDtlsRole/"client"}} or {{RTCDtlsRole/"server"}} depending on the DTLS role.
+                  {{RTCDtlsRole/"unknown"}} before the DTLS negotiation starts.
+                </p>
+              </dd>
+              <dt>
                 <dfn>srtpCipher</dfn> of type <span class=
                 "idlMemberType">DOMString</span>
               </dt>
@@ -3722,8 +3733,59 @@ enum RTCStatsType {
               </dd>
             </dl>
           </section>
-        </div>
-      </section>
+            <section>
+              <h3>
+                <dfn>RTCDtlsRole</dfn> enum
+              </h3>
+              <div>
+                <pre class="idl">enum RTCDtlsRole {
+        "client",
+        "server",
+        "unknown",
+};</pre>
+                <table data-link-for="RTCDtlsRole" data-dfn-for="RTCDtlsRole" class="simple">
+                  <tbody>
+                    <tr>
+                      <th colspan="2">
+                        Enumeration description
+                      </th>
+                    </tr>
+                    <tr>
+                      <td>
+                        <dfn>client</dfn>
+                      </td>
+                      <td>
+                        <p>
+                          The RTCPeerConnection is acting as a DTLS client as defined in [[RFC6347]].
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <dfn>server</dfn>
+                      </td>
+                      <td>
+                        <p>
+                          The RTCPeerConnection is acting as a DTLS server as defined in [[RFC6347]].
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <dfn>unknown</dfn>
+                      </td>
+                      <td>
+                        <p>
+                          The DTLS role of the RTCPeerConnection has not been determined yet.
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+            </div>
+          </section>
       <section id="sctptransportstats-dict*">
         <h3>
           <dfn>RTCSctpTransportStats</dfn> dictionary
