@@ -1207,6 +1207,7 @@ enum RTCStatsType {
              double               totalProcessingDelay;
              DOMHighResTimeStamp  estimatedPlayoutTimestamp;
              double               jitterBufferDelay;
+             double               jitterBufferTargetDelay;
              unsigned long long   jitterBufferEmittedCount;
              unsigned long long   totalSamplesReceived;
              unsigned long long   totalSamplesDecoded;
@@ -1609,7 +1610,19 @@ enum RTCStatsType {
                   delay can be calculated by dividing the {{jitterBufferDelay}} with the
                   {{jitterBufferEmittedCount}}.
                 </p>
-                
+              </dd>
+              <dt>
+                <dfn><code>jitterBufferTargetDelay</code></dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  This value is increased by the target jitter buffer delay every time a
+                  sample is emitted by the jitter buffer. The added target is the target
+                  delay, in seconds, at the time that the sample was emitted from the
+                  jitter buffer. To get the average target delay, divide by
+                  {{jitterBufferEmittedCount}}.
+                </p>
               </dd>
               <dt>
                 <dfn>jitterBufferEmittedCount</dfn> of type <span class=
