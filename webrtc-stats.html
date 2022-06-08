@@ -80,10 +80,6 @@
         Terminology
       </h2>
       <p>
-        The terms <dfn>MediaStream</dfn>, <dfn>MediaStreamTrack</dfn>, and <dfn>Consumer</dfn> are
-        defined in [[!GETUSERMEDIA]].
-      </p>
-      <p>
         The terms {{RTCPeerConnection}}, {{RTCDataChannel}},
         {{RTCDtlsTransport}}, {{RTCDtlsTransportState}}, {{RTCIceTransport}},
         {{RTCSctpTransport}}, {{RTCDataChannelState}},
@@ -1989,13 +1985,14 @@ enum RTCStatsType {
             "other",
           };</pre>
           <table data-link-for="RTCQualityLimitationReason" data-dfn-for=
-          "RTCQualityLimitationReason" class="simple">
-            <tbody>
+		 "RTCQualityLimitationReason" class="simple">
+	    <caption>{{RTCQualityLimitationReason}} Enumeration description</caption>
+            <thead>
               <tr>
-                <th colspan="2">
-                  Enumeration description
-                </th>
+		<th>Enum value</th><th>Description</th>
               </tr>
+	    </thead>
+	    <tbody>
               <tr>
                 <td>
                   <dfn>none</dfn>
@@ -2767,13 +2764,6 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn>transportId</dfn> of type <span class=
-                "idlMemberType">DOMString</span>
-              </dt>
-              <dd>
-                A [= stats object reference =] for the transport used to carry this datachannel.
-              </dd>
-              <dt>
                 <dfn>state</dfn> of type {{RTCDataChannelState}}
               </dt>
               <dd>
@@ -2849,6 +2839,7 @@ enum RTCStatsType {
              DOMString             remoteCertificateId;
              DOMString             tlsVersion;
              DOMString             dtlsCipher;
+             RTCDtlsRole           dtlsRole;
              DOMString             srtpCipher;
              unsigned long         selectedCandidatePairChanges;
 };</pre>
@@ -2974,6 +2965,16 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn>dtlsRole</dfn> of type <span class=
+                "idlMemberType">RTCDtlsRole</span>
+              </dt>
+              <dd>
+                <p>
+                  {{RTCDtlsRole/"client"}} or {{RTCDtlsRole/"server"}} depending on the DTLS role.
+                  {{RTCDtlsRole/"unknown"}} before the DTLS negotiation starts.
+                </p>
+              </dd>
+              <dt>
                 <dfn>srtpCipher</dfn> of type <span class=
                 "idlMemberType">DOMString</span>
               </dt>
@@ -2999,8 +3000,60 @@ enum RTCStatsType {
               </dd>
             </dl>
           </section>
-        </div>
-      </section>
+            <section>
+              <h3>
+                <dfn>RTCDtlsRole</dfn> enum
+              </h3>
+              <div>
+                <pre class="idl">enum RTCDtlsRole {
+        "client",
+        "server",
+        "unknown",
+};</pre>
+                <table data-link-for="RTCDtlsRole" data-dfn-for="RTCDtlsRole" class="simple">
+		  <caption>{{RTCDtlsRole}} Enumeration description</caption>
+                  <thead>
+                    <tr>
+		      <th>Enum value</th><th>Description</th>
+                    </tr>
+		  </thead>
+		  <tbody>
+                    <tr>
+                      <td>
+                        <dfn>client</dfn>
+                      </td>
+                      <td>
+                        <p>
+                          The RTCPeerConnection is acting as a DTLS client as defined in [[RFC6347]].
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <dfn>server</dfn>
+                      </td>
+                      <td>
+                        <p>
+                          The RTCPeerConnection is acting as a DTLS server as defined in [[RFC6347]].
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <dfn>unknown</dfn>
+                      </td>
+                      <td>
+                        <p>
+                          The DTLS role of the RTCPeerConnection has not been determined yet.
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+            </div>
+          </section>
       <section id="sctptransportstats-dict*">
         <h3>
           <dfn>RTCSctpTransportStats</dfn> dictionary
@@ -3469,13 +3522,14 @@ enum RTCStatsType {
     "succeeded"
 };</pre>
             <table data-link-for="RTCStatsIceCandidatePairState" data-dfn-for=
-            "RTCStatsIceCandidatePairState" class="simple">
-              <tbody>
+		   "RTCStatsIceCandidatePairState" class="simple">
+	      <caption>{{RTCStatsIceCandidatePairState}} Enumeration description</caption>
+              <thead>
                 <tr>
-                  <th colspan="2">
-                    Enumeration description
-                  </th>
+		  <th>Enum value</th><th>Description</th>
                 </tr>
+	      </thead>
+	      <tbody>
                 <tr>
                   <td>
                     <dfn>frozen</dfn>
