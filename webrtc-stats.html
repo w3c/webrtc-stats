@@ -3163,6 +3163,8 @@ enum RTCStatsType {
              DOMString                protocol;
              required RTCIceCandidateType candidateType;
              long                     priority;
+             DOMString                url;
+             DOMString                relayProtocol;
 };</pre>
           <section>
             <h2>
@@ -3237,6 +3239,17 @@ enum RTCStatsType {
                   Calculated as defined in [[!RFC5245]] section 15.1.
                 </p>
               </dd>
+              <dt>
+                <dfn>relayProtocol</dfn> of type <span class=
+                "idlMemberType">DOMString</span> <!-- TODO: define enum? -->
+              </dt>
+              <dd>
+                <p>
+                  It is the protocol used by the endpoint to communicate with the TURN server. This
+                  is only present for local candidates. Valid values are <code>"udp"</code>,
+                  <code>"tcp"</code>, or <code>"tls"</code>.
+                </p>
+              </dd>
             </dl>
           </section>
         </div>
@@ -3261,6 +3274,7 @@ enum RTCStatsType {
              double                        totalRoundTripTime;
              double                        currentRoundTripTime;
              double                        availableOutgoingBitrate;
+             double                        availableIncomingBitrate;
              unsigned long long            requestsReceived;
              unsigned long long            requestsSent;
              unsigned long long            responsesReceived;
@@ -3428,6 +3442,27 @@ enum RTCStatsType {
                   were never used. For pairs in use, the estimate is normally no lower than the
                   bitrate for the packets sent at {{lastPacketSentTimestamp}}, but might
                   be higher. For candidate pairs that are not currently in use but were used
+                  before, implementations MUST return undefined.
+                </p>
+              </dd>
+              <dt>
+                <dfn>availableIncomingBitrate</dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  It is calculated by the underlying congestion control by combining the available
+                  bitrate for all the incoming <a>RTP stream</a>s using this candidate pair. The bitrate
+                  measurement does not count the size of the IP or other transport layers like TCP
+                  or UDP. It is similar to the TIAS defined in [[!RFC3890]], i.e., it is measured
+                  in bits per second and the bitrate is calculated over a 1 second window.
+                </p>
+                <p>
+                  Implementations that do not calculate a receiver-side estimate MUST leave this
+                  undefined. Additionally, the value should be undefined for candidate pairs that
+                  were never used. For pairs in use, the estimate is normally no lower than the
+                  bitrate for the packets received at {{lastPacketReceivedTimestamp}}, but
+                  might be higher. For candidate pairs that are not currently in use but were used
                   before, implementations MUST return undefined.
                 </p>
               </dd>
