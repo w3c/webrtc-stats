@@ -82,7 +82,7 @@
       <p>
         The terms {{RTCPeerConnection}}, {{RTCDataChannel}},
         {{RTCDtlsTransport}}, {{RTCDtlsTransportState}}, {{RTCIceTransport}},
-        {{RTCSctpTransport}}, {{RTCDataChannelState}},
+        {{RTCIceRole}}, {{RTCIceTransportState}}, {{RTCSctpTransport}}, {{RTCDataChannelState}},
         {{RTCIceCandidateType}},  {{RTCStats}}, {{RTCCertificate}} are defined in [[!WEBRTC]].
       </p>
       <p><dfn class=fixme data-idl>RTCPriorityType</dfn> is defined in [[WEBRTC-PRIORITY]].</p>
@@ -984,6 +984,7 @@ enum RTCStatsType {
              unsigned long        nackCount;
              unsigned long        firCount;
              unsigned long        pliCount;
+             double               totalProcessingDelay;
              DOMHighResTimeStamp  estimatedPlayoutTimestamp;
              double               jitterBufferDelay;
              unsigned long long   jitterBufferEmittedCount;
@@ -1214,6 +1215,37 @@ enum RTCStatsType {
                   Only [= map/exist =]s for video. Count the total number of Picture Loss Indication (PLI)
                   packets sent by this receiver. Calculated as defined in [[!RFC4585]] section
                   6.3.1.
+                </p>
+              </dd>
+              <dt>
+                <dfn>totalProcessingDelay</dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  It is the sum of the time, in seconds, each <a>audio sample</a> or video frame takes from
+                  the time the first RTP packet is received (reception timestamp) and to the time
+                  the corresponding sample or frame is decoded (decoded timestamp). At this point the audio
+                  sample or video frame is ready for playout by the MediaStreamTrack. Typically ready for
+                  playout here means after the audio sample or video frame is fully decoded by the decoder.
+                </p>
+                <p>
+                  Given the complexities involved, the time of arrival or the reception timestamp is measured
+                  as close to the network layer as possible and the decoded timestamp is measured as soon as the
+                  complete sample or frame is decoded.
+                </p>
+                <p>
+                  In the case of audio, several samples are received in the same RTP packet, all samples
+                  will share the same reception timestamp and different decoded timestamps.
+                  In the case of video, the frame is received over several RTP packets, in this
+                  case the earliest timestamp containing the frame is counted as the reception timestamp,
+                  and the decoded timestamp corresponds to when the complete frame is decoded.
+                </p>
+                <p>
+                  This metric is not incremented for frames that are not decoded,
+                  i.e., {{RTCReceivedRtpStreamStats/framesDropped}}, {{RTCReceivedRtpStreamStats/partialFramesLost}},
+                  The average processing delay can be calculated by dividing the {{totalProcessingDelay}} with the
+                  {{totalSamplesDecoded}} for audio or {{framesDecoded}} for video.
                 </p>
               </dd>
               <dt>
@@ -1478,6 +1510,7 @@ enum RTCStatsType {
         <div>
           <pre class="idl">dictionary RTCRemoteInboundRtpStreamStats : RTCReceivedRtpStreamStats {
              DOMString            localId;
+             double               roundTripTime;
              double               totalRoundTripTime;
              double               fractionLost;
              unsigned long long   roundTripTimeMeasurements;
@@ -1496,6 +1529,18 @@ enum RTCStatsType {
                 <p>
                   The {{localId}} is used for looking up the local
                   {{RTCOutboundRtpStreamStats}} object for the same <a>SSRC</a>.
+                </p>
+              </dd>
+              <dt>
+                <dfn>roundTripTime</dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Estimated round trip time for this <a>SSRC</a> based on the RTCP timestamps in the RTCP
+                  Receiver Report (RR) and measured in seconds. Calculated as defined in section
+                  6.4.1. of [[!RFC3550]]. If no <a>RTCP Receiver Report</a> is received with a DLSR value
+                  other than 0, the round trip time is left undefined.
                 </p>
               </dd>
               <dt>
@@ -2833,7 +2878,10 @@ enum RTCStatsType {
              unsigned long long    bytesSent;
              unsigned long long    bytesReceived;
              DOMString             rtcpTransportStatsId;
+             RTCIceRole            iceRole;
+             DOMString             iceLocalUsernameFragment;
              required RTCDtlsTransportState dtlsState;
+             RTCIceTransportState  iceState;
              DOMString             selectedCandidatePairId;
              DOMString             localCertificateId;
              DOMString             remoteCertificateId;
@@ -2901,6 +2949,28 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn>iceRole</dfn> of type <span class=
+                "idlMemberType">{{RTCIceRole}}</span>
+              </dt>
+              <dd>
+                <p>
+                  Set to the current value of the {{RTCIceTransport/role}} attribute of the underlying
+                  {{RTCDtlsTransport}}.{{RTCDtlsTransport/iceTransport}}.
+                </p>
+              </dd>
+              <dt>
+                <dfn>iceLocalUsernameFragment</dfn> of type <span
+                  class="idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  Set to the current value of the local username fragment
+                  used in message validation procedures [[RFC5245]]
+                  for this {{RTCIceTransport}}. It may be
+                  updated on setLocalDescription() and on ICE restart.
+                </p>
+              </dd>
+              <dt>
                 <dfn>dtlsState</dfn> of type <span class=
                 "idlMemberType">{{RTCDtlsTransportState}}</span>
               </dt>
@@ -2908,6 +2978,15 @@ enum RTCStatsType {
                 <p>
                   Set to the current value of the {{RTCDtlsTransport/state}} attribute of the underlying
                   {{RTCDtlsTransport}}.
+                </p>
+              </dd>
+              <dt>
+                <dfn>iceState</dfn> of type <span class="idlMemberType">{{RTCIceTransportState}}</span>
+              </dt>
+              <dd>
+                <p>
+                  Set to the current value of the {{RTCIceTransport/state}}
+                  attribute of the underlying {{RTCIceTransport}}.
                 </p>
               </dd>
               <dt>
@@ -3237,6 +3316,19 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Calculated as defined in [[!RFC5245]] section 15.1.
+                </p>
+              </dd>
+              <dt>
+                <dfn>url</dfn> of type <span class="idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  For local candidates this is the URL of the ICE server from which the candidate
+                  was obtained. It is the same as the {{RTCPeerConnectionIceEvent/url}} surfaced in the
+                  {{RTCPeerConnectionIceEvent}}.
+                </p>
+                <p>
+                  For remote candidates, this property is not present.
                 </p>
               </dd>
               <dt>
