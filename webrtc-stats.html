@@ -391,9 +391,6 @@ enum RTCStatsType {
 "data-channel",
 "stream",
 "track",
-"transceiver",
-"sender",
-"receiver",
 "transport",
 "candidate-pair",
 "local-candidate",
@@ -437,9 +434,8 @@ enum RTCStatsType {
             <p>
               When there are multiple <a>RTP stream</a>s connected to the same sender due to using
               simulcast, there will be one {{RTCOutboundRtpStreamStats}} per <a>RTP stream</a>,
-              with distinct values of the {{RTCRtpStreamStats/ssrc}} member, and all these senders will have a
-              reference to the same {{RTCStatsType/"sender"}} object (of type {{RTCAudioSenderStats}} or
-              {{RTCVideoSenderStats}}) and {{RTCStatsType/"track"}} object (of type
+              with distinct values of the {{RTCRtpStreamStats/ssrc}} member, and all these streams will have a
+              reference to the same {{RTCStatsType/"track"}} object (of type
               {{RTCSenderAudioTrackAttachmentStats}} or
               {{RTCSenderVideoTrackAttachmentStats}}). RTX streams do not show up as separate
               {{RTCOutboundRtpStreamStats}} objects but affect the {{RTCSentRtpStreamStats/packetsSent}},
@@ -533,35 +529,6 @@ enum RTCStatsType {
               All "track" stats have been made obsolete. The relevant metrics
               have been moved to "media-source", "sender", "outbound-rtp",
               "receiver" and "inbound-rtp" stats.
-            </p>
-          </dd>
-          <dt>
-            <dfn>transceiver</dfn>
-          </dt>
-          <dd>
-            <p>
-              Statistics related to a specific {{RTCRtpTransceiver}}. It is accessed
-              by the {{RTCRtpTransceiverStats}} dictionary.
-            </p>
-          </dd>
-          <dt>
-            <dfn>sender</dfn>
-          </dt>
-          <dd>
-            <p>
-              Statistics related to a specific {{RTCRtpSender}} and the corresponding
-              media-level metrics. It is accessed by the {{RTCAudioSenderStats}} or
-              the {{RTCVideoSenderStats}} depending on <code class=gum>kind</code>.
-            </p>
-          </dd>
-          <dt>
-            <dfn>receiver</dfn>
-          </dt>
-          <dd>
-            <p>
-              Statistics related to a specific receiver and the corresponding media-level
-              metrics. It is accessed by the {{RTCAudioReceiverStats}} or the
-              {{RTCVideoReceiverStats}} depending on <code class=gum>kind</code>.
             </p>
           </dd>
           <dt>
@@ -941,7 +908,9 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCInboundRtpStreamStats : RTCReceivedRtpStreamStats {
-             required DOMString   receiverId;
+             required DOMString   trackIdentifier;
+             required DOMString   kind;
+             DOMString            mid;
              DOMString            remoteId;
              unsigned long        framesDecoded;
              unsigned long        keyFramesDecoded;
@@ -984,13 +953,32 @@ enum RTCStatsType {
             <dl data-link-for="RTCInboundRtpStreamStats" data-dfn-for="RTCInboundRtpStreamStats"
             class="dictionary-members">
               <dt>
-                <dfn>receiverId</dfn> of type <span class=
+                <dfn>trackIdentifier</dfn> of type <span class=
                 "idlMemberType">DOMString</span>
               </dt>
               <dd>
                 <p>
-                  The stats ID used to look up the {{RTCAudioReceiverStats}} or
-                  {{RTCVideoReceiverStats}} object receiving this stream.
+                  The value of the {{MediaStreamTrack}}'s <code class=gum>id</code> attribute.
+                </p>
+              </dd>
+              <dt>
+                <dfn>kind</dfn> of type <span class="idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  The value of the {{MediaStreamTrack}}'s <code class=gum>kind</code> attribute.
+                  This is either <code class=gum>"audio"</code> or <code class=gum>"video"</code>.
+                </p>
+              </dd>
+              <dt>
+                <dfn>mid</dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  If the {{RTCRtpTransceiver}} owning this stream has a
+                  {{RTCRtpTransceiver/mid}} value that is not null, this is that
+                  value, otherwise this member is not present.
                 </p>
               </dd>
               <dt>
@@ -1620,8 +1608,8 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCOutboundRtpStreamStats : RTCSentRtpStreamStats {
+             DOMString            mid;
              DOMString            mediaSourceId;
-             DOMString            senderId;
              DOMString            remoteId;
              DOMString            rid;
              unsigned long long   headerBytesSent;
@@ -1654,21 +1642,24 @@ enum RTCStatsType {
             <dl data-link-for="RTCOutboundRtpStreamStats" data-dfn-for="RTCOutboundRtpStreamStats"
             class="dictionary-members">
               <dt>
-                <dfn>mediaSourceId</dfn> of type <span class=
-                "idlMemberType">DOMString</span>
-              </dt>
-              <dd>
-                The identifier of the stats object representing the track currently attached to the
-                sender of this stream, an {{RTCMediaSourceStats}}.
-              </dd>
-              <dt>
-                <dfn>senderId</dfn> of type <span class=
+                <dfn>mid</dfn> of type <span class=
                 "idlMemberType">DOMString</span>
               </dt>
               <dd>
                 <p>
-                  The stats ID used to look up the {{RTCAudioSenderStats}} or
-                  {{RTCVideoSenderStats}} object sending this stream.
+                  If the {{RTCRtpTransceiver}} owning this stream has a
+                  {{RTCRtpTransceiver/mid}} value that is not null, this is that
+                  value, otherwise this member is not present.
+                </p>
+              </dd>
+              <dd>
+                <dfn>mediaSourceId</dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  The identifier of the stats object representing the track currently attached to the
+                  sender of this stream, an {{RTCMediaSourceStats}}.
                 </p>
               </dd>
               <dt>
@@ -2006,13 +1997,13 @@ enum RTCStatsType {
           };</pre>
           <table data-link-for="RTCQualityLimitationReason" data-dfn-for=
 		 "RTCQualityLimitationReason" class="simple">
-	    <caption>{{RTCQualityLimitationReason}} Enumeration description</caption>
+	          <caption>{{RTCQualityLimitationReason}} Enumeration description</caption>
             <thead>
               <tr>
-		<th>Enum value</th><th>Description</th>
+                <th>Enum value</th><th>Description</th>
               </tr>
-	    </thead>
-	    <tbody>
+            </thead>
+            <tbody>
               <tr>
                 <td>
                   <dfn>none</dfn>
@@ -2258,7 +2249,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the audio level of the media source. For audio levels of remotely
-                  sourced tracks, see {{RTCAudioReceiverStats}} instead.
+                  sourced tracks, see {{RTCInboundRtpStreamStats}} instead.
                 </p>
                 <p>
                   The value is between 0..1 (linear), where 1.0 represents 0 dBov, 0 represents
@@ -2278,7 +2269,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the audio energy of the media source. For audio energy of remotely
-                  sourced tracks, see {{RTCAudioReceiverStats}} instead.
+                  sourced tracks, see {{RTCInboundRtpStreamStats}} instead.
                 </p>
                 <p>
                   This value MUST be computed as follows: for each <a>audio sample</a> produced by the
@@ -2320,7 +2311,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Represents the audio duration of the media source. For audio durations of
-                  remotely sourced tracks, see {{RTCAudioReceiverStats}} instead.
+                  remotely sourced tracks, see {{RTCInboundRtpStreamStats}} instead.
                 </p>
                 <p>
                   Represents the total duration in seconds of all samples that have been produced
@@ -2473,72 +2464,6 @@ enum RTCStatsType {
           </section>
         </div>
       </section>
-      <section id="transceiver-dict*">
-        <h3>
-          <dfn>RTCRtpTransceiverStats</dfn> dictionary
-        </h3>
-        <p>
-          An {{RTCRtpTransceiverStats}} stats object represents an {{RTCRtpTransceiver}}
-          of an {{RTCPeerConnection}}.
-        </p>
-        <p>
-          It appears as soon as the monitored {{RTCRtpTransceiver}} object is
-          created, such as by invoking {{RTCPeerConnection/addTransceiver()}}, {{RTCPeerConnection/addTrack()}} or
-          {{RTCPeerConnection/setRemoteDescription()}}. {{RTCRtpTransceiverStats}} objects can only be
-          deleted if the corresponding {{RTCRtpTransceiver}} is removed - this can
-          only happen if a remote description is rolled back.
-        </p>
-        <div>
-          <pre class="idl">dictionary RTCRtpTransceiverStats : RTCStats {
-    required DOMString senderId;
-    required DOMString receiverId;
-    DOMString mid;
-};</pre>
-          <section>
-            <h2>
-              Dictionary {{RTCRtpTransceiverStats}} Members
-            </h2>
-            <dl data-link-for="RTCRtpTransceiverStats" data-dfn-for="RTCRtpTransceiverStats" class=
-            "dictionary-members">
-              <dt>
-                <dfn>senderId</dfn> of type <span class=
-                "idlMemberType">DOMString</span>
-              </dt>
-              <dd>
-                <p>
-                  The identifier of the stats object representing the
-                  {{RTCRtpSender}}
-                  associated with the {{RTCRtpTransceiver}} represented
-                  by this stats object.
-                </p>
-              </dd>
-              <dt>
-                <dfn>receiverId</dfn> of type <span class=
-                "idlMemberType">DOMString</span>
-              </dt>
-              <dd>
-                <p>
-                  The identifier of the stats object representing the
-                  {{RTCRtpReceiver}}
-                  associated with the {{RTCRtpTransceiver}}
-                  represented by this stats object.
-                </p>
-              </dd>
-              <dt>
-                <dfn>mid</dfn> of type <span class=
-                "idlMemberType">DOMString</span>
-              </dt>
-              <dd>
-                <p>
-                  If the {{RTCRtpTransceiver}} that this stats object represents has
-                  a {{RTCRtpTransceiver/mid}} value that is not null, this is that value,
-                  otherwise this member is not present.
-                </p>
-              </dd>
-            </dl>
-          </section>
-        </div>
-      </section>
       <section id="mststats-dict*">
         <h3>
           <dfn>RTCMediaHandlerStats</dfn> dictionary
@@ -2601,67 +2526,6 @@ enum RTCStatsType {
           </section>
         </div>
       </section>
-      <section id="vsstats-dict*">
-        <h3>
-          <dfn>RTCVideoSenderStats</dfn> dictionary
-        </h3>
-        <p>
-          An {{RTCVideoSenderStats}} object represents the stats about one video sender of a
-          {{RTCPeerConnection}} object for which one calls {{RTCPeerConnection/getStats()}}.
-        </p>
-        <p>
-          It appears in the stats as soon as the sender is added by either addTrack or
-          addTransceiver, or by media negotiation.
-        </p>
-        <div>
-          <pre class="idl">dictionary RTCVideoSenderStats : RTCVideoHandlerStats {
-             DOMString           mediaSourceId;
-};</pre>
-          <section>
-            <h2>
-              Dictionary {{RTCVideoSenderStats}} Members
-            </h2>
-            <dl data-link-for="RTCVideoSenderStats" data-dfn-for="RTCVideoSenderStats" class=
-            "dictionary-members">
-              <dt>
-                <dfn>mediaSourceId</dfn> of type <span class=
-                "idlMemberType">DOMString</span>
-              </dt>
-              <dd>
-                <p>
-                  The identifier of the stats object representing the track currently attached to
-                  this sender, an {{RTCMediaSourceStats}}.
-                </p>
-              </dd>
-            </dl>
-          </section>
-        </div>
-      </section>
-      <section id="rvststats-dict*">
-        <h3>
-          <dfn>RTCVideoReceiverStats</dfn> dictionary
-        </h3>
-        <p>
-          An {{RTCVideoReceiverStats}} object represents the stats about one video receiver of a
-          {{RTCPeerConnection}} object for which one calls {{RTCPeerConnection/getStats()}}.
-        </p>
-        <p>
-          It appears in the stats as soon as the {{RTCRtpReceiver}} is added by either {{RTCPeerConnection/addTrack()}} or
-          {{RTCPeerConnection/addTransceiver()}}, or by media negotiation.
-        </p>
-        <div>
-          <pre class="idl">dictionary RTCVideoReceiverStats : RTCVideoHandlerStats {
-};</pre>
-          <section>
-            <h2>
-              Dictionary {{RTCVideoReceiverStats}} Members
-            </h2>
-            <dl data-link-for="RTCVideoReceiverStats" data-dfn-for="RTCVideoReceiverStats" class=
-            "dictionary-members">
-            </dl>
-          </section>
-        </div>
-      </section>
       <section id="aststats-dict*">
         <h3>
           <dfn>RTCAudioHandlerStats</dfn> dictionary
@@ -2674,67 +2538,6 @@ enum RTCStatsType {
               Dictionary {{RTCAudioHandlerStats}} Members
             </h2>
             <dl data-link-for="RTCAudioHandlerStats" data-dfn-for="RTCAudioHandlerStats" class=
-            "dictionary-members">
-            </dl>
-          </section>
-        </div>
-      </section>
-      <section id="asstats-dict*">
-        <h3>
-          <dfn>RTCAudioSenderStats</dfn> dictionary
-        </h3>
-        <p>
-          An {{RTCAudioSenderStats}} object represents the stats about one audio sender of a
-          {{RTCPeerConnection}} object for which one calls {{RTCPeerConnection/getStats()}}.
-        </p>
-        <p>
-          It appears in the stats as soon as the {{RTCRtpSender}} is added by either {{RTCPeerConnection/addTrack()}} or
-          {{RTCPeerConnection/addTransceiver()}}, or by media negotiation.
-        </p>
-        <div>
-          <pre class="idl">dictionary RTCAudioSenderStats : RTCAudioHandlerStats {
-             DOMString           mediaSourceId;
-};</pre>
-          <section>
-            <h2>
-              Dictionary {{RTCAudioSenderStats}} Members
-            </h2>
-            <dl data-link-for="RTCAudioSenderStats" data-dfn-for="RTCAudioSenderStats" class=
-            "dictionary-members">
-              <dt>
-                <dfn>mediaSourceId</dfn> of type <span class=
-                "idlMemberType">DOMString</span>
-              </dt>
-              <dd>
-                <p>
-                  The identifier of the stats object representing the track currently attached to
-                  this sender, an {{RTCMediaSourceStats}}.
-                </p>
-              </dd>
-            </dl>
-          </section>
-        </div>
-      </section>
-      <section id="raststats-dict*">
-        <h3>
-          <dfn>RTCAudioReceiverStats</dfn> dictionary
-        </h3>
-        <p>
-          An {{RTCAudioReceiverStats}} object represents the stats about one audio receiver of a
-          {{RTCPeerConnection}} object for which one calls {{RTCPeerConnection.getStats()}}.
-        </p>
-        <p>
-          It appears in the stats as soon as the {{RTCRtpReceiver}} is added by either {{RTCPeerConnection/addTrack()}} or
-          {{RTCPeerConnection/addTransceiver()}}, or by media negotiation.
-        </p>
-        <div>
-          <pre class="idl">dictionary RTCAudioReceiverStats : RTCAudioHandlerStats {
-};</pre>
-          <section>
-            <h2>
-              Dictionary {{RTCAudioReceiverStats}} Members
-            </h2>
-            <dl data-link-for="RTCAudioReceiverStats" data-dfn-for="RTCAudioReceiverStats" class=
             "dictionary-members">
             </dl>
           </section>
@@ -4035,9 +3838,9 @@ enum RTCStatsType {
       </section>
       <section>
         <h3>
-          Obsolete {{RTCAudioSenderStats}} members
+          Obsolete <dfn>RTCAudioSenderStats</dfn> members
         </h3>
-        <pre class="idl">partial dictionary RTCAudioSenderStats {
+        <pre class="idl">dictionary RTCAudioSenderStats {
     double echoReturnLoss;
     double echoReturnLossEnhancement;
 };</pre>
@@ -4065,9 +3868,9 @@ enum RTCStatsType {
       </section>
       <section>
         <h3>
-          Obsolete {{RTCAudioReceiverStats}} members
+          Obsolete <dfn>RTCAudioReceiverStats</dfn> members
         </h3>
-        <pre class="idl">partial dictionary RTCAudioReceiverStats {
+        <pre class="idl">dictionary RTCAudioReceiverStats {
     DOMHighResTimeStamp estimatedPlayoutTimestamp;
     double jitterBufferDelay;
     unsigned long long jitterBufferEmittedCount;
@@ -4242,9 +4045,9 @@ enum RTCStatsType {
       </section>
       <section>
         <h3>
-          Obsolete {{RTCVideoSenderStats}} members
+          Obsolete <dfn>RTCVideoSenderStats</dfn> members
         </h3>
-        <pre class="idl">partial dictionary RTCVideoSenderStats {
+        <pre class="idl">dictionary RTCVideoSenderStats {
     unsigned long keyFramesSent;
     unsigned long framesCaptured;
     unsigned long framesSent;
@@ -4293,9 +4096,9 @@ enum RTCStatsType {
       </section>
       <section>
         <h3>
-          Obsolete {{RTCVideoReceiverStats}} members
+          Obsolete <dfn>RTCVideoReceiverStats</dfn> members
         </h3>
-        <pre class="idl">partial dictionary RTCVideoReceiverStats {
+        <pre class="idl">dictionary RTCVideoReceiverStats {
     DOMHighResTimeStamp estimatedPlayoutTimestamp;
     unsigned long keyFramesReceived;
     double jitterBufferDelay;
@@ -4515,18 +4318,6 @@ function processStats() {
           <tr>
             <th class="row">{{RTCStatsType/"data-channel"}}</th>
             <td>{{RTCDataChannelStats}}</td>
-          </tr>
-          <tr>
-            <th class="row">{{RTCStatsType/"transceiver"}}</th>
-            <td>{{RTCRtpTransceiverStats}}</td>
-          </tr>
-          <tr>
-            <th class="row">{{RTCStatsType/"sender"}}</th>
-            <td>{{RTCAudioSenderStats}} {{RTCVideoSenderStats}}</td>
-          </tr>
-          <tr>
-            <th class="row">{{RTCStatsType/"receiver"}}</th>
-            <td>{{RTCMediaHandlerStats}}</td>
           </tr>
           <tr>
             <th class="row">{{RTCStatsType/"transport"}}</th>
