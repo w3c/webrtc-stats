@@ -883,7 +883,6 @@ enum RTCStatsType {
              unsigned long long   packetsReceived;
              long long            packetsLost;
              double               jitter;
-             unsigned long long   packetsDiscarded;
              unsigned long        framesDropped;
 };</pre>
           <section>
@@ -927,18 +926,6 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn>packetsDiscarded</dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
-              </dt>
-              <dd>
-                <p>
-                  The cumulative number of RTP packets discarded by the jitter buffer due to late
-                  or early-arrival, i.e., these packets are not played out. RTP packets discarded
-                  due to packet duplication are not reported in this metric [[XRBLOCK-STATS]].
-                  Calculated as defined in [[!RFC7002]] section 3.2 and Appendix A.a.
-                </p>
-              </dd>
-              <dt>
                 <dfn>framesDropped</dfn> of type <span class="idlMemberType">unsigned
                 long</span>
               </dt>
@@ -978,6 +965,7 @@ enum RTCStatsType {
              double               totalSquaredInterFrameDelay;
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
              unsigned long long   headerBytesReceived;
+             unsigned long long   packetsDiscarded;
              unsigned long long   fecPacketsReceived;
              unsigned long long   fecPacketsDiscarded;
              unsigned long long   bytesReceived;
@@ -1160,6 +1148,18 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn>packetsDiscarded</dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  The cumulative number of RTP packets discarded by the jitter buffer due to late
+                  or early-arrival, i.e., these packets are not played out. RTP packets discarded
+                  due to packet duplication are not reported in this metric [[XRBLOCK-STATS]].
+                  Calculated as defined in [[!RFC7002]] section 3.2 and Appendix A.a.
+                </p>
+              </dd>
+              <dt>
                 <dfn>fecPacketsReceived</dfn> of type <span class=
                 "idlMemberType">unsigned long long</span>
               </dt>
@@ -1332,7 +1332,7 @@ enum RTCStatsType {
                   concealed sample is a sample that was replaced with synthesized samples generated
                   locally before being played out. Examples of samples that have to be concealed
                   are samples from lost packets (reported in {{RTCReceivedRtpStreamStats/packetsLost}}) or samples from packets that arrive
-                  too late to be played out (reported in {{RTCReceivedRtpStreamStats/packetsDiscarded}}).
+                  too late to be played out (reported in {{RTCInboundRtpStreamStats/packetsDiscarded}}).
                 </p>
                 
               </dd>
