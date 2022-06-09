@@ -82,7 +82,7 @@
       <p>
         The terms {{RTCPeerConnection}}, {{RTCDataChannel}},
         {{RTCDtlsTransport}}, {{RTCDtlsTransportState}}, {{RTCIceTransport}},
-        {{RTCIceRole}}, {{RTCIceTransportState}}, {{RTCSctpTransport}}, {{RTCDataChannelState}},
+        {{RTCIceRole}}, {{RTCIceTransportState}}, {{RTCDataChannelState}},
         {{RTCIceCandidateType}},  {{RTCStats}}, {{RTCCertificate}} are defined in [[!WEBRTC]].
       </p>
       <p><dfn class=fixme data-idl>RTCPriorityType</dfn> is defined in [[WEBRTC-PRIORITY]].</p>
@@ -395,7 +395,6 @@ enum RTCStatsType {
 "sender",
 "receiver",
 "transport",
-"sctp-transport",
 "candidate-pair",
 "local-candidate",
 "remote-candidate",
@@ -572,16 +571,6 @@ enum RTCStatsType {
             <p>
               Transport statistics related to the {{RTCPeerConnection}} object. It is
               accessed by the {{RTCTransportStats}}.
-            </p>
-          </dd>
-          <dt>
-            <dfn>sctp-transport</dfn>
-          </dt>
-          <dd>
-            <p>
-              SCTP transport statistics related to an
-              {{RTCSctpTransport}} object. It is accessed by the
-              {{RTCSctpTransportStats}} dictionary.
             </p>
           </dd>
           <dt>
@@ -3065,150 +3054,57 @@ enum RTCStatsType {
               </dd>
             </dl>
           </section>
-            <section>
-              <h3>
-                <dfn>RTCDtlsRole</dfn> enum
-              </h3>
-              <div>
-                <pre class="idl">enum RTCDtlsRole {
-        "client",
-        "server",
-        "unknown",
-};</pre>
-                <table data-link-for="RTCDtlsRole" data-dfn-for="RTCDtlsRole" class="simple">
-		  <caption>{{RTCDtlsRole}} Enumeration description</caption>
-                  <thead>
-                    <tr>
-		      <th>Enum value</th><th>Description</th>
-                    </tr>
-		  </thead>
-		  <tbody>
-                    <tr>
-                      <td>
-                        <dfn>client</dfn>
-                      </td>
-                      <td>
-                        <p>
-                          The RTCPeerConnection is acting as a DTLS client as defined in [[RFC6347]].
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <dfn>server</dfn>
-                      </td>
-                      <td>
-                        <p>
-                          The RTCPeerConnection is acting as a DTLS server as defined in [[RFC6347]].
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <dfn>unknown</dfn>
-                      </td>
-                      <td>
-                        <p>
-                          The DTLS role of the RTCPeerConnection has not been determined yet.
-                        </p>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </section>
-            </div>
-          </section>
-      <section id="sctptransportstats-dict*">
-        <h3>
-          <dfn>RTCSctpTransportStats</dfn> dictionary
-        </h3>
-        <p>
-          An {{RTCSctpTransportStats}} object represents the stats
-          corresponding to an {{RTCSctpTransport}} described in
-          [[!WEBRTC]].
-        </p>
-        <p>
-          There is only one {{RTCSctpTransportStats}} object, since the PeerConnection
-          can only have one SCTP transport.
-        </p>
-        <div>
-          <pre class="idl">dictionary RTCSctpTransportStats : RTCStats {
-            DOMString transportId;
-            double smoothedRoundTripTime;
-            unsigned long congestionWindow;
-            unsigned long receiverWindow;
-            unsigned long mtu;
-            unsigned long unackData;
-};</pre>
           <section>
-            <h2>
-              Dictionary {{RTCSctpTransportStats}} Members
-            </h2>
-            <dl data-link-for="RTCSctpTransportStats" data-dfn-for="RTCSctpTransportStats" class=
-                "dictionary-members">
-              <dt>
-                <dfn>transportId</dfn> of type DOMString
-              </dt>
-              <dd>
-                <p>
-                  The identifier of the object that was inspected to produce the {{RTCTransportStats}}
-                  for the DTLSTransport and ICETransport supporting the SCTP transport.
-                </p>
-              </dd>
-              <dt>
-                <dfn>smoothedRoundTripTime</dfn> of type
-                <span class="idlMemberType">double</span>
-              </dt>
-              <dd>
-                <p>
-                  The latest smoothed round-trip time value, corresponding to
-                  spinfo_srtt defined in [[RFC6458]] but converted to seconds.
-                  If there has been no round-trip time measurements yet, this
-                  value is undefined.
-                </p>
-              </dd>
-              <dt>
-                <dfn>congestionWindow</dfn> of type
-                <span class="idlMemberType">unsigned long</span>
-              </dt>
-              <dd>
-                <p>
-                  The latest congestion window, corresponding to
-                  spinfo_cwnd defined in [[RFC6458]].
-                </p>
-              </dd>
-              <dt>
-                <dfn>receiverWindow</dfn> of type
-                <span class="idlMemberType">unsigned long</span>
-              </dt>
-              <dd>
-                <p>
-                  The latest receiver window, corresponding to
-                  sstat_rwnd defined in [[RFC6458]].
-                </p>
-              </dd>
-              <dt>
-                <dfn>mtu</dfn> of type
-                <span class="idlMemberType">unsigned long</span>
-              </dt>
-              <dd>
-                <p>
-                  The latest maximum transmission unit, corresponding to
-                  spinfo_mtu defined in [[RFC6458]].
-                </p>
-              </dd>
-              <dt>
-                <dfn>unackData</dfn> of type
-                <span class="idlMemberType">unsigned long</span>
-              </dt>
-              <dd>
-                <p>
-                  The number of unacknowledged DATA chunks, corresponding to
-                  sstat_unackdata defined in [[RFC6458]].
-                </p>
-              </dd>
-            </dl>
+            <h3>
+              <dfn>RTCDtlsRole</dfn> enum
+            </h3>
+            <div>
+              <pre class="idl">enum RTCDtlsRole {
+      "client",
+      "server",
+      "unknown",
+};</pre>
+              <table data-link-for="RTCDtlsRole" data-dfn-for="RTCDtlsRole" class="simple">
+                <caption>{{RTCDtlsRole}} Enumeration description</caption>
+                <thead>
+                  <tr>
+                    <th>Enum value</th><th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <dfn>client</dfn>
+                    </td>
+                    <td>
+                      <p>
+                        The RTCPeerConnection is acting as a DTLS client as defined in [[RFC6347]].
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <dfn>server</dfn>
+                    </td>
+                    <td>
+                      <p>
+                        The RTCPeerConnection is acting as a DTLS server as defined in [[RFC6347]].
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <dfn>unknown</dfn>
+                    </td>
+                    <td>
+                      <p>
+                        The DTLS role of the RTCPeerConnection has not been determined yet.
+                      </p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </section>
         </div>
       </section>
@@ -4635,10 +4531,6 @@ function processStats() {
           <tr>
             <th class="row">{{RTCStatsType/"transport"}}</th>
             <td>{{RTCTransportStats}}</td>
-          </tr>
-          <tr>
-            <th class="row">{{RTCStatsType/"sctp-transport"}}</th>
-            <td>{{RTCSctpTransportStats}}</td>
           </tr>
           <tr>
             <th class="row">{{RTCStatsType/"candidate-pair"}}</th>
