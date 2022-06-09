@@ -1,7 +1,9 @@
+let aMonthFromNow = new Date();
+aMonthFromNow.setMonth(aMonthFromNow.getMonth() + 1);
 var respecConfig = {
       // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
       specStatus:           "ED",
-
+      crEnd: aMonthFromNow.toJSON().slice(0,10),
       // the specification's short name, as in http://www.w3.org/TR/short-name/
       shortName:            "webrtc-stats",
 
@@ -15,9 +17,6 @@ var respecConfig = {
       // if the specification's copyright date is a range of years, specify
       // the start date here:
       copyrightStart: "2014",
-
-      // if there is a previously published draft, uncomment this and set its YYYY-MM-DD
-      prevED: "https://w3c.github.io/webrtc-stats/archives/20170331/webrtc-stats.html",
 
       // if there a publicly available Editor's Draft, this is the link
       edDraftURI: "https://w3c.github.io/webrtc-stats/",
