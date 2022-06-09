@@ -2641,13 +2641,10 @@ enum RTCStatsType {
         <p>
           An {{RTCTransportStats}} object represents the stats corresponding to an
           {{RTCDtlsTransport}} and its underlying
-          {{RTCIceTransport}}. When RTCP multiplexing is used, one transport is
-          used for both RTP and RTCP. Otherwise, RTP and RTCP will be sent on separate transports,
-          and {{RTCTransportStats/rtcpTransportStatsId}} can be used to pair the resulting
-          {{RTCTransportStats}} objects. Additionally, when bundling is used, a single
+          {{RTCIceTransport}}. When bundling is used, a single
           transport will be used for all {{MediaStreamTrack}}s in the bundle group.
           If bundling is not used, different {{MediaStreamTrack}} will use
-          different transports. RTCP multiplexing and bundling are described in [[!WEBRTC]].
+          different transports. Bundling is described in [[!WEBRTC]].
         </p>
         <div>
           <pre class="idl">dictionary RTCTransportStats : RTCStats {
@@ -2655,7 +2652,6 @@ enum RTCStatsType {
              unsigned long long    packetsReceived;
              unsigned long long    bytesSent;
              unsigned long long    bytesReceived;
-             DOMString             rtcpTransportStatsId;
              RTCIceRole            iceRole;
              DOMString             iceLocalUsernameFragment;
              required RTCDtlsTransportState dtlsState;
@@ -2713,17 +2709,6 @@ enum RTCStatsType {
                   Represents the total number of payload bytes received on this
                   {{RTCIceTransport}}, i.e., not including headers, padding
                   or ICE connectivity checks.
-                </p>
-              </dd>
-              <dt>
-                <dfn>rtcpTransportStatsId</dfn> of type <span class=
-                "idlMemberType">DOMString</span>
-              </dt>
-              <dd>
-                <p>
-                  If RTP and RTCP are not multiplexed, this is the {{RTCStats/id}} of the transport
-                  that gives stats for the RTCP component, and this record has only the RTP
-                  component stats.
                 </p>
               </dd>
               <dt>
