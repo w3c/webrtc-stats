@@ -231,7 +231,7 @@ dictionary RTCStats {
           <li>When a feature is not implemented on the platform, omit the dictionary member that is
           tracking usage of the feature.
           </li>
-          <li>When a feature is not applicable to an instance of an object (for example {{RTCAudioHandlerStats/audioLevel}}
+          <li>When a feature is not applicable to an instance of an object (for example {{RTCInboundRtpStreamStats/audioLevel}}
           on a video stream), omit the dictionary member. Do NOT report a count of zero, -1 or
           "empty string".
           </li>
@@ -281,12 +281,7 @@ dictionary RTCStats {
         <p>
           When the state of the {{RTCPeerConnection}} visibly changes as a result of an API call, a
           promise resolving or an event firing, subsequent new {{RTCPeerConnection/getStats()}} calls must return
-          up-to-date dictionaries for the affected objects. For example, if a track is added with
-          {{RTCPeerConnection/addTrack()}} subsequent {{RTCPeerConnection/getStats()}} calls must resolve with a corresponding
-          {{RTCMediaHandlerStats}} object. If you call {{RTCPeerConnection/setRemoteDescription()}} removing a remote track,
-          upon the promise resolving or an associated event (stream's <code class=gum>onremovetrack</code> or track's
-          <code class=gum>onmute</code>) firing, calling {{RTCPeerConnection/getStats()}} must resolve with an up-to-date {{RTCMediaHandlerStats}}
-          object.
+          up-to-date dictionaries for the affected objects.
         </p>
         <p>
           When a stats object is [= deleted =], subsequent {{RTCPeerConnection/getStats()}} calls MUST NOT return stats
@@ -436,8 +431,7 @@ enum RTCStatsType {
               simulcast, there will be one {{RTCOutboundRtpStreamStats}} per <a>RTP stream</a>,
               with distinct values of the {{RTCRtpStreamStats/ssrc}} member, and all these streams will have a
               reference to the same {{RTCStatsType/"track"}} object (of type
-              {{RTCSenderAudioTrackAttachmentStats}} or
-              {{RTCSenderVideoTrackAttachmentStats}}). RTX streams do not show up as separate
+              {{RTCMediaStreamTrackStats}}). RTX streams do not show up as separate
               {{RTCOutboundRtpStreamStats}} objects but affect the {{RTCSentRtpStreamStats/packetsSent}},
               {{RTCSentRtpStreamStats/bytesSent}}, {{RTCOutboundRtpStreamStats/retransmittedPacketsSent}}
               and {{RTCOutboundRtpStreamStats/retransmittedBytesSent}} counters of the relevant
@@ -513,13 +507,10 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              Statistics related to a specific {{MediaStreamTrack}}'s attachment to an
-              {{RTCRtpSender}} and the corresponding media-level metrics. It is accessed by
-              {{RTCSenderVideoTrackAttachmentStats}},
-              {{RTCSenderAudioTrackAttachmentStats}},
-              {{RTCReceiverVideoTrackAttachmentStats}} or
-              {{RTCReceiverAudioTrackAttachmentStats}}, all
-              inherited from {{RTCMediaHandlerStats}}.
+              This is now obsolete. Statistics related to a specific
+              {{MediaStreamTrack}}'s attachment to an {{RTCRtpSender}} or
+              {{RTCRtpReceiver}}. It is accessed by the obsolete dictionary
+              {{RTCMediaStreamTrackStats}}.
             </p>
             <p>
               The monitored {{RTCStatsType/"track"}} object is [= deleted =] when the sender it reports on has its {{RTCRtpSender/track}}
@@ -527,8 +518,8 @@ enum RTCStatsType {
             </p>
             <p class="note">
               All "track" stats have been made obsolete. The relevant metrics
-              have been moved to "media-source", "sender", "outbound-rtp",
-              "receiver" and "inbound-rtp" stats.
+              have been moved to "media-source", "outbound-rtp" and "inbound-rtp"
+              stats.
             </p>
           </dd>
           <dt>
@@ -2477,85 +2468,6 @@ enum RTCStatsType {
           </section>
         </div>
       </section>
-      <section id="mststats-dict*">
-        <h3>
-          <dfn>RTCMediaHandlerStats</dfn> dictionary
-        </h3>
-        <div>
-          <pre class="idl">dictionary RTCMediaHandlerStats : RTCStats {
-             DOMString           trackIdentifier;
-             boolean             ended;
-             required DOMString  kind;
-};</pre>
-          <section>
-            <h2>
-              Dictionary {{RTCMediaHandlerStats}} Members
-            </h2>
-            <dl data-link-for="RTCMediaHandlerStats" data-dfn-for="RTCMediaHandlerStats" class=
-            "dictionary-members">
-              <dt>
-                <dfn>trackIdentifier</dfn> of type <span class=
-                "idlMemberType">DOMString</span>
-              </dt>
-              <dd>
-                <p>
-                  Represents the <code class=gum>id</code> property of the track.
-                </p>
-              </dd>
-              <dt>
-                <dfn>ended</dfn> of type <span class="idlMemberType">boolean</span>
-              </dt>
-              <dd>
-                <p>
-                  Reflects the <code class=gum>ended</code> state of the track.
-                </p>
-              </dd>
-              <dt>
-                <dfn>kind</dfn> of type <span class="idlMemberType">DOMString</span>
-              </dt>
-              <dd>
-                <p>
-                  Either "<code class=gum>audio</code>" or "<code class=gum>video</code>". This reflects the <code class=gum>kind</code>
-                  attribute of the {{MediaStreamTrack}}, see [[!GETUSERMEDIA]].
-                </p>
-              </dd>
-            </dl>
-          </section>
-        </div>
-      </section>
-      <section id="vststats-dict*">
-        <h3>
-          <dfn>RTCVideoHandlerStats</dfn> dictionary
-        </h3>
-        <div>
-          <pre class="idl">dictionary RTCVideoHandlerStats : RTCMediaHandlerStats {
-};</pre>
-          <section>
-            <h2>
-              Dictionary {{RTCVideoHandlerStats}} Members
-            </h2>
-            <dl data-link-for="RTCVideoHandlerStats" data-dfn-for="RTCVideoHandlerStats" class=
-            "dictionary-members"></dl>
-          </section>
-        </div>
-      </section>
-      <section id="aststats-dict*">
-        <h3>
-          <dfn>RTCAudioHandlerStats</dfn> dictionary
-        </h3>
-        <div>
-          <pre class="idl">dictionary RTCAudioHandlerStats : RTCMediaHandlerStats {
-};</pre>
-          <section>
-            <h2>
-              Dictionary {{RTCAudioHandlerStats}} Members
-            </h2>
-            <dl data-link-for="RTCAudioHandlerStats" data-dfn-for="RTCAudioHandlerStats" class=
-            "dictionary-members">
-            </dl>
-          </section>
-        </div>
-      </section>
       <section id="dcstats-dict*">
         <h3>
           <dfn>RTCDataChannelStats</dfn> dictionary
@@ -3497,88 +3409,6 @@ enum RTCStatsType {
             </dd>
           </dl>
         </section>
-      <section id="lvststats-dict*">
-        <h3>
-          Obsolete <dfn data-noexport>RTCSenderVideoTrackAttachmentStats</dfn> dictionary
-        </h3>
-        <p>
-          An RTCSenderVideoTrackAttachmentStats object represents the stats about one attachment of
-          a video MediaStreamTrack to the RTCPeerConnection object for which one calls getStats.
-        </p>
-        <p>
-          It appears in the stats as soon as it is attached (via addTrack, via addTransceiver, via
-          replaceTrack on an RTCRtpSender object).
-        </p>
-        <p>
-          If a video track is attached twice (via addTransceiver or replaceTrack), there will be
-          two RTCSenderVideoTrackAttachmentStats objects, one for each attachment. They will have
-          the same "trackIdentifier" member, but different "id" members.
-        </p>
-        <p>
-          This dictionary was made obsolete after its members were moved to "media-source",
-          "sender" and "outbound-rtp" (to enable simulcast stats) and the "onstatsended" event was
-          removed, making the "track" stats redundant.
-        </p>
-        <div>
-          <pre class="idl">dictionary RTCSenderVideoTrackAttachmentStats : RTCVideoSenderStats {
-};</pre>
-        </div>
-      </section>
-      <section id="laststats-dict*">
-        <h3>
-          Obsolete <dfn>RTCSenderAudioTrackAttachmentStats</dfn> dictionary
-        </h3>
-        <p>
-          An RTCSenderAudioTrackAttachmentStats object represents the stats about one attachment of
-          an audio MediaStreamTrack to the RTCPeerConnection object for which one calls getStats.
-        </p>
-        <p>
-          It appears in the stats as soon as it is attached (via addTrack, via addTransceiver, via
-          replaceTrack on an RTCRtpSender object).
-        </p>
-        <p>
-          If an audio track is attached twice (via addTransceiver or replaceTrack), there will be
-          two RTCSenderAudioTrackAttachmentStats objects, one for each attachment. They will have
-          the same "trackIdentifier" member, but different "id" members.
-        </p>
-        <p>
-          This dictionary was made obsolete after its members were moved to "media-source",
-          "sender" and "outbound-rtp" (to enable simulcast stats) and the "onstatsended" event was
-          removed, making the "track" stats redundant.
-        </p>
-        <div>
-          <pre class="idl">dictionary RTCSenderAudioTrackAttachmentStats : RTCAudioSenderStats {
-};</pre>
-        </div>
-      </section>  
-      <section>
-        <h3>
-          Obsolete <dfn data-noexport>RTCReceiverVideoTrackAttachmentStats</dfn> dictionary
-        </h3>
-        <p>
-          The {{RTCReceiverVideoTrackAttachmentStats}} is a copy of
-          {{RTCVideoReceiverStats}}. It adds no new information, it
-          only exists for backwards-compatibility reasons as an obsolete
-          dictionary.
-        </p>
-        <div>
-          <pre class="idl">dictionary RTCReceiverVideoTrackAttachmentStats : RTCVideoReceiverStats {};</pre>
-        </div>
-      </section>
-      <section>
-        <h3>
-          Obsolete <dfn data-noexport>RTCReceiverAudioTrackAttachmentStats</dfn> dictionary
-        </h3>
-        <p>
-          The {{RTCReceiverAudioTrackAttachmentStats}} is a copy of
-          <code>RTCAudioReceiverStats</code>. It adds no new information, it
-          only exists for backwards-compatibility reasons as an obsolete
-          dictionary.
-        </p>
-        <div>
-          <pre class="idl">dictionary RTCReceiverAudioTrackAttachmentStats : RTCAudioReceiverStats {};</pre>
-        </div>
-      </section>
       <section>
         <h3>
           Obsolete {{RTCCodecStats}} members
@@ -3706,8 +3536,7 @@ enum RTCStatsType {
           <dd>
             <p>
               The identifier of the stats object representing the receiving
-              track, an {{RTCReceiverAudioTrackAttachmentStats}} or
-              {{RTCReceiverVideoTrackAttachmentStats}}.
+              track, an {{RTCMediaStreamTrackStats}}.
             </p>
             <p>
               This field was made obsolete in April 2020 as a follow-up to
@@ -3743,8 +3572,7 @@ enum RTCStatsType {
             <p>
               The identifier of the stats object representing the current track
               attachment to the sender of this stream, an
-              {{RTCSenderAudioTrackAttachmentStats}} or
-              {{RTCSenderVideoTrackAttachmentStats}}.
+              {{RTCMediaStreamTrackStats}}.
             </p>
             <p>
               This field was made obsolete in April 2020 as a follow-up to
@@ -3755,17 +3583,82 @@ enum RTCStatsType {
       </section>
       <section>
         <h3>
-          Obsolete {{RTCMediaHandlerStats}} members
+          Obsolete {{RTCMediaStreamTrackStats}} members
         </h3>
-        <pre class="idl">partial dictionary RTCMediaHandlerStats {
+        <pre class="idl">dictionary RTCMediaStreamTrackStats {
+    DOMString           trackIdentifier;
+    boolean             ended;
+    required DOMString  kind;
     RTCPriorityType     priority;
     boolean             remoteSource;
+    DOMHighResTimeStamp estimatedPlayoutTimestamp;
+    double              jitterBufferDelay;
+    unsigned long long  jitterBufferEmittedCount;
+
+    // Audio-only, send and receive side.
+    double              audioLevel;
+    double              totalAudioEnergy;
+    double              totalSamplesDuration;
+
+    // Audio-only, send side.
+    double              echoReturnLoss;
+    double              echoReturnLossEnhancement;
+
+    // Audio-only, receive side.
+    unsigned long long  totalSamplesReceived;
+    unsigned long long  concealedSamples;
+    unsigned long long  silentConcealedSamples;
+    unsigned long long  concealmentEvents;
+    unsigned long long  insertedSamplesForDeceleration;
+    unsigned long long  removedSamplesForAcceleration;
+
+    // Video-only, send and receive side.
+    unsigned long       frameWidth;
+    unsigned long       frameHeight;
+    double              framesPerSecond;
+
+    // Video-only, send side.
+    unsigned long       keyFramesSent;
+    unsigned long       framesCaptured;
+    unsigned long       framesSent;
+    unsigned long       hugeFramesSent;
+
+    // Video-only, receive side.
+    unsigned long       keyFramesReceived;
+    unsigned long       framesReceived;
+    unsigned long       framesDecoded;
+    unsigned long       framesDropped;
 };
         </pre>
-        <dl data-dfn-for="RTCMediaHandlerStats">
+        <dl data-dfn-for="RTCMediaStreamTrackStats">
           <dt>
-            <dfn>priority</dfn> of type <span class=
-                  "idlMemberType">{{RTCPriorityType}}</span>
+            <dfn>trackIdentifier</dfn> of type <span class=
+            "idlMemberType">DOMString</span>
+          </dt>
+          <dd>
+            <p>
+              Represents the <code class=gum>id</code> property of the track.
+            </p>
+          </dd>
+          <dt>
+            <dfn>ended</dfn> of type <span class="idlMemberType">boolean</span>
+          </dt>
+          <dd>
+            <p>
+              Reflects the <code class=gum>ended</code> state of the track.
+            </p>
+          </dd>
+          <dt>
+            <dfn>kind</dfn> of type <span class="idlMemberType">DOMString</span>
+          </dt>
+          <dd>
+            <p>
+              Either "<code class=gum>audio</code>" or "<code class=gum>video</code>". This reflects the <code class=gum>kind</code>
+              attribute of the {{MediaStreamTrack}}, see [[!GETUSERMEDIA]].
+            </p>
+          </dd>
+          <dt>
+            <dfn>priority</dfn> of type <span class="idlMemberType">{{RTCPriorityType}}</span>
           </dt>
           <dd>
             <p>
@@ -3794,96 +3687,6 @@ enum RTCStatsType {
               elsewhere, this metric was made obsolete in April, 2020.
             </p>
           </dd>
-        </dl>
-      </section>
-      <section>
-        <h3>
-          Obsolete {{RTCAudioHandlerStats}} members
-        </h3>
-        <pre class="idl">partial dictionary RTCAudioHandlerStats {
-    double audioLevel;
-    double totalAudioEnergy;
-    double totalSamplesDuration;
-};</pre>
-        <dl data-dfn-for="RTCAudioHandlerStats">
-          <dt>
-            <dfn>audioLevel</dfn> of type <span class="idlMemberType">double</span>
-          </dt>
-          <dd>
-            <p>
-              This field was moved to {{RTCAudioReceiverStats}} and {{RTCAudioSourceStats}} in June 2019.
-            </p>
-          </dd>
-          <dt>
-            <dfn>totalAudioEnergy</dfn> of type <span class=
-            "idlMemberType">double</span>
-          </dt>
-          <dd>
-            <p>
-              This field was moved to {{RTCAudioReceiverStats}} and {{RTCAudioSourceStats}} in June 2019.
-            </p>
-          </dd>
-          <dt>
-            <dfn>totalSamplesDuration</dfn> of type <span class=
-            "idlMemberType">double</span>
-          </dt>
-          <dd>
-            <p>
-              This field was moved to {{RTCAudioReceiverStats}} and {{RTCAudioSourceStats}} in June 2019.
-            </p>
-          </dd>
-        </dl>
-      </section>
-      <section>
-        <h3>
-          Obsolete <dfn>RTCAudioSenderStats</dfn> members
-        </h3>
-        <pre class="idl">dictionary RTCAudioSenderStats {
-    double echoReturnLoss;
-    double echoReturnLossEnhancement;
-};</pre>
-        <dl data-link-for="RTCAudioSenderStats" data-dfn-for="RTCAudioSenderStats" class=
-        "dictionary-members">
-          <dt>
-            <dfn>echoReturnLoss</dfn> of type <span class=
-            "idlMemberType">double</span>
-          </dt>
-          <dd>
-            <p>
-              This was moved to {{RTCAudioSourceStats}} in August 2019.
-            </p>
-          </dd>
-          <dt>
-            <dfn>echoReturnLossEnhancement</dfn> of type <span class=
-            "idlMemberType">double</span>
-          </dt>
-          <dd>
-            <p>
-              This was moved to {{RTCAudioSourceStats}} in August 2019.
-            </p>
-          </dd>
-        </dl>
-      </section>
-      <section>
-        <h3>
-          Obsolete <dfn>RTCAudioReceiverStats</dfn> members
-        </h3>
-        <pre class="idl">dictionary RTCAudioReceiverStats {
-    DOMHighResTimeStamp estimatedPlayoutTimestamp;
-    double jitterBufferDelay;
-    unsigned long long jitterBufferEmittedCount;
-    unsigned long long totalSamplesReceived;
-    unsigned long long concealedSamples;
-    unsigned long long silentConcealedSamples;
-    unsigned long long concealmentEvents;
-    unsigned long long insertedSamplesForDeceleration;
-    unsigned long long removedSamplesForAcceleration;
-    double audioLevel;
-    double totalAudioEnergy;
-    double totalSamplesDuration;
-};</pre>
-        <dl data-link-for="RTCAudioReceiverStats" data-dfn-for="RTCAudioReceiverStats" class=
-        "dictionary-members">
           <dt>
             <dfn>estimatedPlayoutTimestamp</dfn> of type <span class=
             "idlMemberType">DOMHighResTimeStamp</span>
@@ -3912,66 +3715,11 @@ enum RTCStatsType {
             </p>
           </dd>
           <dt>
-            <dfn>totalSamplesReceived</dfn> of type <span class=
-            "idlMemberType">unsigned long long</span>
+            <dfn>audioLevel</dfn> of type <span class="idlMemberType">double</span>
           </dt>
           <dd>
             <p>
-              This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
-            </p>
-          </dd>
-          <dt>
-            <dfn>concealedSamples</dfn> of type <span class=
-            "idlMemberType">unsigned long long</span>
-          </dt>
-          <dd>
-            <p>
-              This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
-            </p>
-          </dd>
-          <dt>
-            <dfn>silentConcealedSamples</dfn> of type <span class=
-            "idlMemberType">unsigned long long</span>
-          </dt>
-          <dd>
-            <p>
-              This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
-            </p>
-          </dd>
-          <dt>
-            <dfn>concealmentEvents</dfn> of type <span class=
-            "idlMemberType">unsigned long long</span>
-          </dt>
-          <dd>
-            <p>
-              This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
-            </p>
-          </dd>
-          <dt>
-            <dfn>insertedSamplesForDeceleration</dfn> of type <span class=
-            "idlMemberType">unsigned long long</span>
-          </dt>
-          <dd>
-            <p>
-              This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
-            </p>
-          </dd>
-          <dt>
-            <dfn>removedSamplesForAcceleration</dfn> of type <span class=
-            "idlMemberType">unsigned long long</span>
-          </dt>
-          <dd>
-            <p>
-              This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
-            </p>
-          </dd>
-          <dt>
-            <dfn>audioLevel</dfn> of type <span class=
-            "idlMemberType">double</span>
-          </dt>
-          <dd>
-            <p>
-              This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
+              Audio-only. This field was moved to {{RTCAudioSourceStats}} and {{RTCInboundRtpStreamStats}} in June 2019.
             </p>
           </dd>
           <dt>
@@ -3980,7 +3728,7 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
+              Audio-only. This field was moved to {{RTCAudioSourceStats}} and {{RTCInboundRtpStreamStats}} in June 2019.
             </p>
           </dd>
           <dt>
@@ -3989,29 +3737,88 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
+              Audio-only. This field was moved to {{RTCAudioSourceStats}} and {{RTCInboundRtpStreamStats}} in June 2019.
             </p>
           </dd>
-        </dl>
-      </section>
-      <section>
-        <h3>
-          Obsolete {{RTCVideoHandlerStats}} members
-        </h3>
-        <pre class="idl">partial dictionary RTCVideoHandlerStats {
-    unsigned long frameWidth;
-    unsigned long frameHeight;
-    double framesPerSecond;
-};</pre>
-        <dl data-link-for="RTCVideoHandlerStats" data-dfn-for="RTCVideoHandlerStats" class=
-        "dictionary-members">
+          <dt>
+            <dfn>echoReturnLoss</dfn> of type <span class=
+            "idlMemberType">double</span>
+          </dt>
+          <dd>
+            <p>
+              Audio-only. This was moved to {{RTCAudioSourceStats}} in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn>echoReturnLossEnhancement</dfn> of type <span class=
+            "idlMemberType">double</span>
+          </dt>
+          <dd>
+            <p>
+              Audio-only. This was moved to {{RTCAudioSourceStats}} in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn>totalSamplesReceived</dfn> of type <span class=
+            "idlMemberType">unsigned long long</span>
+          </dt>
+          <dd>
+            <p>
+              Audio-only. This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn>concealedSamples</dfn> of type <span class=
+            "idlMemberType">unsigned long long</span>
+          </dt>
+          <dd>
+            <p>
+              Audio-only. This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn>silentConcealedSamples</dfn> of type <span class=
+            "idlMemberType">unsigned long long</span>
+          </dt>
+          <dd>
+            <p>
+              Audio-only. This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn>concealmentEvents</dfn> of type <span class=
+            "idlMemberType">unsigned long long</span>
+          </dt>
+          <dd>
+            <p>
+              Audio-only. This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn>insertedSamplesForDeceleration</dfn> of type <span class=
+            "idlMemberType">unsigned long long</span>
+          </dt>
+          <dd>
+            <p>
+              Audio-only. This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
+            </p>
+          </dd>
+          <dt>
+            <dfn>removedSamplesForAcceleration</dfn> of type <span class=
+            "idlMemberType">unsigned long long</span>
+          </dt>
+          <dd>
+            <p>
+              Audio-only. This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
+            </p>
+          </dd>
           <dt>
             <dfn>frameWidth</dfn> of type <span class="idlMemberType">unsigned
             long</span>
           </dt>
           <dd>
             <p>
-              This was moved to {{RTCOutboundRtpStreamStats}} and
+              Video-only. This was moved to {{RTCOutboundRtpStreamStats}} and
               {{RTCInboundRtpStreamStats}} in August 2019.
             </p>
           </dd>
@@ -4021,7 +3828,7 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              This was moved to {{RTCOutboundRtpStreamStats}} and
+              Video-only. This was moved to {{RTCOutboundRtpStreamStats}} and
               {{RTCInboundRtpStreamStats}} in August 2019.
             </p>
           </dd>
@@ -4031,7 +3838,8 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              For the sending case, this was replaced by {{RTCVideoSourceStats}}.{{RTCVideoSourceStats/framesPerSecond}}
+              Video-only. For the sending case, this was replaced by
+              {{RTCVideoSourceStats}}.{{RTCVideoSourceStats/framesPerSecond}}
               in May 2019 representing the frame rate of the track. For the receiving case,
               this was moved to {{RTCInboundRtpStreamStats}} in August 2019 representing the
               decoding frame rate. In August 2019, {{RTCOutboundRtpStreamStats/framesPerSecond}} was also added to
@@ -4039,28 +3847,15 @@ enum RTCStatsType {
               lower than the source frame rate).
             </p>
           </dd>
-        </dl>
-      </section>
-      <section>
-        <h3>
-          Obsolete <dfn>RTCVideoSenderStats</dfn> members
-        </h3>
-        <pre class="idl">dictionary RTCVideoSenderStats {
-    unsigned long keyFramesSent;
-    unsigned long framesCaptured;
-    unsigned long framesSent;
-    unsigned long hugeFramesSent;
-};</pre>
-        <dl data-dfn-for="RTCVideoSenderStats">
           <dt>
             <dfn>keyFramesSent</dfn> of type <span class="idlMemberType">unsigned
             long</span>
           </dt>
           <dd>
             <p>
-              This field was replaced by {{RTCOutboundRtpStreamStats/keyFramesEncoded}} in {{RTCOutboundRtpStreamStats}} in June
-              2019. There were no known implementations supporting the old field at the time of
-              the change.
+              Video-only. This field was replaced by {{RTCOutboundRtpStreamStats/keyFramesEncoded}}
+              in {{RTCOutboundRtpStreamStats}} in June 2019. There were no known implementations
+              supporting the old field at the time of the change.
             </p>
           </dd>
           <dt>
@@ -4069,7 +3864,7 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              This was replaced by {{RTCVideoSourceStats}}.frames in May 2019.
+              Video-only. This was replaced by {{RTCVideoSourceStats}}.frames in May 2019.
             </p>
           </dd>
           <dt>
@@ -4078,7 +3873,7 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              This was moved to {{RTCOutboundRtpStreamStats}} in August 2019.
+              Video-only. This was moved to {{RTCOutboundRtpStreamStats}} in August 2019.
             </p>
           </dd>
           <dt>
@@ -4087,32 +3882,7 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              This was moved to {{RTCOutboundRtpStreamStats}} in August 2019.
-            </p>
-          </dd>
-        </dl>
-      </section>
-      <section>
-        <h3>
-          Obsolete <dfn>RTCVideoReceiverStats</dfn> members
-        </h3>
-        <pre class="idl">dictionary RTCVideoReceiverStats {
-    DOMHighResTimeStamp estimatedPlayoutTimestamp;
-    unsigned long keyFramesReceived;
-    double jitterBufferDelay;
-    unsigned long long jitterBufferEmittedCount;
-    unsigned long framesReceived;
-    unsigned long framesDecoded;
-    unsigned long framesDropped;
-};</pre>
-        <dl data-dfn-for="RTCVideoReceiverStats">
-          <dt>
-            <dfn>estimatedPlayoutTimestamp</dfn> of type <span class=
-            "idlMemberType">DOMHighResTimeStamp</span>
-          </dt>
-          <dd>
-            <p>
-              This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
+              Video-only. This was moved to {{RTCOutboundRtpStreamStats}} in August 2019.
             </p>
           </dd>
           <dt>
@@ -4121,27 +3891,9 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              This field was replaced by {{RTCInboundRtpStreamStats/keyFramesDecoded}} in {{RTCInboundRtpStreamStats}} in June
-              2019. There were no known implementations supporting the old field at the time of
-              the change.
-            </p>
-          </dd>
-          <dt>
-            <dfn>jitterBufferDelay</dfn> of type <span class=
-            "idlMemberType">double</span>
-          </dt>
-          <dd>
-            <p>
-              This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
-            </p>
-          </dd>
-          <dt>
-            <dfn>jitterBufferEmittedCount</dfn> of type <span class=
-            "idlMemberType">unsigned long long</span>
-          </dt>
-          <dd>
-            <p>
-              This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
+              Video-only. This field was replaced by {{RTCInboundRtpStreamStats/keyFramesDecoded}}
+              in {{RTCInboundRtpStreamStats}} in June 2019. There were no known implementations
+              supporting the old field at the time of the change.
             </p>
           </dd>
           <dt>
@@ -4150,7 +3902,7 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
+              Video-only. This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
             </p>
           </dd>
           <dt>
@@ -4159,7 +3911,7 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
+              Video-only. This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
             </p>
           </dd>
           <dt>
@@ -4168,13 +3920,11 @@ enum RTCStatsType {
           </dt>
           <dd>
             <p>
-              This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
+              Video-only. This was moved to {{RTCInboundRtpStreamStats}} in August 2019.
             </p>
           </dd>
         </dl>
       </section>
-            </div>
-
     </section>
     <section>
       <h2>
@@ -4271,9 +4021,11 @@ function processStats() {
         <a data-cite="WEBRTC-IDENTITY#isolated-media-streams">isolated media stream</a>:
       </p>
       <ul>
-        <li>
-          {{RTCAudioHandlerStats.audioLevel}}.
-        </li>
+        <li>{{RTCAudioSourceStats.audioLevel}}</li>
+        <li>{{RTCAudioSourceStats.totalAudioEnergy}}</li>
+        <li>{{RTCAudioSourceStats.audioLevel}}</li>
+        <li>{{RTCInboundRtpStreamStats.audioLevel}}</li>
+        <li>{{RTCInboundRtpStreamStats.totalAudioEnergy}}</li>
       </ul>
     </section>
     <section class="appendix" id=summary>
