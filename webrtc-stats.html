@@ -926,7 +926,7 @@ enum RTCStatsType {
              double               jitterBufferDelay;
              double               jitterBufferTargetDelay;
              unsigned long long   jitterBufferEmittedCount;
-             double               estimatedMinimumJitterBufferTargetDelay;
+             double               jitterBufferMinimumDelay;
              unsigned long long   totalSamplesReceived;
              unsigned long long   concealedSamples;
              unsigned long long   silentConcealedSamples;
@@ -1295,7 +1295,7 @@ enum RTCStatsType {
                 
               </dd>
               <dt>
-                <dfn>estimatedMinimumJitterBufferTargetDelay</dfn> of type <span class=
+                <dfn>jitterBufferMinimumDelay</dfn> of type <span class=
                 "idlMemberType">double</span>
               </dt>
               <dd>
@@ -1311,7 +1311,7 @@ enum RTCStatsType {
                   external mechanisms that increase the jitter buffer target delay, such as playoutDelay (see link above),
                   AV sync, or any other mechanisms. This metric is purely based on the network characteristics such
                   as jitter and packet loss, and can be seen as the minimum obtainable jitter buffer delay if no
-                  external factors would affect it.
+                  external factors would affect it. The metric is updated every time {{jitterBufferEmittedCount}} is updated.
                 </p>
               </dd>
               <dt>
