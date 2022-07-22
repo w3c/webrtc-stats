@@ -1659,6 +1659,7 @@ enum RTCStatsType {
              unsigned long        firCount;
              unsigned long        pliCount;
              DOMString            encoderImplementation;
+             boolean              active;
 };</pre>
           <section>
             <h2>
@@ -2003,6 +2004,17 @@ enum RTCStatsType {
                 <p class="fingerprint">
                   If too much information is given here, it increases the fingerprint surface.
                   Since it is only given for active tracks, the incremental exposure is small.
+                </p>
+              </dd>
+              <dt>
+                <dfn>active</dfn> of type <span class=
+                "idlMemberType">boolean</span>
+              </dt>
+              <dd>
+                <p>
+                  Indicates whether this <a>RTP stream</a> is configured to be sent or disabled.
+                  Note that an active stream can still not be sending, e.g. when being limited by
+                  network conditions.
                 </p>
               </dd>
             </dl>
