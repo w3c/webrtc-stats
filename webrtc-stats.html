@@ -740,12 +740,11 @@ enum RTCStatsType {
         </p>
         <p>
           The {{RTCCodecStats}} object is created when one or more
-          <code>RTCOutboundRtpStreamStats.codecId</code> or
-          <code>RTCInboundRtpStreamStats.codecId</code> references the codec
-          stats object. When there no longer exists any reference to the
-          {{RTCCodecStats}}, the stats object is deleted. If the same codec is
-          used again in the future, the {{RTCCodecStats}} object is revived with
-          the same {{RTCStats/id}} as before.
+          {{RTCRtpStreamStats/codecId}} references the codec. When there no
+          longer exists any reference to the {{RTCCodecStats}}, the stats object
+          is deleted. If the same codec is used again in the future, the
+          {{RTCCodecStats}} object is revived with the same {{RTCStats/id}} as
+          before.
         </p>
         <p>
           Codec objects may be referenced by multiple RTP streams in
