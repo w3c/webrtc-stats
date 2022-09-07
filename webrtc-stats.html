@@ -612,7 +612,8 @@ enum RTCStatsType {
           the first RTCP packet is sent or received that refers to the <a>SSRC</a> of the <a>RTP stream</a>.
         </p>
         <p>
-          RTP monitored objects are not [= deleted =].
+          RTP monitored objects are deleted when the RTP stream is reconfigured
+          with regards to the <a>SSRC</a> or {{RTCRtpStreamStats/codecId}}
         </p>
         <p>
           The hierarchy is as follows:
