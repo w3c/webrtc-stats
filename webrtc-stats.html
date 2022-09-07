@@ -613,9 +613,14 @@ enum RTCStatsType {
         </p>
         <p>
           RTP monitored objects are deleted when the RTP stream is reconfigured
-          with regards to the <a>SSRC</a> or {{RTCRtpStreamStats/codecId}}. If
-          the RTP stream is reconfigured such that it continues to be used, a
-          new RTP monitored object will be created with a new {{RTCStats/id}}.
+          such that the {{RTCRtpStreamStats/ssrc}} or
+          {{RTCRtpStreamStats/codecId}} changes or if the {{RTCRtpTransceiver}}
+          is <code>"stopped"</code>. The monitored object is <i>not</i> deleted
+          if the transceiver is made <code>"inactive"</code> or if the encoding
+          parameters' {{RTCRtpEncodingParameters/active}} attribute is set to
+          <code>false</code>. When an RTP stream is reconfigured such that it
+          continues to be used, a new RTP monitored object and {{RTCStats/id}}
+          will be created for the new configuration.
         </p>
         <p>
           For a given RTP stats object its total counters must always increase,
@@ -631,28 +636,26 @@ enum RTCStatsType {
           increasing.
 
           One layer is inactivated using RTCRtpSender.setParameters(). While
-          this pauses one of the layers, the RTP monitored objects are not
-          deleted and the packet counter for the inactivated RTP stream reports
-          a non-increasing value.
+          this pauses one of the layers (its packet counter freezes), the RTP
+          monitored objects are not deleted. The RTCRtpTransceiver is negotiated
+          as "inactive" and the RTP monitored objects are still not deleted.
+          When the RTCRtpTransceiver becomes "sendonly" again, the same
+          "outbound-rtp" objects continue to be used.
 
-          Now the RTCRtpTransceiver is negotiated as "inactive". The RTP streams
-          are reconfigured not to send, and both "outbound-rtp" stats objects
-          are deleted.
-
-          Later, the RTCRtpTransceiver becomes "sendonly" again. Two new
-          "outbound-rtp" stats objects are created whose packet counters are
-          reset. The ssrc values are the same as before, but not the stats IDs.
+          Later, RTCRtpTransceiver.stop() is called and both "outbound-rtp"
+          objects are immediately deleted.
         </pre>
         <pre class="example highlight">
           An RTCRtpReceiver is receiving VP8 on SSRC=111 with PT=96. We observe
           one "inbound-rtp" with ssrc=111 and a codecId reference to an
           RTCCodecStats with payloadType=96.
 
-          Without renegotiating, we start receiving VP9 with PT=100 instead. The
-          existing "inbound-rtp" is deleted and a new "inbound-rtp" stats object
-          is created. The new "inbound-rtp" has the same ssrc, but a different
-          stats ID and its packet counter starts from zero. The new object's
-          codecId references a different RTCCodecStats with payloadType=100.
+          Without renegotiating, we start receiving VP9 with PT=100 instead, on
+          the same SSRC. The existing "inbound-rtp" is deleted and a new
+          "inbound-rtp" stats object is created. The new "inbound-rtp" has the
+          same ssrc value, but a different stats ID and its packet counter
+          starts from zero. The new object's codecId references a different
+          RTCCodecStats with payloadType=100.
         </pre>
         <p>
           The hierarchy is as follows:
