@@ -612,7 +612,8 @@ enum RTCStatsType {
           is known. For send streams, the SSRC is decided when setting the SDP
           offer. For receive streams, the SSRC is typically known after
           receiving the first packet, however if the SSRC is signalled via SDP
-          then the RTP stream is created when the remote SDP is set.
+          then the RTP stream is created when the remote SDP is set containing
+          the SSRC information.
         </p>
         <p>
           RTP monitored objects are not [= deleted =].
