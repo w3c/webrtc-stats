@@ -618,9 +618,10 @@ enum RTCStatsType {
           is <code>"stopped"</code>. The monitored object is <i>not</i> deleted
           if the transceiver is made <code>"inactive"</code> or if the encoding
           parameters' {{RTCRtpEncodingParameters/active}} attribute is set to
-          <code>false</code>. When an RTP stream is reconfigured such that it
-          continues to be used, a new RTP monitored object and {{RTCStats/id}}
-          will be created for the new configuration.
+          <code>false</code>. When an RTP stream is reconfigured such that the
+          monitored object is deleted but the RTP stream continues to be used, a
+          new RTP monitored object and {{RTCStats/id}} will be created for the
+          new SSRC or codec.
         </p>
         <p>
           For a given RTP stats object its total counters must always increase,
