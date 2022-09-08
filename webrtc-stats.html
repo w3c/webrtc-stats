@@ -614,9 +614,10 @@ enum RTCStatsType {
         <p>
           RTP monitored objects are deleted when the RTP stream is reconfigured
           such that the {{RTCRtpStreamStats/ssrc}} or
-          {{RTCRtpStreamStats/codecId}} changes or if the {{RTCRtpTransceiver}}
-          is <code>"stopped"</code>. The monitored object is <i>not</i> deleted
-          if the transceiver is made <code>"inactive"</code> or if the encoding
+          {{RTCRtpStreamStats/codecId}} changes or if the
+          {{RTCRtpTransceiver}}'s {{RTCRtpTransceiver/currentDirection}} becomes
+          <code>"stopped"</code>. The monitored object is <i>not</i> deleted if
+          the transceiver is made <code>"inactive"</code> or if the encoding
           parameters' {{RTCRtpEncodingParameters/active}} attribute is set to
           <code>false</code>. When an RTP stream is reconfigured such that the
           monitored object is deleted but the RTP stream continues to be used, a
@@ -632,9 +633,8 @@ enum RTCStatsType {
         </p>
         <pre class="example highlight">
           An RTCRtpSender is sending two layers of simulcast on SSRC=111 and
-          SSRC=222. Two "outbound-rtp" stats objects are observed (with
-          ssrc=111 and ssrc=222) and both objects' packet counters are
-          increasing.
+          SSRC=222. Two "outbound-rtp" stats objects are observed with ssrc=111
+          and ssrc=222. Both objects' packet counters are increasing.
 
           One layer is inactivated using RTCRtpSender.setParameters(). While
           this pauses one of the layers (its packet counter freezes), the RTP
@@ -643,8 +643,10 @@ enum RTCStatsType {
           When the RTCRtpTransceiver becomes "sendonly" again, the same
           "outbound-rtp" objects continue to be used.
 
-          Later, RTCRtpTransceiver.stop() is called and both "outbound-rtp"
-          objects are immediately deleted.
+          Later, RTCRtpTransceiver.stop() is called. The "outbound-rtp" objects
+          still exist but their packet counters have frozen. Renegotiation
+          happens and the transceiver.currentDirection becomes "stopped", now
+          both "outbound-rtp" objects have been deleted.
         </pre>
         <pre class="example highlight">
           An RTCRtpReceiver is receiving VP8 on SSRC=111 with PT=96. We observe
