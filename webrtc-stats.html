@@ -1508,6 +1508,13 @@ enum RTCStatsType {
                   agent MAY take other information into account when deciding if
                   the configuration is considered power efficient.
                 </p>
+                <p class="fingerprint">
+                  This metric increases the fingerprint surface since it exposes
+                  hardware information of active tracks. This exposure is small,
+                  but hardware going missing could be a sign that hardware is
+                  used by another application or that software fallback
+                  happened. This could further increase the fingerprint surface.
+                </p>
               </dd>
             </dl>
           </section>
@@ -2032,6 +2039,13 @@ enum RTCStatsType {
                   configuration results in hardware acceleration, but the user
                   agent MAY take other information into account when deciding if
                   the configuration is considered power efficient.
+                </p>
+                <p class="fingerprint">
+                  This metric increases the fingerprint surface since it exposes
+                  hardware information of active tracks. This exposure is small,
+                  but hardware going missing could be a sign that hardware is
+                  used by another application or that software fallback
+                  happened. This could further increase the fingerprint surface.
                 </p>
               </dd>
               <dt>
