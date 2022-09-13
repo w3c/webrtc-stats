@@ -1492,8 +1492,10 @@ enum RTCStatsType {
                   interoperability issues.
                 </p>
                 <p class="fingerprint">
-                  If too much information is given here, it increases the fingerprint surface.
-                  Since it is only given for active tracks, the incremental exposure is small.
+                  As this field is a fingerprinting vector, it MUST only be
+                  exposed to contexts that the user interacted with in a deep
+                  manner, for instance if <a href="https://w3c.github.io/mediacapture-main/#context-capturing-state">
+                  context capturing state</a> returns true.
                 </p>
               </dd>
               <dt>
@@ -1509,11 +1511,10 @@ enum RTCStatsType {
                   the configuration is considered power efficient.
                 </p>
                 <p class="fingerprint">
-                  This metric increases the fingerprint surface since it exposes
-                  hardware information of active tracks. This exposure is small,
-                  but hardware going missing could be a sign that hardware is
-                  used by another application or that software fallback
-                  happened. This could further increase the fingerprint surface.
+                  As this field is a fingerprinting vector, it MUST only be
+                  exposed to contexts that the user interacted with in a deep
+                  manner, for instance if <a href="https://w3c.github.io/mediacapture-main/#context-capturing-state">
+                  context capturing state</a> returns true.
                 </p>
               </dd>
             </dl>
@@ -2024,8 +2025,10 @@ enum RTCStatsType {
                   interoperability issues.
                 </p>
                 <p class="fingerprint">
-                  If too much information is given here, it increases the fingerprint surface.
-                  Since it is only given for active tracks, the incremental exposure is small.
+                  As this field is a fingerprinting vector, it MUST only be
+                  exposed to contexts that the user interacted with in a deep
+                  manner, for instance if <a href="https://w3c.github.io/mediacapture-main/#context-capturing-state">
+                  context capturing state</a> returns true.
                 </p>
               </dd>
               <dt>
@@ -2041,11 +2044,10 @@ enum RTCStatsType {
                   the configuration is considered power efficient.
                 </p>
                 <p class="fingerprint">
-                  This metric increases the fingerprint surface since it exposes
-                  hardware information of active tracks. This exposure is small,
-                  but hardware going missing could be a sign that hardware is
-                  used by another application or that software fallback
-                  happened. This could further increase the fingerprint surface.
+                  As this field is a fingerprinting vector, it MUST only be
+                  exposed to contexts that the user interacted with in a deep
+                  manner, for instance if <a href="https://w3c.github.io/mediacapture-main/#context-capturing-state">
+                  context capturing state</a> returns true.
                 </p>
               </dd>
               <dt>
