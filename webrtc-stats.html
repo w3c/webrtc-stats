@@ -612,24 +612,25 @@ enum RTCStatsType {
           the first RTCP packet is sent or received that refers to the <a>SSRC</a> of the <a>RTP stream</a>.
         </p>
         <p>
-          RTP monitored objects are deleted when the RTP stream is reconfigured
-          such that the {{RTCRtpStreamStats/ssrc}} or
-          {{RTCRtpStreamStats/codecId}} changes or if the
-          {{RTCRtpTransceiver}}'s {{RTCRtpTransceiver/currentDirection}} becomes
-          <code>"stopped"</code>. The monitored object is <i>not</i> deleted if
-          the transceiver is made <code>"inactive"</code> or if the encoding
-          parameters' {{RTCRtpEncodingParameters/active}} attribute is set to
-          <code>false</code>. When an RTP stream is reconfigured such that the
-          monitored object is deleted but the RTP stream continues to be used, a
-          new RTP monitored object and {{RTCStats/id}} will be created for the
-          new SSRC or codec.
+          RTP monitored objects are deleted when the corresponding RTP sender or
+          RTP receiver is reconfigured to remove the corresponding RTP stream.
+          This happens for the old SSRC when the {{RTCRtpStreamStats/ssrc}}
+          changes, a simulcast layer is dropped or the {{RTCRtpTransceiver}}'s
+          {{RTCRtpTransceiver/currentDirection}} becomes <code>"stopped"</code>.
+          The monitored object is <i>not</i> deleted if the transceiver is made
+          <code>"inactive"</code> or if the encoding parameters'
+          {{RTCRtpEncodingParameters/active}} attribute is set to
+          <code>false</code>. If an SSRC is recycled after a deletion event has
+          happened, this is considered a new RTP monitored object and the new 
+          RTP stream stats will have reset counters and a new ID.
         </p>
         <p>
           For a given RTP stats object its total counters must always increase,
-          but due to changes in SSRC or codec, an RTP stats object can be
-          deleted and replaced by another RTP stats object whose counters have
-          been reset. The caller should be aware of this when aggregating packet
-          counters accross multiple RTP stats objects.
+          but due to changes in SSRC, simulast layers dropping or transceivers
+          stopping, an RTP stats object can be deleted and/or replaced by a new
+          RTP stats object. The caller should be aware of this when aggregating
+          packet counters accross multiple RTP stats objects (the aggregates may
+          decrease due to deletions).
         </p>
         <pre class="example highlight">
           An RTCRtpSender is sending two layers of simulcast on SSRC=111 and
@@ -647,18 +648,6 @@ enum RTCStatsType {
           still exist but their packet counters have frozen. Renegotiation
           happens and the transceiver.currentDirection becomes "stopped", now
           both "outbound-rtp" objects have been deleted.
-        </pre>
-        <pre class="example highlight">
-          An RTCRtpReceiver is receiving VP8 on SSRC=111 with PT=96. We observe
-          one "inbound-rtp" with ssrc=111 and a codecId reference to an
-          RTCCodecStats with payloadType=96.
-
-          Without renegotiating, we start receiving VP9 with PT=100 instead, on
-          the same SSRC. The existing "inbound-rtp" is deleted and a new
-          "inbound-rtp" stats object is created. The new "inbound-rtp" has the
-          same ssrc value, but a different stats ID and its packet counter
-          starts from zero. The new object's codecId references a different
-          RTCCodecStats with payloadType=100.
         </pre>
         <p>
           The hierarchy is as follows:
