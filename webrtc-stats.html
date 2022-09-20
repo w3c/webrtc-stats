@@ -948,6 +948,7 @@ enum RTCStatsType {
              double               totalSamplesDuration;
              unsigned long        framesReceived;
              DOMString            decoderImplementation;
+             DOMString            playoutId;
             };</pre>
           <section>
             <h2>
@@ -1503,6 +1504,16 @@ enum RTCStatsType {
                 <p class="fingerprint">
                   If too much information is given here, it increases the fingerprint surface.
                   Since it is only given for active tracks, the incremental exposure is small.
+                </p>
+              </dd>
+              <dt>
+                <dfn>playoutId</dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  If audio playout is happening, this is used to look up the
+                  corresponding {{RTCAudioPlayoutStats}}.
                 </p>
               </dd>
             </dl>
