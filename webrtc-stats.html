@@ -2498,7 +2498,8 @@ enum RTCStatsType {
           Only applicable if the playout path represents an audio devcice.
           Represents one playout path. If the same playout stats object is
           referenced by multiple {{RTCInboundRtpStreamStats}} this is an
-          indication that audio mixing is happening.
+          indication that audio mixing is happening in which case sample
+          counters in this stats object refer to samples after mixing.
         </p>
         <div>
           <pre class="idl">dictionary RTCAudioPlayoutStats : RTCStats {
@@ -2525,6 +2526,12 @@ enum RTCStatsType {
                   {{totalSamplesDuration}} to calculate the percentage of played
                   out media being synthesized.
                 </p>
+                <p>
+                  Synthesization typically only happens if the pipeline is
+                  underperforming. Samples synthesized by the
+                  {{RTCInboundRtpStreamStats}} are not counted for here, but in
+                  {{RTCInboundRtpStreamStats}}.{{RTCInboundRtpStreamStats/concealedSamples}}.
+                </p>
               </dd>
               <dt>
                 <dfn>totalSamplesDuration</dfn> of type <span class=
@@ -2533,7 +2540,8 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The total duration, in seconds, of all audio samples that have
-                  been playout.
+                  been playout. Includes both synthesized and non-synthesized
+                  samples.
                 </p>
               </dd>
             </dl>
