@@ -382,6 +382,7 @@ enum RTCStatsType {
 "remote-inbound-rtp",
 "remote-outbound-rtp",
 "media-source",
+"media-playout",
 "peer-connection",
 "data-channel",
 "stream",
@@ -472,6 +473,15 @@ enum RTCStatsType {
               (i.e. not the raw media produced by the camera). It is either an
               {{RTCAudioSourceStats}} or {{RTCVideoSourceStats}}
               depending on its <code class=gum>kind</code>.
+            </p>
+          </dd>
+          <dt>
+            <dfn>media-playout</dfn>
+          </dt>
+          <dd>
+            <p>
+              Statistics related to audio playout. It is accessed by the
+              {{RTCAudioPlayoutStats}}.
             </p>
           </dd>
           <dt>
@@ -950,6 +960,7 @@ enum RTCStatsType {
              double               totalSamplesDuration;
              unsigned long        framesReceived;
              DOMString            decoderImplementation;
+             DOMString            playoutId;
             };</pre>
           <section>
             <h2>
@@ -1505,6 +1516,16 @@ enum RTCStatsType {
                 <p class="fingerprint">
                   If too much information is given here, it increases the fingerprint surface.
                   Since it is only given for active tracks, the incremental exposure is small.
+                </p>
+              </dd>
+              <dt>
+                <dfn>playoutId</dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  If audio playout is happening, this is used to look up the
+                  corresponding {{RTCAudioPlayoutStats}}.
                 </p>
               </dd>
             </dl>
@@ -2468,6 +2489,66 @@ enum RTCStatsType {
           </section>
         </div>
       </section>
+
+      <section id="playoutstats-dict*">
+        <h3>
+          {{RTCAudioPlayoutStats}} dictionary
+        </h3>
+        <p>
+          Only applicable if the playout path represents an audio devcice.
+          Represents one playout path. If the same playout stats object is
+          referenced by multiple {{RTCInboundRtpStreamStats}} this is an
+          indication that audio mixing is happening in which case sample
+          counters in this stats object refer to samples after mixing.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCAudioPlayoutStats : RTCStats {
+             double synthesizedSamplesDuration;
+             double totalSamplesDuration;
+};</pre>
+          <section>
+            <h2>
+              Dictionary {{RTCAudioPlayoutStats}} Members
+            </h2>
+            <dl data-link-for="RTCAudioPlayoutStats" data-dfn-for="RTCAudioPlayoutStats" class=
+            "dictionary-members">
+              <dt>
+                <dfn>synthesizedSamplesDuration</dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  If the playout path is unable to produce audio samples on time
+                  for device playout, samples are synthesized to be playout out
+                  instead. {{synthesizedSamplesDuration}} is measured in seconds
+                  and is incremented each time an audio sample is synthesized by
+                  this playout path. This metric can be used together with
+                  {{totalSamplesDuration}} to calculate the percentage of played
+                  out media being synthesized.
+                </p>
+                <p>
+                  Synthesization typically only happens if the pipeline is
+                  underperforming. Samples synthesized by the
+                  {{RTCInboundRtpStreamStats}} are not counted for here, but in
+                  {{RTCInboundRtpStreamStats}}.{{RTCInboundRtpStreamStats/concealedSamples}}.
+                </p>
+              </dd>
+              <dt>
+                <dfn>totalSamplesDuration</dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  The total duration, in seconds, of all audio samples that have
+                  been playout. Includes both synthesized and non-synthesized
+                  samples.
+                </p>
+              </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
+
 <section id="pcstats-dict*">
         <h3>
           <dfn>RTCPeerConnectionStats</dfn> dictionary
