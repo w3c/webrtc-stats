@@ -2542,11 +2542,11 @@ enum RTCStatsType {
           {{RTCAudioPlayoutStats}} dictionary
         </h3>
         <p>
-          Only applicable if the playout path represents an audio devcice.
-          Represents one playout path. If the same playout stats object is
+          Only applicable if the playout path represents an audio device.
+          Represents one playout path - if the same playout stats object is
           referenced by multiple {{RTCInboundRtpStreamStats}} this is an
           indication that audio mixing is happening in which case sample
-          counters in this stats object refer to samples after mixing.
+          counters in this stats object refer to the samples after mixing.
         </p>
         <div>
           <pre class="idl">dictionary RTCAudioPlayoutStats : RTCStats {
