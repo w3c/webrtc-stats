@@ -2447,23 +2447,25 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Only applicable if the audio source represents an audio
-                  capture device. This is the total delay for each audio sample
-                  between the time the sample was emitted by the capture device
-                  and the sample reaching the source. This can be used together
-                  with {{totalSamplesCaptured}} to calculate the average capture
-                  delay per sample.
+                  capture device. This is the total delay, in seconds, for each
+                  audio sample between the time the sample was emitted by the
+                  capture device and the sample reaching the source. This can be
+                  used together with {{totalSamplesCaptured}} to calculate the
+                  average capture delay per sample.
                 </p>
               </dd>
               <dt>
                 <dfn>totalSamplesCaptured</dfn> of type <span class=
-                "idlMemberType">double</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
                   Only applicable if the audio source represents an audio
                   capture device. This is the total number of captured samples
                   reaching the audio source, i.e. that were not dropped by the
-                  capture pipeline.
+                  capture pipeline. The frequency of the media source is not
+                  necessarily the same as the frequency of encoders later in the
+                  pipeline.
                 </p>
               </dd>
             </dl>
