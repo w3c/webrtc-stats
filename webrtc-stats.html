@@ -382,6 +382,7 @@ enum RTCStatsType {
 "remote-inbound-rtp",
 "remote-outbound-rtp",
 "media-source",
+"media-playout",
 "peer-connection",
 "data-channel",
 "stream",
@@ -472,6 +473,15 @@ enum RTCStatsType {
               (i.e. not the raw media produced by the camera). It is either an
               {{RTCAudioSourceStats}} or {{RTCVideoSourceStats}}
               depending on its <code class=gum>kind</code>.
+            </p>
+          </dd>
+          <dt>
+            <dfn>media-playout</dfn>
+          </dt>
+          <dd>
+            <p>
+              Statistics related to audio playout. It is accessed by the
+              {{RTCAudioPlayoutStats}}.
             </p>
           </dd>
           <dt>
@@ -734,10 +744,22 @@ enum RTCStatsType {
           <dfn>RTCCodecStats</dfn> dictionary
         </h3>
         <p>
-          This object is created when a codec type is registered for
-          an RTP transport. It may be referenced by multiple RTP streams
-          in media sections using that transport, but similar codecs in
-          different transports have different RTCCodecStats objects.
+          Codecs are created when registered for an RTP transport,
+          but only the subset of codecs that are in use (referenced by an RTP
+          stream) are exposed in <code>getStats()</code>.
+        </p>
+        <p>
+          The {{RTCCodecStats}} object is created when one or more
+          {{RTCRtpStreamStats/codecId}} references the codec. When there no
+          longer exists any reference to the {{RTCCodecStats}}, the stats object
+          is deleted. If the same codec is used again in the future, the
+          {{RTCCodecStats}} object is revived with the same {{RTCStats/id}} as
+          before.
+        </p>
+        <p>
+          Codec objects may be referenced by multiple RTP streams in
+          media sections using the same transport, but similar codecs in
+          different transports have different {{RTCCodecStats}} objects.
         </p>
         <p class="note">
           User agents are expected to coalesce information into a single
@@ -938,6 +960,7 @@ enum RTCStatsType {
              double               totalSamplesDuration;
              unsigned long        framesReceived;
              DOMString            decoderImplementation;
+             DOMString            playoutId;
             };</pre>
           <section>
             <h2>
@@ -1493,6 +1516,16 @@ enum RTCStatsType {
                 <p class="fingerprint">
                   If too much information is given here, it increases the fingerprint surface.
                   Since it is only given for active tracks, the incremental exposure is small.
+                </p>
+              </dd>
+              <dt>
+                <dfn>playoutId</dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  If audio playout is happening, this is used to look up the
+                  corresponding {{RTCAudioPlayoutStats}}.
                 </p>
               </dd>
             </dl>
@@ -2468,6 +2501,94 @@ enum RTCStatsType {
           </section>
         </div>
       </section>
+
+      <section id="playoutstats-dict*">
+        <h3>
+          {{RTCAudioPlayoutStats}} dictionary
+        </h3>
+        <p>
+          Only applicable if the playout path represents an audio devcice.
+          Represents one playout path. If the same playout stats object is
+          referenced by multiple {{RTCInboundRtpStreamStats}} this is an
+          indication that audio mixing is happening in which case sample
+          counters in this stats object refer to samples after mixing.
+        </p>
+        <div>
+          <pre class="idl">dictionary RTCAudioPlayoutStats : RTCStats {
+             double synthesizedSamplesDuration;
+             double totalSamplesDuration;
+             double totalPlayoutDelay;
+             double totalSamplesCount;
+};</pre>
+          <section>
+            <h2>
+              Dictionary {{RTCAudioPlayoutStats}} Members
+            </h2>
+            <dl data-link-for="RTCAudioPlayoutStats" data-dfn-for="RTCAudioPlayoutStats" class=
+            "dictionary-members">
+              <dt>
+                <dfn>synthesizedSamplesDuration</dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  If the playout path is unable to produce audio samples on time
+                  for device playout, samples are synthesized to be playout out
+                  instead. {{synthesizedSamplesDuration}} is measured in seconds
+                  and is incremented each time an audio sample is synthesized by
+                  this playout path. This metric can be used together with
+                  {{totalSamplesDuration}} to calculate the percentage of played
+                  out media being synthesized.
+                </p>
+                <p>
+                  Synthesization typically only happens if the pipeline is
+                  underperforming. Samples synthesized by the
+                  {{RTCInboundRtpStreamStats}} are not counted for here, but in
+                  {{RTCInboundRtpStreamStats}}.{{RTCInboundRtpStreamStats/concealedSamples}}.
+                </p>
+              </dd>
+              <dt>
+                <dfn>totalSamplesDuration</dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  The total duration, in seconds, of all audio samples that have
+                  been playout. Includes both synthesized and non-synthesized
+                  samples.
+                </p>
+              </dd>
+              <dt>
+                <dfn>totalPlayoutDelay</dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  When audio samples are pulled by the playout device, this
+                  counter is incremented with the estimated delay of the playout
+                  path for that audio sample. The playout delay includes the
+                  delay from being emitted to the actual time of playout on the
+                  device. This metric can be used together with
+                  {{totalSamplesCount}} to calculate the average playout delay
+                  per sample.
+                </p>
+              </dd>
+              <dt>
+                <dfn>totalSamplesCount</dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  When audio samples are pulled by the playout device, this
+                  counter is incremented with the number of samples emitted for
+                  playout.
+                </p>
+              </dd>
+            </dl>
+          </section>
+        </div>
+      </section>
+
 <section id="pcstats-dict*">
         <h3>
           <dfn>RTCPeerConnectionStats</dfn> dictionary
