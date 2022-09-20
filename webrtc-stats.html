@@ -2554,7 +2554,9 @@ enum RTCStatsType {
                 <p>
                   When audio samples are pulled by the playout device, this
                   counter is incremented with the estimated delay of the playout
-                  path for that audio sample. Can be used together with
+                  path for that audio sample. The playout delay includes the
+                  delay from being emitted to the actual time of playout on the
+                  device. This metric can be used together with
                   {{totalSamplesCount}} to calculate the average playout delay
                   per sample.
                 </p>
