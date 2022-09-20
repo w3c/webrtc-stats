@@ -2479,6 +2479,8 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCAudioPlayoutStats : RTCStats {
              double synthesizedSamplesDuration;
              double totalSamplesDuration;
+             double totalPlayoutDelay;
+             double totalSamplesCount;
 };</pre>
           <section>
             <h2>
@@ -2508,6 +2510,30 @@ enum RTCStatsType {
                 <p>
                   The total duration, in seconds, of all audio samples that have
                   been playout.
+                </p>
+              </dd>
+              <dt>
+                <dfn>totalPlayoutDelay</dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  When audio samples are pulled by the playout device, this
+                  counter is incremented with the estimated delay of the playout
+                  path for that audio sample. Can be used together with
+                  {{totalSamplesCount}} to calculate the average playout delay
+                  per sample.
+                </p>
+              </dd>
+              <dt>
+                <dfn>totalSamplesCount</dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  When audio samples are pulled by the playout device, this
+                  counter is incremented with the number of samples emitted for
+                  playout.
                 </p>
               </dd>
             </dl>
