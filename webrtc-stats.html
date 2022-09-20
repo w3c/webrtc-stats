@@ -2386,11 +2386,15 @@ enum RTCStatsType {
                 </p>
                 <p>
                   Represents the total duration in seconds of all samples that have been produced
-                  by this source (excluding {{droppedSamplesDuration}}) for the lifetime of this stats object. Can be used with
+                  by this source for the lifetime of this stats object. Can be used with
                   {{totalAudioEnergy}} to compute an average audio level over
                   different intervals.
                 </p>
-
+                <p>
+                  {{totalSamplesDuration}} does not include samples dropped
+                  before reaching this media source, see
+                  {{droppedSamplesDuration}}.
+                </p>
               </dd>
               <dt>
                 <dfn>echoReturnLoss</dfn> of type <span class=
@@ -2429,8 +2433,9 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Only applicable if this media source is backed by an audio
-                  capture device. The total duration of samples produced by the
-                  device that got dropped before reaching the media source.
+                  capture device. The total duration, in seconds, of samples
+                  produced by the device that got dropped before reaching the
+                  media source.
                 </p>
               </dd>
             </dl>
