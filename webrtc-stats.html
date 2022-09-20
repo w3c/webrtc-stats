@@ -2272,6 +2272,8 @@ enum RTCStatsType {
               double              totalSamplesDuration;
               double              echoReturnLoss;
               double              echoReturnLossEnhancement;
+              double              totalCaptureDelay;
+              unsigned long long  totalSamplesCaptured;
 };</pre>
           <section>
             <h2>
@@ -2386,6 +2388,32 @@ enum RTCStatsType {
                 <p>
                   If multiple audio channels are used, the channel of the
                   <strong>least audio energy</strong> is considered for any sample.
+                </p>
+              </dd>
+              <dt>
+                <dfn>totalCaptureDelay</dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Only applicable if the audio source represents an audio
+                  capture device. This is the total delay for each audio sample
+                  between the time the sample was emitted by the capture device
+                  and the sample reaching the source. This can be used together
+                  with {{totalSamplesCaptured}} to calculate the average capture
+                  delay per sample.
+                </p>
+              </dd>
+              <dt>
+                <dfn>totalSamplesCaptured</dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only applicable if the audio source represents an audio
+                  capture device. This is the total number of captured samples
+                  reaching the audio source, i.e. that were not dropped by the
+                  capture pipeline.
                 </p>
               </dd>
             </dl>
