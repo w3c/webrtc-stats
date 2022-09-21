@@ -2306,6 +2306,7 @@ enum RTCStatsType {
               double              echoReturnLoss;
               double              echoReturnLossEnhancement;
               double              droppedSamplesDuration;
+              unsigned long       droppedSamplesEvents;
               double              totalCaptureDelay;
               unsigned long long  totalSamplesCaptured;
 };</pre>
@@ -2441,6 +2442,19 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn>droppedSamplesEvents</dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  The number of dropped samples events. This counter
+                  increases every time a sample is dropped after a non-dropped
+                  sample. That is, multiple consecutive dropped samples will
+                  increase {{droppedSamplesDuration}} multiple times but is a
+                  single dropped samples event.
+                </p>
+              </dd>
+              <dt>
                 <dfn>totalCaptureDelay</dfn> of type <span class=
                 "idlMemberType">double</span>
               </dt>
@@ -2550,10 +2564,11 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCAudioPlayoutStats : RTCStats {
-             double synthesizedSamplesDuration;
-             double totalSamplesDuration;
-             double totalPlayoutDelay;
-             double totalSamplesCount;
+             double        synthesizedSamplesDuration;
+             unsigned long synthesizedSamplesEvents;
+             double        totalSamplesDuration;
+             double        totalPlayoutDelay;
+             double        totalSamplesCount;
 };</pre>
           <section>
             <h2>
@@ -2580,6 +2595,20 @@ enum RTCStatsType {
                   underperforming. Samples synthesized by the
                   {{RTCInboundRtpStreamStats}} are not counted for here, but in
                   {{RTCInboundRtpStreamStats}}.{{RTCInboundRtpStreamStats/concealedSamples}}.
+                </p>
+              </dd>
+              <dt>
+                <dfn>synthesizedSamplesEvents</dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  The number of synthesized samples events. This counter
+                  increases every time a sample is synthesized after a
+                  non-synthesized sample. That is, multiple consecutive
+                  synthesized samples will increase
+                  {{synthesizedSamplesDuration}} multiple times but is a single
+                  synthesization samples event.
                 </p>
               </dd>
               <dt>
