@@ -643,9 +643,10 @@ enum RTCStatsType {
           decrease due to deletions).
         </p>
         <pre class="example highlight">
-          An RTCRtpSender is sending two layers of simulcast on SSRC=111 and
-          SSRC=222. Two "outbound-rtp" stats objects are observed with ssrc=111
-          and ssrc=222. Both objects' packet counters are increasing.
+          An RTCRtpSender is sending two layers of simulcast (on SSRC=111 and
+          SSRC=222). Two "outbound-rtp" stats objects are observed, one with
+          ssrc=111, and the other with ssrc=222. Both objects' packet counters are
+          increasing.
 
           One layer is inactivated using RTCRtpSender.setParameters(). While
           this pauses one of the layers (its packet counter freezes), the RTP
