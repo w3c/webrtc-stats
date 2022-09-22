@@ -628,8 +628,8 @@ enum RTCStatsType {
           changes, a simulcast layer is dropped or the {{RTCRtpTransceiver}}'s
           {{RTCRtpTransceiver/currentDirection}} becomes <code>"stopped"</code>.
           The monitored object is <i>not</i> deleted if the transceiver is made
-          <code>"inactive"</code> or if the encoding parameters'
-          {{RTCRtpEncodingParameters/active}} attribute is set to
+          <code>"inactive"</code> or if the encoding's
+          {{RTCRtpEncodingParameters/active}} parameter is set to
           <code>false</code>. If an SSRC is recycled after a deletion event has
           happened, this is considered a new RTP monitored object and the new 
           RTP stream stats will have reset counters and a new ID.
