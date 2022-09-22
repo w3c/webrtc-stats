@@ -2871,7 +2871,7 @@ enum RTCStatsType {
              required RTCIceCandidateType candidateType;
              long                     priority;
              DOMString                url;
-             DOMString                relayProtocol;
+             RTCIceServerTransportProtocol relayProtocol;
 };</pre>
           <section>
             <h2>
@@ -2961,13 +2961,12 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn>relayProtocol</dfn> of type <span class=
-                "idlMemberType">DOMString</span> <!-- TODO: define enum? -->
+                "idlMemberType">{{RTCIceServerTransportProtocol}}</span>
               </dt>
               <dd>
                 <p>
                   It is the protocol used by the endpoint to communicate with the TURN server. This
-                  is only present for local relay candidates. Valid values are <code>"udp"</code>,
-                  <code>"tcp"</code>, or <code>"tls"</code>.
+                  is only present for local relay candidates and defined in [[WEBRTC]].
                 </p>
               </dd>
             </dl>
