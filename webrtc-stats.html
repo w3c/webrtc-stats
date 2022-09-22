@@ -638,7 +638,7 @@ enum RTCStatsType {
           For a given RTP stats object, its total counters must always increase,
           but due to changes in SSRC, simulast layers dropping or transceivers
           stopping, an RTP stats object can be deleted and/or replaced by a new
-          RTP stats object. The caller should be aware of this when aggregating
+          RTP stats object. The caller will need to be aware of this when aggregating
           packet counters accross multiple RTP stats objects (the aggregates may
           decrease due to deletions).
         </p>
