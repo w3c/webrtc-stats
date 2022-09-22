@@ -635,7 +635,7 @@ enum RTCStatsType {
           RTP stream stats will have reset counters and a new ID.
         </p>
         <p>
-          For a given RTP stats object its total counters must always increase,
+          For a given RTP stats object, its total counters must always increase,
           but due to changes in SSRC, simulast layers dropping or transceivers
           stopping, an RTP stats object can be deleted and/or replaced by a new
           RTP stats object. The caller should be aware of this when aggregating
