@@ -3166,7 +3166,11 @@ enum RTCStatsType {
              long                     priority;
              DOMString                url;
              RTCIceServerTransportProtocol relayProtocol;
-             DOMString                tcpType;
+             DOMString                foundation;
+             DOMString                relatedAddress;
+             long                     relatedPort;
+             DOMString                usernameFragment;
+             RTCIceTcpCandidateType   tcpType;
 };</pre>
           <section>
             <h2>
@@ -3265,11 +3269,46 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn>tcpType</dfn> of type <span class="idlMemberType">DOMString</span>
+                <dfn>foundation</dfn> of type <span class="idlMemberType">DOMString</span>
               </dt>
               <dd>
                 <p>
-                  ICE candidate TCP type, as defined іn {{RTCIceTcpCandidateType}} and used
+                  The ICE foundation as defined in [[!RFC5245]] section 15.1.
+                </p>
+              </dd>
+              <dt>
+                <dfn>relatedAddress</dfn> of type <span class="idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  The ICE rel-addr defined in [[!RFC5245]] section 15.1. Only set for serverreflexive
+                  and relay candidates.
+                </p>
+              </dd>
+              <dt>
+                <dfn>relatedPort</dfn> of type <span class="idlMemberType">long</span>
+              </dt>
+              <dd>
+                <p>
+                  The ICE rel-addr defined in [[!RFC5245]] section 15.1. Only set for serverreflexive
+                  and relay candidates.
+                </p>
+              </dd>
+              <dt>
+                <dfn>usernameFragment</dfn> of type <span class="idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  The ICE username fragment as defined in [[!RFC5245]] section 7.1.2.3.
+                </p>
+              </dd>
+              <dt>
+              <dt>
+                <dfn>tcpType</dfn> of type <span class="idlMemberType">{{RTCIceTcpCandidateType}}</span>
+              </dt>
+              <dd>
+                <p>
+                  The ICE candidate TCP type, as defined іn {{RTCIceTcpCandidateType}} and used
                   in {{RTCIceCandidate}}.
                 </p>
               </dd>
