@@ -356,6 +356,39 @@ dictionary RTCStats {
         </p>
       </section>
     </section>
+    <section>
+      <h2>
+        Privacy considerations
+      </h2>
+      <p class="fingerprint">
+        The WebRTC's Statistics API exposes information about the the system,
+        including hardware capabilities and network characteristics. To limit
+        the finger printing surface imposed by this API, some metrics are only
+        exposed if allowed by the algorithms in this section.
+      </p>
+      <section>
+        <h3>
+          Limiting exposure of hardware capabilities
+        </h3>
+        <p>
+          To <dfn data-lt="exposing hardware is allowed">check if hardware
+          exposure is allowed</dfn>, run the following steps:
+          <ol>
+            <li>
+              <p>
+                If the <a href="https://w3c.github.io/mediacapture-main/#context-capturing-state">
+                context capturing state</a> is true, return true.
+              </p>
+            </li>
+            <li>
+              <p>
+                Return false.
+              </p>
+            </li>
+          </ol>
+        </p>
+      </section>
+    </section>
     <section id="rtctatstype-*">
       <h2>
         {{RTCStatsType}}
@@ -1510,15 +1543,12 @@ enum RTCStatsType {
                 "idlMemberType">DOMString</span>
               </dt>
               <dd>
-                <p>
-                  Identifies the decoder implementation used. This is useful for diagnosing
-                  interoperability issues.
-                </p>
                 <p class="fingerprint">
-                  As this field is a fingerprinting vector, it MUST only be
-                  exposed to contexts that the user interacted with in a deep
-                  manner, for instance if <a href="https://w3c.github.io/mediacapture-main/#context-capturing-state">
-                  context capturing state</a> returns true.
+                  Only defined when [= exposing hardware is allowed =].
+                </p>
+                <p>
+                  Identifies the decoder implementation used. This is useful for
+                  diagnosing interoperability issues.
                 </p>
               </dd>
               <dt>
@@ -1536,18 +1566,15 @@ enum RTCStatsType {
                 "idlMemberType">boolean</span>
               </dt>
               <dd>
+                <p class="fingerprint">
+                  Only defined when [= exposing hardware is allowed =].
+                </p>
                 <p>
                   Whether the decoder currently used is considered power
                   efficient by the user agent. This SHOULD reflect if the
                   configuration results in hardware acceleration, but the user
                   agent MAY take other information into account when deciding if
                   the configuration is considered power efficient.
-                </p>
-                <p class="fingerprint">
-                  As this field is a fingerprinting vector, it MUST only be
-                  exposed to contexts that the user interacted with in a deep
-                  manner, for instance if <a href="https://w3c.github.io/mediacapture-main/#context-capturing-state">
-                  context capturing state</a> returns true.
                 </p>
               </dd>
             </dl>
@@ -2053,15 +2080,12 @@ enum RTCStatsType {
                 "idlMemberType">DOMString</span>
               </dt>
               <dd>
+                <p class="fingerprint">
+                  Only defined when [= exposing hardware is allowed =].
+                </p>
                 <p>
                   Identifies the encoder implementation used. This is useful for diagnosing
                   interoperability issues.
-                </p>
-                <p class="fingerprint">
-                  As this field is a fingerprinting vector, it MUST only be
-                  exposed to contexts that the user interacted with in a deep
-                  manner, for instance if <a href="https://w3c.github.io/mediacapture-main/#context-capturing-state">
-                  context capturing state</a> returns true.
                 </p>
               </dd>
               <dt>
@@ -2069,18 +2093,15 @@ enum RTCStatsType {
                 "idlMemberType">boolean</span>
               </dt>
               <dd>
+                <p class="fingerprint">
+                  Only defined when [= exposing hardware is allowed =].
+                </p>
                 <p>
                   Whether the encoder currently used is considered power
                   efficient by the user agent. This SHOULD reflect if the
                   configuration results in hardware acceleration, but the user
                   agent MAY take other information into account when deciding if
                   the configuration is considered power efficient.
-                </p>
-                <p class="fingerprint">
-                  As this field is a fingerprinting vector, it MUST only be
-                  exposed to contexts that the user interacted with in a deep
-                  manner, for instance if <a href="https://w3c.github.io/mediacapture-main/#context-capturing-state">
-                  context capturing state</a> returns true.
                 </p>
               </dd>
               <dt>
