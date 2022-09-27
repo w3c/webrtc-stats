@@ -644,9 +644,9 @@ enum RTCStatsType {
           that make sense in many different contexts are represented just once in IDL.
         </p>
         <p>
-          The metrics exposed here correspond to local measurements and those reported by RTCP packets. 
-          Compound RTCP packets contain multiple RTCP report blocks, such as <a>Sender Report</a> (SR) and 
-          <a>Receiver Report</a> (RR) whereas a non-compound RTCP packets may contain just a single 
+          The metrics exposed here correspond to local measurements and those reported by RTCP packets.
+          Compound RTCP packets contain multiple RTCP report blocks, such as <a>Sender Report</a> (SR) and
+          <a>Receiver Report</a> (RR) whereas a non-compound RTCP packets may contain just a single
           RTCP SR or RR block.
         </p>
         <p>
@@ -730,11 +730,11 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The synchronization source (ssrc) identifier is an unsigned integer value per [[RFC3550]]
-                  used to identify the stream of RTP packets that this stats object is describing. 
+                  used to identify the stream of RTP packets that this stats object is describing.
                 </p>
                 <p>
-                  For outbound and inbound local, ssrc describes the stats for the track that were 
-                  sent and received, respectively by those endpoints. 
+                  For outbound and inbound local, ssrc describes the stats for the track that were
+                  sent and received, respectively by those endpoints.
                   For the remote inbound and remote outbound, ssrc describes the stats for the track
                   that were received by and sent to the remote endpoint.
                 </p>
@@ -935,7 +935,7 @@ enum RTCStatsType {
                 <p>
                   Only [= map/exist =]s for video. The total number of frames dropped prior to decode or dropped
                   because the frame missed its display deadline for this receiver's track. The measurement
-                  begins when the receiver is created and is a cumulative metric as defined in 
+                  begins when the receiver is created and is a cumulative metric as defined in
                   Appendix A (g) of [[!RFC7004]].
                 </p>
               </dd>
@@ -1105,7 +1105,7 @@ enum RTCStatsType {
                 <p>
                   The definition of QP value depends on the codec; for VP8, the QP value is the
                   value carried in the frame header as the syntax element <code class=vp8>y_ac_qi</code>, and defined in
-                  [[RFC6386]] section 19.2. Its range is 0..127. 
+                  [[RFC6386]] section 19.2. Its range is 0..127.
                   <!-- Need appropriate references for VP9 and H.264 -->
                 </p>
                 <p>
@@ -1311,15 +1311,15 @@ enum RTCStatsType {
               <dd>
                 <p>
                   The purpose of the jitter buffer is to recombine RTP packets into frames (in the case of video)
-                  and have smooth playout. The model described here assumes that the samples or frames are 
+                  and have smooth playout. The model described here assumes that the samples or frames are
                   still compressed and have not yet been decoded.
                   It is the sum of the time, in seconds, each <a>audio sample</a> or a video frame takes from
-                  the time the first packet is received by the jitter buffer (ingest timestamp) to the 
-                  time it exits the jitter buffer (emit timestamp). 
-                  In the case of audio, several samples belong to the same RTP packet, hence they will have the same 
-                  ingest timestamp but different jitter buffer emit timestamps. 
+                  the time the first packet is received by the jitter buffer (ingest timestamp) to the
+                  time it exits the jitter buffer (emit timestamp).
+                  In the case of audio, several samples belong to the same RTP packet, hence they will have the same
+                  ingest timestamp but different jitter buffer emit timestamps.
                   In the case of video, the frame maybe is received over several RTP packets, hence the ingest timestamp
-                  is the earliest packet of the frame that entered the jitter buffer and the emit timestamp is 
+                  is the earliest packet of the frame that entered the jitter buffer and the emit timestamp is
                   when the whole frame exits the jitter buffer.
                   This metric increases upon samples or frames exiting, having completed their time in the buffer (and
                   incrementing {{jitterBufferEmittedCount}}). The average jitter buffer
@@ -1349,7 +1349,7 @@ enum RTCStatsType {
                   The total number of <a>audio sample</a>s or video frames that have come out of the
                   jitter buffer (increasing {{jitterBufferDelay}}).
                 </p>
-                
+
               </dd>
               <dt>
                 <dfn>jitterBufferMinimumDelay</dfn> of type <span class=
@@ -1393,7 +1393,7 @@ enum RTCStatsType {
                   are samples from lost packets (reported in {{RTCReceivedRtpStreamStats/packetsLost}}) or samples from packets that arrive
                   too late to be played out (reported in {{RTCInboundRtpStreamStats/packetsDiscarded}}).
                 </p>
-                
+
               </dd>
               <dt>
                 <dfn>silentConcealedSamples</dfn> of type <span class=
@@ -1405,7 +1405,7 @@ enum RTCStatsType {
                   "silent". Playing out silent samples results in silence or comfort noise. This is
                   a subset of {{concealedSamples}}.
                 </p>
-                
+
               </dd>
               <dt>
                 <dfn>concealmentEvents</dfn> of type <span class=
@@ -1418,7 +1418,7 @@ enum RTCStatsType {
                   consecutive concealed samples will increase the {{concealedSamples}} count multiple
                   times but is a single concealment event.
                 </p>
-                
+
               </dd>
               <dt>
                 <dfn>insertedSamplesForDeceleration</dfn> of type <span class=
@@ -1431,7 +1431,7 @@ enum RTCStatsType {
                   If playout is slowed down by inserting samples, this will be the number of inserted
                   samples.
                 </p>
-                
+
               </dd>
               <dt>
                 <dfn>removedSamplesForAcceleration</dfn> of type <span class=
@@ -1444,7 +1444,7 @@ enum RTCStatsType {
                   out. If speedup is achieved by removing samples, this will be the count of samples
                   removed.
                 </p>
-                
+
               </dd>
               <dt>
                 <dfn>audioLevel</dfn> of type <span class=
@@ -1526,7 +1526,7 @@ enum RTCStatsType {
                   {{totalAudioEnergy}} to compute an average audio level over
                   different intervals.
                 </p>
-                
+
               </dd>
               <dt>
                 <dfn>framesReceived</dfn> of type <span class="idlMemberType">unsigned
@@ -1633,11 +1633,11 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the cumulative sum of all round trip time measurements in seconds 
-                  since the beginning of the session. The individual round trip time is calculated 
+                  Represents the cumulative sum of all round trip time measurements in seconds
+                  since the beginning of the session. The individual round trip time is calculated
                   based on the RTCP timestamps in the <a>RTCP Receiver Report</a> (RR) [[!RFC3550]], hence
-                  undefined roundtrip times are not added. The average round trip time can be computed 
-                  from {{totalRoundTripTime}} by dividing it by 
+                  undefined roundtrip times are not added. The average round trip time can be computed
+                  from {{totalRoundTripTime}} by dividing it by
                   {{roundTripTimeMeasurements}}.
                 </p>
               </dd>
@@ -1657,7 +1657,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Represents the total number of <a>RTCP RR</a> blocks received for this <a>SSRC</a> that contain 
+                  Represents the total number of <a>RTCP RR</a> blocks received for this <a>SSRC</a> that contain
                   a valid round trip time. This counter will not increment if the {{roundTripTime}} is undefined.
                 </p>
               </dd>
@@ -1953,7 +1953,7 @@ enum RTCStatsType {
                 <p>
                   The definition of QP value depends on the codec; for VP8, the QP value is the
                   value carried in the frame header as the syntax element <code class=vp8>y_ac_qi</code>, and defined in
-                  [[RFC6386]] section 19.2. Its range is 0..127. 
+                  [[RFC6386]] section 19.2. Its range is 0..127.
                   <!-- Need appropriate references for VP9 and H.264 -->
                 </p>
                 <p>
@@ -2269,7 +2269,7 @@ enum RTCStatsType {
                   Represents the cumulative sum of all round trip time measurements in seconds since the
                   beginning of the session. The individual round trip time is calculated  based on the
                   DLRR report block in the <a>RTCP Sender Report</a> (SR) [[!RFC3611]], hence
-                  undefined roundtrip times are not added. The average round trip time can be computed 
+                  undefined roundtrip times are not added. The average round trip time can be computed
                   from {{totalRoundTripTime}} by dividing it by {{roundTripTimeMeasurements}}.
                 </p>
               </dd>
