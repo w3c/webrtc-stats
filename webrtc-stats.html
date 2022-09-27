@@ -356,6 +356,39 @@ dictionary RTCStats {
         </p>
       </section>
     </section>
+    <section>
+      <h2>
+        Privacy considerations
+      </h2>
+      <p class="fingerprint">
+        The WebRTC's Statistics API exposes information about the system,
+        including hardware capabilities and network characteristics. To limit
+        the finger printing surface imposed by this API, some metrics are only
+        exposed if allowed by the algorithms in this section.
+      </p>
+      <section>
+        <h3>
+          Limiting exposure of hardware capabilities
+        </h3>
+        <p>
+          To <dfn data-lt="exposing hardware is allowed">check if hardware
+          exposure is allowed</dfn>, run the following steps:
+          <ol>
+            <li>
+              <p>
+                If the <a href="https://w3c.github.io/mediacapture-main/#context-capturing-state">
+                context capturing state</a> is true, return true.
+              </p>
+            </li>
+            <li>
+              <p>
+                Return false.
+              </p>
+            </li>
+          </ol>
+        </p>
+      </section>
+    </section>
     <section id="rtctatstype-*">
       <h2>
         {{RTCStatsType}}
@@ -996,6 +1029,7 @@ enum RTCStatsType {
              unsigned long        framesReceived;
              DOMString            decoderImplementation;
              DOMString            playoutId;
+             boolean              powerEfficientDecoder;
             };</pre>
           <section>
             <h2>
@@ -1544,13 +1578,12 @@ enum RTCStatsType {
                 "idlMemberType">DOMString</span>
               </dt>
               <dd>
-                <p>
-                  Identifies the decoder implementation used. This is useful for diagnosing
-                  interoperability issues.
-                </p>
                 <p class="fingerprint">
-                  If too much information is given here, it increases the fingerprint surface.
-                  Since it is only given for active tracks, the incremental exposure is small.
+                  Only defined when [= exposing hardware is allowed =].
+                </p>
+                <p>
+                  Identifies the decoder implementation used. This is useful for
+                  diagnosing interoperability issues.
                 </p>
               </dd>
               <dt>
@@ -1561,6 +1594,22 @@ enum RTCStatsType {
                 <p>
                   If audio playout is happening, this is used to look up the
                   corresponding {{RTCAudioPlayoutStats}}.
+                </p>
+              </dd>
+              <dt>
+                <dfn>powerEfficientDecoder</dfn> of type <span class=
+                "idlMemberType">boolean</span>
+              </dt>
+              <dd>
+                <p class="fingerprint">
+                  Only defined when [= exposing hardware is allowed =].
+                </p>
+                <p>
+                  Whether the decoder currently used is considered power
+                  efficient by the user agent. This SHOULD reflect if the
+                  configuration results in hardware acceleration, but the user
+                  agent MAY take other information into account when deciding if
+                  the configuration is considered power efficient.
                 </p>
               </dd>
             </dl>
@@ -1727,6 +1776,7 @@ enum RTCStatsType {
              unsigned long        firCount;
              unsigned long        pliCount;
              DOMString            encoderImplementation;
+             boolean              powerEfficientEncoder;
              boolean              active;
 };</pre>
           <section>
@@ -2065,13 +2115,28 @@ enum RTCStatsType {
                 "idlMemberType">DOMString</span>
               </dt>
               <dd>
+                <p class="fingerprint">
+                  Only defined when [= exposing hardware is allowed =].
+                </p>
                 <p>
                   Identifies the encoder implementation used. This is useful for diagnosing
                   interoperability issues.
                 </p>
+              </dd>
+              <dt>
+                <dfn>powerEfficientEncoder</dfn> of type <span class=
+                "idlMemberType">boolean</span>
+              </dt>
+              <dd>
                 <p class="fingerprint">
-                  If too much information is given here, it increases the fingerprint surface.
-                  Since it is only given for active tracks, the incremental exposure is small.
+                  Only defined when [= exposing hardware is allowed =].
+                </p>
+                <p>
+                  Whether the encoder currently used is considered power
+                  efficient by the user agent. This SHOULD reflect if the
+                  configuration results in hardware acceleration, but the user
+                  agent MAY take other information into account when deciding if
+                  the configuration is considered power efficient.
                 </p>
               </dd>
               <dt>
@@ -2341,6 +2406,7 @@ enum RTCStatsType {
               double              echoReturnLoss;
               double              echoReturnLossEnhancement;
               double              droppedSamplesDuration;
+              unsigned long       droppedSamplesEvents;
               double              totalCaptureDelay;
               unsigned long long  totalSamplesCaptured;
 };</pre>
@@ -2476,6 +2542,19 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn>droppedSamplesEvents</dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  The number of dropped samples events. This counter
+                  increases every time a sample is dropped after a non-dropped
+                  sample. That is, multiple consecutive dropped samples will
+                  increase {{droppedSamplesDuration}} multiple times but is a
+                  single dropped samples event.
+                </p>
+              </dd>
+              <dt>
                 <dfn>totalCaptureDelay</dfn> of type <span class=
                 "idlMemberType">double</span>
               </dt>
@@ -2585,10 +2664,11 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCAudioPlayoutStats : RTCStats {
-             double synthesizedSamplesDuration;
-             double totalSamplesDuration;
-             double totalPlayoutDelay;
-             double totalSamplesCount;
+             double        synthesizedSamplesDuration;
+             unsigned long synthesizedSamplesEvents;
+             double        totalSamplesDuration;
+             double        totalPlayoutDelay;
+             double        totalSamplesCount;
 };</pre>
           <section>
             <h2>
@@ -2615,6 +2695,20 @@ enum RTCStatsType {
                   underperforming. Samples synthesized by the
                   {{RTCInboundRtpStreamStats}} are not counted for here, but in
                   {{RTCInboundRtpStreamStats}}.{{RTCInboundRtpStreamStats/concealedSamples}}.
+                </p>
+              </dd>
+              <dt>
+                <dfn>synthesizedSamplesEvents</dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  The number of synthesized samples events. This counter
+                  increases every time a sample is synthesized after a
+                  non-synthesized sample. That is, multiple consecutive
+                  synthesized samples will increase
+                  {{synthesizedSamplesDuration}} multiple times but is a single
+                  synthesization samples event.
                 </p>
               </dd>
               <dt>
@@ -4296,6 +4390,10 @@ function processStats() {
           <tr>
             <th class="row">{{RTCStatsType/"media-source"}}</th>
             <td>{{RTCAudioSourceStats}} {{RTCVideoSourceStats}}</td>
+          </tr>
+          <tr>
+            <th class="row">{{RTCStatsType/"media-playout"}}</th>
+            <td>{{RTCAudioPlayoutStats}}</td>
           </tr>
           <tr>
             <th class="row">{{RTCStatsType/"peer-connection"}}</th>
