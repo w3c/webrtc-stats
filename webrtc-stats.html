@@ -661,24 +661,25 @@ enum RTCStatsType {
           changes, a simulcast layer is dropped or the {{RTCRtpTransceiver}}'s
           {{RTCRtpTransceiver/currentDirection}} becomes <code>"stopped"</code>.
           The monitored object is <i>not</i> deleted if the transceiver is made
-          <code>"inactive"</code> or if the encoding parameters'
-          {{RTCRtpEncodingParameters/active}} attribute is set to
+          <code>"inactive"</code> or if the encoding's
+          {{RTCRtpEncodingParameters/active}} parameter is set to
           <code>false</code>. If an SSRC is recycled after a deletion event has
           happened, this is considered a new RTP monitored object and the new 
           RTP stream stats will have reset counters and a new ID.
         </p>
         <p>
-          For a given RTP stats object its total counters must always increase,
+          For a given RTP stats object, its total counters must always increase,
           but due to changes in SSRC, simulast layers dropping or transceivers
           stopping, an RTP stats object can be deleted and/or replaced by a new
-          RTP stats object. The caller should be aware of this when aggregating
+          RTP stats object. The caller will need to be aware of this when aggregating
           packet counters accross multiple RTP stats objects (the aggregates may
           decrease due to deletions).
         </p>
         <pre class="example highlight">
-          An RTCRtpSender is sending two layers of simulcast on SSRC=111 and
-          SSRC=222. Two "outbound-rtp" stats objects are observed with ssrc=111
-          and ssrc=222. Both objects' packet counters are increasing.
+          An RTCRtpSender is sending two layers of simulcast (on SSRC=111 and
+          SSRC=222). Two "outbound-rtp" stats objects are observed, one with
+          ssrc=111, and the other with ssrc=222. Both objects' packet counters are
+          increasing.
 
           One layer is inactivated using RTCRtpSender.setParameters(). While
           this pauses one of the layers (its packet counter freezes), the RTP
