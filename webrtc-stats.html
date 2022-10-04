@@ -1003,6 +1003,10 @@ enum RTCStatsType {
              double               totalDecodeTime;
              double               totalInterFrameDelay;
              double               totalSquaredInterFrameDelay;
+             unsigned long        pauseCount;
+             double               totalPausesDuration;
+             unsigned long        freezeCount;
+             double               totalFreezesDuration;
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
              unsigned long long   headerBytesReceived;
              unsigned long long   packetsDiscarded;
@@ -1185,6 +1189,53 @@ enum RTCStatsType {
                   Sum of the squared interframe delays in seconds between consecutively decoded frames,
                   recorded just after a frame has been decoded. See {{totalInterFrameDelay}} for
                   details on how to calculate the interframe delay variance.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>pauseCount</code></dfn> of type
+                <span class="idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Count the total number of video pauses experienced by this receiver.
+                  Video is considered to be paused if time passed since last rendered
+                  frame exceeds 5 seconds. {{pauseCount}} is incremented when a frame
+                  is rendered after such a pause.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalPausesDuration</code></dfn> of type
+                <span class="idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Total duration of pauses (for definition of pause see {{pauseCount}}),
+                  in seconds. This value is updated when a frame is rendered.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>freezeCount</code></dfn> of type
+                <span class="idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Count the total number of video freezes experienced by this receiver.
+                  It is a freeze if frame duration, which is time interval between two
+                  consecutively rendered frames, is equal or exceeds
+                  Max(3 * avg_frame_duration_ms, avg_frame_duration_ms + 150), where
+                  avg_frame_duration_ms is linear average of durations of last 30 rendered
+                  frames.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalFreezesDuration</code></dfn> of type
+                <span class="idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Total duration of rendered frames which are considered as frozen (for
+                  definition of freeze see {{freezeCount}}), in seconds. This value
+                  is updated when a frame is rendered.
                 </p>
               </dd>
               <dt>
