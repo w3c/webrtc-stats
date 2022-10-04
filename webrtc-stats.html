@@ -1689,9 +1689,9 @@ enum RTCStatsType {
                 <p>
                   Given the complexities involved, the time of arrival or the reception timestamp is measured
                   as close to the network layer as possible. This metric is not incremented for frames that
-                  are not decoded, i.e., {{framesDropped}}, {{partialFramesLost}} or frames that fail decoding for
-                  other reasons (if any). Only incremented for frames consisting of more than one RTP packet.
-                  The average frame assembly time can be calculated by dividing the {{totalAssemblyTime}} with
+                  are not decoded, i.e., {{framesDropped}} or frames that fail decoding for other reasons
+                  (if any). Only incremented for frames consisting of more than one RTP packet. The average
+                  frame assembly time can be calculated by dividing the {{totalAssemblyTime}} with
                   {{framesAssembledFromMultiplePackets}}.
                 </p>
               </dd>
