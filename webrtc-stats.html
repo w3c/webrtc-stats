@@ -1023,8 +1023,8 @@ enum RTCStatsType {
              DOMString            decoderImplementation;
              DOMString            playoutId;
              boolean              powerEfficientDecoder;
-             double               totalAssemblyTime;
              unsigned long        framesAssembledFromMultiplePackets;
+             double               totalAssemblyTime;
             };</pre>
           <section>
             <h2>
@@ -1665,6 +1665,17 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn>framesAssembledFromMultiplePackets</dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only [= map/exist =]s for video.  It represents the total number of frames correctly decoded
+                  for this RTP stream that consist of more than one RTP packet. For such frames the
+                  {{totalAssemblyTime}} is incremented.
+                </p>
+              </dd>
+              <dt>
                 <dfn>totalAssemblyTime</dfn> of type <span class=
                 "idlMemberType">double</span>
               </dt>
@@ -1672,23 +1683,16 @@ enum RTCStatsType {
                 <p>
                   Only [= map/exist =]s for video. The sum of the time, in seconds, each video frame takes
                   from the time the first RTP packet is received (reception timestamp) and to the time
-                  the last RTP packet of a frame is received.
+                  the last RTP packet of a frame is received. Only incremented for frames consisting of more
+                  than one RTP packet.
                 </p>
                 <p>
-                  Given the complexities involved, the time of arrival or the reception timestamp is measured as close to the network layer as possible.
-                  This metric is not incremented for frames that are not decoded, i.e., framesDropped, partialFramesLost or frames that fail decoding
-                  for other reasons (if any). Only incremented for frames consisting of more than one RTP packet. The average frame assembly time can
-                  be calculated by dividing the totalAssemblyTime with framesAssembledFromMultiplePackets.
-                </p>
-              </dd>
-              <dt>
-                <dfn>framesAssembledFromMultiplePackets</dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
-              </dt>
-              <dd>
-                <p>
-                  Only [= map/exist =]s for video.  It represents the total number of frames correctly decoded for this RTP stream that consist of
-                  more than one RTP packet. For such frames the totalAssemblyTime is incremented.
+                  Given the complexities involved, the time of arrival or the reception timestamp is measured
+                  as close to the network layer as possible. This metric is not incremented for frames that
+                  are not decoded, i.e., {{framesDropped}}, {{partialFramesLost}} or frames that fail decoding for
+                  other reasons (if any). Only incremented for frames consisting of more than one RTP packet.
+                  The average frame assembly time can be calculated by dividing the {{totalAssemblyTime}} with
+                  {{framesAssembledFromMultiplePackets}}.
                 </p>
               </dd>
             </dl>
