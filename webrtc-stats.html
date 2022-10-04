@@ -1672,7 +1672,8 @@ enum RTCStatsType {
                 <p>
                   Only [= map/exist =]s for video.  It represents the total number of frames correctly decoded
                   for this RTP stream that consist of more than one RTP packet. For such frames the
-                  {{totalAssemblyTime}} is incremented.
+                  {{totalAssemblyTime}} is incremented. The average frame assembly time can be calculated by
+                  dividing the {{totalAssemblyTime}} with {{framesAssembledFromMultiplePackets}}.
                 </p>
               </dd>
               <dt>
@@ -1684,8 +1685,7 @@ enum RTCStatsType {
                   Only [= map/exist =]s for video. The sum of the time, in seconds, each video frame takes
                   from the time the first RTP packet is received (reception timestamp) and to the time
                   the last RTP packet of a frame is received. Only incremented for frames consisting of more
-                  than one RTP packet. The average frame assembly time can be calculated by dividing the
-                  {{totalAssemblyTime}} with {{framesAssembledFromMultiplePackets}}.
+                  than one RTP packet.
                 </p>
                 <p>
                   Given the complexities involved, the time of arrival or the reception timestamp is measured
