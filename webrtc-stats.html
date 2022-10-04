@@ -921,7 +921,6 @@ enum RTCStatsType {
              unsigned long long   packetsReceived;
              long long            packetsLost;
              double               jitter;
-             unsigned long        framesDropped;
 };</pre>
           <section>
             <h2>
@@ -963,18 +962,6 @@ enum RTCStatsType {
                   6.4.1. of [[!RFC3550]].
                 </p>
               </dd>
-              <dt>
-                <dfn>framesDropped</dfn> of type <span class="idlMemberType">unsigned
-                long</span>
-              </dt>
-              <dd>
-                <p>
-                  Only [= map/exist =]s for video. The total number of frames dropped prior to decode or dropped
-                  because the frame missed its display deadline for this receiver's track. The measurement
-                  begins when the receiver is created and is a cumulative metric as defined in
-                  Appendix A (g) of [[!RFC7004]].
-                </p>
-              </dd>
             </dl>
           </section>
         </div>
@@ -996,6 +983,7 @@ enum RTCStatsType {
              DOMString            remoteId;
              unsigned long        framesDecoded;
              unsigned long        keyFramesDecoded;
+             unsigned long        framesDropped;
              unsigned long        frameWidth;
              unsigned long        frameHeight;
              double               framesPerSecond;
@@ -1101,6 +1089,18 @@ enum RTCStatsType {
                   decoded for this RTP media stream. This is a subset of
                   {{framesDecoded}}. <code>framesDecoded - keyFramesDecoded</code> gives
                   you the number of delta frames decoded.
+                </p>
+              </dd>
+              <dt>
+                <dfn>framesDropped</dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only [= map/exist =]s for video. The total number of frames dropped prior to decode or dropped
+                  because the frame missed its display deadline for this receiver's track. The measurement
+                  begins when the receiver is created and is a cumulative metric as defined in
+                  Appendix A (g) of [[!RFC7004]].
                 </p>
               </dd>
               <dt>
@@ -1355,7 +1355,7 @@ enum RTCStatsType {
                 </p>
                 <p>
                   This metric is not incremented for frames that are not decoded,
-                  i.e. {{RTCReceivedRtpStreamStats/framesDropped}}.
+                  i.e. {{RTCInboundRtpStreamStats/framesDropped}}.
                   The average processing delay can be calculated by dividing the {{totalProcessingDelay}} with the
                   {{framesDecoded}} for video (or povisional stats spec <code>totalSamplesDecoded</code> for audio).
                 </p>
