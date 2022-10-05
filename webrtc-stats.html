@@ -371,6 +371,11 @@ dictionary RTCStats {
           Limiting exposure of hardware capabilities
         </h3>
         <p>
+          To avoid passive fingerprinting, hardware capabilities should only be
+          exposed in capturing or fullscreen contexts. This is tested using the
+          algorithm below.
+        </p>
+        <p>
           To <dfn data-lt="exposing hardware is allowed">check if hardware
           exposure is allowed</dfn>, run the following steps:
           <ol>
@@ -382,7 +387,15 @@ dictionary RTCStats {
             </li>
             <li>
               <p>
-                Return false.
+                If the current <code>Document</code>'s
+                <a href="https://fullscreen.spec.whatwg.org/#dom-document-fullscreenelement">
+                fullscreenElement</a> getter returns a non-null value, return
+                true.
+              </p>
+            </li>
+            <li>
+              <p>
+                Otherwise return false.
               </p>
             </li>
           </ol>
