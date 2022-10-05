@@ -672,7 +672,7 @@ enum RTCStatsType {
           <code>"inactive"</code> or if the encoding's
           {{RTCRtpEncodingParameters/active}} parameter is set to
           <code>false</code>. If an SSRC is recycled after a deletion event has
-          happened, this is considered a new RTP monitored object and the new 
+          happened, this is considered a new RTP monitored object and the new
           RTP stream stats will have reset counters and a new ID.
         </p>
         <p>
@@ -929,7 +929,6 @@ enum RTCStatsType {
              unsigned long long   packetsReceived;
              long long            packetsLost;
              double               jitter;
-             unsigned long        framesDropped;
 };</pre>
           <section>
             <h2>
@@ -971,18 +970,6 @@ enum RTCStatsType {
                   6.4.1. of [[!RFC3550]].
                 </p>
               </dd>
-              <dt>
-                <dfn>framesDropped</dfn> of type <span class="idlMemberType">unsigned
-                long</span>
-              </dt>
-              <dd>
-                <p>
-                  Only [= map/exist =]s for video. The total number of frames dropped prior to decode or dropped
-                  because the frame missed its display deadline for this receiver's track. The measurement
-                  begins when the receiver is created and is a cumulative metric as defined in
-                  Appendix A (g) of [[!RFC7004]].
-                </p>
-              </dd>
             </dl>
           </section>
         </div>
@@ -1004,6 +991,7 @@ enum RTCStatsType {
              DOMString            remoteId;
              unsigned long        framesDecoded;
              unsigned long        keyFramesDecoded;
+             unsigned long        framesDropped;
              unsigned long        frameWidth;
              unsigned long        frameHeight;
              double               framesPerSecond;
@@ -1011,6 +999,10 @@ enum RTCStatsType {
              double               totalDecodeTime;
              double               totalInterFrameDelay;
              double               totalSquaredInterFrameDelay;
+             unsigned long        pauseCount;
+             double               totalPausesDuration;
+             unsigned long        freezeCount;
+             double               totalFreezesDuration;
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
              unsigned long long   headerBytesReceived;
              unsigned long long   packetsDiscarded;
@@ -1108,6 +1100,18 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn>framesDropped</dfn> of type <span class="idlMemberType">unsigned
+                long</span>
+              </dt>
+              <dd>
+                <p>
+                  Only [= map/exist =]s for video. The total number of frames dropped prior to decode or dropped
+                  because the frame missed its display deadline for this receiver's track. The measurement
+                  begins when the receiver is created and is a cumulative metric as defined in
+                  Appendix A (g) of [[!RFC7004]].
+                </p>
+              </dd>
+              <dt>
                 <dfn>frameWidth</dfn> of type <span class="idlMemberType">unsigned
                 long</span>
               </dt>
@@ -1193,6 +1197,53 @@ enum RTCStatsType {
                   Sum of the squared interframe delays in seconds between consecutively decoded frames,
                   recorded just after a frame has been decoded. See {{totalInterFrameDelay}} for
                   details on how to calculate the interframe delay variance.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>pauseCount</code></dfn> of type
+                <span class="idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Count the total number of video pauses experienced by this receiver.
+                  Video is considered to be paused if time passed since last rendered
+                  frame exceeds 5 seconds. {{pauseCount}} is incremented when a frame
+                  is rendered after such a pause.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalPausesDuration</code></dfn> of type
+                <span class="idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Total duration of pauses (for definition of pause see {{pauseCount}}),
+                  in seconds. This value is updated when a frame is rendered.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>freezeCount</code></dfn> of type
+                <span class="idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  Count the total number of video freezes experienced by this receiver.
+                  It is a freeze if frame duration, which is time interval between two
+                  consecutively rendered frames, is equal or exceeds
+                  Max(3 * avg_frame_duration_ms, avg_frame_duration_ms + 150), where
+                  avg_frame_duration_ms is linear average of durations of last 30 rendered
+                  frames.
+                </p>
+              </dd>
+              <dt>
+                <dfn><code>totalFreezesDuration</code></dfn> of type
+                <span class="idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  Total duration of rendered frames which are considered as frozen (for
+                  definition of freeze see {{freezeCount}}), in seconds. This value
+                  is updated when a frame is rendered.
                 </p>
               </dd>
               <dt>
@@ -1312,7 +1363,7 @@ enum RTCStatsType {
                 </p>
                 <p>
                   This metric is not incremented for frames that are not decoded,
-                  i.e. {{RTCReceivedRtpStreamStats/framesDropped}}.
+                  i.e. {{RTCInboundRtpStreamStats/framesDropped}}.
                   The average processing delay can be calculated by dividing the {{totalProcessingDelay}} with the
                   {{framesDecoded}} for video (or povisional stats spec <code>totalSamplesDecoded</code> for audio).
                 </p>
@@ -1589,8 +1640,8 @@ enum RTCStatsType {
                   Only defined when [= exposing hardware is allowed =].
                 </p>
                 <p>
-                  Identifies the decoder implementation used. This is useful for
-                  diagnosing interoperability issues.
+                  Only [= map/exist =]s for video. Identifies the decoder implementation used.
+                  This is useful for diagnosing interoperability issues.
                 </p>
               </dd>
               <dt>
@@ -2124,8 +2175,8 @@ enum RTCStatsType {
                   Only defined when [= exposing hardware is allowed =].
                 </p>
                 <p>
-                  Identifies the encoder implementation used. This is useful for diagnosing
-                  interoperability issues.
+                  Only [= map/exist =]s for video. Identifies the encoder implementation used.
+                  This is useful for diagnosing interoperability issues.
                 </p>
               </dd>
               <dt>
@@ -3173,7 +3224,12 @@ enum RTCStatsType {
              required RTCIceCandidateType candidateType;
              long                     priority;
              DOMString                url;
-             DOMString                relayProtocol;
+             RTCIceServerTransportProtocol relayProtocol;
+             DOMString                foundation;
+             DOMString                relatedAddress;
+             long                     relatedPort;
+             DOMString                usernameFragment;
+             RTCIceTcpCandidateType   tcpType;
 };</pre>
           <section>
             <h2>
@@ -3263,13 +3319,56 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn>relayProtocol</dfn> of type <span class=
-                "idlMemberType">DOMString</span> <!-- TODO: define enum? -->
+                "idlMemberType">{{RTCIceServerTransportProtocol}}</span>
               </dt>
               <dd>
                 <p>
                   It is the protocol used by the endpoint to communicate with the TURN server. This
-                  is only present for local candidates. Valid values are <code>"udp"</code>,
-                  <code>"tcp"</code>, or <code>"tls"</code>.
+                  is only present for local relay candidates and defined in [[WEBRTC]].
+                </p>
+              </dd>
+              <dt>
+                <dfn>foundation</dfn> of type <span class="idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  The ICE foundation as defined in [[!RFC5245]] section 15.1.
+                </p>
+              </dd>
+              <dt>
+                <dfn>relatedAddress</dfn> of type <span class="idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  The ICE rel-addr defined in [[!RFC5245]] section 15.1. Only set for serverreflexive
+                  and relay candidates.
+                </p>
+              </dd>
+              <dt>
+                <dfn>relatedPort</dfn> of type <span class="idlMemberType">long</span>
+              </dt>
+              <dd>
+                <p>
+                  The ICE rel-addr defined in [[!RFC5245]] section 15.1. Only set for serverreflexive
+                  and relay candidates.
+                </p>
+              </dd>
+              <dt>
+                <dfn>usernameFragment</dfn> of type <span class="idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  The ICE username fragment as defined in [[!RFC5245]] section 7.1.2.3.
+                </p>
+              </dd>
+              <dt>
+              <dt>
+                <dfn>tcpType</dfn> of type <span class="idlMemberType">{{RTCIceTcpCandidateType}}</span>
+              </dt>
+              <dd>
+                <p>
+                  The ICE candidate TCP type, as defined іn {{RTCIceTcpCandidateType}} and used
+                  in {{RTCIceCandidate}}.
                 </p>
               </dd>
             </dl>
