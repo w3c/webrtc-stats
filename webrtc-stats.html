@@ -1873,6 +1873,7 @@ enum RTCStatsType {
              DOMString            encoderImplementation;
              boolean              powerEfficientEncoder;
              boolean              active;
+             DOMString            scalabilityMode;
 };</pre>
           <section>
             <h2>
@@ -2241,6 +2242,18 @@ enum RTCStatsType {
                   Indicates whether this <a>RTP stream</a> is configured to be sent or disabled.
                   Note that an active stream can still not be sending, e.g. when being limited by
                   network conditions.
+                </p>
+              </dd>
+              <dt>
+                <dfn>scalabilityMode</dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  The currently configured
+                  <a href="https://w3c.github.io/webrtc-svc/#scalabilitymodes*">
+                  scalability mode</a> of this <a>RTP stream</a>. If one is not
+                  configured or not applicable, this metric is left undefined.
                 </p>
               </dd>
             </dl>
