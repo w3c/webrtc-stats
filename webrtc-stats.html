@@ -372,8 +372,8 @@ dictionary RTCStats {
         </h3>
         <p>
           To avoid passive fingerprinting, hardware capabilities should only be
-          exposed in capturing or fullscreen contexts. This is tested using the
-          algorithm below.
+          exposed in capturing contexts. This is tested using the algorithm
+          below.
         </p>
         <p>
           To <dfn data-lt="exposing hardware is allowed">check if hardware
@@ -383,14 +383,6 @@ dictionary RTCStats {
               <p>
                 If the <a href="https://w3c.github.io/mediacapture-main/#context-capturing-state">
                 context capturing state</a> is true, return true.
-              </p>
-            </li>
-            <li>
-              <p>
-                If the current <code>Document</code>'s
-                <a href="https://fullscreen.spec.whatwg.org/#dom-document-fullscreenelement">
-                fullscreenElement</a> getter returns a non-null value, return
-                true.
               </p>
             </li>
             <li>
