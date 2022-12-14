@@ -2762,11 +2762,11 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCAudioPlayoutStats : RTCStats {
-             double        synthesizedSamplesDuration;
-             unsigned long synthesizedSamplesEvents;
-             double        totalSamplesDuration;
-             double        totalPlayoutDelay;
-             double        totalSamplesCount;
+             double             synthesizedSamplesDuration;
+             unsigned long      synthesizedSamplesEvents;
+             double             totalSamplesDuration;
+             double             totalPlayoutDelay;
+             unsigned long long totalSamplesCount;
 };</pre>
           <section>
             <h2>
@@ -2837,7 +2837,7 @@ enum RTCStatsType {
               </dd>
               <dt>
                 <dfn>totalSamplesCount</dfn> of type <span class=
-                "idlMemberType">double</span>
+                "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
