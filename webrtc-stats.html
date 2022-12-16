@@ -988,6 +988,7 @@ enum RTCStatsType {
              DOMString            remoteId;
              unsigned long        framesDecoded;
              unsigned long        keyFramesDecoded;
+             unsigned long        framesRendered;
              unsigned long        framesDropped;
              unsigned long        frameWidth;
              unsigned long        frameHeight;
@@ -1099,6 +1100,15 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn>framesRendered</dfn>
+              </dt>
+              <dd>
+                <p>
+                  Only [= map/exist =]s for video. It represents the total number of frames that have been
+                  rendered. It is incremented just after a frame has been rendered.
+                </p>
+              </dd>
+              <dt>
                 <dfn>framesDropped</dfn> of type <span class="idlMemberType">unsigned
                 long</span>
               </dt>
@@ -1179,12 +1189,12 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Sum of the interframe delays in seconds between consecutively decoded frames,
-                  recorded just after a frame has been decoded. The interframe delay variance be
+                  Sum of the interframe delays in seconds between consecutively rendered frames,
+                  recorded just after a frame has been rendered. The interframe delay variance be
                   calculated from {{totalInterFrameDelay}}, {{totalSquaredInterFrameDelay}},
-                  and {{framesDecoded}} according to the formula:
+                  and {{framesRendered}} according to the formula:
                   ({{totalSquaredInterFrameDelay}} - {{totalInterFrameDelay}}^2/
-                  {{framesDecoded}})/{{framesDecoded}}.
+                  {{framesRendered}})/{{framesRendered}}.
                 </p>
               </dd>
               <dt>
@@ -1193,8 +1203,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Sum of the squared interframe delays in seconds between consecutively decoded frames,
-                  recorded just after a frame has been decoded. See {{totalInterFrameDelay}} for
+                  Sum of the squared interframe delays in seconds between consecutively rendered frames,
+                  recorded just after a frame has been rendered. See {{totalInterFrameDelay}} for
                   details on how to calculate the interframe delay variance.
                 </p>
               </dd>
