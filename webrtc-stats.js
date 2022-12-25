@@ -33,7 +33,7 @@ var respecConfig = {
       // only "name" is REQUIRED
       editors: [
         {   name: "Harald Alvestrand",  company: "Google", w3cid: "24610" },
-        {   name: "Varun Singh",        company: "callstats.io", w3cid: "85435" },
+        {   name: "Varun Singh",        company: "daily.co", w3cid: "85435" },
         {   name: "Henrik Boström",     company: "Google", w3cid: "96936" }
       ],
 
