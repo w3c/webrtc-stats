@@ -1032,6 +1032,7 @@ enum RTCStatsType {
              boolean              powerEfficientDecoder;
              unsigned long        framesAssembledFromMultiplePackets;
              double               totalAssemblyTime;
+             boolean              decoderFallback;
             };</pre>
           <section>
             <h2>
@@ -1710,6 +1711,16 @@ enum RTCStatsType {
                   as close to the network layer as possible. This metric is not incremented for frames that
                   are not decoded, i.e., {{framesDropped}} or frames that fail decoding for other reasons
                   (if any). Only incremented for frames consisting of more than one RTP packet.
+                </p>
+              </dd>
+              <dt>
+                <dfn>decoderFallback</dfn> of type <span class=
+                "idlMemberType">boolean</span>
+              </dt>
+              <dd>
+                <p>
+                  Only [= map/exist =]s for video. It indicates that the current WebRTC session is fallbacked
+		  to the Software Decoder. When the session has started with Hardware Decoder.
                 </p>
               </dd>
             </dl>
