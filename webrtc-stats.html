@@ -2773,6 +2773,7 @@ enum RTCStatsType {
         </p>
         <div>
           <pre class="idl">dictionary RTCAudioPlayoutStats : RTCStats {
+             required DOMString kind;
              double             synthesizedSamplesDuration;
              unsigned long      synthesizedSamplesEvents;
              double             totalSamplesDuration;
@@ -2785,6 +2786,18 @@ enum RTCStatsType {
             </h2>
             <dl data-link-for="RTCAudioPlayoutStats" data-dfn-for="RTCAudioPlayoutStats" class=
             "dictionary-members">
+              <dt>
+                <dfn>kind</dfn> of type <span class=
+                "idlMemberType">DOMString</span>
+              </dt>
+              <dd>
+                <p>
+                  For audio playout, this has the value
+                  "<code class=gum>audio</code>". This reflects the
+                  <code class=gum>kind</code> attribute
+                  {{MediaStreamTrack}}(s) being played out.
+                </p>
+              </dd>
               <dt>
                 <dfn>synthesizedSamplesDuration</dfn> of type <span class=
                 "idlMemberType">double</span>
