@@ -373,17 +373,27 @@ dictionary RTCStats {
         </h3>
         <p>
           To avoid passive fingerprinting, hardware capabilities should only be
-          exposed in capturing contexts. This is tested using the algorithm
-          below.
+          exposed in capturing contexts or contexts where Media Capabilities
+          permit hardware exposure. This is tested using the algorithm below.
         </p>
         <p>
           To <dfn data-lt="exposing hardware is allowed">check if hardware
-          exposure is allowed</dfn>, run the following steps:
+          exposure is allowed</dfn>, optionally taking a
+          <var>codec configuration</var> as an argument, run the following
+          steps:
           <ol>
             <li>
               <p>
                 If the <a href="https://w3c.github.io/mediacapture-main/#context-capturing-state">
                 context capturing state</a> is true, return true.
+              </p>
+            </li>
+            <li>
+              <p>
+                If a <var>codec configuration</var> was passed to this
+                algorithm and <a href="https://w3c.github.io/media-capabilities/#dom-mediacapabilitiesinfo-powerefficient">
+                Media Capabilities' powerEfficient</a> is allowed to be exposed
+                for this configuration and context, return true.
               </p>
             </li>
             <li>
@@ -1670,7 +1680,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p class="fingerprint">
-                  Only defined when [= exposing hardware is allowed =].
+                  Only defined when [= exposing hardware is allowed =] with
+                  <var>codec configuration</var> being set to the current codec
+                  configuration.
                 </p>
                 <p>
                   Whether the decoder currently used is considered power
@@ -2226,7 +2238,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p class="fingerprint">
-                  Only defined when [= exposing hardware is allowed =].
+                  Only defined when [= exposing hardware is allowed =] with
+                  <var>codec configuration</var> being set to the current codec
+                  configuration.
                 </p>
                 <p>
                   Whether the encoder currently used is considered power
