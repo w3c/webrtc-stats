@@ -1032,6 +1032,8 @@ enum RTCStatsType {
              boolean              powerEfficientDecoder;
              unsigned long        framesAssembledFromMultiplePackets;
              double               totalAssemblyTime;
+             unsigned long long   retransmittedPacketsReceived;
+             unsigned long long   retransmittedBytesReceived;
             };</pre>
           <section>
             <h2>
@@ -1708,6 +1710,28 @@ enum RTCStatsType {
                   as close to the network layer as possible. This metric is not incremented for frames that
                   are not decoded, i.e., {{framesDropped}} or frames that fail decoding for other reasons
                   (if any). Only incremented for frames consisting of more than one RTP packet.
+                </p>
+              </dd>
+              <dt>
+                <dfn>retransmittedPacketsReceived</dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  The total number of RTX packets that were received for this <a>SSRC</a>. This is a
+                  subset of {{RTCReceivedRtpStreamStats/packetsReceived}}. If RTX is not negotiated,
+                  retransmitted packets can not be identified and this count is not defined.
+                </p>
+              </dd>
+              <dt>
+                <dfn>retransmittedBytesReceived</dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  The total number of RTX bytes that were received for this <a>SSRC</a>, only including
+                  payload bytes. This is a subset of {{RTCReceivedRtpStreamStats/bytesReceived}}. If RTX is not
+                  negotiated, retransmitted pacakets can not be identified and this count is not defined.
                 </p>
               </dd>
             </dl>
