@@ -1718,9 +1718,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The total number of RTX packets that were received for this <a>SSRC</a>. This is a
+                  The total number of retransmitted packets that were received for this <a>SSRC</a>. This is a
                   subset of {{RTCReceivedRtpStreamStats/packetsReceived}}. If RTX is not negotiated,
-                  retransmitted packets can not be identified and this count is not defined.
+                  retransmitted packets can not be identified and this member does not [= map/exist =].
                 </p>
               </dd>
               <dt>
@@ -1729,9 +1729,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The total number of RTX bytes that were received for this <a>SSRC</a>, only including
+                  The total number of retransmitted bytes that were received for this <a>SSRC</a>, only including
                   payload bytes. This is a subset of {{RTCReceivedRtpStreamStats/bytesReceived}}. If RTX is not
-                  negotiated, retransmitted pacakets can not be identified and this count is not defined.
+                  negotiated, retransmitted pacakets can not be identified and this member does not [= map/exist =].
                 </p>
               </dd>
             </dl>
