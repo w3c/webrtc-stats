@@ -1891,9 +1891,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  If the {{RTCRtpTransceiver}} owning this stream has a
-                  {{RTCRtpTransceiver/mid}} value that is not null, this is that
-                  value, otherwise this member is not present.
+                  Only [= map/exist =]s if the {{RTCRtpTransceiver}} owning this stream has a
+                  {{RTCRtpTransceiver/mid}} value that is not null., this is that
+                  value.
                 </p>
               </dd>
               <dt>
@@ -1921,10 +1921,11 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Exposes the {{RTCRtpCodingParameters/rid}}
-                  encoding parameter of this <a>RTP stream</a> if it has been set, otherwise it is
-                  undefined. If set this value will be present regardless if the RID RTP header
-                  extension has been negotiated.
+                  Only defined for video.
+                  Only [= map/exist =]s if a {{RTCRtpCodingParameters/rid}}
+                  has been set for this <a>RTP stream</a>.
+                  If {{RTCRtpCodingParameters/rid}} is set this value will be present
+                  regardless if the RID RTP header extension has been negotiated.
                 </p>
               </dd>
               <dt>
@@ -2230,6 +2231,7 @@ enum RTCStatsType {
                   Omitted unless [= exposing hardware is allowed =].
                 </p>
                 <p>
+                  Only defined for video.
                   Whether the encoder currently used is considered power
                   efficient by the user agent. This SHOULD reflect if the
                   configuration results in hardware acceleration, but the user
@@ -2254,10 +2256,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The currently configured
+                  Only defined for video. Only [= map/exist =]s when a
                   <a href="https://w3c.github.io/webrtc-svc/#scalabilitymodes*">
-                  scalability mode</a> of this <a>RTP stream</a>. If one is not
-                  configured or not applicable, this metric is left undefined.
+                  scalability mode</a> is currently configured of this <a>RTP stream</a>.
                 </p>
               </dd>
             </dl>
