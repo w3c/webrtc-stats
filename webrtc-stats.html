@@ -56,7 +56,7 @@
       <p>
         This specification does not define what objects a conforming implementation should
         generate. Specifications that refer to this specification have the need to specify
-        conformance. They should put in their document text that could like this (EXAMPLE ONLY):
+        conformance. They should put in their document text like this (EXAMPLE ONLY):
       </p>
       <ul>
         <li>An implementation MUST support generating statistics for the type
@@ -89,8 +89,12 @@
       <p>
         The term <dfn><a href="https://datatracker.ietf.org/doc/html/rfc7656#section-2.1.10">RTP stream</a></dfn> is defined in [[RFC7656]].
       </p>
-      <p>The terms <dfn data-lt="SSRC"><a href="https://datatracker.ietf.org/doc/html/rfc3550#section-3">Synchronization Source</a></dfn> (SSRC), <dfn data-lt="Sender Report|SR|RTCP SR"><a href="https://datatracker.ietf.org/doc/html/rfc3550#section-6.4.1">RTCP Sender Report</a></dfn>, <dfn data-lt="Receiver Report|RR|RTCP RR"><a href="https://datatracker.ietf.org/doc/html/rfc3550#section-6.4.2">RTCP Receiver Report</a></dfn> are defined in [[RFC3550]].</p>
-      <p>The term <dfn data-lt="Extended Report|XR"><a href="https://datatracker.ietf.org/doc/html/rfc3611">RTCP Extended Report</a></dfn> is defined in [[RFC3611]].</p>
+      <p>
+        The terms <dfn data-lt="SSRC"><a href="https://datatracker.ietf.org/doc/html/rfc3550#section-3">Synchronization Source</a></dfn> (SSRC),
+        <dfn data-lt="Sender Report|SR|RTCP SR"><a href="https://datatracker.ietf.org/doc/html/rfc3550#section-6.4.1">RTCP Sender Report</a></dfn> (SR),
+        <dfn data-lt="Receiver Report|RR|RTCP RR"><a href="https://datatracker.ietf.org/doc/html/rfc3550#section-6.4.2">RTCP Receiver Report</a></dfn> (RR) are defined in [[RFC3550]].
+      </p>
+      <p>The term <dfn data-lt="Extended Report|XR"><a href="https://datatracker.ietf.org/doc/html/rfc3611">RTCP Extended Report</a></dfn> (XR) is defined in [[RFC3611]].</p>
       <p>An <dfn>audio sample</dfn> refers to having a sample in any channel of an audio track - if multiple audio channels are used, metrics based on samples do not increment at a higher rate, simultaneously having samples in multiple channels counts as a single sample.</p>
     </section>
     <section>
@@ -193,9 +197,8 @@ dictionary RTCStats {
         </p>
         <p>
           Names ending in <code>Id</code> (such as {{RTCRtpStreamStats/transportId}}) are always a [= stats object reference =];
-          <!-- TODO: Ids name are only obsolete now? -->
-          names ending in <code>Ids</code> (such as {{RTCMediaStreamStats/trackIds}}) are always of type sequence&lt;DOMString&gt;,
-          where each {{DOMString}} is a [= stats object reference =].
+          names ending in <code>Ids</code> (such as the obsolete {{RTCMediaStreamStats/trackIds}}) are always of type
+          sequence&lt;{{DOMString}}&gt;, where each {{DOMString}} is a [= stats object reference =].
         </p>
         <p>
           If the natural name for a stats value would end in <code>id</code> (such as when the stats value is
@@ -232,12 +235,12 @@ dictionary RTCStats {
           <li>When a feature is not implemented on the platform, omit the dictionary member that is
           tracking usage of the feature.
           </li>
-          <li>When a feature is not applicable to an instance of an object (for example {{RTCInboundRtpStreamStats/audioLevel}}
-          on a video stream), omit the dictionary member. Do NOT report a count of zero, -1 or
-          "empty string".
+          <li>When a feature is not applicable to an instance of an object (for example{{RTCInboundRtpStreamStats/audioLevel}}
+          on a video stream), it shall not [= map/exist =].
           </li>
-          <li>When a counted feature hasn't been used yet, but may happen in the future, report a
-          count of zero.
+          <li>When an instantaneous feature has not yet been sampled, it shall not [= map/exist =].</li>
+          <li>When a cumulative feature hasn't been sampled yet, but is likely to increment in the future, report a
+          count of zero. This allows subtraction of such features without additional checks for existence.
           </li>
         </ul>
       </section>
