@@ -240,7 +240,8 @@ dictionary RTCStats {
           </li>
           <li>When a features is an instantaneous measure and it has not yet been
           sampled, it shall not [= map/exist =].</li>
-          <li>When a cumulative feature hasn't been sampled yet, but is likely to increment in the future, report a
+          <li>When a feature is a cumulative measure and it has not been sampled yet,
+          but is likely to increment in the future, report a
           count of zero. This allows subtraction of such features without additional checks for existence.
           </li>
         </ul>
