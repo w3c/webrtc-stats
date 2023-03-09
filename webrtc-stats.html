@@ -236,7 +236,7 @@ dictionary RTCStats {
           tracking usage of the feature.
           </li>
           <li>When a feature is not applicable to an instance of an object (for example{{RTCInboundRtpStreamStats/audioLevel}}
-          on a video stream), it shall not [= map/exist =].
+          on a video stream), it shall not [= map/exist =]. Do NOT report a count of zero, -1 or "empty string".
           </li>
           <li>When an instantaneous feature has not yet been sampled, it shall not [= map/exist =].</li>
           <li>When a cumulative feature hasn't been sampled yet, but is likely to increment in the future, report a
