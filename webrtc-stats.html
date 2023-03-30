@@ -2658,6 +2658,9 @@ enum RTCStatsType {
                   produced by the device that got dropped before reaching the
                   media source.
                 </p>
+                <p class="note">
+                  This metric is a feature at risk due to lack of consensus.
+                </p>
               </dd>
               <dt>
                 <dfn>droppedSamplesEvents</dfn> of type <span class=
@@ -2670,6 +2673,9 @@ enum RTCStatsType {
                   sample. That is, multiple consecutive dropped samples will
                   increase {{droppedSamplesDuration}} multiple times but is a
                   single dropped samples event.
+                </p>
+                <p class="note">
+                  This metric is a feature at risk due to lack of consensus.
                 </p>
               </dd>
               <dt>
@@ -2685,6 +2691,9 @@ enum RTCStatsType {
                   used together with {{totalSamplesCaptured}} to calculate the
                   average capture delay per sample.
                 </p>
+                <p class="note">
+                  This metric is a feature at risk due to lack of consensus.
+                </p>
               </dd>
               <dt>
                 <dfn>totalSamplesCaptured</dfn> of type <span class=
@@ -2698,6 +2707,9 @@ enum RTCStatsType {
                   capture pipeline. The frequency of the media source is not
                   necessarily the same as the frequency of encoders later in the
                   pipeline.
+                </p>
+                <p class="note">
+                  This metric is a feature at risk due to lack of consensus.
                 </p>
               </dd>
             </dl>
@@ -2789,6 +2801,10 @@ enum RTCStatsType {
              double             totalPlayoutDelay;
              unsigned long long totalSamplesCount;
 };</pre>
+          <p class="note">
+            The {{RTCAudioPlayoutStats}} dictionary and all of its metrics are
+            features at risk due to lack of consensus.
+          </p>
           <section>
             <h2>
               Dictionary {{RTCAudioPlayoutStats}} Members
