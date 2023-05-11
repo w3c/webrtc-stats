@@ -459,6 +459,13 @@ enum RTCStatsType {
               {{RTCPeerConnection}} object. It is accessed by the
               {{RTCInboundRtpStreamStats}}.
             </p>
+            <p>
+              RTX streams do not show up as separate
+              {{RTCInboundRtpStreamStats}} objects but affect the {{RTCReceivedRtpStreamStats/packetsReceived}},
+              {{RTCInboundRtpStreamStats/bytesReceived}}, {{RTCInboundRtpStreamStats/retransmittedPacketsReceived}}
+              and {{RTCInboundRtpStreamStats/retransmittedBytesReceived}} counters of the relevant
+              {{RTCInboundRtpStreamStats}} objects.
+            </p>
           </dd>
           <dt>
             <dfn>outbound-rtp</dfn>
@@ -912,8 +919,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Total number of RTP packets received for this <a>SSRC</a>. At the receiving endpoint,
-                  this is calculated as defined in [[!RFC3550]] section 6.4.1. At the sending
+                  Total number of RTP packets received for this <a>SSRC</a>. This includes retransmissions.
+                  At the receiving endpoint, this is calculated as defined in [[!RFC3550]] section 6.4.1. At the sending
                   endpoint the {{packetsReceived}} is estimated by subtracting the Cumulative Number of Packets Lost
                   from the Extended Highest Sequence Number Received, both reported in the <a>RTCP Receiver
                   Report</a>, and then subtracting the initial Extended Sequence Number that was sent to this SSRC in a
@@ -1249,8 +1256,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Total number of RTP header and padding bytes received for this <a>SSRC</a>. This does
-                  not include the size of transport layer headers such as IP or UDP.
+                  Total number of RTP header and padding bytes received for this <a>SSRC</a>.
+                  This includes retransmissions.
+                  This does not include the size of transport layer headers such as IP or UDP.
                   <code>headerBytesReceived + bytesReceived</code> equals the number of bytes
                   received as payload over the transport.
                 </p>
@@ -1298,8 +1306,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Total number of bytes received for this <a>SSRC</a>. Calculated as defined in
-                  [[!RFC3550]] section 6.4.1.
+                  Total number of bytes received for this <a>SSRC</a>. This includes retransmissions.
+                  Calculated as defined in [[!RFC3550]] section 6.4.1.
                 </p>
               </dd>
               <dt>
