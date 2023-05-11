@@ -3632,9 +3632,9 @@ enum RTCStatsType {
                 </p>
                 <p>
                   Only [= map/exist =]s when the underlying congestion control calculated either a
-                  send-side bandwidth estimation using mechanisms such as
+                  send-side bandwidth estimation, for example using mechanisms such as
                   <a href="https://datatracker.ietf.org/doc/html/draft-holmer-rmcat-transport-wide-cc-extensions-01">TWCC</a>
-                  or received a receive-side estimation via RTCP as described in
+                  or received a receive-side estimation via RTCP, for example the one described in
                   <a href="https://datatracker.ietf.org/doc/html/draft-alvestrand-rmcat-remb-03">REMB</a>.
                   Does not [= map/exist =] for candidate pairs that were never used
                   for sending packets that were taken into account for bandwidth estimation or
@@ -3658,7 +3658,7 @@ enum RTCStatsType {
                   might be higher.
                 </p>
                 <p>
-                  Only [= map/exist =]s when a receive-side bandwidth estimation such as
+                  Only [= map/exist =]s when a receive-side bandwidth estimation, for example
                   <a href="https://datatracker.ietf.org/doc/html/draft-alvestrand-rmcat-remb-03">REMB</a>
                   was calculated. Does not [= map/exist =] for candidate pairs that were never used
                   for receiving packets that were taken into account for bandwidth estimation or
