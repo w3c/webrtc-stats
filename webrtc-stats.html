@@ -984,6 +984,7 @@ enum RTCStatsType {
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
              unsigned long long   headerBytesReceived;
              unsigned long long   packetsDiscarded;
+             unsigned long long   fecBytesReceived;
              unsigned long long   fecPacketsReceived;
              unsigned long long   fecPacketsDiscarded;
              unsigned long long   bytesReceived;
@@ -1273,6 +1274,16 @@ enum RTCStatsType {
                   or early-arrival, i.e., these packets are not played out. RTP packets discarded
                   due to packet duplication are not reported in this metric [[XRBLOCK-STATS]].
                   Calculated as defined in [[!RFC7002]] section 3.2 and Appendix A.a.
+                </p>
+              </dd>
+              <dt>
+                <dfn>fecBytesReceived</dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of RTP FEC bytes received for this <a>SSRC</a>, only including payload bytes.
+                  This is a subset of {{RTCInboundRtpStreamStats/bytesReceived}}.
                 </p>
               </dd>
               <dt>
