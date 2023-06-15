@@ -466,6 +466,13 @@ enum RTCStatsType {
               and {{RTCInboundRtpStreamStats/retransmittedBytesReceived}} counters of the relevant
               {{RTCInboundRtpStreamStats}} objects.
             </p>
+            <p>
+              FEC streams do not show up as separate
+              {{RTCInboundRtpStreamStats}} objects but affect the {{RTCReceivedRtpStreamStats/packetsReceived}},
+              {{RTCInboundRtpStreamStats/bytesReceived}}, {{RTCInboundRtpStreamStats/fecPacketsReceived}}
+              and {{RTCInboundRtpStreamStats/fecBytesReceived}} counters of the relevant
+              {{RTCInboundRtpStreamStats}} objects.
+            </p>
           </dd>
           <dt>
             <dfn>outbound-rtp</dfn>
@@ -984,6 +991,7 @@ enum RTCStatsType {
              DOMHighResTimeStamp  lastPacketReceivedTimestamp;
              unsigned long long   headerBytesReceived;
              unsigned long long   packetsDiscarded;
+             unsigned long long   fecBytesReceived;
              unsigned long long   fecPacketsReceived;
              unsigned long long   fecPacketsDiscarded;
              unsigned long long   bytesReceived;
@@ -1276,14 +1284,28 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
+                <dfn>fecBytesReceived</dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of RTP FEC bytes received for this <a>SSRC</a>, only including payload bytes.
+                  This is a subset of {{RTCInboundRtpStreamStats/bytesReceived}}. If a FEC mechanism that
+                  uses a different {{RTCRtpStreamStats/ssrc}} was negotiated, FEC packets are sent over a
+                  separate ssrc but is still accounted for here.
+                </p>
+              </dd>
+              <dt>
                 <dfn>fecPacketsReceived</dfn> of type <span class=
                 "idlMemberType">unsigned long long</span>
               </dt>
               <dd>
                 <p>
-                  Total number of RTP FEC packets received for this <a>SSRC</a>. This counter can also be
-                  incremented when receiving FEC packets in-band with media packets (e.g., with
-                  Opus).
+                  Total number of RTP FEC packets received for this <a>SSRC</a>. If a FEC mechanism that
+                  uses a different {{RTCRtpStreamStats/ssrc}} was negotiated, FEC packets are sent over a
+                  separate ssrc but is still accounted for here.
+                  This counter can also be incremented when receiving FEC packets in-band with media packets
+                  (e.g., with Opus).
                 </p>
               </dd>
               <dt>
