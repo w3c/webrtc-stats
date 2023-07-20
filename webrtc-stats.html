@@ -669,7 +669,7 @@ enum RTCStatsType {
         <pre class="example highlight">
           An RTCRtpSender is sending two layers of simulcast (on SSRC=111 and
           SSRC=222). Two "outbound-rtp" stats objects are observed, one with
-          ssrc=111, and the other with ssrc=222. Both objects' packet counters are
+          SSRC=111, and the other with SSRC=222. Both objects' packet counters are
           increasing.
 
           One layer is inactivated using RTCRtpSender.setParameters(). While
@@ -756,13 +756,13 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The synchronization source (ssrc) identifier is an unsigned integer value per [[RFC3550]]
+                  The synchronization source (SSRC) identifier is an unsigned integer value per [[RFC3550]]
                   used to identify the stream of RTP packets that this stats object is describing.
                 </p>
                 <p>
-                  For outbound and inbound local, ssrc describes the stats for the RTP stream that were
+                  For outbound and inbound local, SSRC describes the stats for the RTP stream that were
                   sent and received, respectively by those endpoints.
-                  For the remote inbound and remote outbound, ssrc describes the stats for the RTP stream
+                  For the remote inbound and remote outbound, SSRC describes the stats for the RTP stream
                   that were received by and sent to the remote endpoint.
                 </p>
               </dd>
@@ -1292,7 +1292,7 @@ enum RTCStatsType {
                   Total number of RTP FEC bytes received for this <a>SSRC</a>, only including payload bytes.
                   This is a subset of {{RTCInboundRtpStreamStats/bytesReceived}}. If a FEC mechanism that
                   uses a different {{RTCRtpStreamStats/ssrc}} was negotiated, FEC packets are sent over a
-                  separate ssrc but is still accounted for here.
+                  separate SSRC but is still accounted for here.
                 </p>
               </dd>
               <dt>
@@ -1303,7 +1303,7 @@ enum RTCStatsType {
                 <p>
                   Total number of RTP FEC packets received for this <a>SSRC</a>. If a FEC mechanism that
                   uses a different {{RTCRtpStreamStats/ssrc}} was negotiated, FEC packets are sent over a
-                  separate ssrc but is still accounted for here.
+                  separate SSRC but is still accounted for here.
                   This counter can also be incremented when receiving FEC packets in-band with media packets
                   (e.g., with Opus).
                 </p>
@@ -1977,7 +1977,7 @@ enum RTCStatsType {
                   The total number of packets that were retransmitted for this <a>SSRC</a>. This is a
                   subset of {{RTCSentRtpStreamStats/packetsSent}}. If RTX is not negotiated, retransmitted
                   packets are sent over this {{RTCRtpStreamStats/ssrc}}. If RTX was negotiated,
-                  retransmitted packets are sent over a separate ssrc but is still accounted for here.
+                  retransmitted packets are sent over a separate SSRC but is still accounted for here.
                 </p>
               </dd>
               <dt>
@@ -1989,7 +1989,7 @@ enum RTCStatsType {
                   The total number of bytes that were retransmitted for this <a>SSRC</a>, only including
                   payload bytes. This is a subset of {{RTCSentRtpStreamStats/bytesSent}}. If RTX is not
                   negotiated, retransmitted bytes are sent over this {{RTCRtpStreamStats/ssrc}}. If RTX
-                  was negotiated, retransmitted bytes are sent over a separate ssrc but is still
+                  was negotiated, retransmitted bytes are sent over a separate SSRC but is still
                   accounted for here.
                 </p>
               </dd>
