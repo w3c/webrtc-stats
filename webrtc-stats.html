@@ -1021,6 +1021,7 @@ enum RTCStatsType {
              double               totalAssemblyTime;
              unsigned long long   retransmittedPacketsReceived;
              unsigned long long   retransmittedBytesReceived;
+             unsigned long        rtxSsrc;
             };</pre>
           <section>
             <h2>
@@ -1738,6 +1739,17 @@ enum RTCStatsType {
                   negotiated, retransmitted packets can not be identified and this member does not [= map/exist =].
                 </p>
               </dd>
+              <dt>
+                <dfn>rtxSsrc</dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  If RTX is negotiated for retransmissions on a separate <a>RTP stream</a>, this is the SSRC
+                  of the RTX stream that is associated with this stream's {{RTCRtpStreamStats/ssrc}}.
+                  If RTX is not negotiated, this value is not present.
+                </p>
+              </dd>
             </dl>
           </section>
         </div>
@@ -1884,6 +1896,7 @@ enum RTCStatsType {
              unsigned long long   headerBytesSent;
              unsigned long long   retransmittedPacketsSent;
              unsigned long long   retransmittedBytesSent;
+             unsigned long        rtxSsrc;
              double               targetBitrate;
              unsigned long long   totalEncodedBytesTarget;
              unsigned long        frameWidth;
@@ -1991,6 +2004,17 @@ enum RTCStatsType {
                   negotiated, retransmitted bytes are sent over this {{RTCRtpStreamStats/ssrc}}. If RTX
                   was negotiated, retransmitted bytes are sent over a separate ssrc but is still
                   accounted for here.
+                </p>
+              </dd>
+              <dt>
+                <dfn>rtxSsrc</dfn> of type <span class=
+                "idlMemberType">unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  If RTX is negotiated for retransmissions on a separate <a>RTP stream</a>, this is the SSRC
+                  of the RTX stream that is associated with this stream's {{RTCRtpStreamStats/ssrc}}.
+                  If RTX is not negotiated, this value is not present.
                 </p>
               </dd>
               <dt>
