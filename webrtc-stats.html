@@ -340,27 +340,6 @@ dictionary RTCStats {
           updates happen.
         </p>
       </section>
-      <section>
-        <h3>
-          Retiring stats objects
-        </h3>
-        <p>
-          At times, it makes sense to retire the definition for a stats object or a stats value.
-          When this happens, it is not advisable to simply delete it from the spec, since there may
-          be implementations out there that use it, and it is important that the name is reserved
-          from re-use for another, incompatible definition.
-        </p>
-        <p>
-          Therefore, retired stats objects are moved to a separate section in this document.
-          Retired stats objects are moved there in their entirety; retired stats values are moved
-          to a "partial dictionary".
-        </p>
-        <p>
-          If there is no evidence that the retired object definition has ever been used (such as an
-          object that is added to the spec and renamed, redefined or removed prior to
-          implementation), the editors can decide to just remove the object from the spec.
-        </p>
-      </section>
     </section>
     <section>
       <h2>
