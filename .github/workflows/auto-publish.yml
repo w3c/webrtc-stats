@@ -2,6 +2,7 @@ name: Validate and Auto Publish
 
 on:
   push:
+    paths: webrtc-stats.html
     branches:
       - main
   pull_request: {}
@@ -11,7 +12,7 @@ jobs:
     name: Validate and Publish
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: w3c/spec-prod@v2 # use the action
         with:
           W3C_ECHIDNA_TOKEN: ${{ secrets.ECHIDNA_TOKEN }}
