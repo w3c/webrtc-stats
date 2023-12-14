@@ -2548,10 +2548,6 @@ enum RTCStatsType {
               double              totalSamplesDuration;
               double              echoReturnLoss;
               double              echoReturnLossEnhancement;
-              double              droppedSamplesDuration;
-              unsigned long       droppedSamplesEvents;
-              double              totalCaptureDelay;
-              unsigned long long  totalSamplesCaptured;
 };</pre>
           <section>
             <h2>
@@ -2636,11 +2632,6 @@ enum RTCStatsType {
                   {{totalAudioEnergy}} to compute an average audio level over
                   different intervals.
                 </p>
-                <p>
-                  {{totalSamplesDuration}} does not include samples dropped
-                  before reaching this media source, see
-                  {{droppedSamplesDuration}}.
-                </p>
               </dd>
               <dt>
                 <dfn>echoReturnLoss</dfn> of type <span class=
@@ -2670,71 +2661,6 @@ enum RTCStatsType {
                 <p>
                   If multiple audio channels are used, the channel of the
                   <strong>least audio energy</strong> is considered for any sample.
-                </p>
-              </dd>
-              <dt>
-                <dfn>droppedSamplesDuration</dfn> of type <span class=
-                "idlMemberType">double</span>
-              </dt>
-              <dd>
-                <p>
-                  Only applicable if this media source is backed by an audio
-                  capture device. The total duration, in seconds, of samples
-                  produced by the device that got dropped before reaching the
-                  media source.
-                </p>
-                <p class="note">
-                  This metric is a feature at risk due to lack of consensus.
-                </p>
-              </dd>
-              <dt>
-                <dfn>droppedSamplesEvents</dfn> of type <span class=
-                "idlMemberType">unsigned long</span>
-              </dt>
-              <dd>
-                <p>
-                  The number of dropped samples events. This counter
-                  increases every time a sample is dropped after a non-dropped
-                  sample. That is, multiple consecutive dropped samples will
-                  increase {{droppedSamplesDuration}} multiple times but is a
-                  single dropped samples event.
-                </p>
-                <p class="note">
-                  This metric is a feature at risk due to lack of consensus.
-                </p>
-              </dd>
-              <dt>
-                <dfn>totalCaptureDelay</dfn> of type <span class=
-                "idlMemberType">double</span>
-              </dt>
-              <dd>
-                <p>
-                  Only applicable if the audio source represents an audio
-                  capture device. This is the total delay, in seconds, for each
-                  audio sample between the time the sample was emitted by the
-                  capture device and the sample reaching the source. This can be
-                  used together with {{totalSamplesCaptured}} to calculate the
-                  average capture delay per sample.
-                </p>
-                <p class="note">
-                  This metric is a feature at risk due to lack of consensus.
-                </p>
-              </dd>
-              <dt>
-                <dfn>totalSamplesCaptured</dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
-              </dt>
-              <dd>
-                <p>
-                  Only applicable if the audio source represents an audio
-                  capture device. This is the total number of captured samples
-                  reaching the audio source, i.e. that were not dropped by the
-                  capture pipeline. The frequency of the media source is not
-                  necessarily the same as the frequency of encoders later in the
-                  pipeline.
-                </p>
-                <p class="note">
-                  This metric is a feature at risk due to lack of consensus.
                 </p>
               </dd>
             </dl>
