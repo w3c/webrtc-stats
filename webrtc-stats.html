@@ -1137,6 +1137,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
+                  Does not [= map/exist =] for audio.
                   Total number of seconds that have been spent decoding the {{framesDecoded}}
                   frames of this stream. The average decode time can be calculated by dividing this
                   value with {{framesDecoded}}. The time it takes to decode one frame is the
@@ -1177,6 +1178,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
+                  Does not [= map/exist =] for audio.
                   Count the total number of video pauses experienced by this receiver.
                   Video is considered to be paused if time passed since last rendered
                   frame exceeds 5 seconds. {{pauseCount}} is incremented when a frame
@@ -1189,6 +1191,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
+                  Does not [= map/exist =] for audio.
                   Total duration of pauses (for definition of pause see {{pauseCount}}),
                   in seconds. This value is updated when a frame is rendered.
                 </p>
@@ -1199,6 +1202,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
+                  Does not [= map/exist =] for audio.
                   Count the total number of video freezes experienced by this receiver.
                   It is a freeze if frame duration, which is time interval between two
                   consecutively rendered frames, is equal or exceeds
@@ -1213,6 +1217,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
+                  Does not [= map/exist =] for audio.
                   Total duration of rendered frames which are considered as frozen (for
                   definition of freeze see {{freezeCount}}), in seconds. This value
                   is updated when a frame is rendered.
@@ -1637,6 +1642,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
+                  Does not [= map/exist =] for video.
                   If audio playout is happening, this is used to look up the
                   corresponding {{RTCAudioPlayoutStats}}.
                 </p>
@@ -1650,6 +1656,7 @@ enum RTCStatsType {
                   Does not [= map/exist =] unless [= exposing hardware is allowed =].
                 </p>
                 <p>
+                  Does not [= map/exist =] for audio.
                   Whether the decoder currently used is considered power
                   efficient by the user agent. This SHOULD reflect if the
                   configuration results in hardware acceleration, but the user
@@ -1663,7 +1670,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Does not [= map/exist =] for audio.  It represents the total number of frames correctly decoded
+                  Does not [= map/exist =] for audio.
+                  It represents the total number of frames correctly decoded
                   for this RTP stream that consist of more than one RTP packet. For such frames the
                   {{totalAssemblyTime}} is incremented. The average frame assembly time can be calculated by
                   dividing the {{totalAssemblyTime}} with {{framesAssembledFromMultiplePackets}}.
@@ -1675,7 +1683,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Does not [= map/exist =] for audio. The sum of the time, in seconds, each video frame takes
+                  Does not [= map/exist =] for audio.
+                  The sum of the time, in seconds, each video frame takes
                   from the time the first RTP packet is received (reception timestamp) and to the time
                   the last RTP packet of a frame is received. Only incremented for frames consisting of more
                   than one RTP packet.
@@ -1913,9 +1922,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Only [= map/exist =]s if the {{RTCRtpTransceiver}} owning this stream has a
-                  {{RTCRtpTransceiver/mid}} value that is not null. this is that
-                  value.
+                  If the {{RTCRtpTransceiver}} owning this stream has a
+                  {{RTCRtpTransceiver/mid}} value that is not null, this is that
+                  value, otherwise this member is not present.
                 </p>
               </dd>
               <dt>
@@ -2020,6 +2029,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
+                  Does not [= map/exist =] for audio.
                   This value is increased by the target frame size in bytes every time a frame has
                   been encoded. The actual frame size may be bigger or smaller than this number.
                   This value goes up every time {{framesEncoded}} goes up.
@@ -2031,7 +2041,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Does not [= map/exist =] for audio. Represents the width of the last encoded frame. The resolution
+                  Does not [= map/exist =] for audio.
+                  Represents the width of the last encoded frame. The resolution
                   of the encoded frame may be lower than the media source (see {{RTCVideoSourceStats.width}}).
                   Before the first frame is encoded this member does not [= map/exist =].
                 </p>
@@ -2042,7 +2053,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Does not [= map/exist =] for audio. Represents the height of the last encoded frame. The resolution
+                  Does not [= map/exist =] for audio.
+                  Represents the height of the last encoded frame. The resolution
                   of the encoded frame may be lower than the media source (see {{RTCVideoSourceStats.height}}).
                   Before the first frame is encoded this member does not [= map/exist =].
                 </p>
@@ -2053,7 +2065,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Does not [= map/exist =] for audio. The number of encoded frames during the last second. This may be
+                  Does not [= map/exist =] for audio.
+                  The number of encoded frames during the last second. This may be
                   lower than the media source frame rate (see {{RTCVideoSourceStats.framesPerSecond}}).
                 </p>
               </dd>
@@ -2063,7 +2076,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Does not [= map/exist =] for audio. Represents the total number of frames sent on this <a>RTP stream</a>.
+                  Does not [= map/exist =] for audio.
+                  Represents the total number of frames sent on this <a>RTP stream</a>.
                 </p>
               </dd>
               <dt>
@@ -2072,7 +2086,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Does not [= map/exist =] for audio. Represents the total number of huge frames sent by this RTP
+                  Does not [= map/exist =] for audio.
+                  Represents the total number of huge frames sent by this RTP
                   stream. Huge frames, by definition, are frames that have an encoded size at least
                   2.5 times the average size of the frames. The average size of the frames is defined
                   as the target bitrate per second divided by the target FPS at the time the frame was
@@ -2093,7 +2108,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Does not [= map/exist =] for audio. It represents the total number of frames successfully
+                  Does not [= map/exist =] for audio.
+                  It represents the total number of frames successfully
                   encoded for this RTP media stream.
                 </p>
               </dd>
@@ -2103,7 +2119,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Does not [= map/exist =] for audio. It represents the total number of key frames, such as key
+                  Does not [= map/exist =] for audio.
+                  It represents the total number of key frames, such as key
                   frames in VP8 [[RFC6386]] or IDR-frames in H.264 [[RFC6184]], successfully
                   encoded for this RTP media stream. This is a subset of
                   {{framesEncoded}}. <code>framesEncoded - keyFramesEncoded</code> gives
@@ -2116,7 +2133,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Does not [= map/exist =] for audio. The sum of the QP values of frames encoded by this sender.
+                  Does not [= map/exist =] for audio.
+                  The sum of the QP values of frames encoded by this sender.
                   The count of frames is in {{framesEncoded}}.
                 </p>
                 <p>
@@ -2136,6 +2154,7 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
+                  Does not [= map/exist =] for audio.
                   Total number of seconds that has been spent encoding the {{framesEncoded}}
                   frames of this stream. The average encode time can be calculated by dividing this
                   value with {{framesEncoded}}. The time it takes to encode one frame is the
@@ -2163,7 +2182,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Does not [= map/exist =] for audio. The current reason for limiting the resolution and/or
+                  Does not [= map/exist =] for audio.
+                  The current reason for limiting the resolution and/or
                   framerate, or {{RTCQualityLimitationReason/"none"}} if not limited.
                 </p>
                 <p>
@@ -2188,7 +2208,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Does not [= map/exist =] for audio. A record of the total time, in seconds, that this stream
+                  Does not [= map/exist =] for audio.
+                  A record of the total time, in seconds, that this stream
                   has spent in each quality limitation state. The record includes a mapping for all
                   {{RTCQualityLimitationReason}} types, including {{RTCQualityLimitationReason/"none"}}.
                 </p>
@@ -2203,7 +2224,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Does not [= map/exist =] for audio. The number of times that the resolution has changed because
+                  Does not [= map/exist =] for audio.
+                  The number of times that the resolution has changed because
                   we are quality limited ({{qualityLimitationReason}} has a value other than
                   {{RTCQualityLimitationReason/"none"}}). The counter is initially zero and increases when the
                   resolution goes up or down. For example, if a 720p track is sent as 480p for some
@@ -2227,7 +2249,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Does not [= map/exist =] for audio. Count the total number of Full Intra Request (FIR) packets,
+                  Does not [= map/exist =] for audio.
+                  Count the total number of Full Intra Request (FIR) packets,
                   as defined in [[!RFC5104]] section 4.3.1, received by this sender. Does not count the RTCP FIR
                   indicated in [[?RFC2032]] which was deprecated by [[?RFC4587]].
                 </p>
@@ -2238,7 +2261,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Does not [= map/exist =] for audio. Count the total number of Picture Loss Indication (PLI)
+                  Does not [= map/exist =] for audio.
+                  Count the total number of Picture Loss Indication (PLI)
                   packets, as defined in [[!RFC4585]] section 6.3.1, received by this sender
                 </p>
               </dd>
@@ -2251,7 +2275,8 @@ enum RTCStatsType {
                   Does not [= map/exist =] unless [= exposing hardware is allowed =].
                 </p>
                 <p>
-                  Does not [= map/exist =] for audio. Identifies the encoder implementation used.
+                  Does not [= map/exist =] for audio.
+                  Identifies the encoder implementation used.
                   This is useful for diagnosing interoperability issues.
                 </p>
               </dd>
@@ -2264,7 +2289,8 @@ enum RTCStatsType {
                   Does not [= map/exist =] unless [= exposing hardware is allowed =].
                 </p>
                 <p>
-                  Does not [= map/exist =] for audio. Whether the encoder
+                  Does not [= map/exist =] for audio.
+                  Whether the encoder
                   currently used is considered power efficient by the user agent.
                   This SHOULD reflect if the configuration results in hardware acceleration,
                   but the user agent MAY take other information into account when deciding if
@@ -2288,7 +2314,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  Does not [= map/exist =] for audio. Only [= map/exist =]s when a
+                  Does not [= map/exist =] for audio.
+                  Only [= map/exist =]s when a
                   <a href="https://w3c.github.io/webrtc-svc/#scalabilitymodes*">
                   scalability mode</a> is currently configured for this <a>RTP stream</a>.
                 </p>
