@@ -1024,8 +1024,9 @@ enum RTCStatsType {
               <dd>
                 <p>
                   If the {{RTCRtpTransceiver}} owning this stream has a
-                  {{RTCRtpTransceiver/mid}} value that is not null, this is that
-                  value, otherwise this member is not present.
+                  {{RTCRtpTransceiver/mid}} value that is not <code>null</code>,
+                  this is that value, otherwise this member MUST NOT be
+                  [= map/exist | present =].
                 </p>
               </dd>
               <dt>
@@ -1726,7 +1727,7 @@ enum RTCStatsType {
                 <p>
                   If RTX is negotiated for retransmissions on a separate <a>RTP stream</a>, this is the SSRC
                   of the RTX stream that is associated with this stream's {{RTCRtpStreamStats/ssrc}}.
-                  If RTX is not negotiated, this value is not present.
+                  If RTX is not negotiated, this value MUST NOT be [= map/exist | present =].
                 </p>
               </dd>
               <dt>
@@ -1737,7 +1738,8 @@ enum RTCStatsType {
                 <p>
                   If a FEC mechanism that uses a separate <a>RTP stream</a> is negotiated, this is the SSRC
                   of the FEC stream that is associated with this stream's {{RTCRtpStreamStats/ssrc}}.
-                  If FEC is not negotiated or uses the same <a>RTP stream</a>, this value is not present.
+                  If FEC is not negotiated or uses the same <a>RTP stream</a>, this value MUST NOT be
+                  [= map/exist | present =].
                 </p>
               </dd>
             </dl>
@@ -1923,8 +1925,9 @@ enum RTCStatsType {
               <dd>
                 <p>
                   If the {{RTCRtpTransceiver}} owning this stream has a
-                  {{RTCRtpTransceiver/mid}} value that is not null, this is that
-                  value, otherwise this member is [=map/exist | not present=].
+                  {{RTCRtpTransceiver/mid}} value that is not <code>null</code>,
+                  this is that value, otherwise this member MUST NOT be
+                  [= map/exist | present =].
                 </p>
               </dd>
               <dt>
@@ -2004,7 +2007,7 @@ enum RTCStatsType {
                 <p>
                   If RTX is negotiated for retransmissions on a separate <a>RTP stream</a>, this is the SSRC
                   of the RTX stream that is associated with this stream's {{RTCRtpStreamStats/ssrc}}.
-                  If RTX is not negotiated, this value is not present.
+                  If RTX is not negotiated, this value MUST NOT be [= map/exist | present =].
                 </p>
               </dd>
               <dt>
@@ -3383,7 +3386,7 @@ enum RTCStatsType {
                   {{RTCPeerConnectionIceEvent}}.
                 </p>
                 <p>
-                  For remote candidates, this property is not present.
+                  For remote candidates, this property is MUST NOT be [= map/exist | present =].
                 </p>
               </dd>
               <dt>
