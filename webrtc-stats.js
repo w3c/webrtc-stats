@@ -99,9 +99,6 @@ var respecConfig = {
             status:   "Internet Draft",
             publisher:  "IETF"
         },
-        "JSEP": {
-		"aliasOf": "RFC8829"
-        }
       },
   postProcess: [
     function generateStatsHierarchy(config, doc) {
