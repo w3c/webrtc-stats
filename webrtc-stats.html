@@ -875,8 +875,11 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  The a=fmtp line in the SDP corresponding to the codec, i.e., after the colon
-                  following the PT. This defined by [[!JSEP]] in Section 5.7.
+                  The "format specific parameters" field from the
+                  <code class="sdp">a=fmtp</code> line in the SDP
+                  corresponding to the codec, if one [= map/exist =]s,
+                  as defined by
+                  <span data-jsep="parsing-a-desc">[[!RFC8829]]</span>.
                 </p>
               </dd>
             </dl>
