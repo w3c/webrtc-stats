@@ -3384,9 +3384,9 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  For local candidates this is the URL of the ICE server from which the candidate
-                  was obtained. It is the same as the {{RTCPeerConnectionIceEvent/url}} surfaced in the
-                  {{RTCPeerConnectionIceEvent}}.
+                  For local candidates of type {{RTCIceCandidateType/"srflx"}} or type
+                  {{RTCIceCandidateType/"relay"}} this is the URL of the ICE server
+                  from which the candidate was obtained.
                 </p>
                 <p>
                   For remote candidates, this property is MUST NOT be [= map/exist | present =].
