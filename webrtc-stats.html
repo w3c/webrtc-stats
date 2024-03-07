@@ -3384,12 +3384,12 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p>
-                  For local candidates this is the URL of the ICE server from which the candidate
-                  was obtained. It is the same as the {{RTCPeerConnectionIceEvent/url}} surfaced in the
-                  {{RTCPeerConnectionIceEvent}}.
+                  For local candidates of type {{RTCIceCandidateType/"srflx"}} or type
+                  {{RTCIceCandidateType/"relay"}} this is the URL of the ICE server
+                  from which the candidate was obtained and defined in [[WEBRTC]].
                 </p>
                 <p>
-                  For remote candidates, this property is MUST NOT be [= map/exist | present =].
+                  For remote candidates, this property MUST NOT be [= map/exist | present =].
                 </p>
               </dd>
               <dt>
@@ -3400,6 +3400,9 @@ enum RTCStatsType {
                 <p>
                   It is the protocol used by the endpoint to communicate with the TURN server. This
                   is only present for local relay candidates and defined in [[WEBRTC]].
+                </p>
+                <p>
+                  For remote candidates, this property MUST NOT be [= map/exist | present =].
                 </p>
               </dd>
               <dt>
