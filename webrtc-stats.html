@@ -1758,6 +1758,14 @@ enum RTCStatsType {
                   probability measurements that have been made for this SSRC, see {{corruptionMeasurements}}
                   regarding when this attribute SHOULD be [= map/exist | present =].
                 </p>
+                <p>
+                  Each measurement added to {{totalCorruptionProbability}} MUST be in the range [0.0, 1.0],
+                  where a value of 0.0 indicates the system has estimated there is no or negligible corruption
+                  present in the processed frame. Similarly a value of 1.0 indicates there is almost certainly
+                  a corruption visible in the processed frame. A value in between those two indicates there is
+                  likely some corruption visible, but it could for instance have a low magnitude or be present
+                  only in a small portion of the frame.
+                </p>
               </dd>
               <dt>
                 <dfn>totalSquaredCorruptionProbability</dfn> of type <span class=
@@ -1780,15 +1788,26 @@ enum RTCStatsType {
                   probability measurement, this counter is incremented for each such measurement and
                   {{totalCorruptionProbability}} and {{totalSquaredCorruptionProbability}} are aggregated
                   with this measurement and measurement squared respectively.
+                  If the <a href="http://www.webrtc.org/experiments/rtp-hdrext/corruption-detection">
+                  corruption-detection</a> header extension has been negotiated, corruptioned probability
+                  measurements SHOULD be [= map/exist | present =].
                 </p>
                 <p class="note">
-                  The user agent may produce corruption likelihood measurements using any method available.
-                  That could be facilitated by for instance: a side-channel for validation metadata such as
-                  the header extension described at
-                  <a href="http://www.webrtc.org/experiments/rtp-hdrext/corruption-detection">
-                  http://www.webrtc.org/experiments/rtp-hdrext/corruption-detection</a>, reference-less
-                  image analysis such as natural image statistics, ML-based classification, or anything else
-                  capable of producing an estimate.
+                  The user agent MAY produce corruption likelihood measurements using any method available.
+                  That could be facilitated by e.g. the mentioned corruption detection header extension,
+                  reference-less image analysis such as natural image statistics, ML-based classification,
+                  or anything else capable of producing an estimate.
+                </p>
+                <p class="note">
+                  Note that these values are estimates - not guarantess. Even if the estimate is 0.0 there
+                  could be corruptions present (i.e. it's a false negative) for instance if random sampling
+                  is used and only a very small area of the frame is affected. Similarly, even if the estimate
+                  is 1.0 there might not be corruptions present (i.e. it's a false positive) for instance if
+                  the distribution of per-macroblock quantization parameters is extremely wide.
+
+                  Just like there are edge cases for e.g. PSNR measrumenets, these metrics should primarily
+                  be used as a basis for statistical analysis rather than be used as an absolute truth on a
+                  per-frame basis.
                 </p>
               </dd>
             </dl>
