@@ -1793,6 +1793,11 @@ enum RTCStatsType {
                   measurements SHOULD be [= map/exist | present =].
                 </p>
                 <p class="note">
+                  Note that the corruption-detection header extension documented at
+                  http://www.webrtc.org/experiments/rtp-hdrext/corruption-detection is experimental. The
+                  identifier and format may change once an IETF standard has been established.
+                </p>
+                <p class="note">
                   The user agent MAY produce corruption likelihood measurements using any method available.
                   That could be facilitated by e.g. the mentioned corruption detection header extension,
                   reference-less image analysis such as natural image statistics, ML-based classification,
