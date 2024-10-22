@@ -1793,26 +1793,25 @@ enum RTCStatsType {
                   measurements SHOULD be [= map/exist | present =].
                 </p>
                 <p class="note">
-                  Note that the corruption-detection header extension documented at
-                  http://www.webrtc.org/experiments/rtp-hdrext/corruption-detection is experimental. The
-                  identifier and format may change once an IETF standard has been established.
-                </p>
-                <p class="note">
                   The user agent MAY produce corruption likelihood measurements using any method available.
                   That could be facilitated by e.g. the mentioned corruption detection header extension,
                   reference-less image analysis such as natural image statistics, ML-based classification,
-                  or anything else capable of producing an estimate.
-                </p>
-                <p class="note">
-                  Note that these values are estimates - not guarantess. Even if the estimate is 0.0 there
-                  could be corruptions present (i.e. it's a false negative) for instance if random sampling
-                  is used and only a very small area of the frame is affected. Similarly, even if the estimate
-                  is 1.0 there might not be corruptions present (i.e. it's a false positive) for instance if
-                  the distribution of per-macroblock quantization parameters is extremely wide.
-
+                  or anything else capable of producing an estimate.<br>
+                  <br>
+                  The corruption likeliehood values are estimates - not guarantess. Even if the estimate is
+                  0.0 there could be corruptions present (i.e. it's a false negative) for instance if random
+                  sampling is used and only a very small area of the frame is affected. Similarly, even if the
+                  estimate is 1.0 there might not be corruptions present (i.e. it's a false positive) for
+                  instance if an image recognition technique is used while presenting a screenshot of a
+                  video encoding corruption.<br>
                   Just like there are edge cases for e.g. PSNR measrumenets, these metrics should primarily
                   be used as a basis for statistical analysis rather than be used as an absolute truth on a
-                  per-frame basis.
+                  per-frame basis.<br>
+                  <br>
+                  The corruption-detection header extension documented at
+                  <a href="http://www.webrtc.org/experiments/rtp-hdrext/corruption-detection">
+                  http://www.webrtc.org/experiments/rtp-hdrext/corruption-detection</a> is experimental. The
+                  identifier and format may change once an IETF standard has been established.
                 </p>
               </dd>
             </dl>
