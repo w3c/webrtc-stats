@@ -1004,6 +1004,9 @@ enum RTCStatsType {
              unsigned long long   retransmittedBytesReceived;
              unsigned long        rtxSsrc;
              unsigned long        fecSsrc;
+             double               totalCorruptionProbability;
+             double               totalSquaredCorruptionProbability;
+             unsigned long long   corruptionMeasurements;
             };</pre>
           <section>
             <h2>
@@ -1743,6 +1746,67 @@ enum RTCStatsType {
                   of the FEC stream that is associated with this stream's {{RTCRtpStreamStats/ssrc}}.
                   If FEC is not negotiated or uses the same <a>RTP stream</a>, this value MUST NOT be
                   [= map/exist | present =].
+                </p>
+              </dd>
+              <dt>
+                <dfn>totalCorruptionProbability</dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  MUST NOT [= map/exist =] for audio. Represents the cumulative sum of all corruption
+                  probability measurements that have been made for this SSRC, see {{corruptionMeasurements}}
+                  regarding when this attribute SHOULD be [= map/exist | present =].
+                </p>
+                <p>
+                  Each measurement added to {{totalCorruptionProbability}} MUST be in the range [0.0, 1.0],
+                  where a value of 0.0 indicates the system has estimated there is no or negligible corruption
+                  present in the processed frame. Similarly a value of 1.0 indicates there is almost certainly
+                  a corruption visible in the processed frame. A value in between those two indicates there is
+                  likely some corruption visible, but it could for instance have a low magnitude or be present
+                  only in a small portion of the frame.
+                </p>
+                <p class="note">
+                  The corruption likelihood values are estimates - not guarantees. Even if the estimate is
+                  0.0, there could be corruptions present (i.e. it's a false negative) for instance if only a
+                  very small area of the frame is affected. Similarly, even if the estimate is 1.0 there might
+                  not be a corruption present (i.e. it's a false positive) for instance if there are
+                  macroblocks with a QP far higher than the frame average.
+                  Just like there are edge cases for e.g. PSNR measurements, these metrics should primarily
+                  be used as a basis for statistical analysis rather than be used as an absolute truth on a
+                  per-frame basis.
+                </p>
+              </dd>
+              <dt>
+                <dfn>totalSquaredCorruptionProbability</dfn> of type <span class=
+                "idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  MUST NOT [= map/exist =] for audio. Represents the cumulative sum of all corruption
+                  probability measurements squared that have been made for this SSRC, see
+                  {{corruptionMeasurements}} regarding when this attribute SHOULD be [= map/exist | present =].
+                </p>
+              </dd>
+              <dt>
+                <dfn>corruptionMeasurements</dfn> of type <span class=
+                "idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  MUST NOT [= map/exist =] for audio. When the user agent is able to make a corruption
+                  probability measurement, this counter is incremented for each such measurement and
+                  {{totalCorruptionProbability}} and {{totalSquaredCorruptionProbability}} are aggregated
+                  with this measurement and measurement squared respectively.
+                  If the <a href="http://www.webrtc.org/experiments/rtp-hdrext/corruption-detection">
+                  corruption-detection</a> header extension is present in the RTP packets, corruption
+                  probability measurements MUST be [= map/exist | present =].
+                </p>
+                <p class="note">
+                  The corruption-detection header extension documented at
+                  <a href="http://www.webrtc.org/experiments/rtp-hdrext/corruption-detection">
+                  http://www.webrtc.org/experiments/rtp-hdrext/corruption-detection</a> is experimental. The
+                  identifier and format may change once an IETF standard has been established.
                 </p>
               </dd>
             </dl>
