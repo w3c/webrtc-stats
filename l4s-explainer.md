@@ -6,9 +6,6 @@
 
 This explainer gives the background for the proposal to add stats to webrtc-stats to support the deployment of L4S and its prerequisite reporting format, RFC8888.
 
-(Google-only note: see go/webrtc-l4s for details on what L4S is and why it’s important).
-
-
 ## What is L4S
 
 L4S is a strategy for packet scheduling and marking in the Internet that is intended to make the Internet better for latency-sensitive applications that are capable of and willing to rapidly respond to signals that indicate queue buildup.
