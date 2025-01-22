@@ -31,7 +31,7 @@ There are a number of scenarios we want to diagnose:
 *   Network drops: Packets marked with ECT(1) get dropped, packets without it get through
 *   CE-less chokepoints: We observe packet loss, but no CE markings.
 
-We may also want to look at packet loss vs packet reordering - when packets are lost, the reports will contain loss markings; when packets are reordered, later reports will overlap the previous reports and add info on packets previously lost.
+We may also want to look at packet loss vs packet reordering - when packets are lost, the reports will contain loss markings; when packets are reordered, later reports will overlap the previous reports and add info on packets previously reported as missing.
 
 
 ## Suggested counters and where to attach them
@@ -70,9 +70,9 @@ Diagnosing is performed at the sending endpoint.
 
 
 
-*   CE-aware chokepoints: ECT(1) is sent, ECT(1) and CE are in reports, reported ECT(1) + CE + lost add up to number of sent  packets (modulo in-flight). Bleaching stays at zero.
+*   CE-aware chokepoints: ECT(1) is sent, ECT(1) and CE are in reports, reported ECT(1) + CE + lost add up to the number of sent packets (modulo in-flight). Bleaching stays at zero.
 *   Bleaching: ECT(1) is sent, but “no marking” is reported. Number of sent packets and number of received packets + lost are roughly equal.
 *   Network drops: Packets sent with normal and ECT(1) are both above zero, but packets received are only normal, not ECT(1), and correspond to the number of normal packets. (NOTE: This is a failure scenario for deploying L4S)
-*   CE-less chokepoints: ECT(1) is sent and received, but CE counter remains at zero.
+*   CE-less chokepoints: ECT(1) is sent and received, but CE counter remains at zero. Number of packets reported as lost in RFC8888 reports is above zero.
 
 If excessive reordering occurs, the “reported later” counters will go up; the precise interpretation of that number depends on the strategy used for scheduling RFC8888 reports (longer intervals will allow more reordered packets to be recovered without this being visible in the reports).
