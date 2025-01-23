@@ -1966,6 +1966,10 @@ enum RTCStatsType {
              unsigned long        framesEncoded;
              unsigned long        keyFramesEncoded;
              unsigned long long   qpSum;
+             double               psnrSumY;
+             double               psnrSumU;
+             double               psnrSumV;
+             unsigned long long   psnrMeasurements;
              double               totalEncodeTime;
              double               totalPacketSendDelay;
              RTCQualityLimitationReason                 qualityLimitationReason;
@@ -2216,6 +2220,37 @@ enum RTCStatsType {
                 <p>
                   Note that the QP value is only an indication of quantizer values used; many
                   formats have ways to vary the quantizer value within the frame.
+                </p>
+              </dd>
+              <dt>
+                <dfn>psnrSumY</dfn>, <dfn>psnrSumU</dfn>, <dfn>psnrSumV</dfn> of type
+                <span class="idlMemberType">double</span>
+              </dt>
+              <dd>
+                <p>
+                  MUST NOT [= map/exist =] for audio.
+                  The cumulative sum of the PSNR values of frames encoded by this sender, for Y/U/V components.
+                  The count of measurements is in {{psnrMeasurements}}.
+                </p>
+                <p>
+                  PSNR is defined in [[!iso-29170-1:2017]].
+                </p>
+              </dd>
+              <dt>
+                <dfn>psnrMeasurements</dfn> of type <span class="idlMemberType">unsigned long long
+                </span>
+              </dt>
+              <dd>
+                <p>
+                  MUST NOT [= map/exist =] for audio.
+                  The number of times PSNR was measured. {{psnrSumY}}, {{psnrSumU}} and {{psnrSumV}} are
+                  aggregated with this measurement.
+                </p>
+                <p>
+                  The PSNR is defined in [[!iso-29170-1:2017]].
+                </p>
+                <p class="note">
+                  The frequency of PSNR measurements is outside the scope of this specification.
                 </p>
               </dd>
               <dt>
