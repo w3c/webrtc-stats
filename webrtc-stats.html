@@ -1966,9 +1966,7 @@ enum RTCStatsType {
              unsigned long        framesEncoded;
              unsigned long        keyFramesEncoded;
              unsigned long long   qpSum;
-             double               psnrSumY;
-             double               psnrSumU;
-             double               psnrSumV;
+             record&lt;DOMString, double&gt; psnrSum;
              unsigned long long   psnrMeasurements;
              double               totalEncodeTime;
              double               totalPacketSendDelay;
@@ -2223,13 +2221,14 @@ enum RTCStatsType {
                 </p>
               </dd>
               <dt>
-                <dfn>psnrSumY</dfn>, <dfn>psnrSumU</dfn>, <dfn>psnrSumV</dfn> of type
-                <span class="idlMemberType">double</span>
+                <dfn>psnrSum</dfn> of type <span class="idlMemberType">
+                record&lt;DOMString, double&gt;</span>
               </dt>
               <dd>
                 <p>
                   MUST NOT [= map/exist =] for audio.
-                  The cumulative sum of the PSNR values of frames encoded by this sender, for Y/U/V components.
+                  The cumulative sum of the PSNR values of frames encoded by this sender.
+                  The record includes values for the "y", "u" and "v" components.
                   The count of measurements is in {{psnrMeasurements}}.
                 </p>
                 <p>
@@ -2243,7 +2242,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   MUST NOT [= map/exist =] for audio.
-                  The number of times PSNR was measured. {{psnrSumY}}, {{psnrSumU}} and {{psnrSumV}} are
+                  The number of times PSNR was measured. The components of {{psnrSum}} are
                   aggregated with this measurement.
                 </p>
                 <p>
