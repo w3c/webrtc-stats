@@ -99,7 +99,7 @@ var respecConfig = {
             status:   "Internet Draft",
             publisher:  "IETF"
         },
-	"iso-29170-1:2017": {
+	"ISO-29170-1:2017": {
 	  title: "Information technology — Advanced image coding and evaluation",
 	  href: "https://www.iso.org/standard/63637.html",
 	  publisher: "ISO",
