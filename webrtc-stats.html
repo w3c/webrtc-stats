@@ -3499,8 +3499,10 @@ enum RTCStatsType {
                 <dfn>usernameFragment</dfn> of type <span class="idlMemberType">DOMString</span>
               </dt>
               <dd>
-                <p>
-                  The ICE username fragment as defined in [[!RFC5245]] section 7.1.2.3.
+                <p data-tests="protocol/candidate-exchange.html">
+                  The ICE username fragment as defined in [[!RFC5245]] section 7.1.2.3. For
+                  peerreflexive remote candidates this is not set unless the ICE username fragment
+                  has been previously signaled.
                 </p>
               </dd>
               <dt>
