@@ -63,6 +63,13 @@ Attached to RTCRemoteInboundRtpStreamStats (which is a subclass of RTCReceivedRt
 
 Data in RTCRemoteInboundRtpStreamStats are computed based on a sender’s knowledge of the outgoing packets + data from remote reports (RR or RFC8888 reports). Computing “bleached” packets requires having both info on the sent packet and info on the RFC8888 report available.
 
+Attached to RTCTransportStats:
+
+* Number of RFC 8888 format feedback messages sent
+* Number of RFC 8888 format feedback messages received
+
+These numbers will allow monitoring of the frequency of RFC 8888 reporting.
+
 
 ## How to diagnose scenarios from these numbers
 
