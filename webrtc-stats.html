@@ -3170,6 +3170,8 @@ enum RTCStatsType {
              RTCDtlsRole           dtlsRole;
              DOMString             srtpCipher;
              unsigned long         selectedCandidatePairChanges;
+             unsigned long         ccfbMessagesSent;
+	     unsigned long         ccfbMessagesReceived;
 };</pre>
           <section>
             <h2>
@@ -3346,6 +3348,20 @@ enum RTCStatsType {
                   pair is selected.
                 </p>
               </dd>
+	      <dt>
+		      <dfn>ccfbMessagesSent</dfn> of type <span class="idlMemberType">unsigned long</span>span>
+	      </dt>
+	      <dd>
+		<p>The number of Transport-Layer Feedback Messages of type CongestionControl Feedback Packet, as described
+		in [[!RFC8888]] section 3.1, sent on this transport.</p>
+	      </dd>
+	      <dt>
+		      <dfn>ccfbMessagesReceived</dfn> of type <span class="idlMemberType">unsigned long</span>span>
+	      </dt>
+	      <dd>
+		<p>The number of Transport-Layer Feedback Messages of type CongestionControl Feedback Packet, as described
+		in [[!RFC8888]] section 3.1, received on this transport.</p>
+	      </dd>
             </dl>
           </section>
           <section>
