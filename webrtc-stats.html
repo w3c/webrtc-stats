@@ -1952,6 +1952,7 @@ enum RTCStatsType {
              DOMString            mediaSourceId;
              DOMString            remoteId;
              DOMString            rid;
+             unsigned long        encodingIndex;
              unsigned long long   headerBytesSent;
              unsigned long long   retransmittedPacketsSent;
              unsigned long long   retransmittedBytesSent;
@@ -2027,6 +2028,23 @@ enum RTCStatsType {
                   has been set for this <a>RTP stream</a>.
                   If {{RTCRtpCodingParameters/rid}} is set this value will be present
                   regardless if the RID RTP header extension has been negotiated.
+                </p>
+              </dd>
+              <dt>
+                <dfn>encodingIndex</dfn> of type <span class="idlMemberType">
+                unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  MUST NOT [= map/exist =] for audio.
+                  Only [= map/exist =]s if this <a>RTP stream</a> belongs to an
+                  RTP sender that has been configured for simulcast, in other
+                  words the {{RTCRtpSender}} has multiple
+                  {{RTCRtpSendParameters/encodings}} and
+                  {{RTCOutboundRtpStreamStats}} objects. The {{encodingIndex}}
+                  is the index of the encoding that represents this <a>RTP
+                  stream</a>. MUST NOT be [= map/exist | present =] for
+                  singlecast senders.
                 </p>
               </dd>
               <dt>
