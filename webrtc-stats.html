@@ -620,9 +620,12 @@ enum RTCStatsType {
           RTCP SR or RR block.
         </p>
         <p>
-          The lifetime of all RTP [= monitored object =]s starts when the <a>RTP stream</a> is first
-          used: When the first RTP packet is sent or received on the <a>SSRC</a> it represents, or when
-          the first RTCP packet is sent or received that refers to the <a>SSRC</a> of the <a>RTP stream</a>.
+          The lifetime of all RTP [= monitored object =]s are tied to <a>SSRC</a>s.
+          The {{RTCOutboundRtpStreamStats}} is created when the RTP sender is configured by
+          <code>setLocalDescription()</code>, the {{RTCInboundRtpStreamStats}} is created when
+          the first RTP packet for this SSRC is received and the remote RTP stream stats
+          objects ({{RTCRemoteInboundRtpStreamStats}} and {{RTCRemoteOutboundRtpStreamStats}})
+          are created when the corresponding RTCP packet is first received.
         </p>
         <p>
           RTP monitored objects are deleted when the corresponding RTP sender or
