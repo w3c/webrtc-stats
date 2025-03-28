@@ -2013,6 +2013,7 @@ enum RTCStatsType {
              DOMString            mediaSourceId;
              DOMString            remoteId;
              DOMString            rid;
+             unsigned long        encodingIndex;
              unsigned long long   headerBytesSent;
              unsigned long long   retransmittedPacketsSent;
              unsigned long long   retransmittedBytesSent;
@@ -2088,6 +2089,18 @@ enum RTCStatsType {
                   has been set for this <a>RTP stream</a>.
                   If {{RTCRtpCodingParameters/rid}} is set this value will be present
                   regardless if the RID RTP header extension has been negotiated.
+                </p>
+              </dd>
+              <dt>
+                <dfn>encodingIndex</dfn> of type <span class="idlMemberType">
+                unsigned long</span>
+              </dt>
+              <dd>
+                <p>
+                  MUST NOT [= map/exist =] for audio.
+                  This is the index of the encoding that represents this
+                  <a>RTP stream</a> in the RTP sender's list of
+                  {{RTCRtpSendParameters/encodings}}.
                 </p>
               </dd>
               <dt>
