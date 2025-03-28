@@ -2098,14 +2098,9 @@ enum RTCStatsType {
               <dd>
                 <p>
                   MUST NOT [= map/exist =] for audio.
-                  Only [= map/exist =]s if this <a>RTP stream</a> belongs to an
-                  RTP sender that has been configured for simulcast, in other
-                  words the {{RTCRtpSender}} has multiple
-                  {{RTCRtpSendParameters/encodings}} and
-                  {{RTCOutboundRtpStreamStats}} objects. The {{encodingIndex}}
-                  is the index of the encoding that represents this <a>RTP
-                  stream</a>. MUST NOT be [= map/exist | present =] for
-                  singlecast senders.
+                  This is the index of the encoding that represents this
+                  <a>RTP stream</a> in the RTP sender's list of
+                  {{RTCRtpSendParameters/encodings}}.
                 </p>
               </dd>
               <dt>
