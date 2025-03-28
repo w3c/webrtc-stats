@@ -622,7 +622,9 @@ enum RTCStatsType {
         <p>
           The lifetime of all RTP [= monitored object =]s are tied to <a>SSRC</a>s.
           The {{RTCOutboundRtpStreamStats}} is created when the RTP sender is configured by
-          <code>setLocalDescription()</code>, the {{RTCInboundRtpStreamStats}} is created when
+          setting a local or remote SDP answer (via <code>setLocalDescription()</code>
+          or <code>setRemoteDescription()</code> and the signaling state returning to
+          <code>"stable"</code>). The {{RTCInboundRtpStreamStats}} is created when
           the first RTP packet for this SSRC is received and the remote RTP stream stats
           objects ({{RTCRemoteInboundRtpStreamStats}} and {{RTCRemoteOutboundRtpStreamStats}})
           are created when the corresponding RTCP packet is first received.
