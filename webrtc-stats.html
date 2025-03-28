@@ -620,9 +620,14 @@ enum RTCStatsType {
           RTCP SR or RR block.
         </p>
         <p>
-          The lifetime of all RTP [= monitored object =]s starts when the <a>RTP stream</a> is first
-          used: When the first RTP packet is sent or received on the <a>SSRC</a> it represents, or when
-          the first RTCP packet is sent or received that refers to the <a>SSRC</a> of the <a>RTP stream</a>.
+          The lifetime of all RTP [= monitored object =]s are tied to <a>SSRC</a>s.
+          The {{RTCOutboundRtpStreamStats}} is created when the RTP sender is configured by
+          setting a local or remote SDP answer (via <code>setLocalDescription()</code>
+          or <code>setRemoteDescription()</code> and the signaling state returning to
+          <code>"stable"</code>). The {{RTCInboundRtpStreamStats}} is created when
+          the first RTP packet for this SSRC is received and the remote RTP stream stats
+          objects ({{RTCRemoteInboundRtpStreamStats}} and {{RTCRemoteOutboundRtpStreamStats}})
+          are created when the corresponding RTCP packet is first received.
         </p>
         <p>
           RTP monitored objects are deleted when the corresponding RTP sender or
@@ -893,6 +898,10 @@ enum RTCStatsType {
         <div>
           <pre class="idl">dictionary RTCReceivedRtpStreamStats : RTCRtpStreamStats {
              unsigned long long   packetsReceived;
+             unsigned long long   packetsReceivedWithEct1;
+             unsigned long long   packetsReceivedWithCe;
+             unsigned long long   packetsReportedAsLost;
+             unsigned long long   packetsReportedAsLostButRecovered;
              long long            packetsLost;
              double               jitter;
 };</pre>
@@ -915,6 +924,41 @@ enum RTCStatsType {
                   Report</a>, and then subtracting the initial Extended Sequence Number that was sent to this SSRC in a
                   <a>RTCP Sender Report</a> and then adding one, to mirror what is discussed in Appendix A.3 in [[!RFC3550]], but for the
                   sender side. If no <a>RTCP Receiver Report</a> has been received yet, then return 0.
+                </p>
+              </dd>
+              <dt>
+                <dfn>packetsReceivedWithEct1</dfn> of type <span class="idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of RTP packets received for this <a>SSRC</a> marked with the "ECT(1)" marking.
+                </p>
+              </dd>
+              <dt>
+                <dfn>packetsReceivedWithCe</dfn> of type <span class="idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of RTP packets received for this <a>SSRC</a> marked with the "CE" marking.
+                </p>
+              </dd>
+              <dt>
+              <dt>
+                <dfn>packetsReportedAsLost</dfn> of type <span class="idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Total number of RTP packets for which an [[RFC8888]] section 3.1 report has been sent with a zero R bit.
+                  Only reported if support for the "ccfb" feedback mechanism has been negotiated.
+                </p>
+              </dd>
+                <dt><dfn>packetsReportedAsLostButRecovered</dfn> of type <span class="idlMemberType">unsigned long long</span></dt>
+              </dt>
+              <dd>
+                <p>
+                  Total number of RTP packets for which an [[RFC8888]] section 3.1 report has been sent with a zero R bit,
+                  but a later report for the same packet has the R bit set to 1.
+                  Only reported if support for the "ccfb" feedback mechanism has been negotiated.
                 </p>
               </dd>
               <dt>
@@ -1830,6 +1874,7 @@ enum RTCStatsType {
              double               totalRoundTripTime;
              double               fractionLost;
              unsigned long long   roundTripTimeMeasurements;
+             unsigned long long   packetsWithBleachedEct1Marking;
 };</pre>
           <section>
             <h2>
@@ -1894,6 +1939,14 @@ enum RTCStatsType {
                   be calculated because no <a>RTCP Receiver Report</a> with a DLSR value other than 0 has been received.
                 </p>
               </dd>
+              <dt>
+                <dfn>packetsWithBleachedEct1Marking</dfn> of type <span class="idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                <p>
+                  Number of packets that were sent with ECT(1) markings per [[RFC3168]] section 3, but where an
+                  [[RFC8888]] report gave information that the packet was received with a marking of "not-ECT".
+                </p>
             </dl>
           </section>
         </div>
@@ -1904,8 +1957,9 @@ enum RTCStatsType {
         </h3>
         <div>
           <pre class="idl">dictionary RTCSentRtpStreamStats : RTCRtpStreamStats {
-             unsigned long long packetsSent;
-             unsigned long long bytesSent;
+            unsigned long long packetsSent;
+            unsigned long long bytesSent;
+            unsigned long long packetsSentWithEct1;
 };</pre>
           <section>
             <h2>
@@ -1932,6 +1986,13 @@ enum RTCStatsType {
                   Total number of bytes sent for this <a>SSRC</a>. This includes retransmissions.
                   Calculated as defined in [[!RFC3550]] section 6.4.1.
                 </p>
+              </dd>
+              <dt>
+                <dfn>packetsSentWithEct1</dfn> of type <span class="idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                Total number of RTP packets sent for this <a>SSRC</a> with the ECT(1) marking defined in [[RFC3168]]
+                section 5 and used by the L4S protocol described in [[RFC9331]].
               </dd>
             </dl>
           </section>
@@ -3132,6 +3193,8 @@ enum RTCStatsType {
              RTCDtlsRole           dtlsRole;
              DOMString             srtpCipher;
              unsigned long         selectedCandidatePairChanges;
+             unsigned long         ccfbMessagesSent;
+	     unsigned long         ccfbMessagesReceived;
 };</pre>
           <section>
             <h2>
@@ -3308,6 +3371,20 @@ enum RTCStatsType {
                   pair is selected.
                 </p>
               </dd>
+	      <dt>
+		      <dfn>ccfbMessagesSent</dfn> of type <span class="idlMemberType">unsigned long</span>span>
+	      </dt>
+	      <dd>
+		<p>The number of Transport-Layer Feedback Messages of type CongestionControl Feedback Packet, as described
+		in [[!RFC8888]] section 3.1, sent on this transport.</p>
+	      </dd>
+	      <dt>
+		      <dfn>ccfbMessagesReceived</dfn> of type <span class="idlMemberType">unsigned long</span>span>
+	      </dt>
+	      <dd>
+		<p>The number of Transport-Layer Feedback Messages of type CongestionControl Feedback Packet, as described
+		in [[!RFC8888]] section 3.1, received on this transport.</p>
+	      </dd>
             </dl>
           </section>
           <section>
