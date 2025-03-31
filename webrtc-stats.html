@@ -2028,6 +2028,8 @@ enum RTCStatsType {
              unsigned long        framesEncoded;
              unsigned long        keyFramesEncoded;
              unsigned long long   qpSum;
+             record&lt;DOMString, double&gt; psnrSum;
+             unsigned long long   psnrMeasurements;
              double               totalEncodeTime;
              double               totalPacketSendDelay;
              RTCQualityLimitationReason                 qualityLimitationReason;
@@ -2290,6 +2292,40 @@ enum RTCStatsType {
                 <p>
                   Note that the QP value is only an indication of quantizer values used; many
                   formats have ways to vary the quantizer value within the frame.
+                </p>
+              </dd>
+              <dt>
+                <dfn>psnrSum</dfn> of type <span class="idlMemberType">
+                record&lt;DOMString, double&gt;</span>
+              </dt>
+              <dd>
+                <p>
+                  MUST NOT [= map/exist =] for audio.
+                  The cumulative sum of the PSNR values of frames encoded by this sender.
+                  The record includes values for the "y", "u" and "v" components.
+                  The count of measurements is in {{psnrMeasurements}}.
+                </p>
+                <p>
+                  PSNR is defined in [[ISO-29170-1:2017]].
+                </p>
+              </dd>
+              <dt>
+                <dfn>psnrMeasurements</dfn> of type <span class="idlMemberType">unsigned long long
+                </span>
+              </dt>
+              <dd>
+                <p>
+                  MUST NOT [= map/exist =] for audio.
+                  The number of times PSNR was measured. The components of {{psnrSum}} are
+                  aggregated with this measurement.
+                </p>
+                <p>
+                  The PSNR is defined in [[ISO-29170-1:2017]].
+                </p>
+                <p class="note">
+		  PSNR metrics should primarily be used as a basis for statistical analysis rather
+		  than be used as an absolute truth on a per-frame basis.
+                  The frequency of PSNR measurements is [=implementation-defined=].
                 </p>
               </dd>
               <dt>
