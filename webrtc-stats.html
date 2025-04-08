@@ -2234,6 +2234,10 @@ enum RTCStatsType {
                 <p>
                   PSNR is defined in [[ISO-29170-1:2017]].
                 </p>
+                <p class="note">
+		  PSNR metrics should primarily be used as a basis for statistical analysis rather
+		  than be used as an absolute truth on a per-frame basis.
+                </p>
               </dd>
               <dt>
                 <dfn>psnrMeasurements</dfn> of type <span class="idlMemberType">unsigned long long
@@ -2248,10 +2252,6 @@ enum RTCStatsType {
                 <p>
                   The PSNR is defined in [[ISO-29170-1:2017]].
                   The frequency of PSNR measurements is [=implementation-defined=].
-                </p>
-                <p class="note">
-		  PSNR metrics should primarily be used as a basis for statistical analysis rather
-		  than be used as an absolute truth on a per-frame basis.
                 </p>
               </dd>
               <dt>
