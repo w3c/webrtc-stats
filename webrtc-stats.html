@@ -2225,6 +2225,9 @@ enum RTCStatsType {
                 record&lt;DOMString, double&gt;</span>
               </dt>
               <dd>
+                <p class="fingerprint">
+                  MUST NOT [= map/exist =] unless [= exposing hardware is allowed =].
+                </p>
                 <p>
                   MUST NOT [= map/exist =] for audio.
                   The cumulative sum of the PSNR values of frames encoded by this sender.
@@ -2244,6 +2247,9 @@ enum RTCStatsType {
                 </span>
               </dt>
               <dd>
+                <p class="fingerprint">
+                  MUST NOT [= map/exist =] unless [= exposing hardware is allowed =].
+                </p>
                 <p>
                   MUST NOT [= map/exist =] for audio.
                   The number of times PSNR was measured. The components of {{psnrSum}} are
