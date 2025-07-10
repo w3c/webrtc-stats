@@ -2028,6 +2028,8 @@ enum RTCStatsType {
              unsigned long        framesEncoded;
              unsigned long        keyFramesEncoded;
              unsigned long long   qpSum;
+             record&lt;DOMString, double&gt; psnrSum;
+             unsigned long long   psnrMeasurements;
              double               totalEncodeTime;
              double               totalPacketSendDelay;
              RTCQualityLimitationReason                 qualityLimitationReason;
@@ -2290,6 +2292,51 @@ enum RTCStatsType {
                 <p>
                   Note that the QP value is only an indication of quantizer values used; many
                   formats have ways to vary the quantizer value within the frame.
+                </p>
+              </dd>
+              <dt>
+                <dfn>psnrSum</dfn> of type <span class="idlMemberType">
+                record&lt;DOMString, double&gt;</span>
+              </dt>
+              <dd>
+                <p class="fingerprint">
+                  MUST NOT [= map/exist =] unless [= exposing hardware is allowed =].
+                </p>
+                <p>
+                  MUST NOT [= map/exist =] for audio.
+                  The cumulative sum of the PSNR values of frames encoded by this sender.
+                  The record includes values for the "y", "u" and "v" components.
+                  The count of measurements is in {{psnrMeasurements}}.
+                </p>
+                <p>
+                  PSNR is defined in [[ISO-29170-1:2017]].
+                </p>
+                <p class="note">
+		  PSNR metrics are intended for statistical analysis rather
+		  than representing absolute truth on a per-frame basis.
+                </p>
+              </dd>
+              <dt>
+                <dfn>psnrMeasurements</dfn> of type <span class="idlMemberType">unsigned long long
+                </span>
+              </dt>
+              <dd>
+                <p class="fingerprint">
+                  MUST NOT [= map/exist =] unless [= exposing hardware is allowed =].
+                </p>
+                <p>
+                  MUST NOT [= map/exist =] for audio.
+                  The number of times PSNR was measured. The components of {{psnrSum}} are
+                  aggregated with this measurement.
+                </p>
+                <p>
+                  The PSNR is defined in [[ISO-29170-1:2017]].
+                  The frequency of PSNR measurements is [=implementation-defined=].
+                </p>
+                <p class="note">
+                  User agents are encouraged to measure PSNR at a fixed frequency
+                  for each encoder implementation, and as frequently as possible as
+                  long as it does not introduce a noticeable performance penalty.
                 </p>
               </dd>
               <dt>
