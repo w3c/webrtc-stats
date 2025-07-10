@@ -2259,6 +2259,11 @@ enum RTCStatsType {
                   The PSNR is defined in [[ISO-29170-1:2017]].
                   The frequency of PSNR measurements is [=implementation-defined=].
                 </p>
+                <p class="note">
+                  User agents are encouraged to measure PSNR at a fixed frequency
+                  for each encoder implementation, and as frequently as possible as
+                  long as it does not introduce a noticeable performance penalty.
+                </p>
               </dd>
               <dt>
                 <dfn>totalEncodeTime</dfn> of type <span class=
