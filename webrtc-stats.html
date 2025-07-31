@@ -1959,7 +1959,6 @@ enum RTCStatsType {
           <pre class="idl">dictionary RTCSentRtpStreamStats : RTCRtpStreamStats {
             unsigned long long packetsSent;
             unsigned long long bytesSent;
-            unsigned long long packetsSentWithEct1;
 };</pre>
           <section>
             <h2>
@@ -1986,13 +1985,6 @@ enum RTCStatsType {
                   Total number of bytes sent for this <a>SSRC</a>. This includes retransmissions.
                   Calculated as defined in [[!RFC3550]] section 6.4.1.
                 </p>
-              </dd>
-              <dt>
-                <dfn>packetsSentWithEct1</dfn> of type <span class="idlMemberType">unsigned long long</span>
-              </dt>
-              <dd>
-                Total number of RTP packets sent for this <a>SSRC</a> with the ECT(1) marking defined in [[RFC3168]]
-                section 5 and used by the L4S protocol described in [[RFC9331]].
               </dd>
             </dl>
           </section>
@@ -2042,6 +2034,7 @@ enum RTCStatsType {
              boolean              powerEfficientEncoder;
              boolean              active;
              DOMString            scalabilityMode;
+             unsigned long long   packetsSentWithEct1;
 };</pre>
           <section>
             <h2>
@@ -2510,6 +2503,13 @@ enum RTCStatsType {
                   <a href="https://w3c.github.io/webrtc-svc/#scalabilitymodes*">
                   scalability mode</a> is currently configured for this <a>RTP stream</a>.
                 </p>
+              </dd>
+              <dt>
+                <dfn>packetsSentWithEct1</dfn> of type <span class="idlMemberType">unsigned long long</span>
+              </dt>
+              <dd>
+                Total number of RTP packets sent for this <a>SSRC</a> with the ECT(1) marking defined in [[RFC3168]]
+                section 5 and used by the L4S protocol described in [[RFC9331]].
               </dd>
             </dl>
           </section>
