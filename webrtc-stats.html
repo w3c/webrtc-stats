@@ -949,7 +949,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Total number of RTP packets for which an [[RFC8888]] section 3.1 report has been sent with a zero R bit.
-                  Only reported if support for the "ccfb" feedback mechanism has been negotiated.
+                  Only [= map/exist =]s if support for the "ccfb" feedback mechanism has been negotiated.
                 </p>
               </dd>
                 <dt><dfn>packetsReportedAsLostButRecovered</dfn> of type <span class="idlMemberType">unsigned long long</span></dt>
@@ -958,7 +958,7 @@ enum RTCStatsType {
                 <p>
                   Total number of RTP packets for which an [[RFC8888]] section 3.1 report has been sent with a zero R bit,
                   but a later report for the same packet has the R bit set to 1.
-                  Only reported if support for the "ccfb" feedback mechanism has been negotiated.
+                  Only [= map/exist =]s if support for the "ccfb" feedback mechanism has been negotiated.
                 </p>
               </dd>
               <dt>
