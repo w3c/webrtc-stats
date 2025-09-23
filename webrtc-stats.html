@@ -647,7 +647,7 @@ enum RTCStatsType {
           but due to changes in SSRC, simulcast layers dropping or transceivers
           stopping, an RTP stats object can be deleted and/or replaced by a new
           RTP stats object. The caller will need to be aware of this when aggregating
-          packet counters accross multiple RTP stats objects (the aggregates may
+          packet counters across multiple RTP stats objects (the aggregates may
           decrease due to deletions).
         </p>
         <pre class="example highlight">
@@ -1408,7 +1408,7 @@ enum RTCStatsType {
                   This metric is not incremented for frames that are not decoded,
                   i.e. {{RTCInboundRtpStreamStats/framesDropped}}.
                   The average processing delay can be calculated by dividing the {{totalProcessingDelay}} with the
-                  {{framesDecoded}} for video (or povisional stats spec <code>totalSamplesDecoded</code> for audio).
+                  {{framesDecoded}} for video (or provisional stats spec <code>totalSamplesDecoded</code> for audio).
                 </p>
               </dd>
               <dt>
@@ -2152,7 +2152,7 @@ enum RTCStatsType {
               <dd>
                 <p>
                   Reflects the current encoder target in bits per second. The
-                  target is an instantanous value reflecting the encoder's
+                  target is an instantaneous value reflecting the encoder's
                   settings, but the resulting payload bytes sent per second,
                   excluding retransmissions, SHOULD closely correlate to the
                   target. See also {{RTCSentRtpStreamStats/bytesSent}} and
@@ -2697,7 +2697,7 @@ enum RTCStatsType {
           its frames downscaled due to track constraints and then further downscaled by the
           encoders due to CPU and network conditions. This dictionary reflects the video frames or
           <a>audio sample</a>s passed out from the track - after track constraints have been applied but
-          before any encoding or further donwsampling occurs.
+          before any encoding or further downsampling occurs.
         </p>
         <p>
           Media source objects are of either subdictionary {{RTCAudioSourceStats}} or
@@ -4157,7 +4157,7 @@ function processStats() {
         The data exposed by WebRTC Statistics include most of the media and network data also
         exposed by [[!GETUSERMEDIA]] and [[!WEBRTC]] - as such, all the privacy and security
         considerations of these specifications related to data exposure apply as well to this
-        specifciation.
+        specification.
       </p>
       <p>
         In addition, the properties exposed by {{RTCReceivedRtpStreamStats}},
