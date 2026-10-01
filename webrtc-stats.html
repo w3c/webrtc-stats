@@ -452,21 +452,12 @@ dictionary RTCStats {
           </li>
         </ul>
         <p>
-          Once recognized, the receiver remains recognized until any of the
-          following occurs:
-        </p>
-        <ul>
-          <li>Its video track ends.</li>
-          <li>Its associated transceiver is stopped.</li>
-          <li>Its peer connection is closed.</li>
-          <li>Its associated document navigates or is discarded.</li>
-          <li>
-            It has not successfully decoded a video frame within the
-            [= interactive media session termination duration =].
-          </li>
-        </ul>
-        <p>
-          The document becoming hidden or unfocused, an interaction condition
+          Once recognized, the receiver remains recognized until its video
+          track ends, its associated transceiver is stopped, its peer
+          connection is closed, its associated document navigates or is
+          discarded, or it has not successfully decoded a video frame within
+          the [= interactive media session termination duration =]. The
+          document becoming hidden or unfocused, an interaction condition
           ending, or the [= recent trusted input duration =] expiring does not
           by itself end recognition.
         </p>
