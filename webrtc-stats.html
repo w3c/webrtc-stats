@@ -402,8 +402,15 @@ dictionary RTCStats {
         <ul>
           <li>
             <p>
-              The receiver's [= associated document =] is fully active,
-              visible, and focused, and is not in a cross-origin iframe.
+              The receiver's [= associated document =] is
+              <a href="https://html.spec.whatwg.org/multipage/document-sequences.html#fully-active-documents">
+              fully active</a>, has a visibility state of
+              <code>"visible"</code>, is same origin with all of its ancestor
+              documents, and its
+              <a href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-traversables">
+              top-level traversable</a> has
+              <a href="https://html.spec.whatwg.org/#system-focus">system
+              focus</a>.
             </p>
           </li>
           <li>
