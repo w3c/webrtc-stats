@@ -2010,7 +2010,6 @@ enum RTCStatsType {
              unsigned long long   retransmittedBytesSent;
              unsigned long        rtxSsrc;
              double               targetBitrate;
-             unsigned long long   totalEncodedBytesTarget;
              unsigned long        frameWidth;
              unsigned long        frameHeight;
              double               framesPerSecond;
@@ -2159,18 +2158,6 @@ enum RTCStatsType {
                   {{RTCOutboundRtpStreamStats/retransmittedBytesSent}}. The
                   {{targetBitrate}} is defined in the same way as the Transport
                   Independent Application Specific (TIAS) bitrate [[!RFC3890]].
-                </p>
-              </dd>
-              <dt>
-                <dfn>totalEncodedBytesTarget</dfn> of type <span class=
-                "idlMemberType">unsigned long long</span>
-              </dt>
-              <dd>
-                <p>
-                  MUST NOT [= map/exist =] for audio.
-                  This value is increased by the target frame size in bytes every time a frame has
-                  been encoded. The actual frame size may be bigger or smaller than this number.
-                  This value goes up every time {{framesEncoded}} goes up.
                 </p>
               </dd>
               <dt>
