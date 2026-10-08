@@ -356,13 +356,15 @@ dictionary RTCStats {
           Limiting exposure of hardware capabilities
         </h3>
         <p>
-          To avoid passive fingerprinting, hardware capabilities should only be
-          exposed in capturing contexts. This is tested using the algorithm
-          below.
+          To avoid passive fingerprinting, hardware capabilities are exposed
+          only in capturing contexts or, for a specific receiver, while that
+          receiver is part of an active interactive media session. This is
+          tested using the algorithm below.
         </p>
         <p>
           To <dfn data-lt="exposing hardware is allowed">check if hardware
-          exposure is allowed</dfn>, run the following steps:
+          exposure is allowed</dfn>, given an optional {{RTCRtpReceiver}}
+          <var>receiver</var>, run the following steps:
           <ol>
             <li>
               <p>
@@ -372,11 +374,154 @@ dictionary RTCStats {
             </li>
             <li>
               <p>
+                If <var>receiver</var> was given and it is in the
+                [= active interactive media state =], return true.
+              </p>
+            </li>
+            <li>
+              <p>
                 Otherwise return false.
               </p>
             </li>
           </ol>
         </p>
+        <section>
+          <h4>
+            Receiver-specific hardware exposure
+          </h4>
+        <p>
+          The <dfn>associated document</dfn> of an {{RTCRtpReceiver}} is the
+          {{Document}} associated with the {{Window}} that is the receiver's
+          [= relevant global object =].
+        </p>
+        <p>
+          An {{RTCRtpReceiver}} is
+          <dfn>recognized as belonging to an interactive media session</dfn>
+          when all of the following entry conditions are true at the same time:
+        </p>
+        <ul>
+          <li>
+            <p>
+              The receiver's [= associated document =] is
+              <a href="https://html.spec.whatwg.org/multipage/document-sequences.html#fully-active-documents">
+              fully active</a>, has a visibility state of
+              <code>"visible"</code>, is same origin with all of its ancestor
+              documents, and its
+              <a href="https://html.spec.whatwg.org/multipage/document-sequences.html#top-level-traversables">
+              top-level traversable</a> has
+              <a href="https://html.spec.whatwg.org/#system-focus">system
+              focus</a>.
+            </p>
+          </li>
+          <li>
+            <p>
+              The receiver has a live video track and has successfully decoded
+              a video frame within the
+              [= recently decoded frame duration =].
+            </p>
+          </li>
+          <li>
+            <p>
+              At least one of the following qualifying interaction conditions
+              is true:
+            </p>
+            <ul>
+              <li>
+                <p>
+                  The document has a non-null
+                  <a href="https://w3c.github.io/pointerlock/#dfn-pointer-lock-target">
+                  pointer-lock target</a>.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <a href="https://fullscreen.spec.whatwg.org/#keyboard-locking">
+                  Keyboard lock</a> is active for the document.
+                </p>
+              </li>
+              <li>
+                <p>
+                  Within the [= recent trusted input duration =], a
+                  <a data-cite="GAMEPAD#dfn-gamepad-user-gesture">gamepad user
+                  gesture</a> was observed for the document's {{Navigator}}.
+                </p>
+              </li>
+              <li>
+                <p>
+                  The document's
+                  <a href="https://fullscreen.spec.whatwg.org/#fullscreen-element">
+                  fullscreen element</a> is non-null and, within the
+                  [= recent trusted input duration =], the document received
+                  trusted keyboard, pointer, or touch input.
+                </p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <p>
+          Once recognized, the receiver remains recognized until any one of
+          the following conditions is true:
+        </p>
+        <ul>
+          <li>The receiver's video track ends.</li>
+          <li>The receiver's associated transceiver is stopped.</li>
+          <li>The receiver's peer connection is closed.</li>
+          <li>
+            The receiver's associated document navigates or is discarded.
+          </li>
+          <li>
+            The receiver has not successfully decoded a video frame within the
+            [= interactive media session termination duration =].
+          </li>
+        </ul>
+        <p>
+          None of the following conditions ends recognition by itself:
+        </p>
+        <ul>
+          <li>
+            The receiver's associated document becomes hidden or unfocused.
+          </li>
+          <li>An interaction condition ends.</li>
+          <li>The [= recent trusted input duration =] expires.</li>
+        </ul>
+        <p>
+          A receiver is in the <dfn>active interactive media state</dfn> while
+          all of the following are true:
+        </p>
+        <ul>
+          <li>
+            <p>
+              The receiver is [= recognized as belonging to an interactive
+              media session =].
+            </p>
+          </li>
+          <li>
+            <p>
+              Its [= associated document =] is fully active, visible, and
+              focused.
+            </p>
+          </li>
+          <li>
+            <p>
+              It has a live video track and has successfully decoded a video
+              frame within the [= recently decoded frame duration =].
+            </p>
+          </li>
+        </ul>
+        <p>
+          The <dfn>recent trusted input duration</dfn>, the
+          <dfn>recently decoded frame duration</dfn>, and the
+          <dfn>interactive media session termination duration</dfn> are finite
+          [=implementation-defined=] durations. They SHOULD tolerate ordinary
+          network jitter, brief media interruptions, and ordinary pauses in
+          user input, while preventing recognition or exposure from persisting
+          after the interactive media session has ended.
+        </p>
+        <div class="issue">
+          The Working Group and implementers need to confirm the exact document
+          hooks and interoperable values or bounds for these three durations.
+        </div>
+        </section>
       </section>
     </section>
     <section id="rtctatstype-*">
@@ -1679,7 +1824,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p class="fingerprint">
-                  MUST NOT [= map/exist =] unless [= exposing hardware is allowed =].
+                  MUST NOT [= map/exist =] unless [= exposing hardware is allowed =]
+                  with the {{RTCRtpReceiver}} receiving this RTP stream.
                 </p>
                 <p>
                   MUST NOT [= map/exist =] for audio. Identifies the decoder implementation used.
@@ -1703,7 +1849,8 @@ enum RTCStatsType {
               </dt>
               <dd>
                 <p class="fingerprint">
-                  MUST NOT [= map/exist =] unless [= exposing hardware is allowed =].
+                  MUST NOT [= map/exist =] unless [= exposing hardware is allowed =]
+                  with the {{RTCRtpReceiver}} receiving this RTP stream.
                 </p>
                 <p>
                   MUST NOT [= map/exist =] for audio.
