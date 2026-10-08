@@ -31,12 +31,14 @@ var respecConfig = {
 
       // editors, add as many as you like
       // only "name" is REQUIRED
-      editors: [
-        {   name: "Harald Alvestrand",  company: "Google", w3cid: "24610" },
+      editors: [    
         {   name: "Varun Singh",        company: "daily.co", w3cid: "85435" },
         {   name: "Henrik Boström",     company: "Google", w3cid: "96936" }
       ],
 
+	  formerEditors: [
+		 {   name: "Harald Alvestrand",  company: "Google", w3cid: "24610" },
+	  ],
       // authors, add as many as you like.
       // This is optional, uncomment if you have authors as well as editors.
       // only "name" is REQUIRED. Same format as editors.
